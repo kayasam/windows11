@@ -22,7 +22,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne — Corre
 
 - Construire une ISO de déploiement **zéro clic** à partir de `MASTER.wim`
 - Déployer `PC02`, diagnostiquer un échec de Setup, vérifier le résultat
-- Joindre `PC02` au domaine et y migrer les données de `sguillard` avec USMT
+- Joindre `PC02` au domaine et y migrer les données de `stagiaire` avec USMT
 - Choisir une méthode de déploiement selon le contexte (WDS, MDT, ConfigMgr, Autopilot)
 
 ---
@@ -170,14 +170,14 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne — Corre
 > ```
 > Après redémarrage, sur le lab : `Nom: PC02 / domaine: ad.fournil.lab`, `gpresult` → **GPO-Postes-Securite** appliquée, administrateurs locaux : `FOURNIL\Admins du domaine, FOURNIL\GG-Admins-Postes, PC02\Administrateur, PC02\Utilisateur`.
 
-**C2.** Sur `PC01`, capture le profil de `sguillard` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
+**C2.** Sur `PC01`, capture le profil de `stagiaire` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
 
 > [!success]- Afficher la correction — C2
 > ```cmd
 > \\SRV01\USMT$\USMT\scanstate.exe C:\Temp\usmt-test /i:\\SRV01\USMT$\USMT\MigUser.xml ^
->     /ue:*\* /ui:FOURNIL\sguillard /o /c /nocompress /listfiles:C:\Temp\usmt-files.txt
+>     /ue:*\* /ui:FOURNIL\stagiaire /o /c /nocompress /listfiles:C:\Temp\usmt-files.txt
 > \\SRV01\USMT$\USMT\scanstate.exe \\SRV01\USMT$\Store\PC01 /i:\\SRV01\USMT$\USMT\MigUser.xml ^
->     /i:\\SRV01\USMT$\USMT\MigApp.xml /ue:*\* /ui:FOURNIL\sguillard /o /c /l:\\SRV01\USMT$\scan-PC01.log
+>     /i:\\SRV01\USMT$\USMT\MigApp.xml /ue:*\* /ui:FOURNIL\stagiaire /o /c /l:\\SRV01\USMT$\scan-PC01.log
 > ```
 > (Les binaires USMT ont été copiés de l'ADK de `PC01` vers `\\SRV01\USMT$\USMT` : un seul emplacement pour tous les postes.)
 
@@ -187,22 +187,22 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne — Corre
 > Relevés du lab pour deux fichiers de test : **6,9 Go** (MigDocs), **5,8 Go** (MigUser), **8,2 Go** (MigDocs + MigApp). `/listfiles` montre pourquoi : `MigDocs` ramasse les documents de **tout le disque** (`C:\WinPE_amd64`, une ISO de 567 Mo…), et USMT embarque aussi des éléments système — sons de `C:\Windows\Media`, définitions Defender, **cache de l'Optimisation de la distribution** (4,4 Go pour un seul fichier `content.bin`).
 > Que faire : tester avec `/listfiles`, vider le cache (`Delete-DeliveryOptimizationCache -Force`), exclure les composants inutiles (`/genconfig:config.xml` puis `/config:config.xml`), restreindre par un XML personnalisé. Et surtout, dans un environnement Microsoft 365 : **OneDrive KFM**, qui rend la migration de données inutile.
 
-**C4.** Sur `PC02`, restaure avec `loadstate`. Ouvre une session `sguillard` et vérifie ses documents.
+**C4.** Sur `PC02`, restaure avec `loadstate`. Ouvre une session `stagiaire` et vérifie ses documents.
 
 > [!success]- Afficher la correction — C4
 > Sur `PC02` (joint au domaine), en administrateur :
 > ```cmd
 > \\SRV01\USMT$\USMT\loadstate.exe \\SRV01\USMT$\Store\PC01 /i:\\SRV01\USMT$\USMT\MigUser.xml ^
->     /i:\\SRV01\USMT$\USMT\MigApp.xml /ue:*\* /ui:FOURNIL\sguillard /c /l:\\SRV01\USMT$\load-PC02.log
+>     /i:\\SRV01\USMT$\USMT\MigApp.xml /ue:*\* /ui:FOURNIL\stagiaire /c /l:\\SRV01\USMT$\load-PC02.log
 > ```
 > Sur le lab : **1,1 minute**, code de sortie **3** (= des erreurs non bloquantes ont été ignorées grâce à `/c` : à lire dans le journal), et :
 > ```
-> C:\Users\sguillard\Documents\recette-campagne.txt
-> C:\Users\sguillard\Documents\Planning\semaine46.txt
+> C:\Users\stagiaire\Documents\recette-campagne.txt
+> C:\Users\stagiaire\Documents\Planning\semaine46.txt
 > Recette du pain de campagne
 > Farine T80 1 kg, levain 300 g, eau 650 g, sel 20 g
 > ```
-> Les mêmes `/i:` qu'au `scanstate` sont obligatoires. À la première connexion de `sguillard` sur `PC02`, il retrouve ses documents et son fond d'écran.
+> Les mêmes `/i:` qu'au `scanstate` sont obligatoires. À la première connexion de `stagiaire` sur `PC02`, il retrouve ses documents et son fond d'écran.
 
 ---
 

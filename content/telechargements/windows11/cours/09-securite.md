@@ -20,7 +20,7 @@
 | Mauvaise pratique | Bonne pratique |
 |-------------------|----------------|
 | L'utilisateur est administrateur de son poste « pour installer ses logiciels » | Utilisateur **standard** ; les logiciels arrivent par WinGet/Intune/GPO |
-| Un seul compte pour la messagerie et l'administration | Deux comptes : `sguillard` (usage courant) et `adm.sguillard` (administration des postes) |
+| Un seul compte pour la messagerie et l'administration | Deux comptes : `stagiaire` (usage courant) et `adm.stagiaire` (administration des postes) |
 | Le même mot de passe d'administrateur local sur tous les postes | **Windows LAPS** : un mot de passe unique et changeant par poste (chapitre 11) |
 | Les admins du domaine ouvrent des sessions sur les postes | Modèle en *tiers* : les comptes T0 ne touchent jamais un poste de travail |
 

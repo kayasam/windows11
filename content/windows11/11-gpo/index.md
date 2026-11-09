@@ -133,7 +133,7 @@ Sur le lab, le lecteur `P:` est une **préférence** (*Configuration utilisateur
 
 ![w11-11-lecteur-p-gpo](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
 
-*Session `FOURNIL\sguillard` sur `PC01` : « Commun (P:) » monté par GPO. Le cadenas sur `C:` rappelle que BitLocker est actif.*
+*Session `FOURNIL\stagiaire` sur `PC01` : « Commun (P:) » monté par GPO. Le cadenas sur `C:` rappelle que BitLocker est actif.*
 
 ---
 
@@ -211,7 +211,7 @@ Les stratégies *Windows Update client policies* (chapitre 08) : une GPO par ann
 gpupdate /force
 gpresult /r                                      # résumé ordinateur + utilisateur
 gpresult /scope computer /r
-gpresult /user sguillard /scope user /r
+gpresult /user stagiaire /scope user /r
 gpresult /h C:\Temp\rsop.html                    # rapport complet, lisible
 Get-GPResultantSetOfPolicy -ReportType Html -Path C:\Temp\rsop.html
 ```

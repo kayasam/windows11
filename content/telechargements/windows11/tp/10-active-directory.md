@@ -52,7 +52,7 @@
 
 **C1.** Crée l'arborescence d'UO : `Fournil` › `Utilisateurs`, `Ordinateurs`, `Groupes`, `Admins`.
 
-**C2.** Crée `sguillard` (doit changer son mot de passe à la première connexion) et le compte d'administration des postes `adm.sguillard`.
+**C2.** Crée l'utilisateur standard `stagiaire` et le compte d'administration des postes `adm.stagiaire`, tous deux avec le mot de passe du lab `Fournil2026!`.
 
 **C3.** Crée les groupes globaux `G-Boulangerie` et `GG-Admins-Postes`, et peuple-les.
 
@@ -72,7 +72,7 @@
 
 **D5.** Qui est désormais administrateur local de `PC01` ? D'où vient ce changement ?
 
-**D6.** Ouvre une session `FOURNIL\sguillard` sur `PC01`. Que demande Windows ?
+**D6.** Ouvre une session `FOURNIL\stagiaire` sur `PC01`. Comment saisir le compte, et comment vérifier ensuite que la session est bien une session de domaine ?
 
 ---
 

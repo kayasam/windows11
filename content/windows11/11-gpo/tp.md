@@ -72,7 +72,7 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 
 **C4.** Restreins la GPO aux membres de `G-Boulangerie`. Quelle erreur classique faut-il éviter ?
 
-**C5.** Ouvre une session `FOURNIL\sguillard` sur `PC01`. Vérifie le lecteur `P:` et la restriction.
+**C5.** Ouvre une session `FOURNIL\stagiaire` sur `PC01`. Vérifie le lecteur `P:` et la restriction.
 
 **C6.** Crée un utilisateur `test.vendeur` dans `OU=Utilisateurs`, **hors** de `G-Boulangerie`. Que reçoit-il ?
 

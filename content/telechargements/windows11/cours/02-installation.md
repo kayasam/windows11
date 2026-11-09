@@ -210,7 +210,7 @@ L'OOBE demande une connexion Internet et un **compte Microsoft**. En lab et en e
 | **Local** | `PC01\admin` | Base SAM du poste | Lab, poste isolé, compte de secours |
 | **Compte Microsoft** (MSA) | `prenom@outlook.fr` | Cloud Microsoft (grand public) | Particuliers : synchronisation, OneDrive perso, Store |
 | **Compte professionnel** (Entra ID) | `prenom@fournil.fr` | **Microsoft Entra ID** (ex-Azure AD) | Entreprises M365 : Intune, Autopilot, OneDrive pro, SSO |
-| **Compte de domaine** (AD DS) | `FOURNIL\sguillard` | Active Directory sur site | Entreprises avec contrôleurs de domaine (chapitre 10) |
+| **Compte de domaine** (AD DS) | `FOURNIL\stagiaire` | Active Directory sur site | Entreprises avec contrôleurs de domaine (chapitre 10) |
 
 Un poste peut être, au choix ou en combinaison :
 

@@ -13,7 +13,7 @@ title: "17. Environnement utilisateur et Microsoft 365"
 > **Commandes à connaître :** `Get-CimInstance Win32_UserProfile`, `New-SmbShare`, `Get-SmbShareAccess`, `icacls`, `winget install Microsoft.Office`
 
 > [!INFO] Fil rouge — Fournil
-> `sguillard` reçoit `PC02` : profil propre, lecteur `P:` (chapitre 11), données migrées (chapitre 16), OneDrive et Teams prêts, fiche de remise signée.
+> `stagiaire` reçoit `PC02` : profil propre, lecteur `P:` (chapitre 11), données migrées (chapitre 16), OneDrive et Teams prêts, fiche de remise signée.
 
 > [!NOTE] Lab sans tenant Microsoft 365
 > Le lab n'a pas de tenant Microsoft 365. Tout ce qui est **côté poste** (installation, stratégies, fichiers de configuration) est pratiqué ; ce qui exige un compte professionnel (synchronisation réelle, réunions Teams) est présenté.
@@ -37,7 +37,7 @@ LocalPath               SID                                             Loaded R
 C:\Users\employe1       S-1-5-21-2996719152-1343562269-1905685070-1002   False             False
 C:\Users\admin          S-1-5-21-2996719152-1343562269-1905685070-1000   False             False
 C:\Users\Administrateur S-1-5-21-1698369327-3900126831-4215708287-500     True             False
-C:\Users\sguillard      S-1-5-21-1698369327-3900126831-4215708287-1101    True             False
+C:\Users\stagiaire      S-1-5-21-1698369327-3900126831-4215708287-1101    True             False
 ```
 
 Les deux familles de SID se voient : `…-1905685070-xxxx` = comptes **locaux** de `PC01`, `…-4215708287-xxxx` = comptes du **domaine** FOURNIL.
@@ -61,7 +61,7 @@ Les deux familles de SID se voient : `…-1905685070-xxxx` = comptes **locaux** 
 | Disque plein de vieux profils | **Paramètres système avancés → Profils des utilisateurs → Supprimer**, ou GPO *Supprimer les profils utilisateur plus anciens qu'un nombre spécifié de jours* |
 
 > [!WARNING] Ne jamais supprimer un profil en effaçant le dossier
-> Effacer `C:\Users\sguillard` à la main laisse la clé `ProfileList` : la prochaine connexion produit un **profil temporaire**. Utiliser `sysdm.cpl` → Profils des utilisateurs, ou :
+> Effacer `C:\Users\stagiaire` à la main laisse la clé `ProfileList` : la prochaine connexion produit un **profil temporaire**. Utiliser `sysdm.cpl` → Profils des utilisateurs, ou :
 > ```powershell
 > Get-CimInstance Win32_UserProfile | Where-Object LocalPath -eq "C:\Users\employe1" | Remove-CimInstance
 > ```

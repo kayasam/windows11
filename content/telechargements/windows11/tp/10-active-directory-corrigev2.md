@@ -90,7 +90,7 @@
 > ```powershell
 > Install-ADDSForest -DomainName "ad.fournil.lab" -DomainNetbiosName "FOURNIL" `
 >     -DomainMode "Win2025" -ForestMode "Win2025" -InstallDns:$true `
->     -SafeModeAdministratorPassword (ConvertTo-SecureString "Fournil2026!DSRM" -AsPlainText -Force) -Force
+>     -SafeModeAdministratorPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Force
 > ```
 > Le serveur **redémarre seul**. Pendant le premier démarrage (« Application des paramètres… »), il crée la zone DNS, les enregistrements SRV, le pool de RID et active ADWS.
 > **Ne jamais couper la VM à ce moment.** Vécu lors de la construction du lab : un `Restart-VM -Force` (coupure brutale) pendant cette phase a donné un DC inutilisable — zone `ad.fournil.lab` absente, ADWS *désactivé*, erreurs SAM 16642. Il a fallu réinstaller le serveur.
@@ -151,16 +151,16 @@
 > }
 > ```
 
-**C2.** Crée `sguillard` (doit changer son mot de passe à la première connexion) et le compte d'administration des postes `adm.sguillard`.
+**C2.** Crée l'utilisateur standard `stagiaire` et le compte d'administration des postes `adm.stagiaire`, tous deux avec le mot de passe du lab `Fournil2026!`.
 
 > [!success]- Afficher la correction — C2
 > ```powershell
-> New-ADUser -Name "Samuel Guillard" -SamAccountName sguillard -UserPrincipalName sguillard@ad.fournil.lab `
+> New-ADUser -Name "Stagiaire Fournil" -SamAccountName stagiaire -UserPrincipalName stagiaire@ad.fournil.lab `
 >     -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
->     -AccountPassword (ConvertTo-SecureString "P@ssw0rd2026!" -AsPlainText -Force) -ChangePasswordAtLogon $true -Enabled $true
-> New-ADUser -Name "Admin Postes Samuel" -SamAccountName adm.sguillard -UserPrincipalName adm.sguillard@ad.fournil.lab `
+>     -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Enabled $true
+> New-ADUser -Name "Admin Postes Stagiaire" -SamAccountName adm.stagiaire -UserPrincipalName adm.stagiaire@ad.fournil.lab `
 >     -Path "OU=Admins,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
->     -AccountPassword (ConvertTo-SecureString "P@ssw0rd2026!" -AsPlainText -Force) -Enabled $true
+>     -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Enabled $true
 > ```
 
 **C3.** Crée les groupes globaux `G-Boulangerie` et `GG-Admins-Postes`, et peuple-les.
@@ -169,9 +169,9 @@
 > ```powershell
 > New-ADGroup -Name "G-Boulangerie"    -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > New-ADGroup -Name "GG-Admins-Postes" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
-> Add-ADGroupMember G-Boulangerie -Members sguillard
-> Add-ADGroupMember GG-Admins-Postes -Members adm.sguillard
-> Get-ADUser sguillard -Properties MemberOf | Select-Object SamAccountName, MemberOf
+> Add-ADGroupMember G-Boulangerie -Members stagiaire
+> Add-ADGroupMember GG-Admins-Postes -Members adm.stagiaire
+> Get-ADUser stagiaire -Properties MemberOf | Select-Object SamAccountName, MemberOf
 > ```
 > `MemberOf : {CN=G-Boulangerie,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab}`
 
@@ -256,10 +256,19 @@
 > ```
 > La jonction ajoute **automatiquement** le groupe *Admins du domaine* aux Administrateurs locaux. Pratique, mais contraire au modèle en tiers : au chapitre 11, une GPO y ajoutera `GG-Admins-Postes` à la place, et LAPS gérera le mot de passe de l'admin local.
 
-**D6.** Ouvre une session `FOURNIL\sguillard` sur `PC01`. Que demande Windows ?
+**D6.** Ouvre une session `FOURNIL\stagiaire` sur `PC01`. Comment saisir le compte, et comment vérifier ensuite que la session est bien une session de domaine ?
 
 > [!success]- Afficher la correction — D6
-> Écran de connexion → **Autre utilisateur** → `FOURNIL\sguillard` (ou `sguillard@ad.fournil.lab`). Windows exige un **nouveau mot de passe** (`ChangePasswordAtLogon`), conforme à la stratégie du domaine (*Default Domain Policy* : 7 caractères, complexité). Puis création du profil `C:\Users\sguillard`.
+> Écran de connexion → **Autre utilisateur** → `FOURNIL\stagiaire` (ou `stagiaire@ad.fournil.lab`), mot de passe `Fournil2026!`. Sous le champ, Windows affiche « Se connecter à : FOURNIL » : c'est le domaine qui authentifie. À la première ouverture, Windows crée le profil `C:\Users\stagiaire`.
+>
+> Vérifier que c'est bien une session de domaine :
+> ```powershell
+> whoami                 # fournil\stagiaire
+> echo $env:LOGONSERVER  # \\SRV01 : le DC qui a validé la connexion
+> whoami /upn            # stagiaire@ad.fournil.lab
+> ```
+>
+> > En production, on crée les comptes avec `-ChangePasswordAtLogon $true` : Windows exigerait alors un nouveau mot de passe à cette première ouverture. Dans le lab, on garde `Fournil2026!` pour tous les comptes afin d'éviter les blocages.
 
 ---
 

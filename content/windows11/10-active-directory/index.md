@@ -271,33 +271,32 @@ New-ADOrganizationalUnit -Name "Ordinateurs" -Path "OU=Fournil,DC=ad,DC=fournil,
 New-ADOrganizationalUnit -Name "Groupes" -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
 
 # Créer un utilisateur dans l'UO Utilisateurs
-New-ADUser -Name "Samuel Guillard" `
-    -SamAccountName "sguillard" `
-    -UserPrincipalName "sguillard@ad.fournil.lab" `
+New-ADUser -Name "Stagiaire Fournil" `
+    -SamAccountName "stagiaire" `
+    -UserPrincipalName "stagiaire@ad.fournil.lab" `
     -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
-    -AccountPassword (ConvertTo-SecureString "P@ssw0rd2025!" -AsPlainText -Force) `
-    -ChangePasswordAtLogon $true `
+    -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) `
     -Enabled $true
 
 # Créer un groupe de sécurité (dans l'UO Groupes) et y ajouter l'utilisateur
 New-ADGroup -Name "G-Boulangerie" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
-Add-ADGroupMember -Identity "G-Boulangerie" -Members "sguillard"
+Add-ADGroupMember -Identity "G-Boulangerie" -Members "stagiaire"
 ```
 
 ```powershell
 # Un compte d'administration des postes, séparé du compte utilisateur (moindre privilège, chap. 09/11)
 New-ADOrganizationalUnit -Name "Admins" -Path "OU=Fournil,DC=ad,DC=fournil,DC=lab"
-New-ADUser -Name "Admin Postes Samuel" -SamAccountName "adm.sguillard" `
-    -UserPrincipalName "adm.sguillard@ad.fournil.lab" `
+New-ADUser -Name "Admin Postes Stagiaire" -SamAccountName "adm.stagiaire" `
+    -UserPrincipalName "adm.stagiaire@ad.fournil.lab" `
     -Path "OU=Admins,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
-    -AccountPassword (ConvertTo-SecureString "P@ssw0rd2026!" -AsPlainText -Force) -Enabled $true
+    -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Enabled $true
 New-ADGroup -Name "GG-Admins-Postes" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
-Add-ADGroupMember -Identity "GG-Admins-Postes" -Members "adm.sguillard"
+Add-ADGroupMember -Identity "GG-Admins-Postes" -Members "adm.stagiaire"
 ```
 
 ```powershell
 # Vérifications
-Get-ADUser -Identity "sguillard" -Properties MemberOf
+Get-ADUser -Identity "stagiaire" -Properties MemberOf
 Get-ADGroupMember -Identity "G-Boulangerie"
 ```
 
@@ -315,8 +314,8 @@ Get-ADComputer PC01 | Move-ADObject -TargetPath "OU=Ordinateurs,OU=Fournil,DC=ad
 
 On peut aussi choisir l'UO au moment de la jonction : `Add-Computer ... -OUPath "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"`.
 
-> [!TIP] `-ChangePasswordAtLogon` plutôt qu'un mot de passe permanent connu de l'admin
-> Forcer le changement de mot de passe à la première connexion évite qu'un compte reste durablement avec un mot de passe défini (et donc connu) par l'administrateur qui l'a créé.
+> [!TIP] En production : `-ChangePasswordAtLogon $true`
+> Forcer le changement de mot de passe à la première connexion évite qu'un compte reste durablement avec un mot de passe défini (et donc connu) par l'administrateur qui l'a créé. **Dans le lab, on ne l'active pas** : tous les comptes gardent `Fournil2026!`, ce qui évite les blocages pendant la formation.
 
 ---
 
@@ -378,7 +377,7 @@ Jonction d'un poste (PC01)
 
 Structure AD
   New-ADOrganizationalUnit → New-ADUser → New-ADGroup → Add-ADGroupMember
-  -ChangePasswordAtLogon $true pour les comptes nouvellement créés
+  -ChangePasswordAtLogon $true pour les comptes créés en production (pas dans le lab)
 
 DHCP (en dernier, une fois le domaine et les UO en place)
   Add-DhcpServerInDC (autorisation obligatoire sur un DC) → Add-DhcpServerv4Scope

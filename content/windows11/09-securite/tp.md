@@ -26,7 +26,7 @@ title: "TP 09. Sécuriser un poste Windows 11"
 
 ## Prérequis
 
-- `PC01` (TP 03), comptes `admin` (administrateur) et `employe1` (standard, mot de passe `P@ssw0rd2026!`)
+- `PC01` (TP 03), comptes `admin` (administrateur) et `employe1` (standard, mot de passe `Fournil2026!`)
 - **Aucune ISO montée** dans la VM (voir partie D)
 
 ---

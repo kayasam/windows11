@@ -55,14 +55,14 @@ title: "TP 12. Administration et assistance à distance — Correction"
 > ```
 > À l'échelle : GPO *Composants Windows → Services Bureau à distance → Hôte de la session… → Connexions → Autoriser les utilisateurs à se connecter à distance*.
 
-**A3.** Connecte-toi à `PC02` avec `mstsc`. Qui a le droit de s'y connecter ? Comment autoriser `sguillard` ?
+**A3.** Connecte-toi à `PC02` avec `mstsc`. Qui a le droit de s'y connecter ? Comment autoriser `stagiaire` ?
 
 > [!success]- Afficher la correction — A3
 > `mstsc /v:PC02`. Peuvent se connecter : le groupe local **Administrateurs** et **Utilisateurs du Bureau à distance**.
 > ```powershell
-> Invoke-Command -ComputerName PC02 -ScriptBlock { Add-LocalGroupMember -SID S-1-5-32-555 -Member "FOURNIL\sguillard" }
+> Invoke-Command -ComputerName PC02 -ScriptBlock { Add-LocalGroupMember -SID S-1-5-32-555 -Member "FOURNIL\stagiaire" }
 > ```
-> (`S-1-5-32-555` = *Utilisateurs du Bureau à distance*, quelle que soit la langue.) Le poste n'accepte qu'**une** session : si `sguillard` est connecté sur la console, il est déconnecté.
+> (`S-1-5-32-555` = *Utilisateurs du Bureau à distance*, quelle que soit la langue.) Le poste n'accepte qu'**une** session : si `stagiaire` est connecté sur la console, il est déconnecté.
 
 **A4.** Quel client utiliserais-tu pour un PC cloud Windows 365 ?
 

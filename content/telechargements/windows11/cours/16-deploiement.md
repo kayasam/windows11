@@ -7,7 +7,7 @@
 > **Fichiers à connaître :** `install.wim` (remplacé), `autounattend.xml`, `MigApp.xml`/`MigDocs.xml`/`MigUser.xml`
 
 > [!INFO] Fil rouge — Fournil
-> `PC02` est déployé depuis l'ISO `MASTER-Deploiement.iso`, puis joint au domaine ; les données de `sguillard` sont migrées depuis `PC01` avec USMT.
+> `PC02` est déployé depuis l'ISO `MASTER-Deploiement.iso`, puis joint au domaine ; les données de `stagiaire` sont migrées depuis `PC01` avec USMT.
 
 ---
 
@@ -218,15 +218,15 @@ scanstate.exe ──── USMT.MIG ────► \\SRV01\USMT$\Store\PC01 ─
 ```
 
 ```cmd
-:: Sur PC01 (administrateur) : capturer le profil de sguillard uniquement
+:: Sur PC01 (administrateur) : capturer le profil de stagiaire uniquement
 \\SRV01\USMT$\USMT\scanstate.exe \\SRV01\USMT$\Store\PC01 ^
     /i:\\SRV01\USMT$\USMT\MigDocs.xml /i:\\SRV01\USMT$\USMT\MigApp.xml ^
-    /ue:*\* /ui:FOURNIL\sguillard /o /c /l:\\SRV01\USMT$\scan-PC01.log
+    /ue:*\* /ui:FOURNIL\stagiaire /o /c /l:\\SRV01\USMT$\scan-PC01.log
 
 :: Sur PC02 joint au domaine : restaurer
 \\SRV01\USMT$\USMT\loadstate.exe \\SRV01\USMT$\Store\PC01 ^
     /i:\\SRV01\USMT$\USMT\MigDocs.xml /i:\\SRV01\USMT$\USMT\MigApp.xml ^
-    /ue:*\* /ui:FOURNIL\sguillard /c /l:\\SRV01\USMT$\load-PC02.log
+    /ue:*\* /ui:FOURNIL\stagiaire /c /l:\\SRV01\USMT$\load-PC02.log
 ```
 
 | Option | Rôle |
@@ -240,7 +240,7 @@ scanstate.exe ──── USMT.MIG ────► \\SRV01\USMT$\Store\PC01 ─
 | `/genconfig:config.xml` puis `/config:` | Désactiver des composants précis |
 
 > [!WARNING] Testé sur le lab : les XML fournis ratissent large
-> Pour **deux** fichiers de test dans le profil de `sguillard`, `scanstate` a produit un magasin de **6,9 Go** avec `MigDocs.xml`, **5,8 Go** avec `MigUser.xml`. `/listfiles` a montré pourquoi : `MigDocs.xml` embarque les « documents » de tout le disque (dont `C:\WinPE_amd64`, une ISO de 567 Mo…), et USMT capture aussi par défaut des éléments système — sons de `C:\Windows\Media`, définitions Defender, et **le cache de l'Optimisation de la distribution** (plusieurs Go de mises à jour, dans le profil `NetworkService`).
+> Pour **deux** fichiers de test dans le profil de `stagiaire`, `scanstate` a produit un magasin de **6,9 Go** avec `MigDocs.xml`, **5,8 Go** avec `MigUser.xml`. `/listfiles` a montré pourquoi : `MigDocs.xml` embarque les « documents » de tout le disque (dont `C:\WinPE_amd64`, une ISO de 567 Mo…), et USMT capture aussi par défaut des éléments système — sons de `C:\Windows\Media`, définitions Defender, et **le cache de l'Optimisation de la distribution** (plusieurs Go de mises à jour, dans le profil `NetworkService`).
 > Avant une vraie migration : lancer `scanstate` avec `/listfiles`, vider le cache de distribution (`Delete-DeliveryOptimizationCache -Force`), et exclure ce qui ne doit pas partir (`/genconfig` + `/config`, ou un XML personnalisé).
 
 ### USMT ou OneDrive ?

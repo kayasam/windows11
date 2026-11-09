@@ -29,7 +29,7 @@
 
 **A2.** Active le Bureau à distance sur `PC02` **à distance**, sans t'y connecter graphiquement. Quelle méthode utilises-tu ?
 
-**A3.** Connecte-toi à `PC02` avec `mstsc`. Qui a le droit de s'y connecter ? Comment autoriser `sguillard` ?
+**A3.** Connecte-toi à `PC02` avec `mstsc`. Qui a le droit de s'y connecter ? Comment autoriser `stagiaire` ?
 
 **A4.** Quel client utiliserais-tu pour un PC cloud Windows 365 ?
 

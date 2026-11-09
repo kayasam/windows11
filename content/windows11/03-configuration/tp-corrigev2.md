@@ -84,11 +84,11 @@ title: "TP 03. Configuration et personnalisation — Correction"
 
 ## Partie C — Comptes locaux (20 min)
 
-**C1.** Crée, en PowerShell, l'utilisateur standard `employe1` (mot de passe `P@ssw0rd2026!`, nom complet « Employé 1 ») et ajoute-le au groupe **Utilisateurs**.
+**C1.** Crée, en PowerShell, l'utilisateur standard `employe1` (mot de passe `Fournil2026!`, nom complet « Employé 1 ») et ajoute-le au groupe **Utilisateurs**.
 
 > [!success]- Afficher la correction — C1
 > ```powershell
-> $mdp = ConvertTo-SecureString "P@ssw0rd2026!" -AsPlainText -Force
+> $mdp = ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force
 > New-LocalUser -Name "employe1" -Password $mdp -FullName "Employé 1" -Description "Poste Fournil"
 > Add-LocalGroupMember -Group "Utilisateurs" -Member "employe1"
 > ```

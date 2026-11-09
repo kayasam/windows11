@@ -1,13 +1,13 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "dc2d61bd4968aa38ef077c5d66cb3dfed0f97f105384b9d5df7982ac84401bbc",
+  "pdfSha256": "8ac53373c1b0130bb17d6e511cff0d17d47cf1add2dc281500b24b3c6de46a67",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
       "title": "00. Infrastructure de référence (fil rouge)",
       "href": "https://cours.kaya.ovh/windows11/windows11/00-infrastructure/",
       "download": "telechargements/windows11/cours/00-infrastructure.md",
-      "sourceSha256": "c3ca24e04ef9f1189c4e6295093df5356a7d76efacdc034edf6c41c0926cf9c8",
+      "sourceSha256": "130412cbf4fd7f951ea40c737406837d7dcfa3929d0b2d3cc9324263418a3971",
       "startPage": 2
     },
     {
@@ -23,7 +23,7 @@
       "title": "02. Installation, mise à niveau et comptes",
       "href": "https://cours.kaya.ovh/windows11/windows11/02-installation/",
       "download": "telechargements/windows11/cours/02-installation.md",
-      "sourceSha256": "c42002cb31bbabd1cea7acb05f43ebe321687c4b59bceac12c8e578122f0cbd5",
+      "sourceSha256": "55d421934b062b8a14440edd128f5af9ff1d8848ac1b41eecf9d1e7be149dfd4",
       "startPage": 24
     },
     {
@@ -31,7 +31,7 @@
       "title": "03. Configuration et personnalisation",
       "href": "https://cours.kaya.ovh/windows11/windows11/03-configuration/",
       "download": "telechargements/windows11/cours/03-configuration.md",
-      "sourceSha256": "1d721f12757408a7e6bd9912f92724d9760b1974ac0204bc499fd169b039d194",
+      "sourceSha256": "0dbc34b300756681c9c86953514a168212b94b6b5255c232e26e30a53663cf1a",
       "startPage": 36
     },
     {
@@ -79,7 +79,7 @@
       "title": "09. Sécuriser un poste Windows 11",
       "href": "https://cours.kaya.ovh/windows11/windows11/09-securite/",
       "download": "telechargements/windows11/cours/09-securite.md",
-      "sourceSha256": "2ba78105d9b504ba920a515fb9dac5fbed4bc7402f75e631d2460ef335ade4f4",
+      "sourceSha256": "b5861a9667b23f64d9bd0023bb5a4f7a7aebd79e0de77c29b4c0fd35ce242941",
       "startPage": 89
     },
     {
@@ -87,7 +87,7 @@
       "title": "10. Active Directory et services réseau",
       "href": "https://cours.kaya.ovh/windows11/windows11/10-active-directory/",
       "download": "telechargements/windows11/cours/10-active-directory.md",
-      "sourceSha256": "edae5f950ed1b89f53dce7a005e033e79dee40c1b46439b7278edc33f4abcfc0",
+      "sourceSha256": "88bf1fd5218d1aa405bae4cfe4f6c4549a9597f783764d8508a603883c82bf18",
       "startPage": 111
     },
     {
@@ -95,7 +95,7 @@
       "title": "11. Stratégies de groupe et gestion centralisée",
       "href": "https://cours.kaya.ovh/windows11/windows11/11-gpo/",
       "download": "telechargements/windows11/cours/11-gpo.md",
-      "sourceSha256": "b3b229f99b8d10a547413c86d46c60f3b7192b10977d3908ae821765628cd9b4",
+      "sourceSha256": "36a2298594aa4599a647eb0eb85ac1aa5f6f11f03e14ac0621267c39370ce944",
       "startPage": 120
     },
     {
@@ -135,7 +135,7 @@
       "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/",
       "download": "telechargements/windows11/cours/16-deploiement.md",
-      "sourceSha256": "f0ad604eb13893723f494fad01528cc7c310eba90bb72fac6433f59d6cf1d6fc",
+      "sourceSha256": "f580eaf44ef866a144b533bcc9ddbd066a0e689253268639c61431c7c8820713",
       "startPage": 173
     },
     {
@@ -143,7 +143,7 @@
       "title": "17. Environnement utilisateur et Microsoft 365",
       "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
       "download": "telechargements/windows11/cours/17-environnement-utilisateur.md",
-      "sourceSha256": "f8c1dcacc415d7e0884257227f97fd9006b0e464837928206320b49db936704a",
+      "sourceSha256": "5e232591792b9bf7719dbfd5cea1afbd042f6a7b1850aba6dd5fcda98f3db5c9",
       "startPage": 184
     },
     {

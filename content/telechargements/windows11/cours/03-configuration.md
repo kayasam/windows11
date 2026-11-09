@@ -163,7 +163,7 @@ Paramètres → Comptes → Autres utilisateurs → Ajouter un autre utilisateur
 **Via PowerShell** (méthode automatisable) :
 ```powershell
 # Créer un compte standard
-$mdp = ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force
+$mdp = ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force
 New-LocalUser -Name "employe1" -Password $mdp -FullName "Employé 1" -Description "Poste Fournil"
 
 # Ajouter au groupe Utilisateurs (standard)

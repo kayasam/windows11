@@ -20,7 +20,7 @@ title: "TP 17. Environnement utilisateur et Microsoft 365 — Correction"
 - Inspecter et dépanner les profils utilisateurs
 - Publier un dossier partagé avec les bonnes permissions
 - Préparer l'installation de Microsoft 365 Apps et la configuration de OneDrive par stratégie
-- Remettre `PC02` à `sguillard` avec une check-list et des conseils de sécurité
+- Remettre `PC02` à `stagiaire` avec une check-list et des conseils de sécurité
 
 ---
 
@@ -44,7 +44,7 @@ title: "TP 17. Environnement utilisateur et Microsoft 365 — Correction"
 > C:\Users\employe1       S-1-5-21-2996719152-1343562269-1905685070-1002   False
 > C:\Users\admin          S-1-5-21-2996719152-1343562269-1905685070-1000   False
 > C:\Users\Administrateur S-1-5-21-1698369327-3900126831-4215708287-500     True
-> C:\Users\sguillard      S-1-5-21-1698369327-3900126831-4215708287-1101    True
+> C:\Users\stagiaire      S-1-5-21-1698369327-3900126831-4215708287-1101    True
 > ```
 > La partie centrale du SID identifie l'**autorité** : `…1905685070` = la machine `PC01` (comptes locaux), `…4215708287` = le domaine FOURNIL. `-500` = Administrateur (du domaine, ici), `-1101` = un compte créé dans AD.
 
@@ -186,7 +186,7 @@ title: "TP 17. Environnement utilisateur et Microsoft 365 — Correction"
 > ```
 > Sur un PC02 issu de `MASTER.wim` : `PreventDeviceEncryption` étant capturé dans l'image, BitLocker est **désactivé** → l'activer (TP 09) et sauvegarder la clé dans AD (TP 11) **avant** la remise.
 
-**D2.** Rédige les 5 conseils de sécurité que tu donnes oralement à `sguillard` le jour de la remise.
+**D2.** Rédige les 5 conseils de sécurité que tu donnes oralement à `stagiaire` le jour de la remise.
 
 > [!success]- Afficher la correction — D2
 > 1. `Win + L` à chaque fois que tu quittes ton poste.
@@ -195,7 +195,7 @@ title: "TP 17. Environnement utilisateur et Microsoft 365 — Correction"
 > 4. Un e-mail qui presse, menace ou promet : ne clique pas, transfère-le au support.
 > 5. Tes fichiers de travail vont dans OneDrive ou `P:`, jamais sur une clé USB ou une messagerie personnelle.
 
-**D3.** `sguillard` appelle le support : il ne retrouve pas son fichier. Quels outils proposes-tu pour que le technicien voie son écran ?
+**D3.** `stagiaire` appelle le support : il ne retrouve pas son fichier. Quels outils proposes-tu pour que le technicien voie son écran ?
 
 > [!success]- Afficher la correction — D3
 > - **Assistance rapide** (intégrée, code à 6 chiffres, compte Microsoft/pro requis côté technicien) ;

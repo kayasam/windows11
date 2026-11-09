@@ -257,7 +257,7 @@ title: "TP 02. Installation, mise à niveau et comptes — Correction"
 > | Local | `PC01\admin` | Base **SAM** du poste | Lab, poste isolé, compte de secours |
 > | Microsoft | `prenom@outlook.fr` | Cloud Microsoft grand public | Particulier : OneDrive perso, Store, synchronisation |
 > | Professionnel | `prenom@fournil.fr` | **Microsoft Entra ID** | Entreprise M365 : Intune, Autopilot, SSO |
-> | Domaine | `FOURNIL\sguillard` | **Active Directory** (contrôleurs de domaine) | Entreprise sur site : GPO, Kerberos (chap. 10) |
+> | Domaine | `FOURNIL\stagiaire` | **Active Directory** (contrôleurs de domaine) | Entreprise sur site : GPO, Kerberos (chap. 10) |
 
 **D2.** Pourquoi dit-on que le fichier de réponse est la seule méthode **pérenne** pour obtenir un compte local à l'installation ?
 

@@ -17,7 +17,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 - Construire une ISO de déploiement **zéro clic** à partir de `MASTER.wim`
 - Déployer `PC02`, diagnostiquer un échec de Setup, vérifier le résultat
-- Joindre `PC02` au domaine et y migrer les données de `sguillard` avec USMT
+- Joindre `PC02` au domaine et y migrer les données de `stagiaire` avec USMT
 - Choisir une méthode de déploiement selon le contexte (WDS, MDT, ConfigMgr, Autopilot)
 
 ---
@@ -60,11 +60,11 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 **C1.** Joins `PC02` au domaine dans `OU=Ordinateurs,OU=Fournil`, sous le nom `PC02`.
 
-**C2.** Sur `PC01`, capture le profil de `sguillard` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
+**C2.** Sur `PC01`, capture le profil de `stagiaire` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
 
 **C3.** Le magasin fait plusieurs gigaoctets pour quelques documents. Pourquoi ? Que faire ?
 
-**C4.** Sur `PC02`, restaure avec `loadstate`. Ouvre une session `sguillard` et vérifie ses documents.
+**C4.** Sur `PC02`, restaure avec `loadstate`. Ouvre une session `stagiaire` et vérifie ses documents.
 
 ---
 

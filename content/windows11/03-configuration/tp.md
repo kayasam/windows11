@@ -55,7 +55,7 @@ title: "TP 03. Configuration et personnalisation"
 
 ## Partie C — Comptes locaux (20 min)
 
-**C1.** Crée, en PowerShell, l'utilisateur standard `employe1` (mot de passe `P@ssw0rd2026!`, nom complet « Employé 1 ») et ajoute-le au groupe **Utilisateurs**.
+**C1.** Crée, en PowerShell, l'utilisateur standard `employe1` (mot de passe `Fournil2026!`, nom complet « Employé 1 ») et ajoute-le au groupe **Utilisateurs**.
 
 **C2.** Affiche son SID. Quelle partie du SID identifie la machine, et laquelle identifie le compte ?
 

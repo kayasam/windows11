@@ -203,14 +203,14 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 > ```
 > **Erreur classique** : supprimer *Utilisateurs authentifiés* de l'onglet « Filtrage de sécurité » de GPMC. Depuis MS16-072, le poste lit la GPO avec son **compte ordinateur** ; sans droit de lecture, la GPO n'est plus appliquée à personne. Il faut lui laisser **Lire** (onglet **Délégation** → Avancé).
 
-**C5.** Ouvre une session `FOURNIL\sguillard` sur `PC01`. Vérifie le lecteur `P:` et la restriction.
+**C5.** Ouvre une session `FOURNIL\stagiaire` sur `PC01`. Vérifie le lecteur `P:` et la restriction.
 
 > [!success]- Afficher la correction — C5
 > ![w11-11-lecteur-p-gpo](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
 >
 > **Commun (P:)** apparaît dans *Emplacements réseau*. `Win + I` (Paramètres) ne s'ouvre pas : message « *Cette opération a été annulée en raison des restrictions en vigueur sur cet ordinateur* ».
 > ```powershell
-> gpresult /user sguillard /scope user /r
+> gpresult /user stagiaire /scope user /r
 > ```
 > ```
 > Objets Stratégie de groupe appliqués

@@ -11,7 +11,7 @@
 - Inspecter et dépanner les profils utilisateurs
 - Publier un dossier partagé avec les bonnes permissions
 - Préparer l'installation de Microsoft 365 Apps et la configuration de OneDrive par stratégie
-- Remettre `PC02` à `sguillard` avec une check-list et des conseils de sécurité
+- Remettre `PC02` à `stagiaire` avec une check-list et des conseils de sécurité
 
 ---
 
@@ -62,9 +62,9 @@
 
 **D1.** Exécute la check-list technique de remise sur `PC02` (domaine, mises à jour, BitLocker, Defender, LAPS, lecteurs, numéro de série).
 
-**D2.** Rédige les 5 conseils de sécurité que tu donnes oralement à `sguillard` le jour de la remise.
+**D2.** Rédige les 5 conseils de sécurité que tu donnes oralement à `stagiaire` le jour de la remise.
 
-**D3.** `sguillard` appelle le support : il ne retrouve pas son fichier. Quels outils proposes-tu pour que le technicien voie son écran ?
+**D3.** `stagiaire` appelle le support : il ne retrouve pas son fichier. Quels outils proposes-tu pour que le technicien voie son écran ?
 
 ---
 
