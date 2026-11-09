@@ -1,10 +1,10 @@
-# TP 10 — Intégration Active Directory — Correction
+# TP 10. Intégration Active Directory — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h
 
-> Chapitres associés : [10. Intégration Active Directory](https://kayasam.github.io/windows11/windows11/10-active-directory/)
+> Chapitres associés : [10. Intégration Active Directory](https://cours.kaya.ovh/windows11/windows11/10-active-directory/)
 
 ---
 
@@ -292,4 +292,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/10-active-directory/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp)

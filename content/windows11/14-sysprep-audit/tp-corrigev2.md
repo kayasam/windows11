@@ -1,17 +1,17 @@
 ---
-title: "TP 14 — Poste de référence : mode audit et Sysprep — Correction"
+title: "TP 14. Poste de référence : mode audit et Sysprep — Correction"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/14-sysprep-audit"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/14-sysprep-audit/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/tp/14-sysprep-audit-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
-<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp">Énoncé</a><a class="exercise-correction" href="https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp-corrigev2" aria-current="page">Corrigé</a></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/14-sysprep-audit"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/14-sysprep-audit-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp-corrigev2" aria-current="page">Corrigé</a></nav>
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h
 
-> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/)
+> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
 
 ---
 
@@ -75,7 +75,7 @@ title: "TP 14 — Poste de référence : mode audit et Sysprep — Correction"
 > [!success]- Afficher la correction — B1
 > `Ctrl + Maj + F3`. La VM redémarre et ouvre une session **Administrateur** (le compte intégré, RID 500), sans mot de passe, et la fenêtre *Outil de préparation système v.3.14* s'affiche :
 >
-> ![w11-14-mode-audit-sysprep](https://kayasam.github.io/windows11/assets/captures/w11-14-mode-audit-sysprep.png)
+> ![w11-14-mode-audit-sysprep](https://cours.kaya.ovh/windows11/assets/captures/w11-14-mode-audit-sysprep.png)
 >
 > Particularité constatée sur le lab : `net user Administrateur` indique **« Compte : actif Non »** — Windows ouvre quand même la session en mode audit. D'où l'impossibilité d'administrer `MASTER` à distance tant qu'on ne lui donne pas un mot de passe et qu'on ne l'active pas.
 
@@ -237,4 +237,4 @@ Explique et corrige.
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp)

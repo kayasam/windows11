@@ -1,17 +1,17 @@
 ---
-title: "TP 02 — Installation, mise à niveau et comptes — Correction"
+title: "TP 02. Installation, mise à niveau et comptes — Correction"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/02-installation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/02-installation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/02-installation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/tp/02-installation-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
-<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://kayasam.github.io/windows11/windows11/02-installation/tp">Énoncé</a><a class="exercise-correction" href="https://kayasam.github.io/windows11/windows11/02-installation/tp-corrigev2" aria-current="page">Corrigé</a></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/02-installation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/02-installation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/02-installation-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2" aria-current="page">Corrigé</a></nav>
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [02. Installation, mise à niveau et comptes](https://kayasam.github.io/windows11/windows11/02-installation/)
+> Chapitres associés : [02. Installation, mise à niveau et comptes](https://cours.kaya.ovh/windows11/windows11/02-installation/)
 
 ---
 
@@ -51,14 +51,14 @@ title: "TP 02 — Installation, mise à niveau et comptes — Correction"
 > | Compte | Microsoft / professionnel / local (si autorisé) |
 > | Confidentialité | Localisation, diagnostics, publicité… |
 >
-> ![w11-02-oobe-clavier](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-clavier.png)
+> ![w11-02-oobe-clavier](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-clavier.png)
 
 **A3.** À l'écran **« Il est temps de vous connecter à un réseau »**, que se passe-t-il si la VM n'a pas de réseau ? Et avec le réseau ?
 
 > [!success]- Afficher la correction — A3
 > - **Sans réseau** (testé sur 26300.9457) : l'OOBE **bloque**. Le bouton **Suivant** reste grisé, seule l'option « Installer le pilote » est proposée. Débrancher le réseau ne suffit plus à obtenir un compte local.
 >
-> ![w11-02-oobe-reseau-obligatoire](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
+> ![w11-02-oobe-reseau-obligatoire](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
 >
 > - **Avec réseau** : l'OOBE télécharge des mises à jour puis exige un compte **Microsoft** (personnel) ou **professionnel** (Entra ID).
 
@@ -77,7 +77,7 @@ title: "TP 02 — Installation, mise à niveau et comptes — Correction"
 > ```
 > Après le redémarrage, l'écran réseau affiche le lien **« Je n'ai pas Internet »**, qui mène directement à « Qui utilisera cet appareil ? » (compte local).
 >
-> ![w11-02-oobe-bypassnro-pas-internet](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
+> ![w11-02-oobe-bypassnro-pas-internet](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
 >
 > > [!WARNING] Clavier AZERTY dans l'invite de l'OOBE
 > > À ce stade le clavier est déjà en AZERTY : le `\` s'obtient avec `AltGr + 8`.
@@ -87,7 +87,7 @@ title: "TP 02 — Installation, mise à niveau et comptes — Correction"
 **A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 
 > [!success]- Afficher la correction — A5
-> ![w11-02-oobe-compte-local](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-compte-local.png)
+> ![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)
 >
 > Nom `admin`, mot de passe, puis **trois questions de sécurité** (obligatoires pour un compte local créé dans l'OOBE). Dans « Choisir les paramètres de confidentialité », passer **toutes** les options à **Non** (diagnostic facultatif, localisation, publicité ciblée, reconnaissance vocale en ligne…).
 
@@ -114,7 +114,7 @@ title: "TP 02 — Installation, mise à niveau et comptes — Correction"
 > OSDisplayVersion  : 26H2
 > OsBuildNumber     : 26300
 > ```
-> ![w11-02-parametres-informations-26h2](https://kayasam.github.io/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
+> ![w11-02-parametres-informations-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
 
 **B2.** Liste les partitions du disque. Dans quel ordre sont-elles ? Pourquoi la partition de récupération est-elle placée là ?
 
@@ -289,4 +289,4 @@ title: "TP 02 — Installation, mise à niveau et comptes — Correction"
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/02-installation/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/02-installation/tp)

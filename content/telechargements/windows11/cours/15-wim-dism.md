@@ -1,4 +1,4 @@
-# 15 — Images WIM et DISM
+# 15. Images WIM et DISM
 
 > [!NOTE] Objectif
 > Comprendre le format WIM, **capturer** l'image généralisée de `MASTER` (chapitre 14) avec DISM, la **maintenir hors ligne** (pilotes, mises à jour, applications, langues), et l'**appliquer** sur un disque vierge depuis Windows PE (`Dism /Apply-Image` + `bcdboot`).
@@ -188,7 +188,7 @@ exit
 powershell -NoProfile -Command "Get-Disk | Format-Table Number,FriendlyName,Size,PartitionStyle; Get-Volume | Format-Table DriveLetter,FileSystemLabel,Size"
 ```
 
-![w11-15-winpe-powershell-disques](https://kayasam.github.io/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
+![w11-15-winpe-powershell-disques](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
 
 *WinPE du chapitre 13 sur une VM vierge : PowerShell 5.1 disponible, disque 0 vierge (RAW, cible), disque d'images monté en **C:** — dans WinPE, les lettres ne sont jamais celles de Windows. Toujours vérifier avant `clean`.*
 
@@ -211,7 +211,7 @@ wpeutil reboot
 > [!NOTE] Rejoué de bout en bout sur le lab formateur (08/11/2026)
 > VM vierge `PC03` démarrée sur le WinPE du chapitre 13, script `deploie.cmd` : `diskpart` → `Dism /Apply-Image` (100 %) → `bcdboot` (« *Boot files successfully created* ») → copie d'un `unattend.xml` (passes specialize + oobeSystem, `ComputerName = PC03`) dans `W:\Windows\Panther` → `wpeutil reboot`. **Une minute plus tard, `PC03` était sur le bureau, session `Utilisateur`, image Fournil.** Un premier essai avait échoué faute de place sur l'hôte : prévoir **au moins 40 Go libres**.
 >
-> ![w11-15-winpe-apply-image](https://kayasam.github.io/windows11/assets/captures/w11-15-winpe-apply-image.png)
+> ![w11-15-winpe-apply-image](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-apply-image.png)
 
 > [!WARNING] Espace disque de l'hôte
 > Une VM Hyper-V dont le disque dynamique ne peut plus grandir passe en état **PausedCritical** (`Get-VM` → *State*) : elle est gelée, sans erreur visible dans la VM. Libérer de la place, puis `Resume-VM`. À surveiller pendant tout le jour 4 (WIM de 8 Go, ISO de 9 Go, copies…).

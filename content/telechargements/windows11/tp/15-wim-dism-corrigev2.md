@@ -1,10 +1,10 @@
-# TP 15 — Images WIM et DISM — Correction
+# TP 15. Images WIM et DISM — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h45
 
-> Chapitres associés : [15. Images WIM et DISM](https://kayasam.github.io/windows11/windows11/15-wim-dism/)
+> Chapitres associés : [15. Images WIM et DISM](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/)
 
 ---
 
@@ -160,7 +160,7 @@
 > ```cmd
 > powershell -NoProfile -Command "Get-Disk | Format-Table Number,FriendlyName,Size,PartitionStyle; Get-Volume | Format-Table DriveLetter,FileSystemLabel,Size"
 > ```
-> ![w11-15-winpe-powershell-disques](https://kayasam.github.io/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
+> ![w11-15-winpe-powershell-disques](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
 >
 > Disque **0** = cible (64 Go, RAW). Le disque d'images a reçu la lettre **C:** dans WinPE ! Le script `diskpart` commence par `select disk 0` puis `clean` : se tromper de numéro efface le mauvais disque. Toujours vérifier.
 
@@ -187,4 +187,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/15-wim-dism/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp)

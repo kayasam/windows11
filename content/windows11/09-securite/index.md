@@ -1,10 +1,10 @@
 ---
-title: "09 — Sécuriser un poste Windows 11"
+title: "09. Sécuriser un poste Windows 11"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/09-securite"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/09-securite/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/09-securite/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/cours/09-securite.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/09-securite"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/09-securite/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/09-securite/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/09-securite.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Appliquer le **moindre privilège** (comptes, groupes, élévation), configurer les protections natives de Windows 11 — UAC et *Administrator protection*, Microsoft Defender, Smart App Control, pare-feu, BitLocker, EFS —, restreindre l'exécution des applications (AppLocker / App Control for Business) et découvrir les stratégies de sécurité locales.
@@ -67,7 +67,7 @@ Activation : **Sécurité Windows → Protection du compte → Administrator pro
 
 ---
 ## Contrôle du compte utilisateur (UAC)
-![w11-07-securite](https://kayasam.github.io/windows11/assets/captures/w11-07-securite.png)
+![w11-07-securite](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite.png)
 
 Le **UAC** (User Account Control) empêche une application de s'exécuter avec des privilèges administrateur sans confirmation explicite de l'utilisateur. Il protège contre l'exécution silencieuse de code malveillant ou de modifications système non désirées.
 
@@ -92,7 +92,7 @@ Le **bureau sécurisé** (secure desktop) assombrit l'écran lors de l'invite UA
 ### Niveaux de notification UAC
 
 **Accès :** Panneau de configuration → Comptes d'utilisateurs → Modifier les paramètres de contrôle de compte d'utilisateur
-![w11-07-securite-1](https://kayasam.github.io/windows11/assets/captures/w11-07-securite-1.png)
+![w11-07-securite-1](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite-1.png)
 
 | Niveau | Comportement |
 |--------|--------------|
@@ -124,7 +124,7 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies
 > [!NOTE] Defender Antivirus ≠ Defender for Endpoint
 > **Defender Antivirus** est l'antivirus gratuit intégré. **Microsoft Defender for Endpoint** (licence M365 E5 ou Business Premium) est l'**EDR** : il collecte la télémétrie du poste, détecte les comportements suspects, permet d'isoler un poste à distance depuis une console cloud.
 
-![w11-07-securite-2](https://kayasam.github.io/windows11/assets/captures/w11-07-securite-2.png)
+![w11-07-securite-2](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite-2.png)
 
 ### Types de protection
 
@@ -212,7 +212,7 @@ Le changement de profil se fait via **Paramètres → Réseau et Internet**, sur
 
 **Interface graphique (Windows 11) :**
 Paramètres → Réseau et Internet → sélectionner la connexion (Wi-Fi ou Ethernet) → **Propriétés** → section "Profil réseau" → choisir **Public** ou **Privé**.
-![w11-07-securite-3](https://kayasam.github.io/windows11/assets/captures/w11-07-securite-3.png)
+![w11-07-securite-3](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite-3.png)
 
 > [!NOTE] Le profil Domaine n'est jamais choisi manuellement
 > Le profil **Domaine** est attribué automatiquement par Windows lorsque le poste est joint à un AD et qu'un contrôleur de domaine est joignable sur le réseau. Il n'apparaît pas comme option sélectionnable dans Paramètres — seuls Public et Privé le sont.
@@ -233,7 +233,7 @@ Set-NetConnectionProfile -InterfaceAlias "Wi-Fi" -NetworkCategory Public
 
 ### Console graphique : wf.msc
 
-![w11-07-securite-4](https://kayasam.github.io/windows11/assets/captures/w11-07-securite-4.png)
+![w11-07-securite-4](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite-4.png)
 
 **Accès :** `Win + R` → `wf.msc` (Pare-feu Windows Defender avec fonctions avancées de sécurité)
 
@@ -345,7 +345,7 @@ reg add HKLM\SYSTEM\CurrentControlSet\Control\BitLocker /v PreventDeviceEncrypti
 
 **Interface graphique :** Panneau de configuration\Système et sécurité\Chiffrement de lecteur BitLocker
 
-![w11-07-securite-5](https://kayasam.github.io/windows11/assets/captures/w11-07-securite-5.png)
+![w11-07-securite-5](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite-5.png)
 
 L'assistant graphique force un déroulé dans le bon ordre et ne laisse pas passer d'étape :
 
@@ -437,7 +437,7 @@ manage-bde -off C:
 
 **Interface graphique :** Clic droit sur un fichier/dossier → Propriétés → Avancé → Chiffrer le contenu pour sécuriser les données
 
-![w11-07-securite-7](https://kayasam.github.io/windows11/assets/captures/w11-07-securite-7.png)
+![w11-07-securite-7](https://cours.kaya.ovh/windows11/assets/captures/w11-07-securite-7.png)
 
 > [!NOTE] Pas de module PowerShell dédié pour EFS
 > Contrairement à Defender (`*-Mp*`), au pare-feu (`*-NetFirewall*`) ou à BitLocker (`*-BitLocker*`), il n'existe **aucune cmdlet native pour EFS**. `cipher.exe` est le seul outil en ligne de commande — c'est un exécutable autonome, donc les commandes ci-dessous fonctionnent à l'identique en invite de commandes **et** en PowerShell.
@@ -499,7 +499,7 @@ Get-ChildItem "C:\Users\Sam\Documents\Confidentiel" | Select-Object Name, Attrib
 
 **Chemin GPMC / gpedit.msc / secpol.msc :** `Configuration ordinateur → Paramètres Windows → Paramètres de sécurité → Stratégies de contrôle d'application → AppLocker`
 
-![w11-08-mises-a-jour-restrictions-2](https://kayasam.github.io/windows11/assets/captures/w11-08-mises-a-jour-restrictions-2.png)
+![w11-08-mises-a-jour-restrictions-2](https://cours.kaya.ovh/windows11/assets/captures/w11-08-mises-a-jour-restrictions-2.png)
 
 > [!TIP] Toujours commencer en mode Audit
 > Le mode **Audit uniquement** journalise sans bloquer (journal *Applications et services → Microsoft → Windows → AppLocker*, événement **8003** « aurait été empêché »). On passe en **Appliquer** une fois la liste validée.

@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: "Windows 11 — Administration et déploiement"
+  pageTitle: "Windows 11 : administration et déploiement"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics: null
   locale: fr-FR
-  baseUrl: kayasam.github.io/windows11
+  baseUrl: cours.kaya.ovh/windows11
   ignorePatterns:
     - telechargements/**
     - private

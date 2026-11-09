@@ -1,10 +1,10 @@
-# TP 11 — Stratégies de groupe et gestion centralisée — Correction
+# TP 11. Stratégies de groupe et gestion centralisée — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h
 
-> Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://kayasam.github.io/windows11/windows11/11-gpo/)
+> Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://cours.kaya.ovh/windows11/windows11/11-gpo/)
 
 ---
 
@@ -199,7 +199,7 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 **C5.** Ouvre une session `FOURNIL\sguillard` sur `PC01`. Vérifie le lecteur `P:` et la restriction.
 
 > [!success]- Afficher la correction — C5
-> ![w11-11-lecteur-p-gpo](https://kayasam.github.io/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
+> ![w11-11-lecteur-p-gpo](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
 >
 > **Commun (P:)** apparaît dans *Emplacements réseau*. `Win + I` (Paramètres) ne s'ouvre pas : message « *Cette opération a été annulée en raison des restrictions en vigueur sur cet ordinateur* ».
 > ```powershell
@@ -260,4 +260,4 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/11-gpo/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp)

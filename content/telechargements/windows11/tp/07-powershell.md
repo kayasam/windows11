@@ -1,8 +1,8 @@
-# TP 07 — PowerShell pour l'administrateur
+# TP 07. PowerShell pour l'administrateur
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [07. PowerShell pour l'administrateur](https://kayasam.github.io/windows11/windows11/07-powershell/)
+> Chapitres associés : [07. PowerShell pour l'administrateur](https://cours.kaya.ovh/windows11/windows11/07-powershell/)
 
 ---
 
@@ -80,7 +80,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/07-powershell/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/07-powershell/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp-corrigev2)

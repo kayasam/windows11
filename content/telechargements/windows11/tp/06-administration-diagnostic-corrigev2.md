@@ -1,10 +1,10 @@
-# TP 06 — Processus, services, tâches planifiées et journaux — Correction
+# TP 06. Processus, services, tâches planifiées et journaux — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/)
+> Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/)
 
 ---
 
@@ -31,7 +31,7 @@
 > [!success]- Afficher la correction — A1
 > `taskmgr /7 /startup` ouvre directement la page (ou `Ctrl+Maj+Échap` → icône **Applications de démarrage**).
 >
-> ![w11-06-gestionnaire-taches](https://kayasam.github.io/windows11/assets/captures/w11-06-gestionnaire-taches.png)
+> ![w11-06-gestionnaire-taches](https://cours.kaya.ovh/windows11/assets/captures/w11-06-gestionnaire-taches.png)
 >
 > Sur `PC01` : **Microsoft OneDrive** (Activé), **Microsoft Teams** (Désactivé), **Terminal** (Désactivé), **Windows Security notification** (Activé). L'impact est « Non mesuré » tant que le poste n'a pas redémarré plusieurs fois. En haut à droite : *Dernier temps de démarrage du BIOS : 0.9 secondes* (la VM démarre vite).
 
@@ -249,7 +249,7 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 > [!success]- Afficher la correction — E1
 > `perfmon /rel` :
 >
-> ![w11-06-moniteur-fiabilite](https://kayasam.github.io/windows11/assets/captures/w11-06-moniteur-fiabilite.png)
+> ![w11-06-moniteur-fiabilite](https://cours.kaya.ovh/windows11/assets/captures/w11-06-moniteur-fiabilite.png)
 >
 > Indice de stabilité **10** (poste tout neuf). Un avertissement « **Windows Update a échoué** » pour une application Store (`9MSSGKG348SP…`) le 08/11. Un échec isolé de mise à jour d'application n'est pas grave (elle sera retentée) ; une série d'échecs ou des **échecs d'applications** quotidiens feraient baisser l'indice et justifieraient une enquête (chapitre 19).
 
@@ -282,4 +282,4 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp)

@@ -1,4 +1,4 @@
-# 10 — Active Directory et services réseau
+# 10. Active Directory et services réseau
 
 > [!NOTE] Objectif
 > Installer `SRV01` (Windows Server 2025, Server Core), la préparer (IP fixe, renommage, mises à jour, SSH), installer les rôles AD DS, DNS et DHCP, promouvoir le serveur en contrôleur de domaine, créer la structure de base (UO, utilisateurs, groupes), puis configurer le DHCP.

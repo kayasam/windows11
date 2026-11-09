@@ -1,8 +1,8 @@
-# TP 12 — Administration et assistance à distance
+# TP 12. Administration et assistance à distance
 
 > Durée estimée : 1h45
 
-> Chapitres associés : [12. Administration et assistance à distance](https://kayasam.github.io/windows11/windows11/12-acces-distant/)
+> Chapitres associés : [12. Administration et assistance à distance](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
 ---
 
@@ -73,7 +73,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/12-acces-distant/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/12-acces-distant/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp-corrigev2)

@@ -1,4 +1,4 @@
-# 02 — Installation, mise à niveau et comptes
+# 02. Installation, mise à niveau et comptes
 
 > [!NOTE] Objectif
 > Connaître les prérequis matériels de Windows 11, choisir l'édition, réaliser une installation propre, mettre à niveau un poste existant, et comprendre les trois types de comptes (local, Microsoft, professionnel).
@@ -271,13 +271,13 @@ C'est **la méthode supportée par Microsoft**, et celle qu'on construira propre
 
 Débrancher le réseau **ne suffit plus**. Sur le lab, sans carte réseau connectée, l'OOBE bloque sur cet écran : bouton **Suivant grisé**, aucune autre issue que « Installer le pilote ».
 
-![w11-02-oobe-reseau-obligatoire](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
+![w11-02-oobe-reseau-obligatoire](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
 
 Après `Shift+F10` → `OOBE\BYPASSNRO` (qui ne fait qu'écrire la clé `BypassNRO=1` puis redémarrer), le même écran affiche le lien **« Je n'ai pas Internet »**, qui mène directement à la création d'un compte local :
 
-![w11-02-oobe-bypassnro-pas-internet](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
+![w11-02-oobe-bypassnro-pas-internet](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
 
-![w11-02-oobe-compte-local](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-compte-local.png)
+![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)
 
 Ça fonctionne **aujourd'hui sur cette build** — rien ne garantit que ce sera le cas sur la prochaine ISO.
 

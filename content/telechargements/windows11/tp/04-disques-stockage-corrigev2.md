@@ -1,10 +1,10 @@
-# TP 04 — Disques, volumes et systèmes de fichiers — Correction
+# TP 04. Disques, volumes et systèmes de fichiers — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h15
 
-> Chapitres associés : [04. Disques, volumes et systèmes de fichiers](https://kayasam.github.io/windows11/windows11/04-disques-stockage/)
+> Chapitres associés : [04. Disques, volumes et systèmes de fichiers](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/)
 
 ---
 
@@ -234,4 +234,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/04-disques-stockage/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp)

@@ -1,8 +1,8 @@
-# TP 11 — Stratégies de groupe et gestion centralisée
+# TP 11. Stratégies de groupe et gestion centralisée
 
 > Durée estimée : 2h
 
-> Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://kayasam.github.io/windows11/windows11/11-gpo/)
+> Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://cours.kaya.ovh/windows11/windows11/11-gpo/)
 
 ---
 
@@ -89,7 +89,7 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/11-gpo/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/11-gpo/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp-corrigev2)

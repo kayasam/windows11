@@ -1,4 +1,4 @@
-# 14 — Poste de référence : mode audit et Sysprep
+# 14. Poste de référence : mode audit et Sysprep
 
 > [!NOTE] Objectif
 > Créer la VM de référence `MASTER`, la personnaliser en **mode audit**, puis la généraliser avec Sysprep en appliquant le fichier de réponse construit au chapitre 13. `MASTER` est pensée pour être **réutilisée** dans le temps (mises à jour périodiques de l'image) grâce à un simple point de contrôle Hyper-V. Savoir **diagnostiquer un échec de Sysprep** — trois pièges modernes ont été rencontrés en construisant le lab.
@@ -49,7 +49,7 @@ Installer Windows 11 normalement (voir chapitre 2 pour le détail de l'installat
 
 **À l'écran OOBE "Région ?"**, appuyer sur **`Ctrl + Shift + F3`**. Windows redémarre automatiquement et rouvre une session sous le compte **Administrateur intégré**, sans jamais terminer l'OOBE ni créer de profil utilisateur final.
 
-![w11-14-mode-audit-sysprep](https://kayasam.github.io/windows11/assets/captures/w11-14-mode-audit-sysprep.png)
+![w11-14-mode-audit-sysprep](https://cours.kaya.ovh/windows11/assets/captures/w11-14-mode-audit-sysprep.png)
 
 *`MASTER` en mode audit (26H2) : la fenêtre « Outil de préparation système v.3.14 » s'ouvre à chaque connexion.*
 

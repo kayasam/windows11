@@ -1,10 +1,10 @@
-# TP 13 — ADK, Windows PE et fichier de réponse — Correction
+# TP 13. ADK, Windows PE et fichier de réponse — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h
 
-> Chapitres associés : [13. ADK, Windows PE et fichier de réponse](https://kayasam.github.io/windows11/windows11/13-adk-winpe/)
+> Chapitres associés : [13. ADK, Windows PE et fichier de réponse](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/)
 
 ---
 
@@ -132,7 +132,7 @@
 > ```cmd
 > powershell -NoProfile -Command "$PSVersionTable.PSVersion.ToString(); Get-Disk | Format-Table Number,FriendlyName,Size,PartitionStyle; Get-Volume | Format-Table DriveLetter,FileSystemLabel,Size"
 > ```
-> ![w11-15-winpe-powershell-disques](https://kayasam.github.io/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
+> ![w11-15-winpe-powershell-disques](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
 >
 > PowerShell **5.1.26100.1** répond. Disque 0 = 64 Go **RAW** (vierge).
 
@@ -227,4 +227,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/13-adk-winpe/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp)

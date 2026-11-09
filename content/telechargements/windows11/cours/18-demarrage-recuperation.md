@@ -1,4 +1,4 @@
-# 18 — Démarrage et récupération
+# 18. Démarrage et récupération
 
 > [!NOTE] Objectif
 > Comprendre la séquence de démarrage UEFI, configurer le démarrage (`msconfig`, `bcdedit`), réparer un démarrage cassé (`bcdboot`), utiliser WinRE, et connaître **toute la palette de récupération 2026** : points de restauration, *point-in-time restore*, réinstallation via Windows Update, réinitialisation, Quick Machine Recovery.
@@ -77,7 +77,7 @@ Mise sous tension
 ## Configuration du démarrage
 
 ### msconfig — Configuration du système
-![w11-06-demarrage-recuperation](https://kayasam.github.io/windows11/assets/captures/w11-06-demarrage-recuperation.png)
+![w11-06-demarrage-recuperation](https://cours.kaya.ovh/windows11/assets/captures/w11-06-demarrage-recuperation.png)
 `msconfig` est l'outil graphique pour configurer les options de démarrage courantes.
 
 **Accès :** `Win + R` → `msconfig`
@@ -185,7 +185,7 @@ Le **WinRE** (Windows Recovery Environment) est un environnement de récupérati
 
 ### Options disponibles dans WinRE
 
-![w11-06-demarrage-recuperation-2](https://kayasam.github.io/windows11/assets/captures/w11-06-demarrage-recuperation-2.png)
+![w11-06-demarrage-recuperation-2](https://cours.kaya.ovh/windows11/assets/captures/w11-06-demarrage-recuperation-2.png)
 
 ```
 Options avancées
@@ -240,7 +240,7 @@ La protection est **désactivée par défaut sur les VM** (et souvent sur les in
 Vérifier et activer via :
 **Clic droit sur Démarrer → Système → Protection du système** (onglet dans les Propriétés système)
 
-![w11-06-demarrage-recuperation-1](https://kayasam.github.io/windows11/assets/captures/w11-06-demarrage-recuperation-1.png)
+![w11-06-demarrage-recuperation-1](https://cours.kaya.ovh/windows11/assets/captures/w11-06-demarrage-recuperation-1.png)
 
 Ou en PowerShell :
 ```powershell
@@ -272,7 +272,7 @@ Restore-Computer -RestorePoint <SequenceNumber> -Confirm:$false
 
 ## Récupérer sans tout réinstaller (Paramètres → Système → Récupération)
 
-![w11-18-parametres-recuperation](https://kayasam.github.io/windows11/assets/captures/w11-18-parametres-recuperation.png)
+![w11-18-parametres-recuperation](https://cours.kaya.ovh/windows11/assets/captures/w11-18-parametres-recuperation.png)
 
 *Page Récupération d'un poste 26H2 déployé (`PC03`).*
 

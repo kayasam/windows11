@@ -1,10 +1,10 @@
-# TP 14 — Poste de référence : mode audit et Sysprep — Correction
+# TP 14. Poste de référence : mode audit et Sysprep — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h
 
-> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/)
+> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
 
 ---
 
@@ -68,7 +68,7 @@
 > [!success]- Afficher la correction — B1
 > `Ctrl + Maj + F3`. La VM redémarre et ouvre une session **Administrateur** (le compte intégré, RID 500), sans mot de passe, et la fenêtre *Outil de préparation système v.3.14* s'affiche :
 >
-> ![w11-14-mode-audit-sysprep](https://kayasam.github.io/windows11/assets/captures/w11-14-mode-audit-sysprep.png)
+> ![w11-14-mode-audit-sysprep](https://cours.kaya.ovh/windows11/assets/captures/w11-14-mode-audit-sysprep.png)
 >
 > Particularité constatée sur le lab : `net user Administrateur` indique **« Compte : actif Non »** — Windows ouvre quand même la session en mode audit. D'où l'impossibilité d'administrer `MASTER` à distance tant qu'on ne lui donne pas un mot de passe et qu'on ne l'active pas.
 
@@ -230,4 +230,4 @@ Explique et corrige.
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp)

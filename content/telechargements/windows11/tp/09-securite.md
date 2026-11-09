@@ -1,8 +1,8 @@
-# TP 09 — Sécuriser un poste Windows 11
+# TP 09. Sécuriser un poste Windows 11
 
 > Durée estimée : 2h
 
-> Chapitres associés : [09. Sécuriser un poste Windows 11](https://kayasam.github.io/windows11/windows11/09-securite/)
+> Chapitres associés : [09. Sécuriser un poste Windows 11](https://cours.kaya.ovh/windows11/windows11/09-securite/)
 
 ---
 
@@ -96,7 +96,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/09-securite/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/09-securite/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/09-securite/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/09-securite/tp-corrigev2)

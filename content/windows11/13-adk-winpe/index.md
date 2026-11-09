@@ -1,10 +1,10 @@
 ---
-title: "13 — ADK, Windows PE et fichier de réponse"
+title: "13. ADK, Windows PE et fichier de réponse"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/13-adk-winpe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/13-adk-winpe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/cours/13-adk-winpe.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/13-adk-winpe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/13-adk-winpe.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Préparer les outils du déploiement : installer **Windows ADK et son module Windows PE** (en versions assorties), créer un support de démarrage **WinPE** personnalisé, et construire avec Windows SIM le fichier de réponse unique (`autounattend.xml`) qui servira au Sysprep de `MASTER` (chapitre 14) et à l'installation automatisée des postes (chapitre 16).
@@ -76,7 +76,7 @@ Le [Kit de déploiement et d'évaluation Windows (ADK)](https://learn.microsoft.
 | **ADK** | **Outils de déploiement** (DISM, `oscdimg`, WSIM, `copype`) · **Outil de migration de l'état utilisateur (USMT)** (chapitre 16) |
 | **Module complémentaire Windows PE** (*WinPE add-on*) | L'environnement Windows PE (`winpe.wim`, composants optionnels) |
 
-![w11-12-sysprep-images](https://kayasam.github.io/windows11/assets/captures/w11-12-sysprep-images.png)
+![w11-12-sysprep-images](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images.png)
 
 > [!TIP] Pas besoin du "Concepteur de configuration"
 > Cette fonctionnalité (ICD, *Imaging and Configuration Designer*) sert à créer des **paquets de provisionnement** (`.ppkg`) — une méthode alternative de personnalisation en bloc, indépendante de Windows SIM. Elle n'est pas nécessaire ici.
@@ -227,9 +227,9 @@ NOTRE DÉTOUR — utilisé sur MASTER (chapitre 14)
 > `MASTER` ne termine jamais elle-même la passe `oobeSystem` — on l'interrompt en mode audit avant. C'est chaque machine **déployée** à partir de l'image capturée qui rejoue `specialize` puis `oobeSystem` pour de vrai, avec un SID propre et un nom généré (`FOURNIL-XXXXXXX`). C'est exactement pour ça que la généralisation (chapitre 14) est indispensable avant toute capture.
 
 **Étape 1 — Charger l'image.** Fichier → Sélectionner une image Windows... → pointer vers `D:\Images\install.wim` → choisir l'édition (Windows 11 Pro). Si aucun fichier catalogue (`.clg`) n'existe encore, WSIM propose de le créer (quelques minutes, une seule fois par image).
-![w11-12-sysprep-images-1](https://kayasam.github.io/windows11/assets/captures/w11-12-sysprep-images-1.png)
+![w11-12-sysprep-images-1](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images-1.png)
 **Étape 2 — Nouveau fichier de réponse.** Fichier → Nouveau fichier de réponse...
-![w11-12-sysprep-images-2](https://kayasam.github.io/windows11/assets/captures/w11-12-sysprep-images-2.png)
+![w11-12-sysprep-images-2](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images-2.png)
 
 > [!INFO] Components et Packages
 > Le fichier de réponse fraîchement créé contient deux dossiers, sous chacune de ses 7 passes :
@@ -272,7 +272,7 @@ Ajouter ensuite le composant `Microsoft-Windows-Setup` à la même passe **1 win
 > `VK7JG-NPHTM-C97JM-9MPGT-3V66T` est une clé "KMS client" publiée par Microsoft — elle sélectionne l'édition Windows 11 Pro et permet à l'installation de se dérouler sans écran de saisie de clé, mais n'active pas Windows en elle-même (l'activation dépendra du mécanisme habituel de l'entreprise : KMS, MAK, ou licence numérique liée au matériel).
 
 **Étape 4 — Passe `specialize`.** Ajouter le composant `Microsoft-Windows-Shell-Setup` à la passe **4 specialize** et configurer :
-![w11-12-sysprep-images-3](https://kayasam.github.io/windows11/assets/captures/w11-12-sysprep-images-3.png)
+![w11-12-sysprep-images-3](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images-3.png)
 > [!WARNING] Plusieurs versions du même composant ?
 > Le catalogue liste parfois deux entrées pour `Microsoft-Windows-Shell-Setup` (ex. `10.0.26100.1150` et `10.0.26100.7309`) — l'image contient des mises à jour cumulatives intégrées, qui ajoutent une version plus récente du composant sans faire disparaître l'ancienne du catalogue. **Toujours choisir la version la plus haute** : c'est la seule réellement active une fois l'image appliquée.
 

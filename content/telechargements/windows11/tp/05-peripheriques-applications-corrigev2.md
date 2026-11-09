@@ -1,10 +1,10 @@
-# TP 05 — Pilotes, applications et WinGet — Correction
+# TP 05. Pilotes, applications et WinGet — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [05. Pilotes, applications et WinGet](https://kayasam.github.io/windows11/windows11/05-peripheriques-applications/)
+> Chapitres associés : [05. Pilotes, applications et WinGet](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/)
 
 ---
 
@@ -316,4 +316,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/05-peripheriques-applications/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp)

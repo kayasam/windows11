@@ -2,127 +2,127 @@
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
-      "title": "00 — Infrastructure de référence (fil rouge)",
+      "title": "00. Infrastructure de référence (fil rouge)",
       "tp": false,
       "correction": false
     },
     {
       "key": "windows11/01-introduction-hyperv",
-      "title": "01 — Introduction à Windows 11 et lab Hyper-V",
+      "title": "01. Introduction à Windows 11 et lab Hyper-V",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/02-installation",
-      "title": "02 — Installation, mise à niveau et comptes",
+      "title": "02. Installation, mise à niveau et comptes",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/03-configuration",
-      "title": "03 — Configuration et personnalisation",
+      "title": "03. Configuration et personnalisation",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/04-disques-stockage",
-      "title": "04 — Gestion des disques et du stockage",
+      "title": "04. Gestion des disques et du stockage",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/05-peripheriques-applications",
-      "title": "05 — Pilotes, applications et WinGet",
+      "title": "05. Pilotes, applications et WinGet",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/06-administration-diagnostic",
-      "title": "06 — Processus, services, tâches planifiées et journaux",
+      "title": "06. Processus, services, tâches planifiées et journaux",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/07-powershell",
-      "title": "07 — PowerShell pour l'administrateur",
+      "title": "07. PowerShell pour l'administrateur",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/08-mises-a-jour",
-      "title": "08 — Windows Update et gestion des mises à jour",
+      "title": "08. Windows Update et gestion des mises à jour",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/09-securite",
-      "title": "09 — Sécuriser un poste Windows 11",
+      "title": "09. Sécuriser un poste Windows 11",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/10-active-directory",
-      "title": "10 — Active Directory et services réseau",
+      "title": "10. Active Directory et services réseau",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/11-gpo",
-      "title": "11 — Stratégies de groupe et gestion centralisée",
+      "title": "11. Stratégies de groupe et gestion centralisée",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/12-acces-distant",
-      "title": "12 — Administration et assistance à distance",
+      "title": "12. Administration et assistance à distance",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/13-adk-winpe",
-      "title": "13 — ADK, Windows PE et fichier de réponse",
+      "title": "13. ADK, Windows PE et fichier de réponse",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/14-sysprep-audit",
-      "title": "14 — Poste de référence : mode audit et Sysprep",
+      "title": "14. Poste de référence : mode audit et Sysprep",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/15-wim-dism",
-      "title": "15 — Images WIM et DISM",
+      "title": "15. Images WIM et DISM",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/16-deploiement",
-      "title": "16 — Déployer Windows 11 : ISO, réseau, migration, moderne",
+      "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/17-environnement-utilisateur",
-      "title": "17 — Environnement utilisateur et Microsoft 365",
+      "title": "17. Environnement utilisateur et Microsoft 365",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/18-demarrage-recuperation",
-      "title": "18 — Démarrage et récupération",
+      "title": "18. Démarrage et récupération",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/19-depannage",
-      "title": "19 — Diagnostic et dépannage",
+      "title": "19. Diagnostic et dépannage",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/20-mco",
-      "title": "20 — Maintien en condition opérationnelle",
+      "title": "20. Maintien en condition opérationnelle",
       "tp": true,
       "correction": true
     }
@@ -294,8 +294,8 @@
   "tracks": [
     {
       "id": "windows11",
-      "title": "Windows 11 — Administration et déploiement",
-      "href": "https://kayasam.github.io/windows11/windows11/"
+      "title": "Windows 11 : administration et déploiement",
+      "href": "https://cours.kaya.ovh/windows11/windows11/"
     }
   ],
   "templateVersion": 1

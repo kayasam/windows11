@@ -1,4 +1,4 @@
-# 01 — Introduction à Windows 11 et lab Hyper-V
+# 01. Introduction à Windows 11 et lab Hyper-V
 
 > [!NOTE] Objectif
 > Situer Windows 11 (architecture, versions, cycle de vie, offre cloud), puis activer Hyper-V sur le poste hôte et construire le réseau du lab.
@@ -7,7 +7,7 @@
 > **Cmdlets à connaître :** `Get-ComputerInfo`, `Enable-WindowsOptionalFeature`, `New-VMSwitch`, `New-NetIPAddress`, `New-NetNat`, `New-VM`, `Set-VMKeyProtector`, `Enable-VMTPM`
 
 > [!INFO] Fil rouge — Fournil
-> Réseau `192.168.3.0/24` sur `vSwitch-Rennes`, passerelle NAT `192.168.3.254` — voir [00-infrastructure](https://kayasam.github.io/windows11/windows11/00-infrastructure/).
+> Réseau `192.168.3.0/24` sur `vSwitch-Rennes`, passerelle NAT `192.168.3.254` — voir [00-infrastructure](https://cours.kaya.ovh/windows11/windows11/00-infrastructure/).
 
 ---
 
@@ -163,7 +163,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
 2. Cocher **Hyper-V** (inclut les outils de gestion et la plateforme)
 3. Redémarrer
 
-![w11-01-hyperv](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv.png)
+![w11-01-hyperv](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv.png)
 
 ### Vérifier l'installation
 
@@ -345,7 +345,7 @@ Avant de créer des VM, il est recommandé de définir **où Hyper-V stocke ses 
 
 Dans le **Gestionnaire Hyper-V** → clic droit sur le nom de l'hôte → **Paramètres Hyper-V** :
 
-![w11-01-hyperv-parametres-dossiers](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-parametres-dossiers.png)
+![w11-01-hyperv-parametres-dossiers](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-parametres-dossiers.png)
 
 Deux chemins à configurer :
 
@@ -369,7 +369,7 @@ Set-VMHost -VirtualHardDiskPath "D:\HyperV\" `
 
 Une fois les VM créées, le dossier ressemble à ceci :
 
-![w11-01-hyperv-dossier-hyperv](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-dossier-hyperv.png)
+![w11-01-hyperv-dossier-hyperv](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-dossier-hyperv.png)
 
 ```
 D:\HyperV\
@@ -434,7 +434,7 @@ D:\HyperV\
 6. Disque : VHDX dynamique, `60 Go`
 7. Installation : monter l'ISO Windows 11
 
-![w11-01-hyperv-1](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-1.png)
+![w11-01-hyperv-1](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-1.png)
 
 ### Création via PowerShell
 
@@ -492,7 +492,7 @@ Start-VM -VMName "PC01"
 
 Les checkpoints permettent de **sauvegarder l'état d'une VM** à un instant donné et d'y revenir si nécessaire.
 
-![w11-01-hyperv-3](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-3.png)
+![w11-01-hyperv-3](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-3.png)
 
 ### Deux types de checkpoints
 

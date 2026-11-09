@@ -1,17 +1,17 @@
 ---
-title: "TP 06 — Processus, services, tâches planifiées et journaux — Correction"
+title: "TP 06. Processus, services, tâches planifiées et journaux — Correction"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/06-administration-diagnostic"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/tp/06-administration-diagnostic-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
-<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp">Énoncé</a><a class="exercise-correction" href="https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp-corrigev2" aria-current="page">Corrigé</a></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/06-administration-diagnostic"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/06-administration-diagnostic-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp-corrigev2" aria-current="page">Corrigé</a></nav>
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/)
+> Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/)
 
 ---
 
@@ -38,7 +38,7 @@ title: "TP 06 — Processus, services, tâches planifiées et journaux — Corre
 > [!success]- Afficher la correction — A1
 > `taskmgr /7 /startup` ouvre directement la page (ou `Ctrl+Maj+Échap` → icône **Applications de démarrage**).
 >
-> ![w11-06-gestionnaire-taches](https://kayasam.github.io/windows11/assets/captures/w11-06-gestionnaire-taches.png)
+> ![w11-06-gestionnaire-taches](https://cours.kaya.ovh/windows11/assets/captures/w11-06-gestionnaire-taches.png)
 >
 > Sur `PC01` : **Microsoft OneDrive** (Activé), **Microsoft Teams** (Désactivé), **Terminal** (Désactivé), **Windows Security notification** (Activé). L'impact est « Non mesuré » tant que le poste n'a pas redémarré plusieurs fois. En haut à droite : *Dernier temps de démarrage du BIOS : 0.9 secondes* (la VM démarre vite).
 
@@ -256,7 +256,7 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 > [!success]- Afficher la correction — E1
 > `perfmon /rel` :
 >
-> ![w11-06-moniteur-fiabilite](https://kayasam.github.io/windows11/assets/captures/w11-06-moniteur-fiabilite.png)
+> ![w11-06-moniteur-fiabilite](https://cours.kaya.ovh/windows11/assets/captures/w11-06-moniteur-fiabilite.png)
 >
 > Indice de stabilité **10** (poste tout neuf). Un avertissement « **Windows Update a échoué** » pour une application Store (`9MSSGKG348SP…`) le 08/11. Un échec isolé de mise à jour d'application n'est pas grave (elle sera retentée) ; une série d'échecs ou des **échecs d'applications** quotidiens feraient baisser l'indice et justifieraient une enquête (chapitre 19).
 
@@ -289,4 +289,4 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp)

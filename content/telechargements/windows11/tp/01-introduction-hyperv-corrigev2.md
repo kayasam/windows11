@@ -1,10 +1,10 @@
-# TP 01 — Introduction à Windows 11 et lab Hyper-V — Correction
+# TP 01. Introduction à Windows 11 et lab Hyper-V — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [01. Introduction à Windows 11 et lab Hyper-V](https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/)
+> Chapitres associés : [01. Introduction à Windows 11 et lab Hyper-V](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/)
 
 ---
 
@@ -296,4 +296,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp)

@@ -1,14 +1,14 @@
 {
-  "title": "Windows 11 — Administration et déploiement",
+  "title": "Windows 11 : administration et déploiement",
   "shortTitle": "Windows 11",
   "description": "Installer, configurer, administrer et déployer Windows 11. Cours et travaux pratiques autour du lab Fournil.",
-  "baseUrl": "https://kayasam.github.io/windows11",
+  "baseUrl": "https://cours.kaya.ovh/windows11",
   "sourceRoot": "C:\\Users\\kayaw\\Nextcloud\\Obsidian\\CoffreSam\\Formations\\windows-11-administration-deploiement",
   "mediaRoot": "Ressources/images",
   "tracks": [
     {
       "id": "windows11",
-      "title": "Windows 11 — Administration et déploiement",
+      "title": "Windows 11 : administration et déploiement",
       "description": "Du lab Hyper-V au maintien en condition opérationnelle : 21 chapitres et 20 travaux pratiques.",
       "chapters": [
         {
@@ -135,7 +135,8 @@
           "tp": "cours/20-mco/tp/20-tp-mco.md",
           "correction": "cours/20-mco/tp/20-tp-mco-correction.md"
         }
-      ]
+      ],
+      "logo": "assets/brands/windows11.svg"
     }
   ]
 }

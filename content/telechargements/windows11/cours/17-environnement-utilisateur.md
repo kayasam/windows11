@@ -1,4 +1,4 @@
-# 17 — Environnement utilisateur et Microsoft 365
+# 17. Environnement utilisateur et Microsoft 365
 
 > [!NOTE] Objectif
 > Préparer l'environnement de travail de l'utilisateur : comprendre et dépanner les **profils**, donner accès aux **dossiers partagés**, installer et configurer **Microsoft 365 Apps**, **OneDrive** et **Teams** sur le poste, gérer le **partage de documents**, puis **remettre** un poste à un utilisateur en l'accompagnant et en lui transmettant les bons réflexes de sécurité.

@@ -1,4 +1,4 @@
-# 11 — Stratégies de groupe et gestion centralisée
+# 11. Stratégies de groupe et gestion centralisée
 
 > [!NOTE] Objectif
 > Centraliser la configuration des postes du domaine avec les **stratégies de groupe** : comprendre l'ordre d'application, distinguer paramètres ordinateur et utilisateur, cibler une GPO (liaison, filtrage, préférences), diagnostiquer avec `gpresult`. Mettre en place les GPO de sécurité modernes : **Windows LAPS**, sauvegarde des clés **BitLocker** dans AD, administrateurs locaux, anneau Windows Update. Situer **Intune / Entra ID** face aux GPO.
@@ -125,7 +125,7 @@ Coûteux (requête évaluée à chaque application) : à utiliser avec parcimoni
 
 Sur le lab, le lecteur `P:` est une **préférence** (*Configuration utilisateur → Préférences → Paramètres Windows → Mappages de lecteurs*, action « Mettre à jour », `\\SRV01\Commun`, lettre `P`) :
 
-![w11-11-lecteur-p-gpo](https://kayasam.github.io/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
+![w11-11-lecteur-p-gpo](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
 
 *Session `FOURNIL\sguillard` sur `PC01` : « Commun (P:) » monté par GPO. Le cadenas sur `C:` rappelle que BitLocker est actif.*
 

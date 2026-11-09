@@ -1,10 +1,10 @@
 ---
-title: "02 — Installation, mise à niveau et comptes"
+title: "02. Installation, mise à niveau et comptes"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/02-installation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/02-installation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/02-installation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/cours/02-installation.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/02-installation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/02-installation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/02-installation.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Connaître les prérequis matériels de Windows 11, choisir l'édition, réaliser une installation propre, mettre à niveau un poste existant, et comprendre les trois types de comptes (local, Microsoft, professionnel).
@@ -277,13 +277,13 @@ C'est **la méthode supportée par Microsoft**, et celle qu'on construira propre
 
 Débrancher le réseau **ne suffit plus**. Sur le lab, sans carte réseau connectée, l'OOBE bloque sur cet écran : bouton **Suivant grisé**, aucune autre issue que « Installer le pilote ».
 
-![w11-02-oobe-reseau-obligatoire](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
+![w11-02-oobe-reseau-obligatoire](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
 
 Après `Shift+F10` → `OOBE\BYPASSNRO` (qui ne fait qu'écrire la clé `BypassNRO=1` puis redémarrer), le même écran affiche le lien **« Je n'ai pas Internet »**, qui mène directement à la création d'un compte local :
 
-![w11-02-oobe-bypassnro-pas-internet](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
+![w11-02-oobe-bypassnro-pas-internet](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
 
-![w11-02-oobe-compte-local](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-compte-local.png)
+![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)
 
 Ça fonctionne **aujourd'hui sur cette build** — rien ne garantit que ce sera le cas sur la prochaine ISO.
 

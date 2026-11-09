@@ -1,8 +1,8 @@
-# TP 19 — Diagnostic et dépannage
+# TP 19. Diagnostic et dépannage
 
 > Durée estimée : 2h
 
-> Chapitres associés : [19. Diagnostic et dépannage](https://kayasam.github.io/windows11/windows11/19-depannage/)
+> Chapitres associés : [19. Diagnostic et dépannage](https://cours.kaya.ovh/windows11/windows11/19-depannage/)
 
 ---
 
@@ -81,7 +81,7 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/19-depannage/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/19-depannage/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp-corrigev2)

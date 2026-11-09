@@ -1,8 +1,8 @@
-# TP 14 — Poste de référence : mode audit et Sysprep
+# TP 14. Poste de référence : mode audit et Sysprep
 
 > Durée estimée : 2h
 
-> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/)
+> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
 
 ---
 
@@ -83,7 +83,7 @@ Explique et corrige.
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp-corrigev2)

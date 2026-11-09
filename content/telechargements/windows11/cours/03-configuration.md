@@ -1,4 +1,4 @@
-# 03 — Configuration et personnalisation
+# 03. Configuration et personnalisation
 
 > [!NOTE] Objectif
 > Maîtriser l'interface Windows 11, gérer les comptes utilisateurs locaux, configurer une adresse IP fixe et manipuler les variables d'environnement.
@@ -14,7 +14,7 @@
 
 Le menu Démarrer de Windows 11 est **centré** par défaut (déplaçable à gauche via Paramètres → Personnalisation → Barre des tâches). Depuis la refonte 25H2, c'est **une seule page défilante** en trois zones :
 
-![w11-03-menu-demarrer-26h2](https://kayasam.github.io/windows11/assets/captures/w11-03-menu-demarrer-26h2.png)
+![w11-03-menu-demarrer-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-03-menu-demarrer-26h2.png)
 
 *Menu Démarrer de `PC01` (26H2) : Épinglé, Nos recommandations, Tout (vue Catégorie).*
 
@@ -31,7 +31,7 @@ Le menu Démarrer de Windows 11 est **centré** par défaut (déplaçable à gau
 
 
 ### Snap Layouts
-![w11-03-configuration-1](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-1.png)
+![w11-03-configuration-1](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-1.png)
 Windows 11 introduit les **Snap Layouts** : des dispositions prédéfinies pour organiser plusieurs fenêtres à l'écran.
 
 **Accès :** survoler le bouton Agrandir d'une fenêtre, ou appuyer sur `Win + Z`
@@ -55,7 +55,7 @@ Dispositions disponibles (sur 1920×1080) :
 
 ### Bureaux virtuels
 
-![w11-03-configuration-2](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-2.png)
+![w11-03-configuration-2](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-2.png)
 
 Les **bureaux virtuels** permettent d'organiser les applications sur plusieurs espaces de travail distincts (ex : un bureau pour le travail, un pour la documentation).
 
@@ -71,7 +71,7 @@ Les **bureaux virtuels** permettent d'organiser les applications sur plusieurs e
 
 ### Barre des tâches
 
-![w11-03-configuration-3](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-3.png)
+![w11-03-configuration-3](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-3.png)
 La barre des tâches de Windows 11 est simplifiée par rapport à Windows 10 : les icônes sont centrées, les menus contextuels ont été réduits.
 
 **Personnalisations disponibles :** Paramètres → Personnalisation → Barre des tâches
@@ -90,7 +90,7 @@ Windows 11 maintient deux interfaces de configuration qui coexistent :
 | **Interface** | Moderne, tactile, épurée | Classique, Windows Vista/7 |
 | **Tendance** | En cours de remplacement du Panneau | Progressivement vidé |
 | **Accès** | `Win + I` | Recherche "Panneau" ou `control` |
-![w11-03-configuration-4](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-4.png)
+![w11-03-configuration-4](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-4.png)
 ### Ce qui est encore dans le Panneau de configuration
 
 Certaines fonctionnalités n'ont pas encore été migrées vers Paramètres :
@@ -106,7 +106,7 @@ Certaines fonctionnalités n'ont pas encore été migrées vers Paramètres :
 | Sauvegarde et restauration (Windows 7) | `sdclt.exe` | Non — fonctionnalité héritée, remplacée par l'app **Sauvegarde Windows** + OneDrive (chap. 20) |
 | Informations système | Panneau → Système | Oui : depuis 25H2, **Paramètres → Système → Informations système** (cartes ci-dessous) |
 
-![w11-02-parametres-informations-26h2](https://kayasam.github.io/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
+![w11-02-parametres-informations-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
 
 *Paramètres → Système → Informations système sur `PC01` : stockage, mémoire, processeur, puis les spécifications de l'appareil (« Copier » pour un ticket).*
 
@@ -158,7 +158,7 @@ Paramètres → Comptes → Autres utilisateurs → Ajouter un autre utilisateur
 
 **Via Gestion de l'ordinateur** (méthode avancée) :
 `lusrmgr.msc` → Utilisateurs → clic droit → Nouvel utilisateur
-![w11-03-configuration-6](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-6.png)
+![w11-03-configuration-6](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-6.png)
 
 **Via PowerShell** (méthode automatisable) :
 ```powershell
@@ -258,7 +258,7 @@ Set-DnsClientServerAddress -InterfaceAlias $adaptateur -ServerAddresses "8.8.8.8
 4. Remplir : IP `192.168.3.10`, masque `255.255.255.0`, passerelle `192.168.3.254`
 5. Cocher **"Utiliser l'adresse de serveur DNS suivante"** : `8.8.8.8`
 
-![w11-03-configuration-7](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-7.png)
+![w11-03-configuration-7](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-7.png)
 
 ### Vérifier la connectivité
 
@@ -339,7 +339,7 @@ $env:FOURNIL_ENV = "lab"
 
 **En graphique :**
 Paramètres → Système → Informations système → **Paramètres système avancés** → onglet Avancé → **Variables d'environnement**
-![w11-03-configuration-10](https://kayasam.github.io/windows11/assets/captures/w11-03-configuration-10.png)
+![w11-03-configuration-10](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-10.png)
 > [!WARNING] Modification du PATH
 > Ne jamais écraser la variable `PATH` entière — cela rendrait la plupart des commandes inaccessibles. Toujours **ajouter** au PATH existant :
 > ```powershell

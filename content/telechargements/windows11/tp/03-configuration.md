@@ -1,8 +1,8 @@
-# TP 03 — Configuration et personnalisation
+# TP 03. Configuration et personnalisation
 
 > Durée estimée : 1h15
 
-> Chapitres associés : [03. Configuration et personnalisation](https://kayasam.github.io/windows11/windows11/03-configuration/)
+> Chapitres associés : [03. Configuration et personnalisation](https://cours.kaya.ovh/windows11/windows11/03-configuration/)
 
 ---
 
@@ -88,7 +88,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/03-configuration/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/03-configuration/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp-corrigev2)

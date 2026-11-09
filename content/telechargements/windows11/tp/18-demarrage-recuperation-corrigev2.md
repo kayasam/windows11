@@ -1,10 +1,10 @@
-# TP 18 — Démarrage et récupération — Correction
+# TP 18. Démarrage et récupération — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [18. Démarrage et récupération](https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/)
+> Chapitres associés : [18. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
 
 ---
 
@@ -208,4 +208,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp)

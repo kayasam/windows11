@@ -1,4 +1,4 @@
-# 12 — Administration et assistance à distance
+# 12. Administration et assistance à distance
 
 > [!NOTE] Objectif
 > Configurer et utiliser les différents moyens d'accès distant à un poste Windows 11 : Bureau à distance (RDP), PowerShell Remoting/WinRS, OpenSSH, Assistance rapide (et Remote Help), et les outils RSAT — maintenant que `PC01`, `PC02` et `SRV01` sont joints au domaine `ad.fournil.lab` (chapitres 10 et 16).
@@ -18,9 +18,9 @@ Le **Bureau à distance** (Remote Desktop Protocol, port TCP **3389**) permet de
 ### Activation
 
 **Interface graphique :** Paramètres → Système → Bureau à distance → activer le bouton bascule
-![w11-10-acces-distant](https://kayasam.github.io/windows11/assets/captures/w11-10-acces-distant.png)
+![w11-10-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-10-acces-distant.png)
 Ou : `sysdm.cpl` → onglet **Accès à distance** → cocher **Autoriser les connexions d'assistance à distance à cet ordinateur** et **Autoriser les connexions distantes à cet ordinateur**.
-![w11-10-acces-distant-1](https://kayasam.github.io/windows11/assets/captures/w11-10-acces-distant-1.png)
+![w11-10-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-10-acces-distant-1.png)
 
 ```powershell
 # Vérifier l'état actuel (1 = désactivé, 0 = activé) — désactivé par défaut sur Windows 11
@@ -280,7 +280,7 @@ ssh-keygen -t ed25519
 ---
 
 ## Assistance rapide (Quick Assist)
-![w11-11-acces-distant](https://kayasam.github.io/windows11/assets/captures/w11-11-acces-distant.png)
+![w11-11-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant.png)
 
 **Quick Assist** est une application pré-installée sur Windows 11 (`MicrosoftCorporationII.QuickAssist`, lancée depuis le menu Démarrer — ce n'est pas un exécutable `.exe` classique dans `System32`, mais une application empaquetée). Elle permet de **partager l'écran** ou de **prendre le contrôle** d'un poste distant, typiquement pour du support utilisateur ponctuel.
 
@@ -329,7 +329,7 @@ Contrairement à RDP, Quick Assist ne nécessite **aucune configuration réseau 
 
 **Interface graphique :** Paramètres → Applications → Fonctionnalités facultatives → Ajouter une fonctionnalité → rechercher "RSAT"
 
-![w11-11-acces-distant-1](https://kayasam.github.io/windows11/assets/captures/w11-11-acces-distant-1.png)
+![w11-11-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
 
 ```powershell
 # Lister les fonctionnalités RSAT disponibles (terminal administrateur)

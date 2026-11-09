@@ -1,8 +1,8 @@
-# TP 16 — Déployer Windows 11 : ISO, réseau, migration, moderne
+# TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne
 
 > Durée estimée : 2h30
 
-> Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://kayasam.github.io/windows11/windows11/16-deploiement/)
+> Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
 
 ---
 
@@ -81,7 +81,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/16-deploiement/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/16-deploiement/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp-corrigev2)

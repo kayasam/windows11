@@ -1,10 +1,10 @@
 ---
-title: "15 — Images WIM et DISM"
+title: "15. Images WIM et DISM"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/15-wim-dism"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/15-wim-dism/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/15-wim-dism/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/cours/15-wim-dism.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/15-wim-dism"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/15-wim-dism.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Comprendre le format WIM, **capturer** l'image généralisée de `MASTER` (chapitre 14) avec DISM, la **maintenir hors ligne** (pilotes, mises à jour, applications, langues), et l'**appliquer** sur un disque vierge depuis Windows PE (`Dism /Apply-Image` + `bcdboot`).
@@ -194,7 +194,7 @@ exit
 powershell -NoProfile -Command "Get-Disk | Format-Table Number,FriendlyName,Size,PartitionStyle; Get-Volume | Format-Table DriveLetter,FileSystemLabel,Size"
 ```
 
-![w11-15-winpe-powershell-disques](https://kayasam.github.io/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
+![w11-15-winpe-powershell-disques](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
 
 *WinPE du chapitre 13 sur une VM vierge : PowerShell 5.1 disponible, disque 0 vierge (RAW, cible), disque d'images monté en **C:** — dans WinPE, les lettres ne sont jamais celles de Windows. Toujours vérifier avant `clean`.*
 
@@ -217,7 +217,7 @@ wpeutil reboot
 > [!NOTE] Rejoué de bout en bout sur le lab formateur (08/11/2026)
 > VM vierge `PC03` démarrée sur le WinPE du chapitre 13, script `deploie.cmd` : `diskpart` → `Dism /Apply-Image` (100 %) → `bcdboot` (« *Boot files successfully created* ») → copie d'un `unattend.xml` (passes specialize + oobeSystem, `ComputerName = PC03`) dans `W:\Windows\Panther` → `wpeutil reboot`. **Une minute plus tard, `PC03` était sur le bureau, session `Utilisateur`, image Fournil.** Un premier essai avait échoué faute de place sur l'hôte : prévoir **au moins 40 Go libres**.
 >
-> ![w11-15-winpe-apply-image](https://kayasam.github.io/windows11/assets/captures/w11-15-winpe-apply-image.png)
+> ![w11-15-winpe-apply-image](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-apply-image.png)
 
 > [!WARNING] Espace disque de l'hôte
 > Une VM Hyper-V dont le disque dynamique ne peut plus grandir passe en état **PausedCritical** (`Get-VM` → *State*) : elle est gelée, sans erreur visible dans la VM. Libérer de la place, puis `Resume-VM`. À surveiller pendant tout le jour 4 (WIM de 8 Go, ISO de 9 Go, copies…).

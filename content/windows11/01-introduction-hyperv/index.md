@@ -1,10 +1,10 @@
 ---
-title: "01 — Introduction à Windows 11 et lab Hyper-V"
+title: "01. Introduction à Windows 11 et lab Hyper-V"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/01-introduction-hyperv"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/cours/01-introduction-hyperv.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/01-introduction-hyperv"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/01-introduction-hyperv.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Situer Windows 11 (architecture, versions, cycle de vie, offre cloud), puis activer Hyper-V sur le poste hôte et construire le réseau du lab.
@@ -13,7 +13,7 @@ title: "01 — Introduction à Windows 11 et lab Hyper-V"
 > **Cmdlets à connaître :** `Get-ComputerInfo`, `Enable-WindowsOptionalFeature`, `New-VMSwitch`, `New-NetIPAddress`, `New-NetNat`, `New-VM`, `Set-VMKeyProtector`, `Enable-VMTPM`
 
 > [!INFO] Fil rouge — Fournil
-> Réseau `192.168.3.0/24` sur `vSwitch-Rennes`, passerelle NAT `192.168.3.254` — voir [00-infrastructure](https://kayasam.github.io/windows11/windows11/00-infrastructure/).
+> Réseau `192.168.3.0/24` sur `vSwitch-Rennes`, passerelle NAT `192.168.3.254` — voir [00-infrastructure](https://cours.kaya.ovh/windows11/windows11/00-infrastructure/).
 
 ---
 
@@ -169,7 +169,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
 2. Cocher **Hyper-V** (inclut les outils de gestion et la plateforme)
 3. Redémarrer
 
-![w11-01-hyperv](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv.png)
+![w11-01-hyperv](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv.png)
 
 ### Vérifier l'installation
 
@@ -351,7 +351,7 @@ Avant de créer des VM, il est recommandé de définir **où Hyper-V stocke ses 
 
 Dans le **Gestionnaire Hyper-V** → clic droit sur le nom de l'hôte → **Paramètres Hyper-V** :
 
-![w11-01-hyperv-parametres-dossiers](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-parametres-dossiers.png)
+![w11-01-hyperv-parametres-dossiers](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-parametres-dossiers.png)
 
 Deux chemins à configurer :
 
@@ -375,7 +375,7 @@ Set-VMHost -VirtualHardDiskPath "D:\HyperV\" `
 
 Une fois les VM créées, le dossier ressemble à ceci :
 
-![w11-01-hyperv-dossier-hyperv](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-dossier-hyperv.png)
+![w11-01-hyperv-dossier-hyperv](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-dossier-hyperv.png)
 
 ```
 D:\HyperV\
@@ -440,7 +440,7 @@ D:\HyperV\
 6. Disque : VHDX dynamique, `60 Go`
 7. Installation : monter l'ISO Windows 11
 
-![w11-01-hyperv-1](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-1.png)
+![w11-01-hyperv-1](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-1.png)
 
 ### Création via PowerShell
 
@@ -498,7 +498,7 @@ Start-VM -VMName "PC01"
 
 Les checkpoints permettent de **sauvegarder l'état d'une VM** à un instant donné et d'y revenir si nécessaire.
 
-![w11-01-hyperv-3](https://kayasam.github.io/windows11/assets/captures/w11-01-hyperv-3.png)
+![w11-01-hyperv-3](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-3.png)
 
 ### Deux types de checkpoints
 

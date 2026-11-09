@@ -1,8 +1,8 @@
-# TP 18 — Démarrage et récupération
+# TP 18. Démarrage et récupération
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [18. Démarrage et récupération](https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/)
+> Chapitres associés : [18. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
 
 ---
 
@@ -82,7 +82,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp-corrigev2)

@@ -1,10 +1,12 @@
-# Windows 11 — Administration et déploiement
+# Windows 11 : administration et déploiement
 
-Site public : https://kayasam.github.io/windows11/
+Site de formation : https://cours.kaya.ovh/windows11/
 
 21 cours (00 à 20), 20 TP et leurs corrigés publiés, un ZIP Obsidian et un PDF complet.
 Le dossier `cours/` de la formation dans le coffre Obsidian est la source de référence ; les anciens TP, sauvegardes, sessions et archives ne sont pas publiés.
 `site.json` indique la source locale. Pour mettre à jour : `./publier.ps1 -Push`.
+Les publications GitHub déclenchent la construction puis l’envoi SSH sur le VPS, dans `/opt/docker-compose/cours/sites/windows11/`. La clé GitHub Actions est limitée à ce dossier par `rrsync`. Le site utilise l’authentification propre au cours et conserve l’accès formateur. Aucun mot de passe ne figure dans le dépôt.
+
 Les liens Obsidian sont résolus vers les documents déclarés et seules les captures référencées sont copiées.
 
 # Modèle de site de formation

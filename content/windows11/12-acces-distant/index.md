@@ -1,10 +1,10 @@
 ---
-title: "12 — Administration et assistance à distance"
+title: "12. Administration et assistance à distance"
 ---
 
-<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/12-acces-distant"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://kayasam.github.io/windows11/windows11/12-acces-distant/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://kayasam.github.io/windows11/windows11/12-acces-distant/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://kayasam.github.io/windows11/telechargements/windows11/cours/12-acces-distant.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/12-acces-distant"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/12-acces-distant.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Configurer et utiliser les différents moyens d'accès distant à un poste Windows 11 : Bureau à distance (RDP), PowerShell Remoting/WinRS, OpenSSH, Assistance rapide (et Remote Help), et les outils RSAT — maintenant que `PC01`, `PC02` et `SRV01` sont joints au domaine `ad.fournil.lab` (chapitres 10 et 16).
@@ -24,9 +24,9 @@ Le **Bureau à distance** (Remote Desktop Protocol, port TCP **3389**) permet de
 ### Activation
 
 **Interface graphique :** Paramètres → Système → Bureau à distance → activer le bouton bascule
-![w11-10-acces-distant](https://kayasam.github.io/windows11/assets/captures/w11-10-acces-distant.png)
+![w11-10-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-10-acces-distant.png)
 Ou : `sysdm.cpl` → onglet **Accès à distance** → cocher **Autoriser les connexions d'assistance à distance à cet ordinateur** et **Autoriser les connexions distantes à cet ordinateur**.
-![w11-10-acces-distant-1](https://kayasam.github.io/windows11/assets/captures/w11-10-acces-distant-1.png)
+![w11-10-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-10-acces-distant-1.png)
 
 ```powershell
 # Vérifier l'état actuel (1 = désactivé, 0 = activé) — désactivé par défaut sur Windows 11
@@ -286,7 +286,7 @@ ssh-keygen -t ed25519
 ---
 
 ## Assistance rapide (Quick Assist)
-![w11-11-acces-distant](https://kayasam.github.io/windows11/assets/captures/w11-11-acces-distant.png)
+![w11-11-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant.png)
 
 **Quick Assist** est une application pré-installée sur Windows 11 (`MicrosoftCorporationII.QuickAssist`, lancée depuis le menu Démarrer — ce n'est pas un exécutable `.exe` classique dans `System32`, mais une application empaquetée). Elle permet de **partager l'écran** ou de **prendre le contrôle** d'un poste distant, typiquement pour du support utilisateur ponctuel.
 
@@ -335,7 +335,7 @@ Contrairement à RDP, Quick Assist ne nécessite **aucune configuration réseau 
 
 **Interface graphique :** Paramètres → Applications → Fonctionnalités facultatives → Ajouter une fonctionnalité → rechercher "RSAT"
 
-![w11-11-acces-distant-1](https://kayasam.github.io/windows11/assets/captures/w11-11-acces-distant-1.png)
+![w11-11-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
 
 ```powershell
 # Lister les fonctionnalités RSAT disponibles (terminal administrateur)

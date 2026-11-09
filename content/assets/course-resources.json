@@ -2,9 +2,9 @@
   "windows11/00-infrastructure": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/00-infrastructure/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/00-infrastructure/",
       "label": "Cours",
-      "chapterTitle": "00 — Infrastructure de référence (fil rouge)",
+      "chapterTitle": "00. Infrastructure de référence (fil rouge)",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     }
@@ -12,17 +12,17 @@
   "windows11/01-introduction-hyperv": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/",
       "label": "Cours",
-      "chapterTitle": "01 — Introduction à Windows 11 et lab Hyper-V",
+      "chapterTitle": "01. Introduction à Windows 11 et lab Hyper-V",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp",
       "label": "TP",
-      "chapterTitle": "01 — Introduction à Windows 11 et lab Hyper-V",
+      "chapterTitle": "01. Introduction à Windows 11 et lab Hyper-V",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -30,17 +30,17 @@
   "windows11/02-installation": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/02-installation/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/02-installation/",
       "label": "Cours",
-      "chapterTitle": "02 — Installation, mise à niveau et comptes",
+      "chapterTitle": "02. Installation, mise à niveau et comptes",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/02-installation/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/02-installation/tp",
       "label": "TP",
-      "chapterTitle": "02 — Installation, mise à niveau et comptes",
+      "chapterTitle": "02. Installation, mise à niveau et comptes",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -48,17 +48,17 @@
   "windows11/03-configuration": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/03-configuration/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/03-configuration/",
       "label": "Cours",
-      "chapterTitle": "03 — Configuration et personnalisation",
+      "chapterTitle": "03. Configuration et personnalisation",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/03-configuration/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/03-configuration/tp",
       "label": "TP",
-      "chapterTitle": "03 — Configuration et personnalisation",
+      "chapterTitle": "03. Configuration et personnalisation",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -66,17 +66,17 @@
   "windows11/04-disques-stockage": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/04-disques-stockage/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/",
       "label": "Cours",
-      "chapterTitle": "04 — Gestion des disques et du stockage",
+      "chapterTitle": "04. Gestion des disques et du stockage",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/04-disques-stockage/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp",
       "label": "TP",
-      "chapterTitle": "04 — Gestion des disques et du stockage",
+      "chapterTitle": "04. Gestion des disques et du stockage",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -84,17 +84,17 @@
   "windows11/05-peripheriques-applications": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/05-peripheriques-applications/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/",
       "label": "Cours",
-      "chapterTitle": "05 — Pilotes, applications et WinGet",
+      "chapterTitle": "05. Pilotes, applications et WinGet",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/05-peripheriques-applications/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp",
       "label": "TP",
-      "chapterTitle": "05 — Pilotes, applications et WinGet",
+      "chapterTitle": "05. Pilotes, applications et WinGet",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -102,17 +102,17 @@
   "windows11/06-administration-diagnostic": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/",
       "label": "Cours",
-      "chapterTitle": "06 — Processus, services, tâches planifiées et journaux",
+      "chapterTitle": "06. Processus, services, tâches planifiées et journaux",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp",
       "label": "TP",
-      "chapterTitle": "06 — Processus, services, tâches planifiées et journaux",
+      "chapterTitle": "06. Processus, services, tâches planifiées et journaux",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -120,17 +120,17 @@
   "windows11/07-powershell": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/07-powershell/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/07-powershell/",
       "label": "Cours",
-      "chapterTitle": "07 — PowerShell pour l'administrateur",
+      "chapterTitle": "07. PowerShell pour l'administrateur",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/07-powershell/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/07-powershell/tp",
       "label": "TP",
-      "chapterTitle": "07 — PowerShell pour l'administrateur",
+      "chapterTitle": "07. PowerShell pour l'administrateur",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -138,17 +138,17 @@
   "windows11/08-mises-a-jour": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/08-mises-a-jour/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/",
       "label": "Cours",
-      "chapterTitle": "08 — Windows Update et gestion des mises à jour",
+      "chapterTitle": "08. Windows Update et gestion des mises à jour",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/08-mises-a-jour/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/tp",
       "label": "TP",
-      "chapterTitle": "08 — Windows Update et gestion des mises à jour",
+      "chapterTitle": "08. Windows Update et gestion des mises à jour",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -156,17 +156,17 @@
   "windows11/09-securite": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/09-securite/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/09-securite/",
       "label": "Cours",
-      "chapterTitle": "09 — Sécuriser un poste Windows 11",
+      "chapterTitle": "09. Sécuriser un poste Windows 11",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/09-securite/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/09-securite/tp",
       "label": "TP",
-      "chapterTitle": "09 — Sécuriser un poste Windows 11",
+      "chapterTitle": "09. Sécuriser un poste Windows 11",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -174,17 +174,17 @@
   "windows11/10-active-directory": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/10-active-directory/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/10-active-directory/",
       "label": "Cours",
-      "chapterTitle": "10 — Active Directory et services réseau",
+      "chapterTitle": "10. Active Directory et services réseau",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/10-active-directory/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp",
       "label": "TP",
-      "chapterTitle": "10 — Active Directory et services réseau",
+      "chapterTitle": "10. Active Directory et services réseau",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -192,17 +192,17 @@
   "windows11/11-gpo": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/11-gpo/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/11-gpo/",
       "label": "Cours",
-      "chapterTitle": "11 — Stratégies de groupe et gestion centralisée",
+      "chapterTitle": "11. Stratégies de groupe et gestion centralisée",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/11-gpo/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/11-gpo/tp",
       "label": "TP",
-      "chapterTitle": "11 — Stratégies de groupe et gestion centralisée",
+      "chapterTitle": "11. Stratégies de groupe et gestion centralisée",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -210,17 +210,17 @@
   "windows11/12-acces-distant": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/12-acces-distant/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/",
       "label": "Cours",
-      "chapterTitle": "12 — Administration et assistance à distance",
+      "chapterTitle": "12. Administration et assistance à distance",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/12-acces-distant/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp",
       "label": "TP",
-      "chapterTitle": "12 — Administration et assistance à distance",
+      "chapterTitle": "12. Administration et assistance à distance",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -228,17 +228,17 @@
   "windows11/13-adk-winpe": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/13-adk-winpe/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/",
       "label": "Cours",
-      "chapterTitle": "13 — ADK, Windows PE et fichier de réponse",
+      "chapterTitle": "13. ADK, Windows PE et fichier de réponse",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/13-adk-winpe/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp",
       "label": "TP",
-      "chapterTitle": "13 — ADK, Windows PE et fichier de réponse",
+      "chapterTitle": "13. ADK, Windows PE et fichier de réponse",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -246,17 +246,17 @@
   "windows11/14-sysprep-audit": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/14-sysprep-audit/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/",
       "label": "Cours",
-      "chapterTitle": "14 — Poste de référence : mode audit et Sysprep",
+      "chapterTitle": "14. Poste de référence : mode audit et Sysprep",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/14-sysprep-audit/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp",
       "label": "TP",
-      "chapterTitle": "14 — Poste de référence : mode audit et Sysprep",
+      "chapterTitle": "14. Poste de référence : mode audit et Sysprep",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -264,17 +264,17 @@
   "windows11/15-wim-dism": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/15-wim-dism/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/15-wim-dism/",
       "label": "Cours",
-      "chapterTitle": "15 — Images WIM et DISM",
+      "chapterTitle": "15. Images WIM et DISM",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/15-wim-dism/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp",
       "label": "TP",
-      "chapterTitle": "15 — Images WIM et DISM",
+      "chapterTitle": "15. Images WIM et DISM",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -282,17 +282,17 @@
   "windows11/16-deploiement": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/16-deploiement/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/",
       "label": "Cours",
-      "chapterTitle": "16 — Déployer Windows 11 : ISO, réseau, migration, moderne",
+      "chapterTitle": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/16-deploiement/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp",
       "label": "TP",
-      "chapterTitle": "16 — Déployer Windows 11 : ISO, réseau, migration, moderne",
+      "chapterTitle": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -300,17 +300,17 @@
   "windows11/17-environnement-utilisateur": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/17-environnement-utilisateur/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
       "label": "Cours",
-      "chapterTitle": "17 — Environnement utilisateur et Microsoft 365",
+      "chapterTitle": "17. Environnement utilisateur et Microsoft 365",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/17-environnement-utilisateur/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/tp",
       "label": "TP",
-      "chapterTitle": "17 — Environnement utilisateur et Microsoft 365",
+      "chapterTitle": "17. Environnement utilisateur et Microsoft 365",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -318,17 +318,17 @@
   "windows11/18-demarrage-recuperation": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/",
       "label": "Cours",
-      "chapterTitle": "18 — Démarrage et récupération",
+      "chapterTitle": "18. Démarrage et récupération",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp",
       "label": "TP",
-      "chapterTitle": "18 — Démarrage et récupération",
+      "chapterTitle": "18. Démarrage et récupération",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -336,17 +336,17 @@
   "windows11/19-depannage": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/19-depannage/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/",
       "label": "Cours",
-      "chapterTitle": "19 — Diagnostic et dépannage",
+      "chapterTitle": "19. Diagnostic et dépannage",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/19-depannage/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/tp",
       "label": "TP",
-      "chapterTitle": "19 — Diagnostic et dépannage",
+      "chapterTitle": "19. Diagnostic et dépannage",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -354,17 +354,17 @@
   "windows11/20-mco": [
     {
       "kind": "markdown",
-      "href": "https://kayasam.github.io/windows11/windows11/20-mco/",
+      "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/",
       "label": "Cours",
-      "chapterTitle": "20 — Maintien en condition opérationnelle",
+      "chapterTitle": "20. Maintien en condition opérationnelle",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
       "kind": "tp",
-      "href": "https://kayasam.github.io/windows11/windows11/20-mco/tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/tp",
       "label": "TP",
-      "chapterTitle": "20 — Maintien en condition opérationnelle",
+      "chapterTitle": "20. Maintien en condition opérationnelle",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }

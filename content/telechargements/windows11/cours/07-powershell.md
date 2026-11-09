@@ -1,4 +1,4 @@
-# 07 — PowerShell pour l'administrateur
+# 07. PowerShell pour l'administrateur
 
 > [!NOTE] Objectif
 > Utiliser PowerShell pour administrer Windows 11 : distinguer les consoles disponibles, manipuler le pipeline, interroger le système avec **CIM/WMI** (WMIC n'existe plus), écrire un script de base et comprendre la politique d'exécution.

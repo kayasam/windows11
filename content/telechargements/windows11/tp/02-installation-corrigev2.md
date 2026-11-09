@@ -1,10 +1,10 @@
-# TP 02 — Installation, mise à niveau et comptes — Correction
+# TP 02. Installation, mise à niveau et comptes — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [02. Installation, mise à niveau et comptes](https://kayasam.github.io/windows11/windows11/02-installation/)
+> Chapitres associés : [02. Installation, mise à niveau et comptes](https://cours.kaya.ovh/windows11/windows11/02-installation/)
 
 ---
 
@@ -44,14 +44,14 @@
 > | Compte | Microsoft / professionnel / local (si autorisé) |
 > | Confidentialité | Localisation, diagnostics, publicité… |
 >
-> ![w11-02-oobe-clavier](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-clavier.png)
+> ![w11-02-oobe-clavier](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-clavier.png)
 
 **A3.** À l'écran **« Il est temps de vous connecter à un réseau »**, que se passe-t-il si la VM n'a pas de réseau ? Et avec le réseau ?
 
 > [!success]- Afficher la correction — A3
 > - **Sans réseau** (testé sur 26300.9457) : l'OOBE **bloque**. Le bouton **Suivant** reste grisé, seule l'option « Installer le pilote » est proposée. Débrancher le réseau ne suffit plus à obtenir un compte local.
 >
-> ![w11-02-oobe-reseau-obligatoire](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
+> ![w11-02-oobe-reseau-obligatoire](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
 >
 > - **Avec réseau** : l'OOBE télécharge des mises à jour puis exige un compte **Microsoft** (personnel) ou **professionnel** (Entra ID).
 
@@ -70,7 +70,7 @@
 > ```
 > Après le redémarrage, l'écran réseau affiche le lien **« Je n'ai pas Internet »**, qui mène directement à « Qui utilisera cet appareil ? » (compte local).
 >
-> ![w11-02-oobe-bypassnro-pas-internet](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
+> ![w11-02-oobe-bypassnro-pas-internet](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
 >
 > > [!WARNING] Clavier AZERTY dans l'invite de l'OOBE
 > > À ce stade le clavier est déjà en AZERTY : le `\` s'obtient avec `AltGr + 8`.
@@ -80,7 +80,7 @@
 **A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 
 > [!success]- Afficher la correction — A5
-> ![w11-02-oobe-compte-local](https://kayasam.github.io/windows11/assets/captures/w11-02-oobe-compte-local.png)
+> ![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)
 >
 > Nom `admin`, mot de passe, puis **trois questions de sécurité** (obligatoires pour un compte local créé dans l'OOBE). Dans « Choisir les paramètres de confidentialité », passer **toutes** les options à **Non** (diagnostic facultatif, localisation, publicité ciblée, reconnaissance vocale en ligne…).
 
@@ -107,7 +107,7 @@
 > OSDisplayVersion  : 26H2
 > OsBuildNumber     : 26300
 > ```
-> ![w11-02-parametres-informations-26h2](https://kayasam.github.io/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
+> ![w11-02-parametres-informations-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
 
 **B2.** Liste les partitions du disque. Dans quel ordre sont-elles ? Pourquoi la partition de récupération est-elle placée là ?
 
@@ -282,4 +282,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/02-installation/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/02-installation/tp)

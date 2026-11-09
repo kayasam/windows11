@@ -1,10 +1,10 @@
-# TP 03 — Configuration et personnalisation — Correction
+# TP 03. Configuration et personnalisation — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h15
 
-> Chapitres associés : [03. Configuration et personnalisation](https://kayasam.github.io/windows11/windows11/03-configuration/)
+> Chapitres associés : [03. Configuration et personnalisation](https://cours.kaya.ovh/windows11/windows11/03-configuration/)
 
 ---
 
@@ -30,7 +30,7 @@
 **A1.** Ouvre le menu Démarrer. Nomme ses trois zones. Masque les recommandations.
 
 > [!success]- Afficher la correction — A1
-> ![w11-03-menu-demarrer-26h2](https://kayasam.github.io/windows11/assets/captures/w11-03-menu-demarrer-26h2.png)
+> ![w11-03-menu-demarrer-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-03-menu-demarrer-26h2.png)
 >
 > Trois zones sur une seule page défilante : **Épinglé**, **Nos recommandations**, **Tout** (vue Catégorie par défaut).
 > Masquer les recommandations : **Paramètres → Personnalisation → Accueil** (ou « Démarrer » selon la build) → désactiver *Afficher les fichiers recommandés…* et *Afficher les recommandations…*.
@@ -71,7 +71,7 @@
 > | Options Internet | Panneau de configuration uniquement | `inetcpl.cpl` |
 > | Utilisateurs et groupes locaux | Console MMC | `lusrmgr.msc` |
 >
-> ![w11-02-parametres-informations-26h2](https://kayasam.github.io/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
+> ![w11-02-parametres-informations-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-02-parametres-informations-26h2.png)
 
 ---
 
@@ -255,4 +255,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/03-configuration/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp)

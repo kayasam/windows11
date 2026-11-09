@@ -1,8 +1,8 @@
-# TP 13 — ADK, Windows PE et fichier de réponse
+# TP 13. ADK, Windows PE et fichier de réponse
 
 > Durée estimée : 2h
 
-> Chapitres associés : [13. ADK, Windows PE et fichier de réponse](https://kayasam.github.io/windows11/windows11/13-adk-winpe/)
+> Chapitres associés : [13. ADK, Windows PE et fichier de réponse](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/)
 
 ---
 
@@ -80,7 +80,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/13-adk-winpe/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/13-adk-winpe/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp-corrigev2)

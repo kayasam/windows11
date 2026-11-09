@@ -1,8 +1,8 @@
-# TP 02 — Installation, mise à niveau et comptes
+# TP 02. Installation, mise à niveau et comptes
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [02. Installation, mise à niveau et comptes](https://kayasam.github.io/windows11/windows11/02-installation/)
+> Chapitres associés : [02. Installation, mise à niveau et comptes](https://cours.kaya.ovh/windows11/windows11/02-installation/)
 
 ---
 
@@ -87,7 +87,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/02-installation/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/02-installation/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2)

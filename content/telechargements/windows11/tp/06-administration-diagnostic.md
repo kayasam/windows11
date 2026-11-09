@@ -1,8 +1,8 @@
-# TP 06 — Processus, services, tâches planifiées et journaux
+# TP 06. Processus, services, tâches planifiées et journaux
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/)
+> Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/)
 
 ---
 
@@ -97,7 +97,7 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp-corrigev2)

@@ -1,4 +1,4 @@
-# 00 — Infrastructure de référence (fil rouge)
+# 00. Infrastructure de référence (fil rouge)
 
 > [!NOTE] Objectif
 > Ce chapitre n'a pas de TP — c'est la fiche de référence du **fil rouge Entreprise Fournil** qui traverse toute la formation. Adressage IP, domaine, UO, comptes, DHCP, réseau virtuel : tout ce qui est posé progressivement est récapitulé ici, à consulter à tout moment.

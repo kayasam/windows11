@@ -1,8 +1,8 @@
-# TP 15 — Images WIM et DISM
+# TP 15. Images WIM et DISM
 
 > Durée estimée : 1h45
 
-> Chapitres associés : [15. Images WIM et DISM](https://kayasam.github.io/windows11/windows11/15-wim-dism/)
+> Chapitres associés : [15. Images WIM et DISM](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/)
 
 ---
 
@@ -74,7 +74,7 @@
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/15-wim-dism/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/15-wim-dism/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp-corrigev2)

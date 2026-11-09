@@ -1,8 +1,8 @@
-# TP 20 — TP final : maintien en condition opérationnelle
+# TP 20. TP final : maintien en condition opérationnelle
 
 > Durée estimée : 3h
 
-> Chapitres associés : [20. Maintien en condition opérationnelle](https://kayasam.github.io/windows11/windows11/20-mco/) — et tout le reste de la formation
+> Chapitres associés : [20. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
 
 ---
 
@@ -93,7 +93,7 @@ L'ordinateur portable d'une vendeuse est remplacé. Il est joint au domaine, chi
 
 ---
 
-[Ouvrir la correction](https://kayasam.github.io/windows11/windows11/20-mco/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/20-mco/tp-corrigev2)
 
 
-[Afficher les corrections](https://kayasam.github.io/windows11/windows11/20-mco/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/20-mco/tp-corrigev2)

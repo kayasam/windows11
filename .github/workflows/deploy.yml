@@ -1,21 +1,18 @@
-name: Publier la formation
+name: Publier Windows 11 sur cours.kaya.ovh
 on:
   workflow_dispatch:
   push:
     branches: [main]
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
-  group: pages
+  group: deploy-windows11
   cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v5
       - uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -28,15 +25,13 @@ jobs:
       # Build the reviewed content committed locally, without requiring the author's vault.
       - run: node quartz/bootstrap-cli.mjs build
       - run: python scripts/check-site.py
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: public
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
+      - name: Envoyer sur cours.kaya.ovh
+        env:
+          SSH_KEY: ${{ secrets.COURS_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.COURS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          rsync -rlt --delete --chmod=D755,F644 public/ cours-deploy@cours.kaya.ovh:./

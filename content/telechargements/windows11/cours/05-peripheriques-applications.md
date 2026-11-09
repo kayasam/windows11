@@ -1,4 +1,4 @@
-# 05 — Pilotes, applications et WinGet
+# 05. Pilotes, applications et WinGet
 
 > [!NOTE] Objectif
 > Gérer les périphériques et leurs pilotes (magasin de pilotes, `pnputil`), comprendre les différents types d'applications Windows, et installer/mettre à jour/inventorier des logiciels avec **WinGet**, le gestionnaire de paquets intégré à Windows 11.

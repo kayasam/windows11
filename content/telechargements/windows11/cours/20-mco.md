@@ -1,4 +1,4 @@
-# 20 — Maintien en condition opérationnelle
+# 20. Maintien en condition opérationnelle
 
 > [!NOTE] Objectif
 > Passer du dépannage au coup par coup à une **maintenance organisée** du parc : savoir ce que l'on a (inventaire), savoir dans quel état c'est (santé), garder les postes à jour et supportés (cycle de vie), protéger les données (sauvegarde), et retirer proprement un poste en fin de vie.

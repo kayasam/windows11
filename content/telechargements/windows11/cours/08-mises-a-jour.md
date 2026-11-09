@@ -1,4 +1,4 @@
-# 08 — Windows Update et gestion des mises à jour
+# 08. Windows Update et gestion des mises à jour
 
 > [!NOTE] Objectif
 > Comprendre les types de mises à jour de Windows 11, les piloter sur un poste puis sur un parc (stratégies *Windows Update client policies*), connaître le paysage 2026 (WSUS déprécié, Autopatch, Hotpatch) et ne pas oublier les **applications** et les **pilotes**.
@@ -27,7 +27,7 @@
 
 **Accès :** Paramètres → Windows Update
 
-![w11-08-mises-a-jour-restrictions](https://kayasam.github.io/windows11/assets/captures/w11-08-mises-a-jour-restrictions.png)
+![w11-08-mises-a-jour-restrictions](https://cours.kaya.ovh/windows11/assets/captures/w11-08-mises-a-jour-restrictions.png)
 
 | Option | Rôle |
 |--------|------|
@@ -39,7 +39,7 @@
 
 **Options avancées** (sous-page) :
 
-![w11-08-mises-a-jour-restrictions-1](https://kayasam.github.io/windows11/assets/captures/w11-08-mises-a-jour-restrictions-1.png)
+![w11-08-mises-a-jour-restrictions-1](https://cours.kaya.ovh/windows11/assets/captures/w11-08-mises-a-jour-restrictions-1.png)
 
 | Option | Rôle |
 |--------|------|

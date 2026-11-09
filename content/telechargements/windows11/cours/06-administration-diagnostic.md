@@ -1,4 +1,4 @@
-# 06 — Processus, services, tâches planifiées et journaux
+# 06. Processus, services, tâches planifiées et journaux
 
 > [!NOTE] Objectif
 > Maîtriser les outils de surveillance et d'administration intégrés à Windows 11 : analyser les performances, gérer les services et processus, **automatiser avec le Planificateur de tâches**, lire les journaux d'événements.
@@ -13,7 +13,7 @@
 
 ## Gestionnaire des tâches
 
-![w11-05-administration-diagnostic](https://kayasam.github.io/windows11/assets/captures/w11-05-administration-diagnostic.png)
+![w11-05-administration-diagnostic](https://cours.kaya.ovh/windows11/assets/captures/w11-05-administration-diagnostic.png)
 
 Le **Gestionnaire des tâches** (`taskmgr`) est l'outil de surveillance en temps réel de Windows. Il a été entièrement revu dans Windows 11.
 
@@ -157,7 +157,7 @@ sc config spooler start= disabled  ← (espace après = obligatoire)
 ---
 
 ## Observateur d'événements
-![w11-05-administration-diagnostic-3](https://kayasam.github.io/windows11/assets/captures/w11-05-administration-diagnostic-3.png)
+![w11-05-administration-diagnostic-3](https://cours.kaya.ovh/windows11/assets/captures/w11-05-administration-diagnostic-3.png)
 `eventvwr.msc` — centralise tous les journaux système, applicatifs et de sécurité.
 
 **Accès :** Recherche Windows → "Observateur d'événements" ou `eventvwr.msc`

@@ -1,10 +1,10 @@
-# TP 08 — Windows Update et gestion des mises à jour — Correction
+# TP 08. Windows Update et gestion des mises à jour — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h15
 
-> Chapitres associés : [08. Windows Update et gestion des mises à jour](https://kayasam.github.io/windows11/windows11/08-mises-a-jour/)
+> Chapitres associés : [08. Windows Update et gestion des mises à jour](https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/)
 
 ---
 
@@ -196,4 +196,4 @@ Le Fournil veut que les postes de production reçoivent les correctifs **7 jours
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/08-mises-a-jour/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/tp)

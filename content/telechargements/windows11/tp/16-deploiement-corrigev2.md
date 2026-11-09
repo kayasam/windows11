@@ -1,10 +1,10 @@
-# TP 16 — Déployer Windows 11 : ISO, réseau, migration, moderne — Correction
+# TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h30
 
-> Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://kayasam.github.io/windows11/windows11/16-deploiement/)
+> Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
 
 > [!NOTE] Tout ce TP a été rejoué sur le lab le 08/11/2026
 > Il a fallu **trois** déploiements ratés de `PC02` (pièges B2, B3 et le nom `PC-*`) avant le zéro clic réussi. Ces échecs font désormais partie du TP : ce sont exactement ceux que rencontrent les administrateurs en 2026.
@@ -241,4 +241,4 @@
 
 ---
 
-[Retour à l'énoncé](https://kayasam.github.io/windows11/windows11/16-deploiement/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp)

@@ -1,4 +1,4 @@
-# 19 — Diagnostic et dépannage
+# 19. Diagnostic et dépannage
 
 > [!NOTE] Objectif
 > Adopter une **méthode** de diagnostic, puis maîtriser les outils de Windows 11 pour chaque famille de pannes : système (journaux, fiabilité, Sysmon), performances, services et applications, réseau, fichiers système. **Tracer et documenter** chaque intervention, maintenant que l'Enregistreur d'actions (PSR) et les dépanneurs MSDT sont en fin de vie.

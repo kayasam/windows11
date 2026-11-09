@@ -1,4 +1,4 @@
-# 04 — Gestion des disques et du stockage
+# 04. Gestion des disques et du stockage
 
 > [!NOTE] Objectif
 > Comprendre les structures de partitionnement Windows, gérer les disques et volumes avec les outils graphiques et en ligne de commande, et découvrir les espaces de stockage.
@@ -66,7 +66,7 @@ Interface graphique principale pour la gestion des disques. Accessible via :
 - Changer la lettre de lecteur
 
 
-![w11-04-disques-stockage](https://kayasam.github.io/windows11/assets/captures/w11-04-disques-stockage.png)
+![w11-04-disques-stockage](https://cours.kaya.ovh/windows11/assets/captures/w11-04-disques-stockage.png)
 
 ### DiskPart
 
@@ -211,7 +211,7 @@ Windows formate automatiquement le volume et l'assigne à la lettre choisie.
 > [!TIP] Accès rapide
 > Taper `storage spaces` ou `espaces de stockage` dans la recherche Windows — Windows 11 redirige directement vers l'interface du Panneau de configuration.
 
-![w11-04-disques-stockage-1](https://kayasam.github.io/windows11/assets/captures/w11-04-disques-stockage-1.png)
+![w11-04-disques-stockage-1](https://cours.kaya.ovh/windows11/assets/captures/w11-04-disques-stockage-1.png)
 
 ### En PowerShell
 

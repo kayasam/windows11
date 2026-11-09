@@ -1,4 +1,4 @@
-# 16 — Déployer Windows 11 : ISO, réseau, migration, moderne
+# 16. Déployer Windows 11 : ISO, réseau, migration, moderne
 
 > [!NOTE] Objectif
 > Connaître les méthodes de déploiement d'un poste en 2026 et leur statut, réaliser un déploiement **zéro clic** par ISO personnalisée (image `MASTER.wim` + `autounattend.xml`), situer PXE/WDS et MDT (présentation : retirés ou bloqués en 2026), **migrer les profils** avec USMT, et comprendre le déploiement **moderne** (Windows Autopilot + Intune).
