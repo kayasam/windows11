@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="414" viewBox="0 0 640 414" role="img" aria-labelledby="title desc">
+  <title id="title">Isolation avec VBS</title>
+  <desc id="desc">VBS sépare le noyau Windows ordinaire en VTL0 de l’environnement sécurisé VTL1, qui héberge les protections Credential Guard et HVCI.</desc>
+  <rect x="1" y="1" width="638" height="412" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M17 3l11 4v8c0 6-4 11-11 15C10 26 6 21 6 15V7z M12 16l3 3 7-7" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Isolation avec VBS</text>
+    <rect x="17" y="86" width="606" height="32" rx="8" fill="#e8eef7" stroke="#b7c6da"/>
+    <text x="320.0" y="108" fill="#3e5470" font-size="16" font-weight="700" text-anchor="middle">Windows 11 avec VBS activée</text>
+    <rect x="17" y="130" width="606" height="63" rx="10" fill="#ffffff" stroke="#b7c6da"/>
+    <text x="32" y="157" fill="#3e5470" font-size="21" font-weight="700">VTL0 · Noyau Windows normal</text>
+    <text x="32" y="178" fill="#253b54" font-size="18">Un pilote malveillant peut compromettre cet environnement.</text>
+    <path d="M24 214H616" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"/>
+    <rect x="17" y="228" width="606" height="170" rx="12" fill="#f2ecff" stroke="#c1afe8"/>
+    <text x="33" y="255" fill="#4d2b79" font-size="21" font-weight="700">VTL1 · Environnement sécurisé</text>
+    <rect x="32" y="269" width="283" height="107" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="44" y="292" fill="#4d2b79" font-size="17" font-weight="700">Credential Guard</text>
+    <text x="44" y="311" fill="#253b54" font-size="16">Isole les secrets de LSASS, dont les</text>
+    <text x="44" y="330" fill="#253b54" font-size="16">empreintes NTLM et tickets</text>
+    <text x="44" y="349" fill="#253b54" font-size="16">Kerberos.</text>
+    <rect x="325" y="269" width="283" height="107" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="337" y="292" fill="#104c49" font-size="17" font-weight="700">Intégrité mémoire (HVCI)</text>
+    <text x="337" y="311" fill="#253b54" font-size="16">Seul le code noyau signé et vérifié</text>
+    <text x="337" y="330" fill="#253b54" font-size="16">peut s’exécuter.</text>
+  </g>
+</svg>

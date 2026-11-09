@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="309" viewBox="0 0 640 309" role="img" aria-labelledby="title desc">
+  <title id="title">Les deux parties d’une GPO</title>
+  <desc id="desc">Le contrôleur de domaine conserve l’objet GPO dans Active Directory et les fichiers de la stratégie dans SYSVOL.</desc>
+  <rect x="1" y="1" width="638" height="307" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M3 9h11l4 4h13v15H3z M3 9V6h10l3 3h12v4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Les deux parties d’une GPO</text>
+    <rect x="17" y="87" width="606" height="38" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="29" y="110" fill="#143c6f" font-size="17" font-weight="700">Contrôleur de domaine</text>
+    <path d="M44 125L44 154" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 154L63 154" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="133" width="560" height="76" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="75" y="156" fill="#143c6f" font-size="17" font-weight="700">Active Directory · Objet GPO</text>
+    <text x="75" y="175" fill="#253b54" font-size="16">Nom, version, liaisons et permissions.</text>
+    <text x="75" y="194" fill="#253b54" font-size="16">CN={GUID},CN=Policies,CN=System,DC=ad,DC=fournil,DC=lab</text>
+    <path d="M44 154L44 238" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 238L63 238" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="217" width="560" height="76" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="75" y="240" fill="#4d2b79" font-size="17" font-weight="700">SYSVOL · Fichiers de la GPO</text>
+    <text x="75" y="259" fill="#253b54" font-size="16">registry.pol, GptTmpl.inf, scripts et préférences XML.</text>
+    <text x="75" y="278" fill="#253b54" font-size="16">\\ad.fournil.lab\SYSVOL\ad.fournil.lab\Policies\{GUID}\</text>
+  </g>
+</svg>

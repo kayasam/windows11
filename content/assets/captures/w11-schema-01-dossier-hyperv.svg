@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="531" viewBox="0 0 640 531" role="img" aria-labelledby="title desc">
+  <title id="title">Fichiers du dossier Hyper-V</title>
+  <desc id="desc">Sous D:\HyperV\ se trouvent les dossiers de configuration et de checkpoints, les disques VHDX et un disque différentiel AVHDX.</desc>
+  <rect x="1" y="1" width="638" height="529" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M3 9h11l4 4h13v15H3z M3 9V6h10l3 3h12v4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Fichiers du dossier Hyper-V</text>
+    <rect x="17" y="87" width="606" height="38" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="29" y="110" fill="#143c6f" font-size="17" font-weight="700">D:\HyperV\</text>
+    <path d="M44 125L44 154" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 154L63 154" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="133" width="560" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="75" y="156" fill="#143c6f" font-size="17" font-weight="700">Virtual Machines\</text>
+    <text x="75" y="175" fill="#253b54" font-size="16">Fichiers de configuration des VM (.vmcx, .vmrs)</text>
+    <path d="M44 154L44 219" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 219L63 219" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="198" width="560" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="75" y="221" fill="#143c6f" font-size="17" font-weight="700">Snapshots\</text>
+    <text x="75" y="240" fill="#253b54" font-size="16">Fichiers des checkpoints</text>
+    <path d="M44 219L44 284" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 284L63 284" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="263" width="560" height="57" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="75" y="286" fill="#104c49" font-size="17" font-weight="700">DC1.vhdx</text>
+    <text x="75" y="305" fill="#253b54" font-size="16">Disque virtuel de DC1</text>
+    <path d="M44 284L44 349" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 349L63 349" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="328" width="560" height="57" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="75" y="351" fill="#104c49" font-size="17" font-weight="700">DC2.vhdx</text>
+    <text x="75" y="370" fill="#253b54" font-size="16">Disque virtuel de DC2</text>
+    <path d="M44 349L44 414" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 414L63 414" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="393" width="560" height="57" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="75" y="416" fill="#104c49" font-size="17" font-weight="700">w10.vhdx</text>
+    <text x="75" y="435" fill="#253b54" font-size="16">Disque virtuel d’un poste Windows 10</text>
+    <path d="M44 414L44 479" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 479L63 479" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="458" width="560" height="57" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="75" y="481" fill="#4d2b79" font-size="17" font-weight="700">DC1_855758A2-...avhdx</text>
+    <text x="75" y="500" fill="#253b54" font-size="16">Disque différentiel du checkpoint actif</text>
+  </g>
+</svg>

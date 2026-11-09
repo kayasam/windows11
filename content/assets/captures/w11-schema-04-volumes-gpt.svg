@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="382" viewBox="0 0 640 382" role="img" aria-labelledby="title desc">
+  <title id="title">Partitions d’un disque GPT</title>
+  <desc id="desc">Un disque GPT de base peut contenir une partition EFI, une partition MSR, des données et une partition de récupération.</desc>
+  <rect x="1" y="1" width="638" height="380" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 9h26v16H4z M4 20h26 M24 22.5h2" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Partitions d’un disque GPT</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="32" y="114" fill="#143c6f" font-size="21" font-weight="700">Système EFI · System</text>
+    <text x="32" y="135" fill="#253b54" font-size="18">Chargeur de démarrage UEFI.</text>
+    <rect x="17" y="159" width="606" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="32" y="186" fill="#4d2b79" font-size="21" font-weight="700">MSR · Reserved</text>
+    <text x="32" y="207" fill="#253b54" font-size="18">Réservée Microsoft.</text>
+    <rect x="17" y="231" width="606" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="32" y="258" fill="#104c49" font-size="21" font-weight="700">Données · Basic Data</text>
+    <text x="32" y="279" fill="#253b54" font-size="18">Volumes C:, D:, etc.</text>
+    <rect x="17" y="303" width="606" height="63" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="32" y="330" fill="#63400e" font-size="21" font-weight="700">Récupération · Recovery</text>
+    <text x="32" y="351" fill="#253b54" font-size="18">Environnement Windows RE.</text>
+  </g>
+</svg>

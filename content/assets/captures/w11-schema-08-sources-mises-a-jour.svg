@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" role="img" aria-labelledby="title desc">
+  <title id="title">Sources et pilotage des mises à jour</title>
+  <desc id="desc">Windows Update et Autopatch utilisent le cloud Microsoft. WSUS et ConfigMgr utilisent un serveur interne.</desc>
+  <rect x="1" y="1" width="638" height="468" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M5 8h24m-24 9h24m-24 9h24 M12 5v6m11 3v6m-7 3v6" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Sources et pilotage des mises à jour</text>
+    <rect x="17" y="87" width="195" height="32" rx="8" fill="#e8eef7" stroke="#b7c6da"/>
+    <text x="114.5" y="109" fill="#3e5470" font-size="16" font-weight="700" text-anchor="middle">Outil</text>
+    <rect x="224" y="87" width="179" height="32" rx="8" fill="#e8eef7" stroke="#b7c6da"/>
+    <text x="313.5" y="109" fill="#3e5470" font-size="16" font-weight="700" text-anchor="middle">Source</text>
+    <rect x="415" y="87" width="208" height="32" rx="8" fill="#e8eef7" stroke="#b7c6da"/>
+    <text x="519.0" y="109" fill="#3e5470" font-size="16" font-weight="700" text-anchor="middle">Qui décide quand ?</text>
+    <rect x="17" y="129" width="195" height="76" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="29" y="152" fill="#143c6f" font-size="17" font-weight="700">Windows Update</text>
+    <rect x="224" y="129" width="179" height="76" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="236" y="151" fill="#253b54" font-size="16">Cloud Microsoft</text>
+    <rect x="415" y="129" width="208" height="76" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="427" y="151" fill="#253b54" font-size="16">Stratégies client</text>
+    <text x="427" y="170" fill="#253b54" font-size="16">GPO ou Intune</text>
+    <rect x="17" y="212" width="195" height="76" rx="10" fill="#ddf4f0" stroke="#9ccac8"/>
+    <text x="29" y="235" fill="#104c49" font-size="17" font-weight="700">Autopatch</text>
+    <rect x="224" y="212" width="179" height="76" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="236" y="234" fill="#253b54" font-size="16">Cloud Microsoft</text>
+    <rect x="415" y="212" width="208" height="76" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="427" y="234" fill="#253b54" font-size="16">Service Microsoft</text>
+    <text x="427" y="253" fill="#253b54" font-size="16">Anneaux automatiques</text>
+    <rect x="17" y="295" width="195" height="76" rx="10" fill="#f2ecff" stroke="#c1afe8"/>
+    <text x="29" y="318" fill="#4d2b79" font-size="17" font-weight="700">WSUS</text>
+    <rect x="224" y="295" width="179" height="76" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="236" y="317" fill="#253b54" font-size="16">Serveur interne</text>
+    <rect x="415" y="295" width="208" height="76" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="427" y="317" fill="#253b54" font-size="16">Admin</text>
+    <text x="427" y="336" fill="#253b54" font-size="16">Approbation par mise à</text>
+    <text x="427" y="355" fill="#253b54" font-size="16">jour</text>
+    <rect x="17" y="378" width="195" height="76" rx="10" fill="#fff1d7" stroke="#dac08d"/>
+    <text x="29" y="401" fill="#63400e" font-size="17" font-weight="700">ConfigMgr</text>
+    <rect x="224" y="378" width="179" height="76" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="236" y="400" fill="#253b54" font-size="16">Serveur interne</text>
+    <text x="236" y="419" fill="#253b54" font-size="16">WSUS</text>
+    <rect x="415" y="378" width="208" height="76" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="427" y="400" fill="#253b54" font-size="16">Admin</text>
+    <text x="427" y="419" fill="#253b54" font-size="16">Déploiements</text>
+  </g>
+</svg>

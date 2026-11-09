@@ -75,17 +75,7 @@ Le **UAC** (User Account Control) empêche une application de s'exécuter avec d
 
 Un compte administrateur reçoit **deux jetons d'accès** à l'ouverture de session :
 
-```
-Ouverture de session (compte administrateur)
-      │
-      ▼
- Jeton standard          Jeton administrateur complet
- (utilisé par défaut)    (activé uniquement sur demande)
-      │                         │
-      ▼                         ▼
- Explorer.exe, apps        Invite élevée, action nécessitant
- courantes                 des privilèges admin (UAC prompt)
-```
+![UAC et les deux jetons — Une session administrateur utilise le jeton standard par défaut. L’élévation UAC active le jeton administrateur pour l’action demandée.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-09-uac-jetons.svg)
 
 Le **bureau sécurisé** (secure desktop) assombrit l'écran lors de l'invite UAC : seule l'invite UAC elle-même peut y répondre, ce qui empêche un malware de simuler un clic automatique.
 
@@ -295,21 +285,7 @@ netsh advfirewall set publicprofile state off
 
 ### Fonctionnement
 
-```
-Volume système (C:)
-      │
-      ▼
- Clé de chiffrement de volume (FVEK)
- chiffrée par la clé maître (VMK)
-      │
-      ▼
- VMK scellée dans le TPM
- (liée à l'état de démarrage : BCD, BIOS/UEFI, Secure Boot)
-      │
-      ▼
- Si l'état de démarrage change (BIOS modifié, disque déplacé...)
- → TPM refuse de libérer la clé → demande de la clé de récupération
-```
+![Chaîne de clés BitLocker — La FVEK chiffre le volume système, la VMK protège la FVEK et le TPM protège la VMK selon l’état du démarrage.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-09-bitlocker-cles.svg)
 
 ### Depuis 24H2 : le chiffrement automatique de l'appareil
 
@@ -564,13 +540,7 @@ Sur les installations **neuves** de Windows 11, **Smart App Control** (Sécurit�
 
 Ces protections reposent sur **VBS** : une partie du système s'exécute dans un conteneur isolé par l'hyperviseur (VTL1), inaccessible même à un noyau Windows compromis.
 
-```
-Windows 11 (VBS activé)
-      ├── Noyau Windows normal (VTL0) — peut être compromis par un pilote malveillant
-      └── Conteneur sécurisé (VTL1)
-            ├── Credential Guard → isole les secrets de LSASS (hash NTLM, tickets Kerberos)
-            └── Intégrité de la mémoire (HVCI) → seul du code noyau signé et vérifié s'exécute
-```
+![Isolation avec VBS — VBS sépare le noyau Windows ordinaire en VTL0 de l’environnement sécurisé VTL1, qui héberge les protections Credential Guard et HVCI.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-09-vbs-isolation.svg)
 
 - **Credential Guard** bloque le vol d'identifiants en mémoire (*Pass-the-Hash*, *Pass-the-Ticket*, mimikatz). Il est **activé par défaut** depuis 22H2 sur les postes **Enterprise/Education joints à un domaine** qui ont le matériel compatible.
 - **Intégrité de la mémoire** : Sécurité Windows → Sécurité de l'appareil → Isolation du noyau. Activée par défaut sur les PC neufs compatibles.
@@ -604,38 +574,37 @@ Tout ce qui précède se règle poste par poste dans `secpol.msc` (stratégie de
 
 ## Récapitulatif
 
-```
-Moindre privilège
-  Utilisateur standard + compte d'admin séparé (adm.xxx) | LAPS pour l'admin local (chap. 11)
-  Get-LocalGroupMember Administrateurs | secpol.msc → Attribution des droits utilisateur
-
-UAC — Contrôle du compte utilisateur
-  Jeton standard vs jeton admin | bureau sécurisé | 4 niveaux de notification
-  Administrator protection : compte fantôme juste-à-temps + Windows Hello (TypeOfAdminApprovalMode=2)
-
-Microsoft Defender Antivirus
-  Protection temps réel, cloud, accès contrôlé aux dossiers, protection contre les falsifications
-  Get-MpComputerStatus | Start-MpScan | Add-MpPreference -ExclusionPath
-
-Pare-feu Windows Defender
-  Profils : Domaine > Privé > Public (confiance décroissante)
-  Profil = par carte réseau, pas par PC | changement : Réseau et Internet > Propriétés
-  wf.msc (GUI) | New-NetFirewallRule (PowerShell) | netsh advfirewall (CLI)
-
-BitLocker — chiffrement de volume
-  24H2+ : chiffrement AUTOMATIQUE mais Protection Off, sans protecteur → à finaliser :
-    Add-BitLockerKeyProtector -RecoveryPasswordProtector → -TpmProtector → Resume-BitLocker
-  ISO/clé de démarrage présente → 0x80310030 | master → PreventDeviceEncryption (sinon Sysprep KO)
-  Clé de récupération → AD / Entra (Backup-BitLockerKeyProtector) | BitLocker To Go (mot de passe)
-
-EFS — chiffrement de fichiers (ancien, toujours présent)
-  Certificat utilisateur | cipher /e | /d | /x (sauvegarde certificat)
-
-Restreindre les applications
-  AppLocker : règles Exe/MSI/Script/Appx, Éditeur > Hash > Chemin, Audit puis Appliquer, AppIDSvc
-              TESTÉ : appliqué sur Windows 11 Pro 26H2 (événement 8004)
-  App Control for Business (ex-WDAC) : noyau, non contournable | Smart App Control : PC neufs, cloud
-
-VBS : Credential Guard (défaut sur Enterprise joint au domaine) | intégrité mémoire (HVCI)
-Baselines : secpol.msc / gpedit.msc en local → GPO de domaine (chap. 11) | gpresult /h
-```
+> [!summary] L'essentiel du chapitre
+> **Moindre privilège**
+> - Utilisateur standard + compte d'admin séparé (adm.xxx) · LAPS pour l'admin local (chap. 11)
+> - `Get-LocalGroupMember Administrateurs` · `secpol.msc` → Attribution des droits utilisateur
+>
+> **UAC — Contrôle du compte utilisateur**
+> - Jeton standard vs jeton admin · bureau sécurisé · 4 niveaux de notification
+> - **Administrator protection** : compte fantôme juste-à-temps + Windows Hello (TypeOfAdminApprovalMode=2)
+>
+> **Microsoft Defender Antivirus**
+> - Protection temps réel, cloud, accès contrôlé aux dossiers, protection contre les falsifications
+> - `Get-MpComputerStatus` · `Start-MpScan` · `Add-MpPreference -ExclusionPath`
+>
+> **Pare-feu Windows Defender**
+> - **Profils** : Domaine > Privé > Public (confiance décroissante)
+> - Profil = par carte réseau, pas par PC · changement : Réseau et Internet > Propriétés
+> - `wf.msc` (GUI) · `New-NetFirewallRule` (PowerShell) · `netsh advfirewall` (CLI)
+>
+> **BitLocker — chiffrement de volume**
+> - **24H2+** : chiffrement AUTOMATIQUE mais Protection Off, sans protecteur → à finaliser :
+>   - `Add-BitLockerKeyProtector -RecoveryPasswordProtector` → -TpmProtector → `Resume-BitLocker`
+> - ISO/clé de démarrage présente → 0x80310030 · master → PreventDeviceEncryption (sinon Sysprep KO)
+> - Clé de récupération → AD / Entra (`Backup-BitLockerKeyProtector`) · BitLocker To Go (mot de passe)
+>
+> **EFS — chiffrement de fichiers (ancien, toujours présent)**
+> - Certificat utilisateur · `cipher /e` · /d · /x (sauvegarde certificat)
+>
+> **Restreindre les applications**
+> - **AppLocker** : règles Exe/MSI/Script/Appx, Éditeur > Hash > Chemin, Audit puis Appliquer, AppIDSvc
+>   - **TESTÉ** : appliqué sur Windows 11 Pro 26H2 (événement 8004)
+> - App Control for Business (ex-WDAC) : noyau, non contournable · Smart App Control : PC neufs, cloud
+>
+> - **VBS** : Credential Guard (défaut sur Enterprise joint au domaine) · intégrité mémoire (HVCI)
+> - **Baselines** : `secpol.msc` / `gpedit.msc` en local → GPO de domaine (chap. 11) · `gpresult /h`

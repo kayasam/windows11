@@ -36,13 +36,7 @@ Windows 11 introduit les **Snap Layouts** : des dispositions prédéfinies pour 
 
 **Accès :** survoler le bouton Agrandir d'une fenêtre, ou appuyer sur `Win + Z`
 
-```
-Dispositions disponibles (sur 1920×1080) :
-┌──┬──┐  ┌──┬──┬──┐  ┌──┬─────┐  ┌──────┬──┐
-│  │  │  │  │  │  │  │  │     │  │      │  │
-└──┴──┘  └──┴──┴──┘  └──┴─────┘  └──────┴──┘
- 50/50    33/33/33    33 / 67       67 / 33
-```
+![Dispositions de fenêtres Snap — Quatre exemples de dispositions sur un écran de 1920 × 1080, dont des répartitions en deux et trois zones.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-03-snap-layouts.svg)
 
 **Snap Groups** : Windows 11 mémorise les groupes de fenêtres snappées. En survolant l'icône d'une app dans la barre des tâches, on retrouve le groupe d'un clic.
 
@@ -121,12 +115,7 @@ Certaines fonctionnalités n'ont pas encore été migrées vers Paramètres :
 
 Les comptes locaux sont stockés dans la **base SAM** (Security Accounts Manager), une ruche du registre Windows située dans `C:\Windows\System32\config\SAM`. Elle est chargée en mémoire au démarrage et verrouillée par le système — impossible de l'ouvrir directement avec regedit tant que Windows tourne.
 
-```
-C:\Windows\System32\config\SAM
-        │
-        ├── Comptes utilisateurs  (SID, nom, hash du mot de passe, état...)
-        └── Groupes locaux        (Administrateurs, Utilisateurs, ...)
-```
+![La base SAM — La base SAM de Windows stocke les comptes utilisateurs et les groupes locaux.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-03-base-sam.svg)
 
 Chaque compte est identifié par un **SID** (Security Identifier) unique, de la forme `S-1-5-21-XXXXXXXXX-XXXXXXXXX-XXXXXXXXX-XXXX`. C'est le SID, et non le nom du compte, qui est utilisé en interne par Windows pour les permissions NTFS, les jetons d'accès et les journaux d'événements.
 
@@ -196,21 +185,7 @@ Remove-LocalUser -Name "employe1"
 
 ### Architecture réseau du lab Fournil
 
-```
-Internet
-    │
-    │ (NAT Windows)
-    │
-┌───┴────────────────────┐
-│  vEthernet (vSwitch-Rennes)   │  192.168.3.254  ← passerelle
-│  Hôte Windows 11       │
-└───┬────────────────────┘
-    │
-    │  Switch vSwitch-Rennes (192.168.3.0/24)
-    ├──── PC01   192.168.3.10  ← poste admin (ce chapitre)
-    ├──── SRV01  192.168.3.1   ← futur serveur AD
-    └──── PC02   DHCP           ← futur poste cible
-```
+![Réseau du lab pour PC01 — PC01, SRV01 et PC02 partagent le réseau 192.168.3.0/24. L’hôte Windows 11 fournit le NAT et la passerelle 192.168.3.254.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-03-reseau-pc01.svg)
 
 ### Afficher la configuration réseau actuelle
 
@@ -351,27 +326,26 @@ Paramètres → Système → Informations système → **Paramètres système av
 
 ## Récapitulatif
 
-```
-Interface Windows 11
-  Menu Démarrer    → Win | épinglé + nos recommandations + tout (une seule page)
-  Snap Layouts     → Win+Z | 6 dispositions de fenêtres
-  Bureaux virtuels → Win+Tab | Win+Ctrl+D/→/←/F4
-
-Comptes locaux
-  Créer            → lusrmgr.msc | Paramètres | New-LocalUser
-  Administrateur   → Add-LocalGroupMember -Group "Administrateurs"
-  Standard         → Add-LocalGroupMember -Group "Utilisateurs"
-
-Réseau IP fixe (PC01)
-  IP               → 192.168.3.10/24
-  Passerelle       → 192.168.3.254
-  DNS              → 8.8.8.8 (provisoire)
-  Graphique        → ncpa.cpl → TCP/IPv4 → IP fixe
-  PowerShell       → New-NetIPAddress + Set-DnsClientServerAddress
-
-Variables d'environnement
-  Afficher         → Get-ChildItem Env: | $env:NOM
-  Créer session    → $env:NOM = "valeur"
-  Créer persistant → [System.Environment]::SetEnvironmentVariable(...)
-  Portées          → Processus < Utilisateur < Machine
-```
+> [!summary] L'essentiel du chapitre
+> **Interface Windows 11**
+> - **Menu Démarrer** : Win · épinglé + nos recommandations + tout (une seule page)
+> - **Snap Layouts** : Win+Z · 6 dispositions de fenêtres
+> - **Bureaux virtuels** : Win+Tab · Win+Ctrl+D/→/←/F4
+>
+> **Comptes locaux**
+> - **Créer** : `lusrmgr.msc` · Paramètres · `New-LocalUser`
+> - **Administrateur** : `Add-LocalGroupMember -Group "Administrateurs"`
+> - **Standard** : `Add-LocalGroupMember -Group "Utilisateurs"`
+>
+> **Réseau IP fixe (PC01)**
+> - **IP** : 192.168.3.10/24
+> - **Passerelle** : 192.168.3.254
+> - **DNS** : 8.8.8.8 (provisoire)
+> - **Graphique** : `ncpa.cpl` → TCP/IPv4 → IP fixe
+> - **PowerShell** : `New-NetIPAddress` + `Set-DnsClientServerAddress`
+>
+> **Variables d'environnement**
+> - **Afficher** : `Get-ChildItem Env:` · `$env:NOM`
+> - **Créer session** : `$env:NOM` = "valeur"
+> - **Créer persistant** : `[System.Environment]::SetEnvironmentVariable(...)`
+> - **Portées** : Processus < Utilisateur < Machine

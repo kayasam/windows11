@@ -7,29 +7,7 @@
 
 ## Schéma du lab
 
-```
-                              Internet
-                                  │
-                ┌─────────────────┴──────────────────┐
-                │ PC hôte (Windows 11 + Hyper-V)     │
-                │  vEthernet (vSwitch-Rennes)        │
-                │  192.168.3.254  ← passerelle + NAT │
-                │  Default Switch (DHCP + NAT auto)  │
-                └───────┬────────────────────┬───────┘
-                        │ vSwitch-Rennes     │ Default Switch
-                        │ 192.168.3.0/24     │ (172.x, change au reboot)
-      ┌─────────────────┼─────────────┐      │
-      │                 │             │      │
-  ┌───┴────┐      ┌─────┴──┐     ┌────┴───┐ ┌┴───────┐
-  │ SRV01  │      │ PC01   │     │ PC02   │ │ MASTER │
-  │ .1     │      │ .10    │     │ DHCP   │ │ DHCP   │
-  │ WS2025 │      │ W11    │     │ W11    │ │ W11    │
-  │ Core   │      │ 26H2   │     │ déployé│ │ réf.   │
-  └────────┘      └────────┘     └────────┘ └────────┘
-   AD DS/DNS/DHCP  poste admin   chap. 16    chap. 14
-   chap. 10        chap. 01→     jamais      jamais
-                                 joint ?     joint
-```
+![Réseau du lab Fournil — L’hôte Hyper-V relie Internet à vSwitch-Rennes pour SRV01, PC01 et PC02, et au Default Switch pour MASTER.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-00-lab-fournil.svg)
 
 ---
 
@@ -72,14 +50,7 @@
 | **Niveau fonctionnel** | `Win2025` (domaine et forêt) |
 | **Contrôleur de domaine** | `SRV01` (unique) |
 
-```
-ad.fournil.lab
-└── OU=Fournil
-    ├── OU=Utilisateurs      ← stagiaire
-    ├── OU=Ordinateurs       ← PC01, PC02 (déplacés depuis CN=Computers)
-    ├── OU=Groupes           ← G-Boulangerie, GG-Admins-Postes
-    └── OU=Admins            ← adm.stagiaire
-```
+![Arborescence Active Directory — Dans ad.fournil.lab, l’UO Fournil regroupe les utilisateurs, les ordinateurs, les groupes et les comptes d’administration.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-00-uo-fournil.svg)
 
 | Objet | Type | Détail |
 |-------|------|--------|

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="463" viewBox="0 0 640 463" role="img" aria-labelledby="title desc">
+  <title id="title">Gestion de l’ordinateur</title>
+  <desc id="desc">La console regroupe les outils système, le stockage, et les services et applications.</desc>
+  <rect x="1" y="1" width="638" height="461" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M5 8h24m-24 9h24m-24 9h24 M12 5v6m11 3v6m-7 3v6" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Gestion de l’ordinateur</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="32" y="114" fill="#143c6f" font-size="21" font-weight="700">Gestion de l’ordinateur</text>
+    <text x="32" y="135" fill="#253b54" font-size="18">Console d’administration</text>
+    <path d="M44 150L44 179" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 179L63 179" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="158" width="560" height="126" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="78" y="185" fill="#143c6f" font-size="21" font-weight="700">Outils système</text>
+    <text x="78" y="206" fill="#253b54" font-size="18">Planificateur de tâches, Observateur d’événements, Dossiers</text>
+    <text x="78" y="227" fill="#253b54" font-size="18">partagés</text>
+    <text x="78" y="248" fill="#253b54" font-size="18">Utilisateurs et groupes locaux (lusrmgr.msc), Performances</text>
+    <text x="78" y="269" fill="#253b54" font-size="18">Gestionnaire de périphériques</text>
+    <path d="M44 179L44 313" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 313L63 313" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="292" width="560" height="84" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="78" y="319" fill="#104c49" font-size="21" font-weight="700">Stockage</text>
+    <text x="78" y="340" fill="#253b54" font-size="18">Sauvegarde Windows Server et Gestion des disques</text>
+    <text x="78" y="361" fill="#253b54" font-size="18">(diskmgmt.msc).</text>
+    <path d="M44 313L44 405" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 405L63 405" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="384" width="560" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="78" y="411" fill="#4d2b79" font-size="21" font-weight="700">Services et applications</text>
+    <text x="78" y="432" fill="#253b54" font-size="18">Services (services.msc).</text>
+  </g>
+</svg>

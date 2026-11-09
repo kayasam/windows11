@@ -117,26 +117,11 @@ Get-WindowsUpdateLog
 | WUfB *deployment service* | Intégré à **Windows Autopatch** | Service cloud d'orchestration des anneaux (licences Microsoft 365 E3/E5 ou Business Premium) |
 | WSUS | **Déprécié** (septembre 2024) | Fonctionne toujours dans Windows Server 2025, mais plus aucune évolution |
 
-```
-                   Source des mises à jour            Qui décide quand ?
-Windows Update ─── cloud Microsoft          ──────── stratégies client (GPO / Intune)
-Autopatch ──────── cloud Microsoft          ──────── service Microsoft (anneaux automatiques)
-WSUS ────────────── serveur interne         ──────── l'admin approuve chaque mise à jour
-ConfigMgr ───────── serveur interne (WSUS)  ──────── l'admin (déploiements)
-```
+![Sources et pilotage des mises à jour — Windows Update et Autopatch utilisent le cloud Microsoft. WSUS et ConfigMgr utilisent un serveur interne.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-08-sources-mises-a-jour.svg)
 
 ### Principe des anneaux de déploiement (rings)
 
-```
-Anneau pilote (IT, 5 % du parc)     report 0 jour   ── PC01 au Fournil
-        │  quelques jours de recul : rien ne casse ?
-        ▼
-Anneau large (production)           report 7 jours
-        │
-        ▼
-Anneau critique (caisses, postes    report 14 jours
- de production)
-```
+![Anneaux de déploiement — Le déploiement démarre sur le pilote, s’élargit à la production après 7 jours et atteint les postes critiques après 14 jours.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-08-anneaux-windows-update.svg)
 
 On crée **une GPO par anneau**, filtrée sur un groupe de postes (chapitre 11).
 
@@ -144,13 +129,7 @@ On crée **une GPO par anneau**, filtrée sur un groupe de postes (chapitre 11).
 
 Les paramètres sont rangés sous le nœud **Windows Update**, en **quatre** sous-dossiers (libellés relevés dans l'ADMX de la 26H2) :
 
-```
-Configuration ordinateur → Modèles d'administration → Composants Windows → Windows Update
-├── Gérer l'expérience utilisateur final                                   ← redémarrages, échéances, heures d'activité
-├── Gérer les mises à jour proposées de Windows Server Update Service      ← uniquement avec un serveur WSUS
-├── Gérer les mises à jour proposées de Windows Update                     ← report, version cible, pilotes
-└── Stratégies héritées                                                    ← anciens paramètres, à ne plus utiliser
-```
+![Stratégies GPO pour Windows Update — Sous Windows Update, quatre dossiers distinguent l’expérience utilisateur, WSUS, les mises à jour Windows Update et les stratégies héritées.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-08-gpo-windows-update.svg)
 
 | Dossier | Paramètre | Rôle |
 |---------|-----------|------|
@@ -210,18 +189,17 @@ Sur `PC01` fraîchement installé : **8 logiciels** à mettre à jour selon `win
 
 ## Récapitulatif
 
-```
-Windows Update
-  Qualité (mensuelle, Patch Tuesday) vs Fonctionnalité (annuelle, package d'activation)
-  Suspendre (5 sem. max) | Heures d'activité | usoclient (déprécié) → API COM / PSWindowsUpdate
-  Get-HotFix | Get-WindowsUpdateLog | Fiabilité (perfmon /rel) pour les échecs
-
-Parc
-  "Windows Update client policies" (ex-WUfB) : GPO Composants Windows → Windows Update (4 dossiers)
-  Report qualité 0-30 j | fonctionnalités 0-365 j | version cible | exclure les pilotes | échéances
-  WSUS : déprécié (2024) | Autopatch : cloud, licences M365 | Hotpatch : Enterprise, sans redémarrage
-  Anneaux : pilote → large → critique (une GPO par anneau)
-
-Applications et pilotes
-  winget upgrade --all | outils constructeurs | Autopatch
-```
+> [!summary] L'essentiel du chapitre
+> **Windows Update**
+> - Qualité (mensuelle, Patch Tuesday) vs Fonctionnalité (annuelle, package d'activation)
+> - Suspendre (5 sem. max) · Heures d'activité · `usoclient` (déprécié) → API COM / PSWindowsUpdate
+> - `Get-HotFix` · `Get-WindowsUpdateLog` · Fiabilité (`perfmon /rel`) pour les échecs
+>
+> **Parc**
+> - "Windows Update client policies" (ex-WUfB) : GPO Composants Windows → Windows Update (4 dossiers)
+> - Report qualité 0-30 j · fonctionnalités 0-365 j · version cible · exclure les pilotes · échéances
+> - **WSUS** : déprécié (2024) · Autopatch : cloud, licences M365 · Hotpatch : Enterprise, sans redémarrage
+> - **Anneaux** : pilote → large → critique (une GPO par anneau)
+>
+> **Applications et pilotes**
+> - `winget upgrade --all` · outils constructeurs · Autopatch

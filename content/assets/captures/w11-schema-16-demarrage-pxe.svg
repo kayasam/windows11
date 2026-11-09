@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="498" viewBox="0 0 640 498" role="img" aria-labelledby="title desc">
+  <title id="title">Démarrage par le réseau (PXE)</title>
+  <desc id="desc">Le poste obtient ses informations de démarrage par DHCP, télécharge le chargeur et WinPE par TFTP, puis applique l’image via SMB.</desc>
+  <rect x="1" y="1" width="638" height="496" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M11 6h12v7H11z M2 23h10v7H2z M22 23h10v7H22z M17 13v5M7 23v-5h20v5" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Démarrage par le réseau (PXE)</text>
+    <rect x="17" y="86" width="187" height="32" rx="8" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="110.5" y="108" fill="#143c6f" font-size="16" font-weight="700" text-anchor="middle">Poste client</text>
+    <rect x="226" y="86" width="187" height="32" rx="8" fill="#ddf4f0" stroke="#9ccac8"/>
+    <text x="319.5" y="108" fill="#104c49" font-size="16" font-weight="700" text-anchor="middle">DHCP</text>
+    <rect x="435" y="86" width="188" height="32" rx="8" fill="#f2ecff" stroke="#c1afe8"/>
+    <text x="529.0" y="108" fill="#4d2b79" font-size="16" font-weight="700" text-anchor="middle">Déploiement</text>
+    <path d="M110 119V410" fill="none" stroke="#879ab2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"/>
+    <path d="M319 119V410" fill="none" stroke="#879ab2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"/>
+    <path d="M529 119V410" fill="none" stroke="#879ab2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"/>
+    <rect x="116" y="130" width="198" height="24" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="214.5" y="146" fill="#143c6f" font-size="14" font-weight="700" text-anchor="middle">DHCPDISCOVER (PXEClient)</text>
+    <path d="M110 152L319 152" fill="none" stroke="#143c6f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="319,152 313,148 313,156" fill="#143c6f"/>
+    <rect x="116" y="191" width="198" height="24" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="214.5" y="207" fill="#104c49" font-size="14" font-weight="700" text-anchor="middle">Attribution de l’adresse IP</text>
+    <path d="M319 213L110 213" fill="none" stroke="#104c49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="110,213 116,209 116,217" fill="#104c49"/>
+    <rect x="146" y="252" width="348" height="24" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="319.5" y="268" fill="#104c49" font-size="17" font-weight="700" text-anchor="middle">Serveur et fichier de démarrage</text>
+    <path d="M529 274L110 274" fill="none" stroke="#104c49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="110,274 116,270 116,278" fill="#104c49"/>
+    <rect x="146" y="280" width="348" height="23" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="319.5" y="296" fill="#104c49" font-size="16" text-anchor="middle">Via les options DHCP 66/67 ou le proxy DHCP</text>
+    <rect x="146" y="313" width="348" height="24" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="319.5" y="329" fill="#4d2b79" font-size="17" font-weight="700" text-anchor="middle">TFTP · Chargeur EFI</text>
+    <path d="M110 335L529 335" fill="none" stroke="#4d2b79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="529,335 523,331 523,339" fill="#4d2b79"/>
+    <rect x="146" y="341" width="348" height="23" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="319.5" y="357" fill="#4d2b79" font-size="16" text-anchor="middle">wdsmgfw.efi ou bootmgfw.efi</text>
+    <rect x="146" y="374" width="348" height="24" rx="3" fill="#f1f5fa" stroke="none"/>
+    <text x="319.5" y="390" fill="#4d2b79" font-size="17" font-weight="700" text-anchor="middle">TFTP · boot.wim (WinPE)</text>
+    <path d="M110 396L529 396" fill="none" stroke="#4d2b79" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="529,396 523,392 523,400" fill="#4d2b79"/>
+    <rect x="17" y="419" width="606" height="63" rx="10" fill="#fff1d7" stroke="#dac08d"/>
+    <text x="32" y="446" fill="#63400e" font-size="21" font-weight="700">WinPE démarre</text>
+    <text x="32" y="467" fill="#253b54" font-size="18">Il contacte le serveur de déploiement et applique l’image via SMB.</text>
+  </g>
+</svg>

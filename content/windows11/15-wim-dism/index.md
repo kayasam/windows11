@@ -229,29 +229,28 @@ wpeutil reboot
 
 ## Récapitulatif
 
-```
-Format WIM
-  Basé fichiers (pas secteurs) | déduplication | multi-index dans un seul .wim
-
-Capture (MASTER généralisée et éteinte, chapitre 14)
-  $vhdPath = (Get-VMHardDiskDrive -VMName "MASTER").Path   ← disque actif, pas forcément MASTER.vhdx (checkpoint = .avhdx)
-  Mount-VHD -Path $vhdPath -ReadOnly → Dism /Capture-Image /CaptureDir:E:\ → Dismount-VHD -Path $vhdPath
-
-Montage / modification / démontage
-  Dism /Mount-Image /Index:N /MountDir:...
-  Dism /Unmount-Image /Commit (garder) ou /Discard (annuler)
-  Dism /Cleanup-Wim si un montage reste bloqué
-
-Pilotes et mises à jour hors ligne
-  Dism /Image:... /Add-Driver /Driver:... [/Recurse]
-  Dism /Image:... /Add-Package /PackagePath:...msu
-
-Maintenance hors ligne
-  /Get-WimInfo | /Remove-ProvisionedAppxPackage | /Enable-Feature /Source | langues | /Cleanup-Image /ResetBase
-
-Application depuis WinPE
-  diskpart /s partition-uefi.txt → Dism /Apply-Image /ApplyDir:W:\ → bcdboot W:\Windows /s S: /f UEFI
-  Lettres différentes dans WinPE : vérifier avec Get-Volume avant "clean"
-
-→ Chapitre 16 : MASTER.wim intégrée dans une ISO de déploiement personnalisée
-```
+> [!summary] L'essentiel du chapitre
+> **Format WIM**
+> - Basé fichiers (pas secteurs) · déduplication · multi-index dans un seul .wim
+>
+> **Capture (MASTER généralisée et éteinte, chapitre 14)**
+> - `$vhdPath = (Get-VMHardDiskDrive -VMName "MASTER").Path` — *disque actif, pas forcément `MASTER.vhdx` (checkpoint = `.avhdx`)*
+> - `Mount-VHD -Path $vhdPath -ReadOnly` → `Dism /Capture-Image /CaptureDir:E:\` → `Dismount-VHD -Path $vhdPath`
+>
+> **Montage / modification / démontage**
+> - `Dism /Mount-Image /Index:N /MountDir:...`
+> - `Dism /Unmount-Image /Commit` (garder) ou /Discard (annuler)
+> - `Dism /Cleanup-Wim` si un montage reste bloqué
+>
+> **Pilotes et mises à jour hors ligne**
+> - `Dism /Image:... /Add-Driver /Driver:... [/Recurse]`
+> - `Dism /Image:... /Add-Package /PackagePath:...msu`
+>
+> **Maintenance hors ligne**
+> - /Get-WimInfo · /Remove-ProvisionedAppxPackage · /Enable-Feature /Source · langues · /Cleanup-Image /ResetBase
+>
+> **Application depuis WinPE**
+> - `diskpart /s partition-uefi.txt` → `Dism /Apply-Image /ApplyDir:W:\` → `bcdboot W:\Windows /s S: /f UEFI`
+> - **Lettres différentes dans WinPE** : vérifier avec `Get-Volume` avant "clean"
+>
+> - → Chapitre 16 : `MASTER.wim` intégrée dans une ISO de déploiement personnalisée

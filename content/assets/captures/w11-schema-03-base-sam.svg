@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="287" viewBox="0 0 640 287" role="img" aria-labelledby="title desc">
+  <title id="title">La base SAM</title>
+  <desc id="desc">La base SAM de Windows stocke les comptes utilisateurs et les groupes locaux.</desc>
+  <rect x="1" y="1" width="638" height="285" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M3 9h11l4 4h13v15H3z M3 9V6h10l3 3h12v4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">La base SAM</text>
+    <rect x="17" y="87" width="606" height="42" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="32" y="114" fill="#143c6f" font-size="21" font-weight="700">C:\Windows\System32\config\SAM</text>
+    <path d="M44 129L44 158" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 158L63 158" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="137" width="560" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="78" y="164" fill="#104c49" font-size="21" font-weight="700">Comptes utilisateurs</text>
+    <text x="78" y="185" fill="#253b54" font-size="18">SID, nom, empreinte du mot de passe et état du compte.</text>
+    <path d="M44 158L44 229" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 229L63 229" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="208" width="560" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="78" y="235" fill="#4d2b79" font-size="21" font-weight="700">Groupes locaux</text>
+    <text x="78" y="256" fill="#253b54" font-size="18">Administrateurs, Utilisateurs et autres groupes locaux.</text>
+  </g>
+</svg>

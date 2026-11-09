@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="450" viewBox="0 0 640 450" role="img" aria-labelledby="title desc">
+  <title id="title">Stratégies GPO pour Windows Update</title>
+  <desc id="desc">Sous Windows Update, quatre dossiers distinguent l’expérience utilisateur, WSUS, les mises à jour Windows Update et les stratégies héritées.</desc>
+  <rect x="1" y="1" width="638" height="448" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M3 9h11l4 4h13v15H3z M3 9V6h10l3 3h12v4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Stratégies GPO pour Windows Update</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="32" y="114" fill="#143c6f" font-size="21" font-weight="700">Configuration ordinateur</text>
+    <text x="32" y="135" fill="#253b54" font-size="18">Modèles d’administration → Composants Windows → Windows Update</text>
+    <path d="M44 150L44 179" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 179L63 179" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="158" width="560" height="63" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="78" y="185" fill="#143c6f" font-size="21" font-weight="700">Gérer l’expérience utilisateur final</text>
+    <text x="78" y="206" fill="#253b54" font-size="18">Redémarrages, échéances et heures d’activité.</text>
+    <path d="M44 179L44 250" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 250L63 250" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="229" width="560" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="78" y="256" fill="#4d2b79" font-size="21" font-weight="700">Mises à jour proposées par WSUS</text>
+    <text x="78" y="277" fill="#253b54" font-size="18">Seulement avec un serveur Windows Server Update Service.</text>
+    <path d="M44 250L44 321" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 321L63 321" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="300" width="560" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="78" y="327" fill="#104c49" font-size="21" font-weight="700">Mises à jour proposées par Windows Update</text>
+    <text x="78" y="348" fill="#253b54" font-size="18">Report, version cible et pilotes.</text>
+    <path d="M44 321L44 392" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M44 392L63 392" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="63" y="371" width="560" height="63" rx="10" fill="#ffffff" stroke="#b7c6da"/>
+    <text x="78" y="398" fill="#3e5470" font-size="21" font-weight="700">Stratégies héritées</text>
+    <text x="78" y="419" fill="#253b54" font-size="18">Anciens paramètres à éviter.</text>
+  </g>
+</svg>

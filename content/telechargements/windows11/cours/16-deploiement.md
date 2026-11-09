@@ -32,19 +32,7 @@
 
 ## 2. Méthode 1 — l'ISO de déploiement personnalisée
 
-```
-MASTER.wim (chapitre 15)         autounattend.xml (chapitre 13)
-        │                                  │
-        └──────────────┬───────────────────┘
-                        ▼
-        ISO Windows 11 officielle, copiée dans un dossier de travail
-        → install.wim remplacé par MASTER.wim
-        → autounattend.xml déposé à la racine
-                        ▼
-              oscdimg → ISO bootable
-                        ▼
-        Attachée à PC02 → démarrage → zéro clic → bureau
-```
+![Assembler l’ISO de déploiement — MASTER.wim et autounattend.xml remplacent ou complètent le contenu de l’ISO Windows 11, puis oscdimg crée l’ISO amorçable pour PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-iso-personnalisee.svg)
 
 ---
 
@@ -154,14 +142,7 @@ vmconnect.exe localhost "PC02"
 
 ### Le principe PXE
 
-```
-Poste (carte réseau)            DHCP                       Serveur de déploiement
-      │  DHCPDISCOVER (PXEClient) ──►                              │
-      │  ◄── adresse IP + « serveur de boot = X, fichier = Y » ────│ (options 66/67 ou proxy DHCP)
-      │  TFTP : télécharge le chargeur (wdsmgfw.efi / bootmgfw.efi) ─► │
-      │  TFTP : télécharge boot.wim (WinPE)                         │
-      │  WinPE démarre, contacte le serveur, applique l'image (SMB) │
-```
+![Démarrage par le réseau (PXE) — Le poste obtient ses informations de démarrage par DHCP, télécharge le chargeur et WinPE par TFTP, puis applique l’image via SMB.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-demarrage-pxe.svg)
 
 Avantage : **aucun support physique**, des dizaines de postes en parallèle (multidiffusion). Inconvénients : infrastructure (DHCP, serveur, VLAN, Secure Boot), maintenance.
 
@@ -211,11 +192,7 @@ Schéma UEFI/GPT recommandé : **EFI** (FAT32, 100-260 Mo) · **MSR** (16 Mo) ·
 
 Changer de poste (ou réinstaller) sans perdre les documents, le fond d'écran, les lecteurs réseau, les paramètres d'applications : c'est le rôle de **USMT** (*User State Migration Tool*), fourni avec l'ADK (dossier `User State Migration Tool\amd64`).
 
-```
-Ancien poste                      Magasin (partage réseau)            Nouveau poste
-scanstate.exe ──── USMT.MIG ────► \\SRV01\USMT$\Store\PC01 ────────► loadstate.exe
- (capture)        (compressé)                                         (restaure)
-```
+![Migration des profils avec USMT — scanstate.exe capture le profil dans USMT.MIG sur un partage réseau, puis loadstate.exe le restaure sur le nouveau poste.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-migration-usmt.svg)
 
 ```cmd
 :: Sur PC01 (administrateur) : capturer le profil de stagiaire uniquement
@@ -262,16 +239,7 @@ En 2026, la combinaison **OneDrive KFM + Windows Backup for Organizations** rend
 
 Plus d'image : on **garde le Windows installé en usine** et on le **transforme** en poste d'entreprise au premier démarrage, depuis le cloud.
 
-```
-Constructeur / revendeur               Microsoft Entra ID + Intune               Utilisateur
-  enregistre le hash matériel ───────►  profil Autopilot attribué au poste
-                                                                                  déballe le PC,
-                                         ◄──────── le poste s'identifie ─────────  se connecte au Wi-Fi
-                                         OOBE personnalisée (logo, pas de choix)
-                                         jonction Entra ID + inscription Intune
-                                         applications, stratégies, BitLocker,      ───► bureau prêt,
-                                         Windows Update (Autopatch)                     données OneDrive
-```
+![Provisionnement avec Windows Autopilot — Le fabricant enregistre l’appareil, le cloud lui attribue un profil, puis l’OOBE inscrit le poste dans Entra ID et Intune.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-windows-autopilot.svg)
 
 | Mode | Usage |
 |------|-------|
@@ -310,23 +278,22 @@ En pratique, beaucoup d'organisations sont **hybrides** : jonction AD + Entra (*
 
 ## Récapitulatif
 
-```
-ISO officielle → copiée dans un dossier de travail
-  sources\install.wim  remplacé par MASTER.wim (chapitre 15)
-  autounattend.xml      déposé à la racine (chapitre 13 — passes windowsPE/specialize/oobeSystem)
-
-oscdimg -m -o -u2 -udfver102 -bootdata:2#p0,e,b...etfsboot.com#pEF,e,b...efisys.bin <source> <iso>
-  → ISO bootable BIOS + UEFI
-
-  efisys_noprompt.bin → plus de "Press any key" (vrai zéro clic, mais efface sans prévenir)
-  Image sans Windows\Panther\unattend-original.xml (sinon 0x80070050 au déploiement)
-
-PC02 : New-VM (Gen2, vSwitch-Rennes) → Add-VMDvdDrive (ISO) → démarrage
-  → zéro clic → bureau directement
-
-Réseau : PXE = DHCP + TFTP + WinPE | WDS : mains libres BLOQUÉ (avril 2026), rôle déprécié
-         MDT : RETIRÉ (janvier 2026) | ConfigMgr OSD : supporté
-Migration : USMT scanstate/loadstate (/ue:*\* /ui:DOM\user, tester avec /listfiles)
-            ou OneDrive KFM + Windows Backup for Organizations (Entra)
-Moderne : Autopilot (hash matériel, Entra + Intune, OOBE pilotée par le cloud, pas d'image)
-```
+> [!summary] L'essentiel du chapitre
+> **ISO officielle → copiée dans un dossier de travail**
+> - `sources\install.wim` : remplacé par `MASTER.wim` (chapitre 15)
+> - `autounattend.xml` : déposé à la racine (chapitre 13 — passes windowsPE/specialize/oobeSystem)
+>
+> **`oscdimg -m -o -u2 -udfver102 -bootdata:2#p0,e,b...etfsboot.com#pEF,e,b...efisys.bin <source> <iso>`**
+> - → ISO bootable BIOS + UEFI
+>
+> - `efisys_noprompt.bin` → plus de "Press any key" (vrai zéro clic, mais efface sans prévenir)
+> - Image sans `Windows\Panther\unattend-original.xml` (sinon 0x80070050 au déploiement)
+>
+> **PC02 : `New-VM` (Gen2, vSwitch-Rennes) → `Add-VMDvdDrive` (ISO) → démarrage**
+> - → zéro clic → bureau directement
+>
+> - **Réseau** : PXE = DHCP + TFTP + WinPE · WDS : mains libres BLOQUÉ (avril 2026), rôle déprécié
+>   - **MDT** : RETIRÉ (janvier 2026) · ConfigMgr OSD : supporté
+> - **Migration** : USMT scanstate/loadstate (`/ue:*\*` `/ui:DOM\user`, tester avec /listfiles)
+>   - ou OneDrive KFM + Windows Backup for Organizations (Entra)
+> - **Moderne** : Autopilot (hash matériel, Entra + Intune, OOBE pilotée par le cloud, pas d'image)

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="424" viewBox="0 0 640 424" role="img" aria-labelledby="title desc">
+  <title id="title">Anatomie d’une tâche planifiée</title>
+  <desc id="desc">Une tâche combine le moment du déclenchement, l’action à exécuter, l’identité et les conditions d’exécution.</desc>
+  <rect x="1" y="1" width="638" height="422" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M5 8h24m-24 9h24m-24 9h24 M12 5v6m11 3v6m-7 3v6" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Anatomie d’une tâche planifiée</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="32" y="114" fill="#143c6f" font-size="21" font-weight="700">Déclencheurs · Quand ?</text>
+    <text x="32" y="135" fill="#253b54" font-size="18">Tous les jours à 07:30, au démarrage ou sur l’événement 4625.</text>
+    <rect x="17" y="159" width="606" height="84" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="32" y="186" fill="#104c49" font-size="21" font-weight="700">Actions · Quoi ?</text>
+    <text x="32" y="207" fill="#253b54" font-size="18">Exemple de commande</text>
+    <text x="32" y="228" fill="#253b54" font-size="18">powershell.exe -File C:\Scripts\x.ps1</text>
+    <rect x="17" y="252" width="606" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="32" y="279" fill="#4d2b79" font-size="21" font-weight="700">Principal · Qui ?</text>
+    <text x="32" y="300" fill="#253b54" font-size="18">SYSTEM, un compte de service ou l’utilisateur connecté.</text>
+    <rect x="17" y="324" width="606" height="84" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="32" y="351" fill="#63400e" font-size="21" font-weight="700">Paramètres · Comment ?</text>
+    <text x="32" y="372" fill="#253b54" font-size="18">Rattraper une exécution manquée, limiter la durée ou éviter le</text>
+    <text x="32" y="393" fill="#253b54" font-size="18">lancement sur batterie.</text>
+  </g>
+</svg>

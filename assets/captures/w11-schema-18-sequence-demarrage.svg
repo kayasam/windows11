@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="568" viewBox="0 0 640 568" role="img" aria-labelledby="title desc">
+  <title id="title">Séquence de démarrage Windows 11</title>
+  <desc id="desc">Le PC passe de l’UEFI et de Secure Boot au gestionnaire de démarrage, au chargeur Windows, au noyau puis à la session utilisateur.</desc>
+  <rect x="1" y="1" width="638" height="566" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M17 4v13m-7-8a12 12 0 1 0 14 0" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Séquence de démarrage Windows 11</text>
+    <rect x="17" y="87" width="606" height="57" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <rect x="28" y="96" width="25" height="25" rx="8" fill="#fff1d7" stroke="none"/>
+    <text x="40.5" y="114" fill="#63400e" font-size="15" font-weight="700" text-anchor="middle">1</text>
+    <text x="62" y="110" fill="#63400e" font-size="17" font-weight="700">Mise sous tension · Firmware UEFI</text>
+    <text x="62" y="129" fill="#253b54" font-size="16">POST et autotest du matériel.</text>
+    <path d="M320.0 145L320.0 159" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,159 316.0,153 324.0,153" fill="#6e85a0"/>
+    <rect x="17" y="161" width="606" height="57" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <rect x="28" y="170" width="25" height="25" rx="8" fill="#f2ecff" stroke="none"/>
+    <text x="40.5" y="188" fill="#4d2b79" font-size="15" font-weight="700" text-anchor="middle">2</text>
+    <text x="62" y="184" fill="#4d2b79" font-size="17" font-weight="700">Secure Boot</text>
+    <text x="62" y="203" fill="#253b54" font-size="16">Vérifie la signature du chargeur de démarrage.</text>
+    <path d="M320.0 219L320.0 233" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,233 316.0,227 324.0,227" fill="#6e85a0"/>
+    <rect x="17" y="235" width="606" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="28" y="244" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="40.5" y="262" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">3</text>
+    <text x="62" y="258" fill="#143c6f" font-size="17" font-weight="700">Windows Boot Manager</text>
+    <text x="62" y="277" fill="#253b54" font-size="16">bootmgfw.efi, dans la partition EFI.</text>
+    <path d="M320.0 293L320.0 307" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,307 316.0,301 324.0,301" fill="#6e85a0"/>
+    <rect x="17" y="309" width="606" height="76" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="28" y="318" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="40.5" y="336" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">4</text>
+    <text x="62" y="332" fill="#143c6f" font-size="17" font-weight="700">Windows Boot Loader · winload.efi</text>
+    <text x="62" y="351" fill="#253b54" font-size="16">Charge ntoskrnl.exe et les pilotes de démarrage.</text>
+    <text x="62" y="370" fill="#253b54" font-size="16">Initialise la couche d’abstraction matérielle (HAL).</text>
+    <path d="M320.0 386L320.0 400" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,400 316.0,394 324.0,394" fill="#6e85a0"/>
+    <rect x="17" y="402" width="606" height="76" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <rect x="28" y="411" width="25" height="25" rx="8" fill="#ddf4f0" stroke="none"/>
+    <text x="40.5" y="429" fill="#104c49" font-size="15" font-weight="700" text-anchor="middle">5</text>
+    <text x="62" y="425" fill="#104c49" font-size="17" font-weight="700">Noyau Windows · ntoskrnl.exe</text>
+    <text x="62" y="444" fill="#253b54" font-size="16">Session Manager (smss.exe), processus système (wininit.exe, lsass.exe,</text>
+    <text x="62" y="463" fill="#253b54" font-size="16">services.exe) et chargement des services.</text>
+    <path d="M320.0 479L320.0 493" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,493 316.0,487 324.0,487" fill="#6e85a0"/>
+    <rect x="17" y="495" width="606" height="57" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <rect x="28" y="504" width="25" height="25" rx="8" fill="#ddf4f0" stroke="none"/>
+    <text x="40.5" y="522" fill="#104c49" font-size="15" font-weight="700" text-anchor="middle">6</text>
+    <text x="62" y="518" fill="#104c49" font-size="17" font-weight="700">Winlogon → Bureau</text>
+    <text x="62" y="537" fill="#253b54" font-size="16">Démarrage de l’interface utilisateur (explorer.exe).</text>
+  </g>
+</svg>

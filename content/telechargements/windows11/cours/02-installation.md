@@ -28,17 +28,7 @@ Windows 11 impose des **exigences matérielles strictes** par rapport à Windows
 
 ### Pourquoi ces exigences ?
 
-```
-Windows 10                              Windows 11
-┌─────────────────────┐                 ┌─────────────────────┐
-│ Sécurité logicielle │                 │ Sécurité matérielle │
-│ (antivirus, pare-feu)│                │ (TPM + Secure Boot) │
-│                     │                 │         +           │
-│ BIOS ou UEFI        │                 │ Sécurité logicielle │
-│ TPM optionnel       │                 │                     │
-│ Secure Boot optionnel│                │ UEFI obligatoire    │
-└─────────────────────┘                 └─────────────────────┘
-```
+![Exigences de sécurité à l’installation — Windows 10 pouvait être installé en BIOS ou UEFI. Windows 11 exige UEFI et TPM et s’appuie sur Secure Boot en plus de la sécurité logicielle.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-02-securite-exigences.svg)
 
 | Technologie | Rôle |
 |-------------|------|
@@ -142,13 +132,7 @@ Sur un disque vierge (cas de notre VM), l'installeur propose l'espace non allou�
 - Sélectionner **Espace non alloué** → **Suivant**
 - Windows crée automatiquement les partitions nécessaires :
 
-```
-Disque 0 (64 Go)
-├── Partition 1 : Système EFI (100 à 200 Mo)  ← bootloader UEFI
-├── Partition 2 : MSR (16 Mo)                 ← réservé Microsoft
-├── Partition 3 : Windows (≈ 63 Go)           ← système C:
-└── Partition 4 : Récupération (≈ 900 Mo)     ← WinRE, en FIN de disque
-```
+![Partitions du disque d’installation — Exemple de disque de 64 Go avec, dans l’ordre, les partitions EFI, MSR, Windows et Récupération.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-02-partitions-installation.svg)
 
 Relevé réel sur `PC01` (26H2) :
 
@@ -179,10 +163,7 @@ Après l'installation, Windows lance l'**OOBE** (Out-Of-Box Experience) : l'assi
 
 ### Étapes de l'OOBE
 
-```
-Région → Clavier → Réseau → Mises à jour → Nom du PC
-  → Compte → Vie privée → Personnalisation → Bureau
-```
+![Les étapes de l’OOBE — La première configuration va du choix de la région jusqu’au Bureau, en passant par le réseau et la création du compte.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-02-oobe.svg)
 
 #### Région et clavier
 
@@ -214,12 +195,7 @@ L'OOBE demande une connexion Internet et un **compte Microsoft**. En lab et en e
 
 Un poste peut être, au choix ou en combinaison :
 
-```
-Groupe de travail ──── comptes locaux (+ éventuellement MSA)
-Joint à AD ─────────── comptes du domaine (chap. 10)
-Joint à Entra ID ───── comptes professionnels, géré par Intune (chap. 16)
-Joint hybride ──────── AD + Entra ID en même temps (synchronisation Entra Connect)
-```
+![Comptes et jonction du poste — Les comptes associés au groupe de travail, au domaine AD, à Entra ID et à la jonction hybride.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-02-comptes-jonction.svg)
 
 ```cmd
 :: Voir le type de jonction d'un poste
@@ -378,16 +354,15 @@ D:\setup.exe /auto upgrade /quiet /eula accept /dynamicupdate disable
 
 ## Récapitulatif
 
-```
-Prérequis matériels  → TPM 2.0, Secure Boot, UEFI, 4 Go RAM, 64 Go, 2 cœurs
-Édition entreprise   → Pro minimum (Hyper-V, BitLocker, GPO, domaine, App Control)
-Comptes              → local (SAM) | Microsoft | professionnel (Entra ID) | domaine (AD)
-                       dsregcmd /status pour voir la jonction
-Compte local à l'OOBE→ fichier de réponse (pérenne) | sans réseau : BLOQUÉ en 26H2
-                       BYPASSNRO → "Je n'ai pas Internet" (marche sur 26300.9457, fragile)
-                       BYPASSNRO : selon la build, ms-cxh:localonly : bloqué → jamais en procédure
-Mise à niveau        → 24H2/25H2 → 26H2 : package d'activation (1 redémarrage)
-                       Windows 10 → setup.exe /auto upgrade (fin de support W10 : 14/10/2025)
-                       10 jours pour revenir en arrière (Windows.old)
-Vérification         → winver, Get-ComputerInfo, Get-Tpm, Confirm-SecureBootUEFI
-```
+> [!summary] L'essentiel du chapitre
+> - **Prérequis matériels** : TPM 2.0, Secure Boot, UEFI, 4 Go RAM, 64 Go, 2 cœurs
+> - **Édition entreprise** : Pro minimum (Hyper-V, BitLocker, GPO, domaine, App Control)
+> - **Comptes** : local (SAM) · Microsoft · professionnel (Entra ID) · domaine (AD)
+>   - `dsregcmd /status` pour voir la jonction
+> - **Compte local à l'OOBE** : fichier de réponse (pérenne) · sans réseau : BLOQUÉ en 26H2
+>   - BYPASSNRO → "Je n'ai pas Internet" (marche sur 26300.9457, fragile)
+>   - **BYPASSNRO** : selon la build, ms-cxh:localonly : bloqué → jamais en procédure
+> - **Mise à niveau** : 24H2/25H2 → 26H2 : package d'activation (1 redémarrage)
+>   - Windows 10 → `setup.exe /auto upgrade` (fin de support W10 : 14/10/2025)
+>   - 10 jours pour revenir en arrière (Windows.old)
+> - **Vérification** : `winver`, `Get-ComputerInfo`, `Get-Tpm`, `Confirm-SecureBootUEFI`

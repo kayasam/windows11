@@ -23,12 +23,7 @@ Un **pilote** (*driver*) est le logiciel qui permet à Windows de dialoguer avec
 
 ### Le magasin de pilotes (*Driver Store*)
 
-```
-C:\Windows\System32\DriverStore\FileRepository\
-   ├── netvsc.inf_amd64_...\        ← pilote carte réseau Hyper-V (en boîte)
-   ├── prnms009.inf_amd64_...\      ← imprimante Microsoft Print to PDF
-   └── ...
-```
+![Magasin de pilotes Windows — FileRepository contient les dossiers des pilotes, par exemple le réseau Hyper-V et Microsoft Print to PDF.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-05-driver-store.svg)
 
 Windows n'installe un pilote **que depuis le magasin**. Ajouter un pilote = le **déposer dans le magasin** (« staging ») ; Windows l'associe ensuite automatiquement à tout périphérique compatible, présent ou futur.
 
@@ -162,14 +157,7 @@ Quelques changements récents, constatés sur la 26H2 :
 
 Il est fourni par l'application **App Installer** (`Microsoft.DesktopAppInstaller`), présente et mise à jour par le Store sur Windows 11.
 
-```
-winget install 7zip.7zip
-   │
-   ├─► source "winget" (dépôt communautaire GitHub microsoft/winget-pkgs, géré par Microsoft)
-   │      └─► manifeste : URL https://github.com/ip7z/.../7z2606-x64.exe + SHA256
-   ├─► téléchargement + vérification de l'empreinte
-   └─► lancement de l'installeur en mode silencieux
-```
+![Installation avec WinGet — Pour installer 7-Zip, WinGet lit le manifeste, télécharge et vérifie l’installeur, puis l’exécute silencieusement.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-05-installation-winget.svg)
 
 | Source | Contenu |
 |--------|---------|
@@ -245,23 +233,22 @@ Le fichier JSON ne contient que les **identifiants** (pas les installeurs) : il 
 
 ## Récapitulatif
 
-```
-Pilotes
-  Magasin de pilotes (DriverStore) → Windows n'installe que depuis le magasin
-  devmgmt.msc : mettre à jour / restaurer / désinstaller ; Affichage → périphériques cachés
-  Get-PnpDevice | Where Status -ne OK      → périphériques en erreur
-  pnputil /enum-drivers | /add-driver x.inf /install | /delete-driver oemNN.inf | /export-driver *
-  26H2 : fin de la confiance par défaut pour les pilotes cross-signed
-
-Applications
-  Win32 (exe/msi) | MSIX/Appx | Store | PWA
-  Get-AppxProvisionedPackage -Online       → apps installées pour chaque nouveau profil
-  Get-WindowsCapability / Add-WindowsCapability → Features on Demand (OpenSSH, RSAT…)
-  WMIC et PowerShell 2.0 supprimés
-
-WinGet
-  winget search | show | install --id X -e --silent --scope machine
-  winget list | upgrade [--all] | uninstall | pin
-  winget export -o socle.json  →  winget import -i socle.json
-  En SYSTEM : chemin complet ou module Microsoft.WinGet.Client
-```
+> [!summary] L'essentiel du chapitre
+> **Pilotes**
+> - Magasin de pilotes (DriverStore) → Windows n'installe que depuis le magasin
+> - `devmgmt.msc` : mettre à jour / restaurer / désinstaller ; Affichage → périphériques cachés
+> - `Get-PnpDevice` · Where Status -ne OK : périphériques en erreur
+> - `pnputil /enum-drivers` · /add-driver `x.inf` /install · /delete-driver `oemNN.inf` · /export-driver *
+> - **26H2** : fin de la confiance par défaut pour les pilotes cross-signed
+>
+> **Applications**
+> - Win32 (exe/msi) · MSIX/Appx · Store · PWA
+> - `Get-AppxProvisionedPackage -Online` : apps installées pour chaque nouveau profil
+> - `Get-WindowsCapability` / `Add-WindowsCapability` → Features on Demand (OpenSSH, RSAT…)
+> - WMIC et PowerShell 2.0 supprimés
+>
+> **WinGet**
+> - `winget search` · show · install --id X -e --silent --scope machine
+> - `winget list` · upgrade [--all] · uninstall · pin
+> - `winget export -o socle.json` → `winget import -i socle.json`
+> - **En SYSTEM** : chemin complet ou module Microsoft.WinGet.Client

@@ -229,14 +229,13 @@ Le MCO s'écrit : qui fait quoi, à quelle fréquence, comment on le vérifie.
 
 ## Récapitulatif
 
-```
-MCO = préventive + corrective + évolutive (viser le moins de corrective possible)
-Cycle de vie : Pro 24 mois / Entreprise 36 mois par version
-               nov. 2026 : 24H2 Pro HORS support (13/10/2026), 23H2 Ent. fin 10/11/2026, Win10 hors support (ESU)
-Inventaire : Get-Inventaire.ps1 (CIM, local + Invoke-Command) → CSV | GLPI, Intune pour un parc
-Santé : version, dernière KB, reboot en attente, AntivirusSignatureAge, BitLocker, disque, uptime
-        Defender bloqué ? MpCmdRun -SignatureUpdate -MMPC ; GPO ordre des sources avec MMPC en secours
-Maintenance : maintenance automatique, Dism /AnalyzeComponentStore → /StartComponentCleanup (pas /ResetBase en prod)
-Sauvegarde : OneDrive KFM + Sauvegarde Windows | Historique des fichiers | wbadmin déprécié | 3-2-1 + test de restauration
-Fin de vie : données → effacement (réinit. / crypto-erase BitLocker) → AD (récupérer LAPS/BitLocker) → Intune → GLPI → DEEE
-```
+> [!summary] L'essentiel du chapitre
+> - MCO = préventive + corrective + évolutive (viser le moins de corrective possible)
+> - **Cycle de vie** : Pro 24 mois / Entreprise 36 mois par version
+>   - **nov. 2026** : 24H2 Pro HORS support (13/10/2026), 23H2 Ent. fin 10/11/2026, Win10 hors support (ESU)
+> - **Inventaire** : `Get-Inventaire.ps1` (CIM, local + `Invoke-Command`) → CSV · GLPI, Intune pour un parc
+> - **Santé** : version, dernière KB, reboot en attente, AntivirusSignatureAge, BitLocker, disque, uptime
+>   - Defender bloqué ? `MpCmdRun -SignatureUpdate -MMPC` ; GPO ordre des sources avec MMPC en secours
+> - **Maintenance** : maintenance automatique, `Dism /AnalyzeComponentStore` → /StartComponentCleanup (pas /ResetBase en prod)
+> - **Sauvegarde** : OneDrive KFM + Sauvegarde Windows · Historique des fichiers · `wbadmin` déprécié · 3-2-1 + test de restauration
+> - **Fin de vie** : données → effacement (réinit. / crypto-erase BitLocker) → AD (récupérer LAPS/BitLocker) → Intune → GLPI → DEEE

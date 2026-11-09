@@ -23,13 +23,7 @@ title: "11. Stratégies de groupe et gestion centralisée"
 
 Une **GPO** (*Group Policy Object*) est un ensemble de paramètres stocké dans le domaine et appliqué automatiquement aux **ordinateurs** et aux **utilisateurs** situés dans les conteneurs où elle est liée.
 
-```
-Contrôleur de domaine
-├── Active Directory : l'objet GPO (nom, version, liaisons, permissions)
-│     CN={GUID},CN=Policies,CN=System,DC=ad,DC=fournil,DC=lab
-└── SYSVOL : les fichiers de la GPO (registry.pol, GptTmpl.inf, scripts, préférences XML…)
-      \\ad.fournil.lab\SYSVOL\ad.fournil.lab\Policies\{GUID}\
-```
+![Les deux parties d’une GPO — Le contrôleur de domaine conserve l’objet GPO dans Active Directory et les fichiers de la stratégie dans SYSVOL.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-11-composition-gpo.svg)
 
 Le poste télécharge et applique les GPO :
 - **au démarrage** (paramètres ordinateur) et **à l'ouverture de session** (paramètres utilisateur) ;
@@ -50,13 +44,7 @@ Le poste télécharge et applique les GPO :
 
 ## 2. Ordre d'application : LSDOU
 
-```
-Local (gpedit.msc du poste)
-  └─► Site AD
-        └─► Domaine          (Default Domain Policy…)
-              └─► UO parente (OU=Fournil)
-                    └─► UO enfant (OU=Ordinateurs)   ← appliquée en DERNIER → gagne
-```
+![Ordre d’application LSDOU — Les stratégies s’appliquent dans l’ordre Local, Site, Domaine, UO parente et UO enfant. En règle générale, la dernière prime en cas de conflit.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-11-ordre-lsdou.svg)
 
 **La dernière appliquée gagne** en cas de conflit. Deux exceptions :
 
@@ -91,12 +79,7 @@ Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.
 
 ## 4. Cibler une GPO
 
-```
-                   Liaison (OU)              → QUELS objets sont concernés
-GPO ──────────────► Filtrage de sécurité      → QUI, parmi eux, a le droit « Appliquer »
-                   Filtre WMI (optionnel)    → SUR QUELS postes (ex. seulement Windows 11)
-                   Ciblage au niveau élément → par préférence (groupe, IP, OS…)
-```
+![Ciblage d’une GPO — La liaison définit le périmètre, le filtrage de sécurité règle le droit Appliquer, WMI sélectionne des postes et le ciblage par élément affine les préférences.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-11-ciblage-gpo.svg)
 
 ### Filtrage de sécurité
 
@@ -250,13 +233,12 @@ Journal : *Applications et services → Microsoft → Windows → GroupPolicy �
 
 ## Récapitulatif
 
-```
-GPO = objet AD + fichiers SYSVOL | ordinateur (démarrage) / utilisateur (session) | 90 min
-LSDOU : Local → Site → Domaine → UO → UO enfant (le dernier gagne) | Appliqué / Bloquer l'héritage
-Ciblage : liaison (UO) + filtrage de sécurité (garder LIRE pour Utilisateurs authentifiés) + WMI
-Stratégies (imposées) vs Préférences (lecteurs, groupes locaux, tâches, ciblage par élément)
-Sécurité parc : Groupes restreints/GPP → GG-Admins-Postes | Windows LAPS (Get-LapsADPassword)
-               BitLocker → AD (Backup-BitLockerKeyProtector pour l'existant) | anneau WU
-Diagnostic : gpupdate /force | gpresult /r /h | journal GroupPolicy/Operational
-Cloud : Intune + Entra ID (hybride, Group Policy Analytics)
-```
+> [!summary] L'essentiel du chapitre
+> - GPO = objet AD + fichiers SYSVOL · ordinateur (démarrage) / utilisateur (session) · 90 min
+> - **LSDOU** : Local → Site → Domaine → UO → UO enfant (le dernier gagne) · Appliqué / Bloquer l'héritage
+> - **Ciblage** : liaison (UO) + filtrage de sécurité (garder LIRE pour Utilisateurs authentifiés) + WMI
+> - Stratégies (imposées) vs Préférences (lecteurs, groupes locaux, tâches, ciblage par élément)
+> - **Sécurité parc** : Groupes restreints/GPP → GG-Admins-Postes · Windows LAPS (`Get-LapsADPassword`)
+>   - BitLocker → AD (`Backup-BitLockerKeyProtector` pour l'existant) · anneau WU
+> - **Diagnostic** : `gpupdate /force` · `gpresult /r /h` · journal GroupPolicy/Operational
+> - **Cloud** : Intune + Entra ID (hybride, Group Policy Analytics)

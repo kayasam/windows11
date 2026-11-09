@@ -107,21 +107,7 @@ taskkill /pid 1234 /f
 
 **Accès :** Clic droit sur le menu Démarrer → **Gestion de l'ordinateur**
 
-```
-Gestion de l'ordinateur
-├── Outils système
-│   ├── Planificateur de tâches
-│   ├── Observateur d'événements
-│   ├── Dossiers partagés
-│   ├── Utilisateurs et groupes locaux  (lusrmgr.msc)
-│   ├── Performances
-│   └── Gestionnaire de périphériques
-├── Stockage
-│   ├── Sauvegarde Windows Server
-│   └── Gestion des disques           (diskmgmt.msc)
-└── Services et applications
-    └── Services                       (services.msc)
-```
+![Gestion de l’ordinateur — La console regroupe les outils système, le stockage, et les services et applications.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-06-gestion-ordinateur.svg)
 
 ### Services — services.msc
 
@@ -170,16 +156,7 @@ sc config spooler start= disabled  ← (espace après = obligatoire)
 
 ### Structure des journaux
 
-```
-Observateur d'événements
-├── Journaux Windows
-│   ├── Application   ← événements des applications
-│   ├── Sécurité      ← connexions, échecs d'authentification, audit
-│   ├── Système       ← événements du noyau, drivers, services
-│   └── Installation  ← journal des mises à jour et installations
-└── Journaux des applications et des services
-    └── Microsoft → Windows → (journaux spécialisés par composant)
-```
+![Journaux de l’Observateur d’événements — Les journaux Windows couvrent les applications, la sécurité, le système et l’installation. Les autres journaux sont classés par composant.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-06-journaux-evenements.svg)
 
 ### Niveaux de sévérité
 
@@ -259,13 +236,7 @@ Get-CimInstance Win32_ReliabilityStabilityMetrics | Select-Object -First 1 Syste
 
 Le **Planificateur de tâches** (`taskschd.msc`) exécute un programme ou un script selon un **déclencheur** : heure, démarrage, ouverture de session, inactivité, **événement** du journal…
 
-```
-Tâche
-├── Déclencheur(s)  → quand ?  (quotidien 07:30, au démarrage, sur l'événement 4625…)
-├── Action(s)       → quoi ?   (powershell.exe -File C:\Scripts\x.ps1)
-├── Principal       → qui ?    (SYSTEM, un compte de service, l'utilisateur connecté)
-└── Paramètres      → comment ? (rattraper si manquée, durée max, ne pas lancer sur batterie…)
-```
+![Anatomie d’une tâche planifiée — Une tâche combine le moment du déclenchement, l’action à exécuter, l’identité et les conditions d’exécution.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-06-tache-planifiee.svg)
 
 Windows en contient déjà plus de 250 (`(Get-ScheduledTask).Count` → 254 sur `PC01`) : défragmentation, mises à jour, télémétrie… On range les siennes dans un **dossier dédié** (`\Fournil\`).
 
@@ -338,18 +309,17 @@ Compteurs utiles à connaître :
 
 ## Récapitulatif
 
-```
-Outils du quotidien (à maîtriser)
-  taskmgr        → processus, performances, démarrage, services
-  services.msc   → gérer les services (Get-Service, sc)
-  eventvwr.msc   → journaux Application/Sécurité/Système (Get-WinEvent -FilterHashtable)
-    IDs clés : 4624/4625 (connexions), 6005/6008 (boot/crash), 1000 (crash app)
-    Get-EventLog : PS 5.1 seulement → Get-WinEvent
-  perfmon /rel   → moniteur de fiabilité (indice 1-10, frise des incidents)
-  taskschd.msc   → Register-ScheduledTask (Action + Trigger + Principal + Settings)
-                   Export-ScheduledTask / schtasks /s (à distance) | LastTaskResult 0 = OK
-
-Outils avancés (savoir qu'ils existent)
-  resmon   → détail par processus et par fichier/connexion
-  perfmon  → compteurs sur la durée, surtout utile sur Windows Server
-```
+> [!summary] L'essentiel du chapitre
+> **Outils du quotidien (à maîtriser)**
+> - `taskmgr` : processus, performances, démarrage, services
+> - `services.msc` : gérer les services (`Get-Service`, sc)
+> - `eventvwr.msc` : journaux Application/Sécurité/Système (`Get-WinEvent -FilterHashtable`)
+>   - **IDs clés** : 4624/4625 (connexions), 6005/6008 (boot/crash), 1000 (crash app)
+>   - `Get-EventLog` : PS 5.1 seulement → `Get-WinEvent`
+> - `perfmon /rel` : moniteur de fiabilité (indice 1-10, frise des incidents)
+> - `taskschd.msc` → `Register-ScheduledTask` (Action + Trigger + Principal + Settings)
+>   - `Export-ScheduledTask` / `schtasks /s` (à distance) · LastTaskResult 0 = OK
+>
+> **Outils avancés (savoir qu'ils existent)**
+> - `resmon` : détail par processus et par fichier/connexion
+> - `perfmon` : compteurs sur la durée, surtout utile sur Windows Server

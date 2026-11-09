@@ -221,26 +221,24 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
 ## Récapitulatif
 
-```
-Consoles
-  Windows PowerShell 5.1 (intégré, maintenance) vs PowerShell 7 (à installer, actif)
-  Windows Terminal = fenêtre hôte, pas un moteur | ISE = déprécié, remplacé par VS Code
-
-Cmdlets et aide
-  Verbe-Nom | Get-Help -Full/-Examples | Get-Member pour explorer les objets
-
-CIM / WMI
-  Get-CimInstance Win32_BIOS | Win32_OperatingSystem | Win32_ComputerSystem | Win32_LogicalDisk
-  WMIC supprimé, Get-WmiObject absent de PS 7 → Get-CimInstance
-
-Pipeline
-  Where-Object (filtrer) | Select-Object (choisir) | Sort-Object (trier)
-  Measure-Object (statistiques) | ForEach-Object (agir sur chaque élément)
-
-Scripts et politique d'exécution
-  Restricted (défaut client) → RemoteSigned (défaut serveur) → Unrestricted → Bypass
-  Unblock-File pour un script téléchargé bloqué malgré RemoteSigned
-
-La gestion à distance (PowerShell Remoting, WinRS, OpenSSH) est couverte au chapitre 12,
-une fois SRV01 promue en contrôleur de domaine (chapitre 10).
-```
+> [!summary] L'essentiel du chapitre
+> **Consoles**
+> - Windows PowerShell 5.1 (intégré, maintenance) vs PowerShell 7 (à installer, actif)
+> - Windows Terminal = fenêtre hôte, pas un moteur · ISE = déprécié, remplacé par VS Code
+>
+> **Cmdlets et aide**
+> - `Verbe-Nom` · `Get-Help -Full/-Examples` · `Get-Member` pour explorer les objets
+>
+> **CIM / WMI**
+> - `Get-CimInstance Win32_BIOS` · Win32_OperatingSystem · Win32_ComputerSystem · Win32_LogicalDisk
+> - WMIC supprimé, `Get-WmiObject` absent de PS 7 → `Get-CimInstance`
+>
+> **Pipeline**
+> - `Where-Object` (filtrer) · `Select-Object` (choisir) · `Sort-Object` (trier)
+> - `Measure-Object` (statistiques) · ForEach-Object (agir sur chaque élément)
+>
+> **Scripts et politique d'exécution**
+> - Restricted (défaut client) → RemoteSigned (défaut serveur) → Unrestricted → Bypass
+> - `Unblock-File` pour un script téléchargé bloqué malgré RemoteSigned
+>
+> - La gestion à distance (PowerShell Remoting, WinRS, OpenSSH) est couverte au chapitre 12, une fois SRV01 promue en contrôleur de domaine (chapitre 10).

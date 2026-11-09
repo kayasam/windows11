@@ -107,9 +107,7 @@ Rapports d'erreurs détaillés : `C:\ProgramData\Microsoft\Windows\WER\ReportArc
 
 ## 5. Réseau : du bas vers le haut
 
-```
-Carte et lien → IP / passerelle → DNS → port du service → authentification → application
-```
+![Diagnostic réseau, couche par couche — Vérifier successivement le lien, l’adressage, le DNS, le port du service, l’authentification et l’application.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-diagnostic-reseau.svg)
 
 | Étape | Commande | Ce qu'on cherche |
 |-------|----------|------------------|
@@ -207,14 +205,13 @@ Au redémarrage, le menu propose les deux Windows. Limites : pas d'hibernation, 
 
 ## Récapitulatif
 
-```
-Méthode : recueillir → délimiter → hypothèses → tester (une chose à la fois) → corriger → documenter
-          "Qu'est-ce qui a changé ?" : perfmon /rel, Get-HotFix
-Système : Get-WinEvent -FilterHashtable | fiabilité | Get Help (remplace MSDT)
-          Sysmon INTÉGRÉ 26H2 : Enable-WindowsOptionalFeature Sysmon → sysmon -i → journal Sysmon/Operational
-Perfs : taskmgr | resmon (handles, ports) | logman/perfmon (collecteur) | Diagnostics-Performance ID 100
-Réseau : carte → IP (169.254 = pas de DHCP) → DNS → port (Test-NetConnection) → pktmon
-CIM à distance : New-CimSession → Win32_OperatingSystem / LogicalDisk / Service / QFE
-Fichiers système : DISM /RestoreHealth puis sfc /scannow | chkdsk /scan
-Traçabilité : PSR déprécié → Capture d'écran (Win+Maj+R) + ticket documenté
-```
+> [!summary] L'essentiel du chapitre
+> - **Méthode** : recueillir → délimiter → hypothèses → tester (une chose à la fois) → corriger → documenter
+>   - **"Qu'est-ce qui a changé ?"** : `perfmon /rel`, `Get-HotFix`
+> - **Système** : `Get-WinEvent -FilterHashtable` · fiabilité · Get Help (remplace MSDT)
+>   - **Sysmon INTÉGRÉ 26H2** : `Enable-WindowsOptionalFeature Sysmon` → `sysmon -i` → journal Sysmon/Operational
+> - **Perfs** : `taskmgr` · `resmon` (handles, ports) · logman/perfmon (collecteur) · journal `Diagnostics-Performance` (ID 100)
+> - **Réseau** : carte → IP (169.254 = pas de DHCP) → DNS → port (`Test-NetConnection`) → `pktmon`
+> - **CIM à distance** : `New-CimSession` → Win32_OperatingSystem / LogicalDisk / Service / QFE
+> - **Fichiers système** : `DISM /RestoreHealth` puis `sfc /scannow` · `chkdsk /scan`
+> - **Traçabilité** : PSR déprécié → Capture d'écran (Win+Maj+R) + ticket documenté

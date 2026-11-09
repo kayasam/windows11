@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="382" viewBox="0 0 640 382" role="img" aria-labelledby="title desc">
+  <title id="title">Partitions du disque d’installation</title>
+  <desc id="desc">Exemple de disque de 64 Go avec, dans l’ordre, les partitions EFI, MSR, Windows et Récupération.</desc>
+  <rect x="1" y="1" width="638" height="380" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 9h26v16H4z M4 20h26 M24 22.5h2" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Partitions du disque d’installation</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="31" y="96" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="43.5" y="114" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">1</text>
+    <text x="65" y="114" fill="#143c6f" font-size="21" font-weight="700">EFI · 100 à 200 Mo</text>
+    <text x="65" y="135" fill="#253b54" font-size="18">Chargeur de démarrage UEFI.</text>
+    <rect x="17" y="159" width="606" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <rect x="31" y="168" width="25" height="25" rx="8" fill="#f2ecff" stroke="none"/>
+    <text x="43.5" y="186" fill="#4d2b79" font-size="15" font-weight="700" text-anchor="middle">2</text>
+    <text x="65" y="186" fill="#4d2b79" font-size="21" font-weight="700">MSR · 16 Mo</text>
+    <text x="65" y="207" fill="#253b54" font-size="18">Partition réservée Microsoft.</text>
+    <rect x="17" y="231" width="606" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <rect x="31" y="240" width="25" height="25" rx="8" fill="#ddf4f0" stroke="none"/>
+    <text x="43.5" y="258" fill="#104c49" font-size="15" font-weight="700" text-anchor="middle">3</text>
+    <text x="65" y="258" fill="#104c49" font-size="21" font-weight="700">Windows · ≈ 63 Go</text>
+    <text x="65" y="279" fill="#253b54" font-size="18">Volume système C:\.</text>
+    <rect x="17" y="303" width="606" height="63" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <rect x="31" y="312" width="25" height="25" rx="8" fill="#fff1d7" stroke="none"/>
+    <text x="43.5" y="330" fill="#63400e" font-size="15" font-weight="700" text-anchor="middle">4</text>
+    <text x="65" y="330" fill="#63400e" font-size="21" font-weight="700">Récupération · ≈ 900 Mo</text>
+    <text x="65" y="351" fill="#253b54" font-size="18">En fin de disque, pour l’environnement WinRE.</text>
+  </g>
+</svg>

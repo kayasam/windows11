@@ -27,15 +27,7 @@ Plutôt que réinstaller Windows 11 et reconfigurer chaque poste individuellemen
 > [!NOTE] Une VM réutilisable, pas jetable
 > Contrairement à une VM qu'on détruirait après chaque capture, `MASTER` est pensée pour vivre dans la durée : chaque mois (ou selon le rythme de l'entreprise), on la remet à jour (Windows Update, nouvelles versions d'applications), on la re-généralise, et on recapture une nouvelle version de l'image. Pour permettre ça sans tout recommencer de zéro à chaque fois, on protège l'état "prêt à généraliser" avec un point de contrôle Hyper-V plutôt qu'une sauvegarde complète de la VM — voir chapitre 14.
 
-```
-Ce chapitre (12)             Chapitre 14                    Chapitre 15        Chapitre 16
-Outils + fichier de réponse   VM MASTER + mode audit          Capture WIM        ISO personnalisée
-  install.wim            →    Checkpoint "Avant-Sysprep"  →   (DISM, hôte)   →   PC02 boot ISO → bureau
-  ADK / Windows SIM            → sysprep /generalize                              (zéro clic, autounattend.xml)
-  autounattend.xml             → capture prête
-
-  PC01 : jamais touché, reste joint au domaine tout du long
-```
+![De l’ISO au poste déployé — Le chapitre 13 prépare les outils et le fichier de réponse, le 14 prépare MASTER, le 15 capture le WIM et le 16 déploie PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-13-strategie-image-master.svg)
 
 > [!NOTE] Pourquoi une ISO personnalisée plutôt que WDS ou MDT ?
 > En 2026, les deux outils « historiques » du déploiement sur site sont hors jeu :
@@ -199,29 +191,7 @@ Un fichier de réponse est découpé en **7 passes de configuration**, chacune e
 
 Le schéma officiel Microsoft ci-dessous montre que la passe `specialize` n'est **pas jouée qu'une seule fois** : elle est rejouée à chaque fois que Windows redémarre après une généralisation — ce qui explique pourquoi `ComputerName: *` produit bien un nom différent sur chaque machine déployée, même si elles proviennent toutes de la même image.
 
-```
-DÉROULÉ NORMAL — une installation classique, sans Sysprep
-
-  windowsPE ──► offlineServicing ──► specialize ──► oobeSystem ──► Bureau
-  (partition,                        (nom de la                  (écrans OOBE
-   clé, langue)                       machine, fuseau)             affichés ou masqués)
-
-
-NOTRE DÉTOUR — utilisé sur MASTER (chapitre 14)
-
-  ... specialize ──► oobeSystem
-                          │
-                          │  Ctrl+Shift+F3 (avant la fin de l'OOBE)
-                          ▼
-                     auditSystem ──► auditUser     ← mode audit : personnalisation
-                          │                            de MASTER (mises à jour, logiciels)
-                          │  sysprep /generalize /oobe /unattend:autounattend.xml
-                          ▼
-                     generalize ──► specialize ──► oobeSystem ──► Bureau
-                     (efface le      (rejouée, cette              (sur CHAQUE poste
-                      SID et les      fois "pour de vrai",          déployé au
-                      infos machine)  sur chaque poste déployé)     chapitre 16)
-```
+![Les passes de Windows Setup — L’installation normale suit quatre passes jusqu’au Bureau. MASTER passe par le mode audit, puis est généralisée et les postes rejouent specialize et oobeSystem.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-13-passes-unattend.svg)
 
 > [!NOTE] Ce que ça change concrètement
 > `MASTER` ne termine jamais elle-même la passe `oobeSystem` — on l'interrompt en mode audit avant. C'est chaque machine **déployée** à partir de l'image capturée qui rejoue `specialize` puis `oobeSystem` pour de vrai, avec un SID propre et un nom généré (`FOURNIL-XXXXXXX`). C'est exactement pour ça que la généralisation (chapitre 14) est indispensable avant toute capture.
@@ -388,18 +358,17 @@ Vue d'ensemble de tout ce que contient `autounattend.xml`, passe par passe :
 
 ## Récapitulatif
 
-```
-install.wim         copié depuis l'ISO Windows 11 (pas de conversion .esd nécessaire)
-ADK + WinPE add-on   MÊME version (26100.x pour 24H2/25H2/26H2) — Outils de déploiement + USMT + WinPE
-WinPE                copype amd64 → Dism /Mount-Image → Add-Package (WMI, NetFx, Scripting, PowerShell + fr-fr)
-                     → /Unmount-Image /Commit → MakeWinPEMedia /ISO ou /UFD
-MASTER               installée avec PreventDeviceEncryption=true (sinon Sysprep échoue : 0x80310039)
-autounattend.xml     via WSIM, un seul fichier pour deux usages :
-                       - windowsPE (passe 1)   : partitionnement, clé produit, langue           → utilisé chapitre 16 (ISO)
-                       - specialize (passe 4)  : ComputerName, organisation, fuseau horaire       → utilisé chapitre 14 (Sysprep)
-                       - oobeSystem (passe 7)  : Hide* (5 écrans), ProtectYourPC, compte local     → utilisé aux deux chapitres
-                                                  Utilisateur/Administrators — sans lui, HideLocalAccountScreen bloque tout
-
-→ Chapitre 14 : création de MASTER, mode audit, et application de ce fichier au moment du Sysprep
-→ Chapitre 16 : ce même fichier, déposé à la racine de l'ISO de déploiement
-```
+> [!summary] L'essentiel du chapitre
+> - `install.wim` : copié depuis l'ISO Windows 11 (pas de conversion .esd nécessaire)
+> - **ADK + WinPE add-on** : MÊME version (26100.x pour 24H2/25H2/26H2) — Outils de déploiement + USMT + WinPE
+> - **WinPE** : `copype amd64` → `Dism /Mount-Image` → `Add-Package` (WMI, NetFx, Scripting, PowerShell + fr-fr)
+>   - → /Unmount-Image /Commit → `MakeWinPEMedia /ISO` ou /UFD
+> - **MASTER** : installée avec PreventDeviceEncryption=true (sinon Sysprep échoue : 0x80310039)
+> - `autounattend.xml` : via WSIM, un seul fichier pour deux usages :
+>   - **windowsPE (passe 1)** : partitionnement, clé produit, langue → utilisé chapitre 16 (ISO)
+>   - **specialize (passe 4)** : ComputerName, organisation, fuseau horaire → utilisé chapitre 14 (Sysprep)
+>   - **oobeSystem (passe 7)** : Hide* (5 écrans), ProtectYourPC, compte local → utilisé aux deux chapitres
+>   - Le compte local doit être membre de `Administrators` : sans lui, `HideLocalAccountScreen` bloque tout
+>
+> - → Chapitre 14 : création de MASTER, mode audit, et application de ce fichier au moment du Sysprep
+> - → Chapitre 16 : ce même fichier, déposé à la racine de l'ISO de déploiement

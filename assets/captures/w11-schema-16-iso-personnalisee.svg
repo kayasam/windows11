@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="439" viewBox="0 0 640 439" role="img" aria-labelledby="title desc">
+  <title id="title">Assembler l’ISO de déploiement</title>
+  <desc id="desc">MASTER.wim et autounattend.xml remplacent ou complètent le contenu de l’ISO Windows 11, puis oscdimg crée l’ISO amorçable pour PC02.</desc>
+  <rect x="1" y="1" width="638" height="437" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 9h26v16H4z M4 20h26 M24 22.5h2" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Assembler l’ISO de déploiement</text>
+    <rect x="17" y="87" width="298" height="61" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="29" y="110" fill="#143c6f" font-size="17" font-weight="700">MASTER.wim</text>
+    <text x="29" y="129" fill="#253b54" font-size="16">Image capturée au chap. 15.</text>
+    <rect x="325" y="87" width="298" height="61" rx="10" fill="#f2ecff" stroke="#c1afe8"/>
+    <text x="337" y="110" fill="#4d2b79" font-size="17" font-weight="700">autounattend.xml</text>
+    <text x="337" y="129" fill="#253b54" font-size="16">Fichier de réponse du chap. 13.</text>
+    <path d="M166.0 148V163H474.0V148" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M320 163L320 178" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,178 316,172 324,172" fill="#6e85a0"/>
+    <rect x="17" y="179" width="606" height="84" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="32" y="206" fill="#143c6f" font-size="21" font-weight="700">Copier l’ISO Windows 11 officielle</text>
+    <text x="32" y="227" fill="#253b54" font-size="18">Remplacer sources\install.wim par MASTER.wim.</text>
+    <text x="32" y="248" fill="#253b54" font-size="18">Déposer autounattend.xml à la racine.</text>
+    <path d="M320 263L320 279" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,279 316,273 324,273" fill="#6e85a0"/>
+    <rect x="17" y="280" width="606" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="32" y="307" fill="#104c49" font-size="21" font-weight="700">oscdimg</text>
+    <text x="32" y="328" fill="#253b54" font-size="18">Générer une ISO amorçable.</text>
+    <path d="M320 343L320 359" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,359 316,353 324,353" fill="#6e85a0"/>
+    <rect x="17" y="360" width="606" height="63" rx="10" fill="#fff1d7" stroke="#dac08d"/>
+    <text x="32" y="387" fill="#63400e" font-size="21" font-weight="700">Démarrer PC02 sur l’ISO</text>
+    <text x="32" y="408" fill="#253b54" font-size="18">Installation sans clic, jusqu’au Bureau.</text>
+  </g>
+</svg>

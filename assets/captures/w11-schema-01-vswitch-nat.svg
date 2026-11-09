@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="463" viewBox="0 0 640 463" role="img" aria-labelledby="title desc">
+  <title id="title">Switch interne et passerelle NAT</title>
+  <desc id="desc">PC01 et SRV01 utilisent vSwitch-Rennes et la passerelle NAT 192.168.3.254 de l’hôte pour accéder à Internet.</desc>
+  <rect x="1" y="1" width="638" height="461" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M11 6h12v7H11z M2 23h10v7H2z M22 23h10v7H22z M17 13v5M7 23v-5h20v5" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Switch interne et passerelle NAT</text>
+    <rect x="226" y="86" width="188" height="42" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="320.0" y="113" fill="#104c49" font-size="21" font-weight="700" text-anchor="middle">Internet</text>
+    <path d="M320 128L320 150" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,150 316,144 324,144" fill="#6e85a0"/>
+    <rect x="17" y="151" width="606" height="296" rx="12" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="33" y="177" fill="#143c6f" font-size="19" font-weight="700">Machine hôte</text>
+    <rect x="33" y="187" width="574" height="63" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="48" y="214" fill="#143c6f" font-size="21" font-weight="700">vEthernet (Rennes) · 192.168.3.254</text>
+    <text x="48" y="235" fill="#253b54" font-size="18">Passerelle NAT</text>
+    <path d="M320 250L320 270" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,270 316,264 324,264" fill="#6e85a0"/>
+    <rect x="33" y="271" width="574" height="63" rx="10" fill="#ddf4f0" stroke="#9ccac8"/>
+    <text x="48" y="298" fill="#104c49" font-size="21" font-weight="700">vSwitch-Rennes</text>
+    <text x="48" y="319" fill="#253b54" font-size="18">Commutateur interne · 192.168.3.0/24</text>
+    <rect x="33" y="362" width="282" height="65" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="45" y="385" fill="#143c6f" font-size="17" font-weight="700">PC01</text>
+    <text x="45" y="404" fill="#253b54" font-size="16">192.168.3.10</text>
+    <rect x="325" y="362" width="282" height="65" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="337" y="385" fill="#143c6f" font-size="17" font-weight="700">SRV01</text>
+    <text x="337" y="404" fill="#253b54" font-size="16">192.168.3.1</text>
+    <path d="M320 334L320 348" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M174.0 348L466.0 348" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M174.0 348L174.0 362" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="174.0,362 170.0,356 178.0,356" fill="#6e85a0"/>
+    <path d="M466.0 348L466.0 362" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="466.0,362 462.0,356 470.0,356" fill="#6e85a0"/>
+  </g>
+</svg>

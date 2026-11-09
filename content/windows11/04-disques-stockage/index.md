@@ -46,13 +46,7 @@ Les disques sont structurés selon une **table de partitions** qui décrit l'org
 
 ### Types de volumes (disque basique GPT)
 
-```
-Disque GPT (basique)
-├── Partition système EFI    (type : System)        ← bootloader UEFI
-├── Partition MSR            (type : Reserved)       ← réservé Microsoft
-├── Partition de données     (type : Basic Data)     ← C:, D:, etc.
-└── Partition de récupération (type : Recovery)      ← WinRE
-```
+![Partitions d’un disque GPT — Un disque GPT de base peut contenir une partition EFI, une partition MSR, des données et une partition de récupération.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-04-volumes-gpt.svg)
 
 ---
 
@@ -177,11 +171,7 @@ Add-PartitionAccessPath -DiskNumber 1 -PartitionNumber 2 -AccessPath "C:\Donnée
 
 Les **Espaces de stockage** permettent de regrouper plusieurs disques physiques en un pool, puis de créer des volumes virtuels avec redondance ou agrégation.
 
-```
-Disque physique 1 ─┐
-Disque physique 2 ─┼─► Pool de stockage ─► Espace de stockage (volume virtuel)
-Disque physique 3 ─┘
-```
+![Espaces de stockage — Trois disques physiques alimentent un pool de stockage, qui fournit un espace de stockage sous forme de volume virtuel.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-04-espaces-stockage.svg)
 
 > [!NOTE] Windows 11 vs Windows Server
 > Sur **Windows Server**, les Espaces de stockage se gèrent depuis le **Gestionnaire de serveur** (interface riche avec supervision, alertes, remplacement de disques). Sur **Windows 11**, l'interface graphique est dans le **Panneau de configuration** — plus simple, suffisante pour un lab ou un poste de travail.
@@ -256,22 +246,21 @@ Get-VirtualDisk -FriendlyName "Données-Miroir" | Get-Disk |
 
 ## Récapitulatif
 
-```
-Table de partitions
-  MBR   → legacy BIOS, max 2 To, max 4 partitions primaires
-  GPT   → UEFI, max 18 Eo, max 128 partitions  ← Windows 11
-
-Outils
-  diskmgmt.msc   → interface graphique
-  diskpart        → ligne de commande interactive (CMD/PowerShell)
-  Get-Disk / New-Partition / Format-Volume  → PowerShell module Storage
-
-Systèmes de fichiers
-  NTFS    → disques Windows (permissions, journalisation)
-  exFAT   → clés USB modernes
-  FAT32   → compatibilité maximale (limite 4 Go/fichier)
-
-Espaces de stockage
-  Pool de disques → volumes virtuels avec résilience
-  Types : Simple, Miroir 2/3 voies, Parité
-```
+> [!summary] L'essentiel du chapitre
+> **Table de partitions**
+> - **MBR** : legacy BIOS, max 2 To, max 4 partitions primaires
+> - **GPT** : UEFI, max 18 Eo, max 128 partitions — *Windows 11*
+>
+> **Outils**
+> - `diskmgmt.msc` : interface graphique
+> - `diskpart` : ligne de commande interactive (CMD/PowerShell)
+> - `Get-Disk` / `New-Partition` / `Format-Volume` : PowerShell module Storage
+>
+> **Systèmes de fichiers**
+> - **NTFS** : disques Windows (permissions, journalisation)
+> - **exFAT** : clés USB modernes
+> - **FAT32** : compatibilité maximale (limite 4 Go/fichier)
+>
+> **Espaces de stockage**
+> - Pool de disques → volumes virtuels avec résilience
+> - **Types** : Simple, Miroir 2/3 voies, Parité

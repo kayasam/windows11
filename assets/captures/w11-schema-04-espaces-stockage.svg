@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="297" viewBox="0 0 640 297" role="img" aria-labelledby="title desc">
+  <title id="title">Espaces de stockage</title>
+  <desc id="desc">Trois disques physiques alimentent un pool de stockage, qui fournit un espace de stockage sous forme de volume virtuel.</desc>
+  <rect x="1" y="1" width="638" height="295" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 9h26v16H4z M4 20h26 M24 22.5h2" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Espaces de stockage</text>
+    <rect x="17" y="87" width="195" height="42" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="110" fill="#143c6f" font-size="17" font-weight="700">Disque physique 1</text>
+    <rect x="222" y="87" width="195" height="42" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="234" y="110" fill="#143c6f" font-size="17" font-weight="700">Disque physique 2</text>
+    <rect x="427" y="87" width="195" height="42" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="439" y="110" fill="#143c6f" font-size="17" font-weight="700">Disque physique 3</text>
+    <path d="M320 154L320 141" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M114.5 141L524.5 141" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M114.5 141L114.5 129" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M319.5 141L319.5 129" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M524.5 141L524.5 129" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M320 145L320 153" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,153 316,147 324,147" fill="#6e85a0"/>
+    <rect x="17" y="154" width="606" height="42" rx="10" fill="#ddf4f0" stroke="#9ccac8"/>
+    <text x="320.0" y="181" fill="#104c49" font-size="21" font-weight="700" text-anchor="middle">Pool de stockage</text>
+    <path d="M320 196L320 217" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,217 316,211 324,211" fill="#6e85a0"/>
+    <rect x="17" y="218" width="606" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="320.0" y="245" fill="#4d2b79" font-size="21" font-weight="700" text-anchor="middle">Espace de stockage</text>
+    <text x="320.0" y="266" fill="#253b54" font-size="18" text-anchor="middle">Volume virtuel</text>
+  </g>
+</svg>

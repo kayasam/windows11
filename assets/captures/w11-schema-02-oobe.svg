@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="276" viewBox="0 0 640 276" role="img" aria-labelledby="title desc">
+  <title id="title">Les étapes de l’OOBE</title>
+  <desc id="desc">La première configuration va du choix de la région jusqu’au Bureau, en passant par le réseau et la création du compte.</desc>
+  <rect x="1" y="1" width="638" height="274" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 8h16m-4-4 4 4-4 4 M14 17h16m-4-4 4 4-4 4 M4 26h16m-4-4 4 4-4 4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Les étapes de l’OOBE</text>
+    <rect x="17" y="87" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="28" y="96" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="40.5" y="114" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">1</text>
+    <text x="62" y="110" fill="#143c6f" font-size="17" font-weight="700">Région</text>
+    <path d="M210 106L222 106" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="222,106 216,102 216,110" fill="#6e85a0"/>
+    <rect x="224" y="87" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="235" y="96" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="247.5" y="114" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">2</text>
+    <text x="269" y="110" fill="#143c6f" font-size="17" font-weight="700">Clavier</text>
+    <path d="M417 106L429 106" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="429,106 423,102 423,110" fill="#6e85a0"/>
+    <rect x="431" y="87" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="442" y="96" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="454.5" y="114" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">3</text>
+    <text x="476" y="110" fill="#143c6f" font-size="17" font-weight="700">Réseau</text>
+    <path d="M527 126L527 152" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="527,152 523,146 531,146" fill="#6e85a0"/>
+    <rect x="431" y="154" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="442" y="163" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="454.5" y="181" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">4</text>
+    <text x="476" y="177" fill="#143c6f" font-size="17" font-weight="700">Mises à jour</text>
+    <path d="M430 173L418 173" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="418,173 424,169 424,177" fill="#6e85a0"/>
+    <rect x="224" y="154" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="235" y="163" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="247.5" y="181" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">5</text>
+    <text x="269" y="177" fill="#143c6f" font-size="17" font-weight="700">Nom du PC</text>
+    <path d="M223 173L211 173" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="211,173 217,169 217,177" fill="#6e85a0"/>
+    <rect x="17" y="154" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="28" y="163" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="40.5" y="181" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">6</text>
+    <text x="62" y="177" fill="#143c6f" font-size="17" font-weight="700">Compte</text>
+    <path d="M113 193L113 219" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="113,219 109,213 117,213" fill="#6e85a0"/>
+    <rect x="17" y="221" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="28" y="230" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="40.5" y="248" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">7</text>
+    <text x="62" y="244" fill="#143c6f" font-size="17" font-weight="700">Vie privée</text>
+    <path d="M210 240L222 240" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="222,240 216,236 216,244" fill="#6e85a0"/>
+    <rect x="224" y="221" width="192" height="38" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="235" y="230" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="247.5" y="248" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">8</text>
+    <text x="269" y="244" fill="#143c6f" font-size="17" font-weight="700">Personnalisation</text>
+    <path d="M417 240L429 240" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="429,240 423,236 423,244" fill="#6e85a0"/>
+    <rect x="431" y="221" width="192" height="38" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <rect x="442" y="230" width="25" height="25" rx="8" fill="#ddf4f0" stroke="none"/>
+    <text x="454.5" y="248" fill="#104c49" font-size="15" font-weight="700" text-anchor="middle">9</text>
+    <text x="476" y="244" fill="#104c49" font-size="17" font-weight="700">Bureau</text>
+  </g>
+</svg>

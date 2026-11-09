@@ -292,17 +292,7 @@ ssh-keygen -t ed25519
 
 ### Principe
 
-```
-Utilisateur A (assistance à donner)          Utilisateur B (assistance à recevoir)
-        │                                              │
-        ▼                                              ▼
-"Donner de l'assistance" ──► génère un code ──► "Obtenir de l'assistance"
-        │                     à 6 chiffres              │
-        └──────────────── saisie du code ────────────────┘
-                                │
-                    Connexion établie (via relais Microsoft),
-                    partage d'écran, puis contrôle à distance sur demande
-```
+![Une session d’Assistance rapide — L’assistant génère un code à six chiffres. La personne aidée le saisit pour ouvrir une session via le relais Microsoft.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-12-assistance-rapide.svg)
 
 > [!WARNING] Compte Microsoft côté technicien
 > La personne qui **donne** l'assistance doit se connecter avec un **compte Microsoft** (personnel ou professionnel). Celle qui **reçoit** l'aide saisit seulement le code. Ce n'est pas un outil d'entreprise : aucune journalisation centrale, aucun contrôle de qui peut aider qui — et un vecteur d'arnaque connu (faux supports techniques qui demandent un code Quick Assist).
@@ -367,36 +357,35 @@ Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.
 
 ## Récapitulatif
 
-```
-Bureau à distance (RDP, port 3389)
-  Désactivé par défaut (fDenyTSConnections=1) | Pro/Enterprise/Education pour héberger
-  mstsc /v:machine | Activer via Paramètres ou registre + règle de pare-feu
-
-WinRM / PowerShell Remoting / WinRS
-  Domaine : Kerberos automatique, pas de TrustedHosts nécessaire (contrairement au hors-domaine)
-  Enter-PSSession (1-to-1) | Invoke-Command (1-to-N) | New-PSSession (persistante)
-  winrs -r:http://machine:5985 commande   ← shell CMD distant
-
-OpenSSH — alternative ouverte, en parallèle de WinRM
-  Client pré-installé | Serveur : déjà actif sur SRV01 (ch.10) — vérifier avant d'installer sur un client
-  ssh user@machine | Enter-PSSession -HostName (PowerShell 7 uniquement, des DEUX côtés)
-  Authentification par clé (ssh-keygen) plutôt que mot de passe
-
-PS Remoting sur SSH — installer PS7 sur SRV01 (pas de winget sur Server Core)
-  MSI direct (version fixe) OU API GitHub releases/latest (version toujours à jour)
-  PUIS déclarer le sous-système "powershell" dans sshd_config → Restart-Service sshd
-  (sans cette dernière étape, Enter-PSSession -HostName échoue même avec pwsh installé)
-
-Assistance rapide (Quick Assist)
-  App pré-installée | code à 6 chiffres | compte Microsoft côté technicien
-  Aucune config réseau (relais cloud) — contrairement à RDP/WinRM/SSH
-  Entreprise : Remote Help (Intune, journalisé, RBAC)
-
-Clients Bureau à distance
-  mstsc.exe : supporté | appli Bureau à distance/MSRDC : retirées → Windows App (AVD, Windows 365)
-  WinRM : actif sur Server, ARRÊTÉ sur Windows 11 → Enable-PSRemoting ou GPO
-
-RSAT
-  Installé APRÈS que les rôles existent sur SRV01 (chapitre 10) → immédiatement utilisable
-  Add-WindowsCapability -Online -Name "Rsat.XXX.Tools~~~~0.0.1.0"
-```
+> [!summary] L'essentiel du chapitre
+> **Bureau à distance (RDP, port 3389)**
+> - Désactivé par défaut (fDenyTSConnections=1) · Pro/Enterprise/Education pour héberger
+> - `mstsc /v:machine` · Activer via Paramètres ou registre + règle de pare-feu
+>
+> **WinRM / PowerShell Remoting / WinRS**
+> - **Domaine** : Kerberos automatique, pas de TrustedHosts nécessaire (contrairement au hors-domaine)
+> - `Enter-PSSession` (1-to-1) · `Invoke-Command` (1-to-N) · `New-PSSession` (persistante)
+> - `winrs -r:http://machine:5985 commande` — *shell CMD distant*
+>
+> **OpenSSH — alternative ouverte, en parallèle de WinRM**
+> - Client pré-installé · Serveur : déjà actif sur SRV01 (ch.10) — vérifier avant d'installer sur un client
+> - `ssh user@machine` · `Enter-PSSession -HostName` (PowerShell 7 uniquement, des DEUX côtés)
+> - Authentification par clé (`ssh-keygen`) plutôt que mot de passe
+>
+> **PS Remoting sur SSH — installer PS7 sur SRV01 (pas de `winget` sur Server Core)**
+> - MSI direct (version fixe) OU API GitHub releases/latest (version toujours à jour)
+> - PUIS déclarer le sous-système "powershell" dans sshd_config → `Restart-Service sshd`
+>   - (sans cette dernière étape, `Enter-PSSession -HostName` échoue même avec `pwsh` installé)
+>
+> **Assistance rapide (Quick Assist)**
+> - App pré-installée · code à 6 chiffres · compte Microsoft côté technicien
+> - Aucune config réseau (relais cloud) — contrairement à RDP/WinRM/SSH
+> - **Entreprise** : Remote Help (Intune, journalisé, RBAC)
+>
+> **Clients Bureau à distance**
+> - `mstsc.exe` : supporté · appli Bureau à distance/MSRDC : retirées → Windows App (AVD, Windows 365)
+> - **WinRM** : actif sur Server, ARRÊTÉ sur Windows 11 → `Enable-PSRemoting` ou GPO
+>
+> **RSAT**
+> - Installé APRÈS que les rôles existent sur SRV01 (chapitre 10) → immédiatement utilisable
+> - `Add-WindowsCapability -Online -Name "Rsat.XXX.Tools~~~~0.0.1.0"`

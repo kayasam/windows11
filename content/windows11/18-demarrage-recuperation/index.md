@@ -32,37 +32,7 @@ title: "18. Démarrage et récupération"
 
 La séquence de démarrage d'un système UEFI/GPT est la suivante :
 
-```
-Mise sous tension
-      │
-      ▼
- Firmware UEFI
- (POST + autotest matériel)
-      │
-      ▼
- Secure Boot
- (vérification signatures bootloader)
-      │
-      ▼
- Windows Boot Manager
- (bootmgfw.efi — partition EFI)
-      │
-      ▼
- Windows Boot Loader
- (winload.efi)
- ├── Charge le noyau (ntoskrnl.exe)
- ├── Charge les drivers de démarrage
- └── Initialise le HAL (couche d'abstraction matérielle)
-      │
-      ▼
- Noyau Windows (ntoskrnl.exe)
- ├── Session Manager (smss.exe)
- ├── Processus système (wininit.exe, lsass.exe, services.exe)
- └── Chargement des services
-      │
-      ▼
- Winlogon → Bureau (explorer.exe)
-```
+![Séquence de démarrage Windows 11 — Le PC passe de l’UEFI et de Secure Boot au gestionnaire de démarrage, au chargeur Windows, au noyau puis à la session utilisateur.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-sequence-demarrage.svg)
 
 ### Fichiers clés
 
@@ -193,16 +163,7 @@ Le **WinRE** (Windows Recovery Environment) est un environnement de récupérati
 
 ![w11-06-demarrage-recuperation-2](https://cours.kaya.ovh/windows11/assets/captures/w11-06-demarrage-recuperation-2.png)
 
-```
-Options avancées
-├── Restauration du système       ← revenir à un point de restauration
-├── Point-in-time restore          ← revenir à l'état complet d'il y a quelques heures (2026)
-├── Récupération de l'image système ← sauvegarde « Windows 7 » (héritée, rarement utilisée)
-├── Réparation du démarrage       ← répare automatiquement les problèmes de boot
-├── Invite de commandes           ← accès CMD (bootrec, sfc, diskpart...)
-├── Paramètres de démarrage       ← redémarrer en mode sans échec
-└── Désinstaller les mises à jour ← supprimer la dernière mise à jour de qualité/fonctionnalité
-```
+![Options avancées de WinRE — Les options WinRE servent à restaurer le système, réparer le démarrage, utiliser CMD ou retirer une mise à jour.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-options-winre.svg)
 
 ### Commandes de réparation depuis WinRE
 
@@ -310,30 +271,29 @@ Quand une mise à jour défectueuse empêche **des milliers** de postes de déma
 
 ## Récapitulatif
 
-```
-Séquence de boot UEFI
-  UEFI → Secure Boot → bootmgfw.efi → winload.efi → ntoskrnl.exe → explorer.exe
-
-Outils de configuration du boot
-  msconfig   → GUI : mode sans échec, services, délai de boot
-  bcdedit    → CLI : modifier le BCD (timeout, entrées, safeboot)
-
-Mode sans échec
-  msconfig → Démarrage → Démarrage sécurisé
-  F8 (réactiver avec bcdedit /set bootmenupolicy legacy)
-
-WinRE — Environnement de récupération
-  Accès : Shift+Redémarrer | shutdown /r /o /t 0
-  Outils : Réparation du démarrage, Restauration système, Point-in-time restore, Désinstaller les MAJ, CMD
-  UEFI : bcdboot C:\Windows /s S: /f UEFI (bootrec /fixboot = MBR, "Accès refusé" sur GPT)
-  Hors ligne : sfc /offbootdir=C:\ /offwindir=C:\Windows | DISM /Image:C:\ /RestoreHealth /Source:…
-
-Points de restauration
-  Créer  : Checkpoint-Computer | Protection du système
-  Lister : Get-ComputerRestorePoint
-  Restaurer : rstrui.exe | Restore-Computer
-
-Récupération 2026
-  Réinstaller maintenant (via Windows Update, garde tout) | Réinitialiser ce PC | Revenir en arrière (10 j)
-  Point-in-time restore (instantanés 24 h, tout le volume) | Quick Machine Recovery (incidents de masse)
-```
+> [!summary] L'essentiel du chapitre
+> **Séquence de boot UEFI**
+> - UEFI → Secure Boot → `bootmgfw.efi` → `winload.efi` → `ntoskrnl.exe` → `explorer.exe`
+>
+> **Outils de configuration du boot**
+> - `msconfig` : GUI : mode sans échec, services, délai de boot
+> - `bcdedit` : CLI : modifier le BCD (timeout, entrées, safeboot)
+>
+> **Mode sans échec**
+> - `msconfig` → Démarrage → Démarrage sécurisé
+> - F8 (réactiver avec `bcdedit /set bootmenupolicy legacy`)
+>
+> **WinRE — Environnement de récupération**
+> - **Accès** : Shift+Redémarrer · `shutdown /r /o /t 0`
+> - **Outils** : Réparation du démarrage, Restauration système, Point-in-time restore, Désinstaller les MAJ, CMD
+> - **UEFI** : `bcdboot C:\Windows /s S: /f UEFI` (`bootrec /fixboot` = MBR, "Accès refusé" sur GPT)
+> - **Hors ligne** : `sfc /offbootdir=C:\ /offwindir=C:\Windows` · `DISM /Image:C:\ /RestoreHealth /Source:…`
+>
+> **Points de restauration**
+> - **Créer** : `Checkpoint-Computer` · Protection du système
+> - **Lister** : `Get-ComputerRestorePoint`
+> - **Restaurer** : `rstrui.exe` · `Restore-Computer`
+>
+> **Récupération 2026**
+> - Réinstaller maintenant (via Windows Update, garde tout) · Réinitialiser ce PC · Revenir en arrière (10 j)
+> - Point-in-time restore (instantanés 24 h, tout le volume) · Quick Machine Recovery (incidents de masse)

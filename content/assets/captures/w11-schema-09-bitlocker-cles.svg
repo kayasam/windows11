@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="448" viewBox="0 0 640 448" role="img" aria-labelledby="title desc">
+  <title id="title">Chaîne de clés BitLocker</title>
+  <desc id="desc">La FVEK chiffre le volume système, la VMK protège la FVEK et le TPM protège la VMK selon l’état du démarrage.</desc>
+  <rect x="1" y="1" width="638" height="446" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M17 3l11 4v8c0 6-4 11-11 15C10 26 6 21 6 15V7z M12 16l3 3 7-7" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Chaîne de clés BitLocker</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="32" y="114" fill="#143c6f" font-size="21" font-weight="700">Volume système C:</text>
+    <text x="32" y="135" fill="#253b54" font-size="18">Les données sont chiffrées avec la FVEK.</text>
+    <path d="M320.0 151L320.0 165" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,165 316.0,159 324.0,159" fill="#6e85a0"/>
+    <rect x="17" y="167" width="606" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="32" y="194" fill="#104c49" font-size="21" font-weight="700">FVEK · Clé de chiffrement du volume</text>
+    <text x="32" y="215" fill="#253b54" font-size="18">Elle est elle-même chiffrée par la clé maître VMK.</text>
+    <path d="M320.0 231L320.0 245" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,245 316.0,239 324.0,239" fill="#6e85a0"/>
+    <rect x="17" y="247" width="606" height="84" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="32" y="274" fill="#4d2b79" font-size="21" font-weight="700">VMK · Clé maître du volume</text>
+    <text x="32" y="295" fill="#253b54" font-size="18">Scellée dans le TPM, selon l’état de démarrage (BCD, BIOS/UEFI,</text>
+    <text x="32" y="316" fill="#253b54" font-size="18">Secure Boot).</text>
+    <path d="M320.0 332L320.0 346" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,346 316.0,340 324.0,340" fill="#6e85a0"/>
+    <rect x="17" y="348" width="606" height="84" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="32" y="375" fill="#63400e" font-size="21" font-weight="700">Si l’état de démarrage change</text>
+    <text x="32" y="396" fill="#253b54" font-size="18">Exemples : BIOS modifié ou disque déplacé. Si le TPM refuse de libérer</text>
+    <text x="32" y="417" fill="#253b54" font-size="18">la clé, BitLocker demande la clé de récupération.</text>
+  </g>
+</svg>

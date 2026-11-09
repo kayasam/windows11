@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="235" viewBox="0 0 640 235" role="img" aria-labelledby="title desc">
+  <title id="title">Exigences de sécurité à l’installation</title>
+  <desc id="desc">Windows 10 pouvait être installé en BIOS ou UEFI. Windows 11 exige UEFI et TPM et s’appuie sur Secure Boot en plus de la sécurité logicielle.</desc>
+  <rect x="1" y="1" width="638" height="233" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M17 3l11 4v8c0 6-4 11-11 15C10 26 6 21 6 15V7z M12 16l3 3 7-7" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Exigences de sécurité à l’installation</text>
+    <rect x="17" y="87" width="298" height="132" rx="10" fill="#e8eef7" stroke="#b7c6da"/>
+    <text x="29" y="110" fill="#3e5470" font-size="17" font-weight="700">Windows 10</text>
+    <text x="29" y="129" fill="#253b54" font-size="16">Sécurité logicielle</text>
+    <text x="29" y="148" fill="#253b54" font-size="16">Antivirus et pare-feu</text>
+    <text x="29" y="167" fill="#253b54" font-size="16">BIOS ou UEFI</text>
+    <text x="29" y="186" fill="#253b54" font-size="16">TPM et Secure Boot optionnels</text>
+    <rect x="325" y="87" width="298" height="132" rx="10" fill="#ddf4f0" stroke="#9ccac8"/>
+    <text x="337" y="110" fill="#104c49" font-size="17" font-weight="700">Windows 11</text>
+    <text x="337" y="129" fill="#253b54" font-size="16">Sécurité logicielle et matérielle</text>
+    <text x="337" y="148" fill="#253b54" font-size="16">TPM et Secure Boot</text>
+    <text x="337" y="167" fill="#253b54" font-size="16">UEFI obligatoire</text>
+  </g>
+</svg>

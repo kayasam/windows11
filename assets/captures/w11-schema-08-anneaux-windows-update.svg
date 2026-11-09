@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="347" viewBox="0 0 640 347" role="img" aria-labelledby="title desc">
+  <title id="title">Anneaux de déploiement</title>
+  <desc id="desc">Le déploiement démarre sur le pilote, s’élargit à la production après 7 jours et atteint les postes critiques après 14 jours.</desc>
+  <rect x="1" y="1" width="638" height="345" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 8h16m-4-4 4 4-4 4 M14 17h16m-4-4 4 4-4 4 M4 26h16m-4-4 4 4-4 4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Anneaux de déploiement</text>
+    <rect x="17" y="87" width="606" height="84" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="31" y="96" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="43.5" y="114" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">1</text>
+    <text x="65" y="114" fill="#143c6f" font-size="21" font-weight="700">Pilote · Report de 0 jour</text>
+    <text x="65" y="135" fill="#253b54" font-size="18">Équipe IT, 5 % du parc. Dans le lab, PC01.</text>
+    <text x="65" y="156" fill="#253b54" font-size="18">Attendre quelques jours et vérifier que la mise à jour tient.</text>
+    <path d="M320.0 172L320.0 186" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,186 316.0,180 324.0,180" fill="#6e85a0"/>
+    <rect x="17" y="188" width="606" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <rect x="31" y="197" width="25" height="25" rx="8" fill="#ddf4f0" stroke="none"/>
+    <text x="43.5" y="215" fill="#104c49" font-size="15" font-weight="700" text-anchor="middle">2</text>
+    <text x="65" y="215" fill="#104c49" font-size="21" font-weight="700">Large · Report de 7 jours</text>
+    <text x="65" y="236" fill="#253b54" font-size="18">Postes de production.</text>
+    <path d="M320.0 252L320.0 266" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,266 316.0,260 324.0,260" fill="#6e85a0"/>
+    <rect x="17" y="268" width="606" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <rect x="31" y="277" width="25" height="25" rx="8" fill="#f2ecff" stroke="none"/>
+    <text x="43.5" y="295" fill="#4d2b79" font-size="15" font-weight="700" text-anchor="middle">3</text>
+    <text x="65" y="295" fill="#4d2b79" font-size="21" font-weight="700">Critique · Report de 14 jours</text>
+    <text x="65" y="316" fill="#253b54" font-size="18">Caisses et postes de production critiques.</text>
+  </g>
+</svg>

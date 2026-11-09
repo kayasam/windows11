@@ -341,38 +341,37 @@ Get-DhcpServerv4Lease -ScopeId 192.168.3.0
 
 ## Récapitulatif
 
-```
-Installation Server Core (SRV01)
-  New-VM -Generation 2 -SwitchName "vSwitch-Rennes" → ISO "(Server Core)", pas "(Desktop Experience)"
-
-Préparation (sconfig)
-  Renommage (2) → IP fixe + DNS provisoire 1.1.1.1 (8) → hostname/ipconfig pour vérifier
-  Sans DNS, Windows Update ne résout rien
-
-Mise à jour
-  Install-Module PSWindowsUpdate → Install-WindowsUpdate -AcceptAll -AutoReboot
-
-Activer SSH
-  Get-WindowsCapability d'abord (souvent déjà Installed sur WS2025) → Start-Service sshd
-  Règle OpenSSH-Server-In-TCP scopée Privé uniquement → vérifier Get-NetConnectionProfile
-  Carte sur vSwitch interne = souvent Public par défaut → Set-NetConnectionProfile -NetworkCategory Private
-  Se connecter par IP (192.168.3.1) : pas encore de DNS pour résoudre "SRV01"
-
-Rôles
-  Install-WindowsFeature -Name AD-Domain-Services,DNS,DHCP -IncludeManagementTools
-
-Promotion en contrôleur de domaine
-  Install-ADDSForest -DomainName ad.fournil.lab -DomainMode Win2025 -ForestMode Win2025 -InstallDns:$true
-  Redémarrage automatique attendu | mot de passe DSRM distinct
-
-Jonction d'un poste (PC01)
-  Le DNS du poste DOIT pointer vers SRV01 avant la jonction
-  Add-Computer -DomainName ad.fournil.lab -Credential ... -Restart
-
-Structure AD
-  New-ADOrganizationalUnit → New-ADUser → New-ADGroup → Add-ADGroupMember
-  -ChangePasswordAtLogon $true pour les comptes créés en production (pas dans le lab)
-
-DHCP (en dernier, une fois le domaine et les UO en place)
-  Add-DhcpServerInDC (autorisation obligatoire sur un DC) → Add-DhcpServerv4Scope
-```
+> [!summary] L'essentiel du chapitre
+> **Installation Server Core (SRV01)**
+> - `New-VM -Generation 2 -SwitchName "vSwitch-Rennes"` → ISO "(Server Core)", pas "(Desktop Experience)"
+>
+> **Préparation (`sconfig`)**
+> - Renommage (2) → IP fixe + DNS provisoire 1.1.1.1 (8) → hostname/ipconfig pour vérifier
+> - Sans DNS, Windows Update ne résout rien
+>
+> **Mise à jour**
+> - `Install-Module PSWindowsUpdate` → `Install-WindowsUpdate -AcceptAll -AutoReboot`
+>
+> **Activer SSH**
+> - `Get-WindowsCapability` d'abord (souvent déjà Installed sur WS2025) → `Start-Service sshd`
+> - Règle OpenSSH-Server-In-TCP scopée Privé uniquement → vérifier `Get-NetConnectionProfile`
+> - Carte sur vSwitch interne = souvent Public par défaut → `Set-NetConnectionProfile -NetworkCategory Private`
+> - Se connecter par IP (192.168.3.1) : pas encore de DNS pour résoudre "SRV01"
+>
+> **Rôles**
+> - `Install-WindowsFeature -Name AD-Domain-Services,DNS,DHCP -IncludeManagementTools`
+>
+> **Promotion en contrôleur de domaine**
+> - `Install-ADDSForest -DomainName ad.fournil.lab -DomainMode Win2025 -ForestMode Win2025 -InstallDns:$true`
+> - Redémarrage automatique attendu · mot de passe DSRM distinct
+>
+> **Jonction d'un poste (PC01)**
+> - Le DNS du poste DOIT pointer vers SRV01 avant la jonction
+> - `Add-Computer -DomainName ad.fournil.lab -Credential ... -Restart`
+>
+> **Structure AD**
+> - `New-ADOrganizationalUnit` → `New-ADUser` → `New-ADGroup` → `Add-ADGroupMember`
+> - -ChangePasswordAtLogon $true pour les comptes créés en production (pas dans le lab)
+>
+> **DHCP (en dernier, une fois le domaine et les UO en place)**
+> - `Add-DhcpServerInDC` (autorisation obligatoire sur un DC) → `Add-DhcpServerv4Scope`

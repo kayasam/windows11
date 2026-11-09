@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="486" viewBox="0 0 640 486" role="img" aria-labelledby="title desc">
+  <title id="title">Ordre d’application LSDOU</title>
+  <desc id="desc">Les stratégies s’appliquent dans l’ordre Local, Site, Domaine, UO parente et UO enfant. En règle générale, la dernière prime en cas de conflit.</desc>
+  <rect x="1" y="1" width="638" height="484" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 8h16m-4-4 4 4-4 4 M14 17h16m-4-4 4 4-4 4 M4 26h16m-4-4 4 4-4 4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Ordre d’application LSDOU</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#ffffff" stroke="#b7c6da"/>
+    <rect x="31" y="96" width="25" height="25" rx="8" fill="#e8eef7" stroke="none"/>
+    <text x="43.5" y="114" fill="#3e5470" font-size="15" font-weight="700" text-anchor="middle">1</text>
+    <text x="65" y="114" fill="#3e5470" font-size="21" font-weight="700">Local</text>
+    <text x="65" y="135" fill="#253b54" font-size="18">gpedit.msc sur le poste.</text>
+    <path d="M320.0 151L320.0 165" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,165 316.0,159 324.0,159" fill="#6e85a0"/>
+    <rect x="17" y="167" width="606" height="42" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="31" y="176" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="43.5" y="194" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">2</text>
+    <text x="65" y="194" fill="#143c6f" font-size="21" font-weight="700">Site Active Directory</text>
+    <path d="M320.0 210L320.0 224" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,224 316.0,218 324.0,218" fill="#6e85a0"/>
+    <rect x="17" y="226" width="606" height="63" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <rect x="31" y="235" width="25" height="25" rx="8" fill="#e2efff" stroke="none"/>
+    <text x="43.5" y="253" fill="#143c6f" font-size="15" font-weight="700" text-anchor="middle">3</text>
+    <text x="65" y="253" fill="#143c6f" font-size="21" font-weight="700">Domaine</text>
+    <text x="65" y="274" fill="#253b54" font-size="18">Exemple : Default Domain Policy.</text>
+    <path d="M320.0 290L320.0 304" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,304 316.0,298 324.0,298" fill="#6e85a0"/>
+    <rect x="17" y="306" width="606" height="63" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <rect x="31" y="315" width="25" height="25" rx="8" fill="#ddf4f0" stroke="none"/>
+    <text x="43.5" y="333" fill="#104c49" font-size="15" font-weight="700" text-anchor="middle">4</text>
+    <text x="65" y="333" fill="#104c49" font-size="21" font-weight="700">UO parente</text>
+    <text x="65" y="354" fill="#253b54" font-size="18">OU=Fournil.</text>
+    <path d="M320.0 370L320.0 384" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320.0,384 316.0,378 324.0,378" fill="#6e85a0"/>
+    <rect x="17" y="386" width="606" height="84" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <rect x="31" y="395" width="25" height="25" rx="8" fill="#f2ecff" stroke="none"/>
+    <text x="43.5" y="413" fill="#4d2b79" font-size="15" font-weight="700" text-anchor="middle">5</text>
+    <text x="65" y="413" fill="#4d2b79" font-size="21" font-weight="700">UO enfant</text>
+    <text x="65" y="434" fill="#253b54" font-size="18">OU=Ordinateurs. Appliquée en dernier, elle prime en cas de conflit</text>
+    <text x="65" y="455" fill="#253b54" font-size="18">standard.</text>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="556" viewBox="0 0 640 556" role="img" aria-labelledby="title desc">
+  <title id="title">Options avancées de WinRE</title>
+  <desc id="desc">Les options WinRE servent à restaurer le système, réparer le démarrage, utiliser CMD ou retirer une mise à jour.</desc>
+  <rect x="1" y="1" width="638" height="554" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M5 8h24m-24 9h24m-24 9h24 M12 5v6m11 3v6m-7 3v6" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Options avancées de WinRE</text>
+    <rect x="17" y="87" width="606" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="110" fill="#143c6f" font-size="17" font-weight="700">Restauration du système</text>
+    <text x="29" y="129" fill="#253b54" font-size="16">Revenir à un point de restauration.</text>
+    <rect x="17" y="153" width="606" height="57" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="29" y="176" fill="#104c49" font-size="17" font-weight="700">Point-in-time restore</text>
+    <text x="29" y="195" fill="#253b54" font-size="16">Revenir à l’état complet d’il y a quelques heures.</text>
+    <rect x="17" y="219" width="606" height="57" rx="10" fill="#ffffff" stroke="#b7c6da"/>
+    <text x="29" y="242" fill="#3e5470" font-size="17" font-weight="700">Récupération de l’image système</text>
+    <text x="29" y="261" fill="#253b54" font-size="16">Utiliser une sauvegarde « Windows 7 », une option héritée rarement utilisée.</text>
+    <rect x="17" y="285" width="606" height="57" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="29" y="308" fill="#4d2b79" font-size="17" font-weight="700">Réparation du démarrage</text>
+    <text x="29" y="327" fill="#253b54" font-size="16">Tenter une réparation automatique du démarrage.</text>
+    <rect x="17" y="351" width="606" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="374" fill="#143c6f" font-size="17" font-weight="700">Invite de commandes</text>
+    <text x="29" y="393" fill="#253b54" font-size="16">Accéder à CMD (bootrec, sfc, diskpart…).</text>
+    <rect x="17" y="417" width="606" height="57" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="29" y="440" fill="#104c49" font-size="17" font-weight="700">Paramètres de démarrage</text>
+    <text x="29" y="459" fill="#253b54" font-size="16">Redémarrer en mode sans échec.</text>
+    <rect x="17" y="483" width="606" height="57" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="29" y="506" fill="#63400e" font-size="17" font-weight="700">Désinstaller les mises à jour</text>
+    <text x="29" y="525" fill="#253b54" font-size="16">Retirer la dernière mise à jour de qualité ou de fonctionnalité.</text>
+  </g>
+</svg>

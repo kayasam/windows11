@@ -72,11 +72,7 @@ Les deux familles de SID se voient : `…-1905685070-xxxx` = comptes **locaux** 
 
 ### Partage + NTFS : deux couches
 
-```
-Utilisateur ──► \\SRV01\Commun ──► permissions de PARTAGE (SMB)  ──┐
-                                                                   ├─► la plus restrictive gagne
-                C:\Partages\Commun ──► permissions NTFS (fichiers) ──┘
-```
+![Accès réseau et permissions NTFS — Pour ouvrir un fichier via SMB, l’accès doit être autorisé par le partage et par NTFS. La combinaison la plus restrictive s’applique.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-17-permissions-smb-ntfs.svg)
 
 Bonne pratique : partage **« Tout le monde : contrôle total »** (ou *Utilisateurs authentifiés : modifier*), et les vraies restrictions en **NTFS**, par **groupes** (jamais par utilisateur — modèle AGDLP de la formation AD).
 
@@ -247,13 +243,12 @@ Côté administrateur : stratégies de partage du tenant (SharePoint admin cente
 
 ## Récapitulatif
 
-```
-Profils : C:\Users\x + NTUSER.DAT | local / itinérant / obligatoire / redirigé / FSLogix
-          Get-CimInstance Win32_UserProfile | supprimer via sysdm.cpl ou Remove-CimInstance (jamais le dossier seul)
-Partages : partage large + NTFS par groupes | \\SRV01\Commun | ABE | lecteurs par GPO
-Microsoft 365 Apps : ODT setup.exe /configure config.xml (config.office.com) | canaux | Teams à part
-OneDrive : intégré, par utilisateur | ADMX dans AppData\…\adm | SSO silencieux, KFM, Files On-Demand, tenants autorisés
-Teams : nouveau Teams MSIX (MSTeams), teamsbootstrapper -p | classique retiré
-Partage : liens nominatifs, expiration, lecture seule par défaut
-Remise : check-list technique → session accompagnée (Hello, MFA, Get Help, Assistance rapide) → fiche signée
-```
+> [!summary] L'essentiel du chapitre
+> - **Profils** : `C:\Users\x` + `NTUSER.DAT` · local / itinérant / obligatoire / redirigé / FSLogix
+>   - `Get-CimInstance Win32_UserProfile` · supprimer via `sysdm.cpl` ou `Remove-CimInstance` (jamais le dossier seul)
+> - **Partages** : partage large + NTFS par groupes · `\\SRV01\Commun` · ABE · lecteurs par GPO
+> - **Microsoft 365 Apps** : ODT `setup.exe /configure config.xml` (`config.office.com`) · canaux · Teams à part
+> - **OneDrive** : intégré, par utilisateur · ADMX dans `AppData\…\adm` · SSO silencieux, KFM, Files `On-Demand`, tenants autorisés
+> - **Teams** : nouveau Teams MSIX (MSTeams), `teamsbootstrapper -p` · classique retiré
+> - **Partage** : liens nominatifs, expiration, lecture seule par défaut
+> - **Remise** : check-list technique → session accompagnée (Hello, MFA, Get Help, Assistance rapide) → fiche signée

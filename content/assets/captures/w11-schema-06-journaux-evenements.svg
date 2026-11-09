@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="376" viewBox="0 0 640 376" role="img" aria-labelledby="title desc">
+  <title id="title">Journaux de l’Observateur d’événements</title>
+  <desc id="desc">Les journaux Windows couvrent les applications, la sécurité, le système et l’installation. Les autres journaux sont classés par composant.</desc>
+  <rect x="1" y="1" width="638" height="374" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M3 9h11l4 4h13v15H3z M3 9V6h10l3 3h12v4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Journaux de l’Observateur d’événements</text>
+    <rect x="17" y="86" width="606" height="32" rx="8" fill="#e8eef7" stroke="#b7c6da"/>
+    <text x="320.0" y="108" fill="#3e5470" font-size="16" font-weight="700" text-anchor="middle">Journaux Windows</text>
+    <rect x="17" y="129" width="298" height="80" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="152" fill="#143c6f" font-size="17" font-weight="700">Application</text>
+    <text x="29" y="171" fill="#253b54" font-size="16">Événements des applications.</text>
+    <rect x="325" y="129" width="298" height="80" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="337" y="152" fill="#4d2b79" font-size="17" font-weight="700">Sécurité</text>
+    <text x="337" y="171" fill="#253b54" font-size="16">Connexions, échecs d’authentification</text>
+    <text x="337" y="190" fill="#253b54" font-size="16">et audit.</text>
+    <rect x="17" y="219" width="298" height="65" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="29" y="242" fill="#104c49" font-size="17" font-weight="700">Système</text>
+    <text x="29" y="261" fill="#253b54" font-size="16">Noyau, pilotes et services.</text>
+    <rect x="325" y="219" width="298" height="65" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="337" y="242" fill="#63400e" font-size="17" font-weight="700">Installation</text>
+    <text x="337" y="261" fill="#253b54" font-size="16">Mises à jour et installations.</text>
+    <rect x="17" y="297" width="606" height="63" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="32" y="324" fill="#143c6f" font-size="21" font-weight="700">Journaux des applications et des services</text>
+    <text x="32" y="345" fill="#253b54" font-size="18">Microsoft → Windows → journaux spécialisés par composant.</text>
+  </g>
+</svg>

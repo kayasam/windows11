@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="634" viewBox="0 0 640 634" role="img" aria-labelledby="title desc">
+  <title id="title">Les passes de Windows Setup</title>
+  <desc id="desc">L’installation normale suit quatre passes jusqu’au Bureau. MASTER passe par le mode audit, puis est généralisée et les postes rejouent specialize et oobeSystem.</desc>
+  <rect x="1" y="1" width="638" height="632" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M4 8h16m-4-4 4 4-4 4 M14 17h16m-4-4 4 4-4 4 M4 26h16m-4-4 4 4-4 4" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">Les passes de Windows Setup</text>
+    <rect x="17" y="86" width="606" height="32" rx="8" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="320.0" y="108" fill="#143c6f" font-size="16" font-weight="700" text-anchor="middle">Installation classique · Sans Sysprep</text>
+    <rect x="17" y="129" width="606" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="152" fill="#143c6f" font-size="17" font-weight="700">windowsPE → offlineServicing → specialize</text>
+    <text x="29" y="171" fill="#253b54" font-size="16">windowsPE règle partition, clé et langue. specialize règle nom et fuseau.</text>
+    <path d="M320 186L320 200" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,200 316,194 324,194" fill="#6e85a0"/>
+    <rect x="17" y="201" width="606" height="57" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="224" fill="#143c6f" font-size="17" font-weight="700">oobeSystem → Bureau</text>
+    <text x="29" y="243" fill="#253b54" font-size="16">Les écrans OOBE sont affichés ou masqués selon la configuration.</text>
+    <rect x="17" y="272" width="606" height="32" rx="8" fill="#f2ecff" stroke="#c1afe8"/>
+    <text x="320.0" y="294" fill="#4d2b79" font-size="16" font-weight="700" text-anchor="middle">Détour du mode audit · VM MASTER au chap. 14</text>
+    <rect x="17" y="316" width="606" height="57" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="29" y="339" fill="#4d2b79" font-size="17" font-weight="700">specialize → oobeSystem</text>
+    <text x="29" y="358" fill="#253b54" font-size="16">Avant la fin de l’OOBE, appuyer sur Ctrl+Shift+F3.</text>
+    <path d="M320 373L320 384" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,384 316,378 324,378" fill="#6e85a0"/>
+    <rect x="17" y="385" width="606" height="57" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="29" y="408" fill="#4d2b79" font-size="17" font-weight="700">auditSystem → auditUser</text>
+    <text x="29" y="427" fill="#253b54" font-size="16">Personnaliser MASTER (mises à jour et logiciels).</text>
+    <path d="M320 442L320 453" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,453 316,447 324,447" fill="#6e85a0"/>
+    <rect x="17" y="454" width="606" height="76" rx="10" fill="#ffffff" stroke="#9ccac8"/>
+    <text x="29" y="477" fill="#104c49" font-size="17" font-weight="700">generalize</text>
+    <text x="29" y="496" fill="#253b54" font-size="16">sysprep /generalize /oobe /unattend:autounattend.xml</text>
+    <text x="29" y="515" fill="#253b54" font-size="16">Efface le SID et les informations propres à la machine.</text>
+    <path d="M320 530L320 541" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="320,541 316,535 324,535" fill="#6e85a0"/>
+    <rect x="17" y="542" width="606" height="76" rx="10" fill="#ffffff" stroke="#dac08d"/>
+    <text x="29" y="565" fill="#63400e" font-size="17" font-weight="700">specialize → oobeSystem → Bureau</text>
+    <text x="29" y="584" fill="#253b54" font-size="16">Les passes specialize et oobeSystem sont rejouées sur chaque poste déployé</text>
+    <text x="29" y="603" fill="#253b54" font-size="16">(chap. 16).</text>
+  </g>
+</svg>

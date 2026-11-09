@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="357" viewBox="0 0 640 357" role="img" aria-labelledby="title desc">
+  <title id="title">UAC et les deux jetons</title>
+  <desc id="desc">Une session administrateur utilise le jeton standard par défaut. L’élévation UAC active le jeton administrateur pour l’action demandée.</desc>
+  <rect x="1" y="1" width="638" height="355" rx="20" fill="#f1f5fa" stroke="#a9bad0"/>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <path d="M21 2H619Q638 2 638 21V72H2V21Q2 2 21 2Z" fill="#14243d"/>
+<path d="M17 3l11 4v8c0 6-4 11-11 15C10 26 6 21 6 15V7z M12 16l3 3 7-7" transform="translate(24 20)" fill="none" stroke="#7ed5ff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="72" y="46" fill="#ffffff" font-size="26" font-weight="700">UAC et les deux jetons</text>
+    <rect x="17" y="87" width="606" height="63" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="320.0" y="114" fill="#143c6f" font-size="21" font-weight="700" text-anchor="middle">Ouverture de session</text>
+    <text x="320.0" y="135" fill="#253b54" font-size="18" text-anchor="middle">Compte administrateur</text>
+    <rect x="17" y="176" width="298" height="61" rx="10" fill="#ffffff" stroke="#a6c9ed"/>
+    <text x="29" y="199" fill="#143c6f" font-size="17" font-weight="700">Jeton standard</text>
+    <text x="29" y="218" fill="#253b54" font-size="16">Utilisé par défaut</text>
+    <rect x="325" y="176" width="298" height="61" rx="10" fill="#ffffff" stroke="#c1afe8"/>
+    <text x="337" y="199" fill="#4d2b79" font-size="17" font-weight="700">Jeton administrateur complet</text>
+    <text x="337" y="218" fill="#253b54" font-size="16">Activé uniquement sur demande</text>
+    <path d="M320 150L320 163" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M166.0 163L474.0 163" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M166.0 163L166.0 176" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="166.0,176 162.0,170 170.0,170" fill="#6e85a0"/>
+    <path d="M474.0 163L474.0 176" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="474.0,176 470.0,170 478.0,170" fill="#6e85a0"/>
+    <path d="M166.0 237L166.0 259" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="166.0,259 162.0,253 170.0,253" fill="#6e85a0"/>
+    <path d="M474.0 237L474.0 259" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="474.0,259 470.0,253 478.0,253" fill="#6e85a0"/>
+    <rect x="17" y="260" width="298" height="81" rx="10" fill="#e2efff" stroke="#a6c9ed"/>
+    <text x="29" y="283" fill="#143c6f" font-size="17" font-weight="700">Usage courant</text>
+    <text x="29" y="302" fill="#253b54" font-size="16">explorer.exe et applications courantes.</text>
+    <rect x="325" y="260" width="298" height="81" rx="10" fill="#f2ecff" stroke="#c1afe8"/>
+    <text x="337" y="283" fill="#4d2b79" font-size="17" font-weight="700">Action élevée</text>
+    <text x="337" y="302" fill="#253b54" font-size="16">Invite UAC pour l’action qui nécessite</text>
+    <text x="337" y="321" fill="#253b54" font-size="16">des privilèges administrateur.</text>
+  </g>
+</svg>

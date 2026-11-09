@@ -264,22 +264,21 @@ Start-VM -Name "MASTER"
 
 ## Récapitulatif
 
-```
-VM MASTER
-  New-VM (Gen2, TPM, Default Switch pour Internet) → ISO Windows + ISO "unattend-master"
-  (PreventDeviceEncryption, sinon BitLocker bloque Sysprep) → installation jusqu'à l'OOBE
-  Ctrl+Shift+F3 → mode audit (Administrateur intégré, sans mot de passe, "inactif")
-  → mises à jour, logiciels (WinGet), retrait des apps provisionnées
-  Copy-VMFile (Guest Service Interface) → autounattend.xml (chapitre 13) dans C:\Sysprep
-
-Avant Sysprep : retirer les paquets "utilisateur" (Microsoft.Winget.Source, NotepadPlusPlus…)
-Checkpoint-VM "Avant-Sysprep"
-  → sysprep /generalize /oobe /shutdown /unattend:...
-  → capture (chapitre 15)
-
-Échec ? setuperr.log / setupact.log (Panther)
-  0x80310039 BitLocker | 0x80073cf2 paquet "not provisioned" → Remove-AppxPackage → re-checkpoint
-
-Rafraîchir plus tard
-  Restore-VMSnapshot "Avant-Sysprep" → mode audit → nouveau checkpoint → re-sysprep → nouvelle capture
-```
+> [!summary] L'essentiel du chapitre
+> **VM MASTER**
+> - `New-VM` (Gen2, TPM, Default Switch pour Internet) → ISO Windows + ISO "unattend-master"
+>   - (PreventDeviceEncryption, sinon BitLocker bloque Sysprep) → installation jusqu'à l'OOBE
+> - Ctrl+Shift+F3 → mode audit (Administrateur intégré, sans mot de passe, "inactif")
+>   - → mises à jour, logiciels (WinGet), retrait des apps provisionnées
+> - `Copy-VMFile` (Guest Service Interface) → `autounattend.xml` (chapitre 13) dans `C:\Sysprep`
+>
+> - **Avant Sysprep** : retirer les paquets "utilisateur" (Microsoft.Winget.Source, NotepadPlusPlus…)
+> - `Checkpoint-VM "Avant-Sysprep"`
+>   - → `sysprep /generalize /oobe /shutdown /unattend:...`
+>   - → capture (chapitre 15)
+>
+> **Échec ? `setuperr.log` / `setupact.log` (Panther)**
+> - 0x80310039 BitLocker · 0x80073cf2 paquet "not provisioned" → `Remove-AppxPackage` → re-checkpoint
+>
+> **Rafraîchir plus tard**
+> - `Restore-VMSnapshot "Avant-Sysprep"` → mode audit → nouveau checkpoint → re-sysprep → nouvelle capture

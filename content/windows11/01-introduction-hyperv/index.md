@@ -53,20 +53,7 @@ Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
 
 ### Architecture en un coup d'œil
 
-```
-┌───────────────────────────────────────────────────────────┐
-│ Mode utilisateur : applications, explorer.exe, services    │
-│   (svchost), sous-systèmes (Win32, WSL), lsass.exe         │
-├───────────────────────────────────────────────────────────┤
-│ Mode noyau : ntoskrnl.exe (exécutif + noyau), pilotes,     │
-│   HAL, système de fichiers (NTFS/ReFS)                     │
-├───────────────────────────────────────────────────────────┤
-│ VBS — sécurité basée sur la virtualisation (si activée) :  │
-│   Credential Guard, intégrité mémoire (HVCI)  → chap. 09   │
-├───────────────────────────────────────────────────────────┤
-│ Firmware UEFI + Secure Boot + TPM 2.0         → chap. 02   │
-└───────────────────────────────────────────────────────────┘
-```
+![Architecture de Windows 11 : modes utilisateur et noyau, VBS si activée, UEFI, Secure Boot et TPM 2.0.](https://cours.kaya.ovh/windows11/assets/captures/windows11-architecture.svg)
 
 ### Windows dans le cloud : Windows 365
 
@@ -85,26 +72,7 @@ Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
 
 Un **hyperviseur** est un logiciel qui permet de faire tourner plusieurs systèmes d'exploitation (machines virtuelles) sur un seul ordinateur physique.
 
-```
-┌──────────────────────────────────────────────┐
-│              Machine physique                │
-│                                              │
-│   ┌──────────┐  ┌──────────┐  ┌──────────┐  │
-│   │  PC01 │  │ SRV01 │  │  PC02 │  │
-│   │  Win 11  │  │ Server   │  │  Win 11  │  │
-│   └────┬─────┘  └────┬─────┘  └────┬─────┘  │
-│        │              │              │        │
-│   ┌────┴──────────────┴──────────────┴────┐  │
-│   │          Hyperviseur (Hyper-V)         │  │
-│   └───────────────────────────────────────┘  │
-│   ┌───────────────────────────────────────┐  │
-│   │     Windows 11 (système hôte)         │  │
-│   └───────────────────────────────────────┘  │
-│   ┌───────────────────────────────────────┐  │
-│   │          Matériel (CPU, RAM, SSD)      │  │
-│   └───────────────────────────────────────┘  │
-└──────────────────────────────────────────────┘
-```
+![Hyper-V sur la machine physique — La partition hôte Windows 11 et les VM PC01, SRV01 et PC02 s’exécutent au-dessus de Hyper-V, directement sur le matériel.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-01-hyperviseur-hyper-v.svg)
 
 ### Types d'hyperviseurs
 
@@ -193,34 +161,7 @@ Un commutateur virtuel (vSwitch) connecte les cartes réseau des VM entre elles 
 
 ### Les trois types de vSwitch
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                         Machine hôte                             │
-│                                                                  │
-│   EXTERNE                 INTERNE                 PRIVÉ          │
-│   ┌──────┐               ┌──────┐               ┌──────┐        │
-│   │ VM 1 │               │ VM 1 │               │ VM 1 │        │
-│   └──┬───┘               └──┬───┘               └──┬───┘        │
-│      │                      │                      │             │
-│   ┌──┴───┐               ┌──┴───┐               ┌──┴───┐        │
-│   │ VM 2 │               │ VM 2 │               │ VM 2 │        │
-│   └──┬───┘               └──┬───┘               └──┬───┘        │
-│      │                      │                      │             │
-│   ┌──┴──────────┐      ┌──┴──────────┐        ┌──┴──────────┐   │
-│   │ vSwitch     │      │ vSwitch     │        │ vSwitch     │   │
-│   │ EXTERNE     │      │ INTERNE     │        │ PRIVÉ       │   │
-│   └──┬──────────┘      └──┬──────────┘        └─────────────┘   │
-│      │                    │                      ✗ pas d'hôte    │
-│   ┌──┴──────────┐      ┌──┴──────────┐                          │
-│   │ Carte phys. │      │ vEthernet   │                          │
-│   │ (Wi-Fi/Eth) │      │ (sur hôte)  │                          │
-│   └──┬──────────┘      └─────────────┘                          │
-│      │                    ✗ pas d'accès                          │
-│      │                      au réseau physique                   │
-└──────┼───────────────────────────────────────────────────────────┘
-       │
-   Internet / LAN
-```
+![Les trois types de vSwitch — Le switch externe relie les VM au réseau physique, l’interne les relie à l’hôte et le privé relie seulement les VM.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-01-types-vswitch.svg)
 
 | Type | VM ↔ VM | VM ↔ Hôte | VM → Internet | Risque |
 |------|---------|-----------|---------------|--------|
@@ -235,13 +176,7 @@ Un commutateur virtuel (vSwitch) connecte les cartes réseau des VM entre elles 
 
 À l'activation de Hyper-V, Windows crée automatiquement un switch appelé **Default Switch**. Il est visible dans le Gestionnaire de commutateur virtuel mais **ne peut pas être supprimé ni modifié**.
 
-```
-Default Switch
-├── Type : Interne (géré automatiquement)
-├── DHCP : Oui — les VM reçoivent une IP automatiquement
-├── NAT : Oui — les VM ont accès à Internet directement
-└── Plage IP : attribuée dynamiquement par Windows (change à chaque redémarrage de l'hôte)
-```
+![Default Switch — Le commutateur interne automatique de Hyper-V fournit DHCP et NAT. Windows peut changer son sous-réseau au redémarrage.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-01-default-switch.svg)
 
 | Avantage | Inconvénient |
 |----------|-------------|
@@ -264,26 +199,7 @@ Default Switch
 
 C'est la configuration recommandée pour un lab. L'idée :
 
-```
-                     Internet
-                        │
-            ┌───────────┴───────────┐
-            │      Machine hôte     │
-            │                       │
-            │  vEthernet (Rennes)   │
-            │  192.168.3.254        │  ← passerelle NAT
-            │         │             │
-            │  ┌──────┴─────────┐   │
-            │  │ vSwitch-Rennes │   │
-            │  │   (interne)    │   │
-            │  └───┬───────┬────┘   │
-            │      │       │        │
-            │  ┌───┴──┐ ┌──┴───┐    │
-            │  │PC01  │ │SRV01 │    │
-            │  │.10   │ │.1    │    │
-            │  └──────┘ └──────┘    │
-            └────────────────────────┘
-```
+![Switch interne et passerelle NAT — PC01 et SRV01 utilisent vSwitch-Rennes et la passerelle NAT 192.168.3.254 de l’hôte pour accéder à Internet.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-01-vswitch-nat.svg)
 
 Les VM utilisent la passerelle `.254` sur l'hôte, et Windows traduit les adresses (NAT) pour leur donner accès à Internet.
 
@@ -377,15 +293,7 @@ Une fois les VM créées, le dossier ressemble à ceci :
 
 ![w11-01-hyperv-dossier-hyperv](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-dossier-hyperv.png)
 
-```
-D:\HyperV\
-├── Virtual Machines\     ← fichiers de configuration des VM (.vmcx, .vmrs)
-├── Snapshots\            ← fichiers des checkpoints
-├── DC1.vhdx              ← disque dur virtuel de la VM DC1
-├── DC2.vhdx              ← disque dur virtuel de la VM DC2
-├── w10.vhdx              ← disque dur virtuel d'un poste Windows 10
-└── DC1_855758A2-...avhdx ← disque différentiel (checkpoint actif)
-```
+![Fichiers du dossier Hyper-V — Sous D:\HyperV\ se trouvent les dossiers de configuration et de checkpoints, les disques VHDX et un disque différentiel AVHDX.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-01-dossier-hyperv.svg)
 
 | Extension | Type | Description |
 |-----------|------|------------|
@@ -557,15 +465,14 @@ Import-VM -Path "D:\Export\PC01\Virtual Machines\*.vmcx" -Copy -GenerateNewId
 
 ## Récapitulatif
 
-```
-Activer Hyper-V        → Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
-Créer un switch        → New-VMSwitch -Name "vSwitch-Rennes" -SwitchType Internal
-Configurer le NAT      → New-NetIPAddress (passerelle) + New-NetNat (règle NAT)
-Créer une VM           → New-VM -Generation 2 + Set-VMKeyProtector + Enable-VMTPM
-Gérer les checkpoints  → Checkpoint-VM / Restore-VMCheckpoint
-Exporter/importer      → Export-VM / Import-VM
-Vérifier               → Get-VMSwitch / Get-VM / Get-NetNat / Get-VMCheckpoint
-```
+> [!summary] L'essentiel du chapitre
+> - **Activer Hyper-V** : `Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All`
+> - **Créer un switch** : `New-VMSwitch -Name "vSwitch-Rennes" -SwitchType Internal`
+> - **Configurer le NAT** : `New-NetIPAddress` (passerelle) + `New-NetNat` (règle NAT)
+> - **Créer une VM** : `New-VM -Generation 2` + `Set-VMKeyProtector` + `Enable-VMTPM`
+> - **Gérer les checkpoints** : `Checkpoint-VM` / `Restore-VMCheckpoint`
+> - **Exporter/importer** : `Export-VM` / `Import-VM`
+> - **Vérifier** : `Get-VMSwitch` / `Get-VM` / `Get-NetNat` / `Get-VMCheckpoint`
 
 ---
 
