@@ -1,0 +1,174 @@
+{
+  "pdf": "telechargements/cours-complets.pdf",
+  "pdfSha256": "dc8437c5baaf07e55c1ee9ad1af4c2dcdd480e87723673b1393eb805cc4075ac",
+  "chapters": [
+    {
+      "key": "windows11/00-infrastructure",
+      "title": "00 — Infrastructure de référence (fil rouge)",
+      "href": "https://kayasam.github.io/windows11/windows11/00-infrastructure/",
+      "download": "telechargements/windows11/cours/00-infrastructure.md",
+      "sourceSha256": "415d75f2ab997416b605a986aeed7e264b466da7e7699f38c34c59fd62366ad2",
+      "startPage": 2
+    },
+    {
+      "key": "windows11/01-introduction-hyperv",
+      "title": "01 — Introduction à Windows 11 et lab Hyper-V",
+      "href": "https://kayasam.github.io/windows11/windows11/01-introduction-hyperv/",
+      "download": "telechargements/windows11/cours/01-introduction-hyperv.md",
+      "sourceSha256": "a7c0908bea89f34a16e35839541c1d20c02c6b53b6558c7cfab4b19bf835c61c",
+      "startPage": 7
+    },
+    {
+      "key": "windows11/02-installation",
+      "title": "02 — Installation, mise à niveau et comptes",
+      "href": "https://kayasam.github.io/windows11/windows11/02-installation/",
+      "download": "telechargements/windows11/cours/02-installation.md",
+      "sourceSha256": "1123a535799686fb2b7fcbc1a2b7f7702aa9a58ef283d513d307a027011a574d",
+      "startPage": 24
+    },
+    {
+      "key": "windows11/03-configuration",
+      "title": "03 — Configuration et personnalisation",
+      "href": "https://kayasam.github.io/windows11/windows11/03-configuration/",
+      "download": "telechargements/windows11/cours/03-configuration.md",
+      "sourceSha256": "9f894bbf153d290f26627c44a64e8f0cf7af37d1db71c10dbe4d6f462c6a4f0b",
+      "startPage": 36
+    },
+    {
+      "key": "windows11/04-disques-stockage",
+      "title": "04 — Gestion des disques et du stockage",
+      "href": "https://kayasam.github.io/windows11/windows11/04-disques-stockage/",
+      "download": "telechargements/windows11/cours/04-disques-stockage.md",
+      "sourceSha256": "08aab80c61cd428cacc895671f34d2e90c4628ad7557b57f31b21d70684946e4",
+      "startPage": 49
+    },
+    {
+      "key": "windows11/05-peripheriques-applications",
+      "title": "05 — Pilotes, applications et WinGet",
+      "href": "https://kayasam.github.io/windows11/windows11/05-peripheriques-applications/",
+      "download": "telechargements/windows11/cours/05-peripheriques-applications.md",
+      "sourceSha256": "97e1fc3daaaccaf30c47858ffcfebb831f7aff101090d7699f3d2b5605853d7d",
+      "startPage": 57
+    },
+    {
+      "key": "windows11/06-administration-diagnostic",
+      "title": "06 — Processus, services, tâches planifiées et journaux",
+      "href": "https://kayasam.github.io/windows11/windows11/06-administration-diagnostic/",
+      "download": "telechargements/windows11/cours/06-administration-diagnostic.md",
+      "sourceSha256": "602818e6bf5ee1b74c4fc3ad27333f7451ce82274bd1fd9a2f58f9840180e89f",
+      "startPage": 64
+    },
+    {
+      "key": "windows11/07-powershell",
+      "title": "07 — PowerShell pour l'administrateur",
+      "href": "https://kayasam.github.io/windows11/windows11/07-powershell/",
+      "download": "telechargements/windows11/cours/07-powershell.md",
+      "sourceSha256": "0a195c58582378a4566cda03f4c12cd89c45908db25920b7b5a9ffd54f322020",
+      "startPage": 74
+    },
+    {
+      "key": "windows11/08-mises-a-jour",
+      "title": "08 — Windows Update et gestion des mises à jour",
+      "href": "https://kayasam.github.io/windows11/windows11/08-mises-a-jour/",
+      "download": "telechargements/windows11/cours/08-mises-a-jour.md",
+      "sourceSha256": "de6f65fdfc8e0ccd567a91cdf6d9681538617051df9e6c012ddb65a6b3d16a9f",
+      "startPage": 81
+    },
+    {
+      "key": "windows11/09-securite",
+      "title": "09 — Sécuriser un poste Windows 11",
+      "href": "https://kayasam.github.io/windows11/windows11/09-securite/",
+      "download": "telechargements/windows11/cours/09-securite.md",
+      "sourceSha256": "b45e327a8087bb1a75cfd58656e87cf9920fd0da50b09a291a0983f44897fa00",
+      "startPage": 89
+    },
+    {
+      "key": "windows11/10-active-directory",
+      "title": "10 — Active Directory et services réseau",
+      "href": "https://kayasam.github.io/windows11/windows11/10-active-directory/",
+      "download": "telechargements/windows11/cours/10-active-directory.md",
+      "sourceSha256": "deb4c38f3e596b7695969d3cf4fca63d58ff83c456a354fc0bfbf787cd216921",
+      "startPage": 111
+    },
+    {
+      "key": "windows11/11-gpo",
+      "title": "11 — Stratégies de groupe et gestion centralisée",
+      "href": "https://kayasam.github.io/windows11/windows11/11-gpo/",
+      "download": "telechargements/windows11/cours/11-gpo.md",
+      "sourceSha256": "16cac881dfeb68a29e4162b467afb6b1c620f74c39eeb3d76f034f7b345cdfb1",
+      "startPage": 120
+    },
+    {
+      "key": "windows11/12-acces-distant",
+      "title": "12 — Administration et assistance à distance",
+      "href": "https://kayasam.github.io/windows11/windows11/12-acces-distant/",
+      "download": "telechargements/windows11/cours/12-acces-distant.md",
+      "sourceSha256": "60c29a153849a28dbb5929a24e89d958fcc18cf85818f7d9eabf25f3a139733e",
+      "startPage": 128
+    },
+    {
+      "key": "windows11/13-adk-winpe",
+      "title": "13 — ADK, Windows PE et fichier de réponse",
+      "href": "https://kayasam.github.io/windows11/windows11/13-adk-winpe/",
+      "download": "telechargements/windows11/cours/13-adk-winpe.md",
+      "sourceSha256": "8f09d67027c0d20d5165eae1f4ab7f7f88649399a8c62b9952419251a877ee60",
+      "startPage": 141
+    },
+    {
+      "key": "windows11/14-sysprep-audit",
+      "title": "14 — Poste de référence : mode audit et Sysprep",
+      "href": "https://kayasam.github.io/windows11/windows11/14-sysprep-audit/",
+      "download": "telechargements/windows11/cours/14-sysprep-audit.md",
+      "sourceSha256": "8073a3d3656bab4bb10f4ca44f9a6763283ba8a7e40862aa42afaac6b7300085",
+      "startPage": 157
+    },
+    {
+      "key": "windows11/15-wim-dism",
+      "title": "15 — Images WIM et DISM",
+      "href": "https://kayasam.github.io/windows11/windows11/15-wim-dism/",
+      "download": "telechargements/windows11/cours/15-wim-dism.md",
+      "sourceSha256": "2d40ada251d439f8f31d03897e49a718e3097b2f4ceca1a018f3f3c250254ace",
+      "startPage": 166
+    },
+    {
+      "key": "windows11/16-deploiement",
+      "title": "16 — Déployer Windows 11 : ISO, réseau, migration, moderne",
+      "href": "https://kayasam.github.io/windows11/windows11/16-deploiement/",
+      "download": "telechargements/windows11/cours/16-deploiement.md",
+      "sourceSha256": "7d67bc675e3fc86a1ee91242783388d1e32993e84b0c59e7032a74dc5a265d56",
+      "startPage": 173
+    },
+    {
+      "key": "windows11/17-environnement-utilisateur",
+      "title": "17 — Environnement utilisateur et Microsoft 365",
+      "href": "https://kayasam.github.io/windows11/windows11/17-environnement-utilisateur/",
+      "download": "telechargements/windows11/cours/17-environnement-utilisateur.md",
+      "sourceSha256": "95f4897aeaf9ffc9acfdfd5427e10e887cc43eee949bc6c51ca66c93824ac544",
+      "startPage": 184
+    },
+    {
+      "key": "windows11/18-demarrage-recuperation",
+      "title": "18 — Démarrage et récupération",
+      "href": "https://kayasam.github.io/windows11/windows11/18-demarrage-recuperation/",
+      "download": "telechargements/windows11/cours/18-demarrage-recuperation.md",
+      "sourceSha256": "2961b5d71a427f5880c9a6e7242d5e0ccf7495fe3c1ee9812461ff23e10fc2e8",
+      "startPage": 192
+    },
+    {
+      "key": "windows11/19-depannage",
+      "title": "19 — Diagnostic et dépannage",
+      "href": "https://kayasam.github.io/windows11/windows11/19-depannage/",
+      "download": "telechargements/windows11/cours/19-depannage.md",
+      "sourceSha256": "f644f32baf2c37e5a58e57fd4b80addbd357ecd87e5e3a56984ecbe39d8aa275",
+      "startPage": 203
+    },
+    {
+      "key": "windows11/20-mco",
+      "title": "20 — Maintien en condition opérationnelle",
+      "href": "https://kayasam.github.io/windows11/windows11/20-mco/",
+      "download": "telechargements/windows11/cours/20-mco.md",
+      "sourceSha256": "f7769563adb83c1561be6fd5a2ea0cbbc72c09f5c060427d4758724bad56cc1c",
+      "startPage": 210
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+name: Publier la formation
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - run: python -m pip install --target .pdf-tools -r scripts/requirements-pdf.txt
+      # Build the reviewed content committed locally, without requiring the author's vault.
+      - run: node quartz/bootstrap-cli.mjs build
+      - run: python scripts/check-site.py
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
