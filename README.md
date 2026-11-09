@@ -76,16 +76,18 @@ Une archive Obsidian par parcours ; **un seul PDF réunissant tous les cours Mar
 
 `construire.ps1` prépare, compile et vérifie les liens locaux, les téléchargements contextuels, les boutons conditionnels, l’absence des corrigés privés, les liens du ZIP, le PDF unique et ses signets. Vérifier ensuite dans un navigateur : clair/sombre, mobile, menus, boutons, réponses dépliables et quiz. Les compagnons HTML restent des activités complémentaires ; aucune conversion automatique du cours complet en HTML pédagogique.
 
-## Publication GitHub Pages
+## Publication sur le VPS
 
-Créer un dépôt **distinct** pour la nouvelle formation, y configurer GitHub Pages avec GitHub Actions, puis définir `origin` sur ce dépôt. Vérifier `baseUrl` avant le premier push. Le modèle n’ajoute jamais le remote du site Linux.
+La destination est **https://cours.kaya.ovh/windows11/**. Le workflow GitHub Actions construit les contenus générés et validés, puis envoie `public/` par rsync dans le dossier Windows 11 du VPS. Il n’a pas besoin du coffre Obsidian.
 
 ```powershell
 ./publier.ps1                  # prépare et vérifie seulement
-./publier.ps1 -Push -Message "Publier ma formation"
+./publier.ps1 -Push            # commit, push, construction et déploiement sur le VPS
 ```
 
-Le workflow compile les contenus générés déjà validés et commités, sans dépendre du coffre local. Après publication, vérifier le déploiement et les téléchargements réellement servis. Publier uniquement à la demande de l’utilisateur.
+Secrets GitHub utilisés : `COURS_DEPLOY_KEY` et `COURS_KNOWN_HOSTS`. La clé SSH est limitée à `/opt/docker-compose/cours/sites/windows11/` par `rrsync -wo`. Traefik protège ce cours avec le compte `stagiaire` et maintient l’accès formateur. Les mots de passe restent hors du dépôt.
+
+Après publication, vérifier le workflow et les pages, captures, ZIP et PDF servis avec authentification. L’accueil général du VPS contient le lien vers Windows 11.
 
 ## Référence et évolution
 
