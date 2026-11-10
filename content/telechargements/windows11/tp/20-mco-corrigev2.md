@@ -51,7 +51,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 > |-------|----------------|-------|
 > | Les deux | Signatures antivirus de **417 jours** | > 3 jours |
 > | Les deux | Dernière mise à jour du **13/09/2026** (≈ 2 mois) | > 35 jours |
-> | `PC02` | **BitLocker désactivé** (hérité de `PreventDeviceEncryption` dans l'image, chapitre 14) | Chiffré et protégé |
+> | `PC02` | **BitLocker désactivé** (conséquence de `PreventDeviceEncryption` dans le fichier de réponse, chapitre 16) | Chiffré et protégé |
 >
 > Les autres colonnes sont correctes : version supportée, disque > 15 %, uptime court, protection temps réel active.
 
@@ -128,7 +128,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 > Report de 7 jours : normal pour un anneau « large ». Mais un retard de deux mois signifie que la recherche **échoue** : *Paramètres → Windows Update → Rechercher des mises à jour*, puis le journal (`Get-WindowsUpdateLog` génère `WindowsUpdate.log` sur le Bureau) et l'Observateur *Microsoft-Windows-WindowsUpdateClient/Operational*. L'échec de la mise à jour Defender par la même source (B1) pointe dans la même direction : c'est **un** problème, pas deux.
 > En dernier recours : `UsoClient StartInteractiveScan`, ou installer la cumulative à la main depuis le *Catalogue Microsoft Update* (`wusa` ou `Add-WindowsPackage`).
 
-**B4.** Analyse le magasin de composants de `PC02`. Faut-il le nettoyer ? Avec ou sans `/ResetBase` ?
+**B4.** Analyse le magasin de composants de `PC02`. Faut-il le nettoyer ? Avec ou sans `/ResetBase` ? *(approfondissement)*
 
 > [!success]- Afficher la correction — B4
 > ```cmd

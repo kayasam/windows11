@@ -93,7 +93,7 @@ Set-GPPermission -Name "GPO-Boulangerie-Utilisateurs" -TargetName "G-Boulangerie
 > [!WARNING] Garder la **lecture** pour Utilisateurs authentifiés
 > Depuis le correctif MS16-072 (2016), les GPO utilisateur sont lues avec le **compte ordinateur**. Retirer complètement *Utilisateurs authentifiés* (au lieu de ne lui laisser que *Lire*) empêche la GPO de s'appliquer à quiconque — erreur encore très répandue dans les tutoriels.
 
-### Filtre WMI
+### Filtre WMI *(approfondissement)*
 
 ```
 SELECT * FROM Win32_OperatingSystem WHERE BuildNumber >= 22000      ← Windows 11 uniquement

@@ -45,9 +45,9 @@ title: "TP 13. ADK, Windows PE et fichier de réponse"
 
 **B2.** Crée l'arborescence WinPE amd64 dans `C:\WinPE_amd64`. Que contient-elle ?
 
-**B3.** Monte `boot.wim` et ajoute : WMI, NetFx, Scripting, PowerShell, StorageWMI, DismCmdlets — avec leurs packs `fr-fr`. Dans quel ordre, et pourquoi ?
+**B3.** Monte `boot.wim` et ajoute : WMI, NetFx, Scripting, PowerShell, StorageWMI, DismCmdlets — avec leurs packs `fr-fr`. Dans quel ordre, et pourquoi ? *(approfondissement)*
 
-**B4.** Passe le clavier de WinPE en français, vérifie les paquets, puis démonte en validant.
+**B4.** Passe le clavier de WinPE en français, vérifie les paquets, puis démonte en validant. *(approfondissement)*
 
 **B5.** Crée l'ISO `WinPE-Fournil.iso`. Quelle taille fait-elle ?
 
@@ -71,7 +71,7 @@ title: "TP 13. ADK, Windows PE et fichier de réponse"
 
 ---
 
-## Partie D — Le fichier d'installation de MASTER (10 min)
+## Partie D — Le fichier d'installation de MASTER (10 min) *(approfondissement)*
 
 **D1.** Pourquoi faut-il un **second** fichier de réponse pour **installer** `MASTER` ?
 

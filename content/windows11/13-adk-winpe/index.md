@@ -13,13 +13,25 @@ title: "13. ADK, Windows PE et fichier de réponse"
 > **Fichiers à connaître :** `install.wim`, `boot.wim`, `autounattend.xml`
 
 > [!INFO] Fil rouge — Fournil
-> L'ADK est installé sur `PC01` (poste d'administration) ; le fichier de réponse produit est `autounattend-fournil-26h2.xml` (dans `Ressources/Fichier-reponse/`).
+> L'ADK est installé sur `PC01` (poste d'administration) ; le fichier de réponse produit est `autounattend-fournil-26h2.xml` (dans `Ressources/Fichier-reponse/`). Sa version complète pour le déploiement du chapitre 16 (nom du poste, jonction au domaine, applications) est `autounattend-iso-officielle.xml`.
 
 ---
 
-## Stratégie d'image master
+## Deux stratégies de déploiement
 
-Plutôt que réinstaller Windows 11 et reconfigurer chaque poste individuellement, on prépare une **image master** (ou "image de référence") : un poste configuré une fois (applications, paramètres, pilotes courants), puis **généralisé** et capturé sous forme de fichier `.wim` (chapitre 15), redéployable ensuite sur d'autres machines (chapitre 16).
+| | **Installation automatisée** (socle) | **Image maître** (approfondissement) |
+|---|---|---|
+| Principe | ISO **officielle** + `autounattend.xml` : Windows s'installe et se configure seul | Un poste de référence est préparé, généralisé (Sysprep), capturé (WIM), puis déployé |
+| Préparation | un fichier XML (ce chapitre) | VM `MASTER`, mode audit, Sysprep, capture DISM (chapitres 14 et 15) |
+| Entretien | rien : l'ISO de Microsoft est tenue à jour | refaire l'image à chaque vague de mises à jour |
+| Pièges | aucun lié à BitLocker | Sysprep bloqué par le chiffrement automatique, paquets non provisionnés… |
+| Pour qui ? | petits et moyens parcs — **méthode retenue pour le lab** | grands parcs homogènes |
+
+Le fichier de réponse construit dans ce chapitre sert aux **deux** stratégies. Le chapitre 16 déploie `PC02` avec la première ; les chapitres 14 et 15 présentent la seconde.
+
+## Stratégie d'image master *(approfondissement)*
+
+Plutôt que réinstaller Windows 11 et reconfigurer chaque poste individuellement, on peut préparer une **image master** (ou "image de référence") : un poste configuré une fois (applications, paramètres, pilotes courants), puis **généralisé** et capturé sous forme de fichier `.wim` (chapitre 15), redéployable ensuite sur d'autres machines (chapitre 16).
 
 > [!TIP] Pourquoi une VM dédiée (`MASTER`) plutôt que réutiliser PC01 ?
 > `PC01` est le poste de travail utilisé depuis le chapitre 1 : joint au domaine `ad.fournil.lab`, chargé de sa propre configuration, de comptes et d'historique. Généraliser cette machine serait risqué (casse la relation de confiance avec le domaine) et peu réaliste — en entreprise, on ne sysprep jamais un poste de production ou un poste d'administrateur en cours d'usage. La pratique standard est de préparer l'image sur une machine de référence **dédiée**, jamais jointe au domaine, jamais utilisée pour autre chose que la préparation d'image. C'est `MASTER`, créée au chapitre 14.
@@ -118,7 +130,7 @@ copype amd64 C:\WinPE_amd64
 Dism /Mount-Image /ImageFile:C:\WinPE_amd64\media\sources\boot.wim /Index:1 /MountDir:C:\WinPE_amd64\mount
 ```
 
-### Personnaliser WinPE avec DISM : ajouter PowerShell
+### Personnaliser WinPE avec DISM : ajouter PowerShell *(approfondissement)*
 
 WinPE de base n'a ni PowerShell ni WMI. On ajoute des **composants optionnels** (fichiers `.cab` du module WinPE) — **toujours avec leur pack de langue** :
 
@@ -299,7 +311,7 @@ Puis, toujours dans `Microsoft-Windows-Shell-Setup`, sous `UserAccounts > LocalA
 
 Le fichier complet, testé sur le lab, est fourni : `Ressources/Fichier-reponse/autounattend-fournil-26h2.xml`.
 
-### Un second petit fichier : empêcher le chiffrement automatique de MASTER
+### Un second petit fichier : empêcher le chiffrement automatique de MASTER *(approfondissement)*
 
 > [!DANGER] Le piège de 2026 : Sysprep refuse un disque chiffré
 > Depuis la 24H2, Windows active le **chiffrement automatique de l'appareil** (BitLocker) dès l'installation, y compris pendant le mode audit. Vécu sur le lab au premier Sysprep de `MASTER` :

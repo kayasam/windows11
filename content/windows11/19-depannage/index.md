@@ -42,7 +42,7 @@ title: "19. Diagnostic et dépannage"
 | **Obtenir de l'aide** (*Get Help*) | Dépannages guidés (audio, réseau, impression…) | **Remplace les dépanneurs MSDT** (retirés) |
 | **Sysmon** (intégré en 26H2) | Traçage fin des processus, connexions, fichiers | Voir ci-dessous |
 
-### Sysmon intégré à Windows 11 26H2
+### Sysmon intégré à Windows 11 26H2 *(approfondissement)*
 
 **Sysmon** (*System Monitor*, de la suite Sysinternals) journalise ce que les journaux standard ne voient pas : chaque **création de processus** avec sa ligne de commande et son parent, les **connexions réseau** par processus, les créations de fichiers exécutables, les chargements de pilotes… Depuis 26H2, il fait partie de Windows (fonctionnalité facultative, désactivée par défaut). Testé sur `PC01` :
 
@@ -189,7 +189,7 @@ Un bon compte rendu d'intervention répond à : **quoi** (symptôme), **pourquoi
 
 ---
 
-## 9. Bonus : démarrer sur un disque virtuel (VHDX natif)
+## 9. Bonus : démarrer sur un disque virtuel (VHDX natif) *(approfondissement)*
 
 Windows peut **démarrer directement sur un fichier VHDX** stocké sur le disque physique (*native boot*), sans hyperviseur — pratique pour tester une image sur du vrai matériel, ou avoir un second système jetable :
 

@@ -92,7 +92,7 @@
 
 **F1.** Chiffre avec EFS le dossier `C:\Users\admin\Documents\Confidentiel`, puis exporte le certificat EFS. Pourquoi cette exportation est-elle vitale ?
 
-**F2.** Interroge l'état de VBS/Credential Guard sur `PC01`. Explique le résultat.
+**F2.** Interroge l'état de VBS/Credential Guard sur `PC01`. Explique le résultat. *(approfondissement)*
 
 ---
 

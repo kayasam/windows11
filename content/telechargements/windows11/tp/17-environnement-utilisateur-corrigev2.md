@@ -175,9 +175,9 @@
 > Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled, AntivirusSignatureAge
 > Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 1
 > (Get-CimInstance Win32_BIOS).SerialNumber
-> Get-Content C:\Fournil\version-image.txt
+> Get-Content C:\Windows\Temp\postinstall.log -Tail 3     # applications installées au déploiement (chapitre 16)
 > ```
-> Sur un PC02 issu de `MASTER.wim` : `PreventDeviceEncryption` étant capturé dans l'image, BitLocker est **désactivé** → l'activer (TP 09) et sauvegarder la clé dans AD (TP 11) **avant** la remise.
+> Sur `PC02` : le fichier de réponse du chapitre 16 contient `PreventDeviceEncryption`, BitLocker est donc **désactivé** → l'activer (TP 09) et sauvegarder la clé dans AD (TP 11) **avant** la remise.
 
 **D2.** Rédige les 5 conseils de sécurité que tu donnes oralement à `stagiaire` le jour de la remise.
 

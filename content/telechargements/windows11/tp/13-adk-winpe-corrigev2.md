@@ -83,7 +83,7 @@
 > └── mount\            dossier vide, pour monter boot.wim
 > ```
 
-**B3.** Monte `boot.wim` et ajoute : WMI, NetFx, Scripting, PowerShell, StorageWMI, DismCmdlets — avec leurs packs `fr-fr`. Dans quel ordre, et pourquoi ?
+**B3.** Monte `boot.wim` et ajoute : WMI, NetFx, Scripting, PowerShell, StorageWMI, DismCmdlets — avec leurs packs `fr-fr`. Dans quel ordre, et pourquoi ? *(approfondissement)*
 
 > [!success]- Afficher la correction — B3
 > ```cmd
@@ -96,7 +96,7 @@
 > ```
 > Ordre imposé par les **dépendances** : PowerShell a besoin de NetFx et de Scripting, qui ont besoin de WMI ; StorageWMI et DismCmdlets ont besoin de PowerShell. Chaque `.cab` s'accompagne de son pack de langue, sinon le composant reste en anglais ou incomplet.
 
-**B4.** Passe le clavier de WinPE en français, vérifie les paquets, puis démonte en validant.
+**B4.** Passe le clavier de WinPE en français, vérifie les paquets, puis démonte en validant. *(approfondissement)*
 
 > [!success]- Afficher la correction — B4
 > ```cmd
@@ -193,7 +193,7 @@
 
 ---
 
-## Partie D — Le fichier d'installation de MASTER (10 min)
+## Partie D — Le fichier d'installation de MASTER (10 min) *(approfondissement)*
 
 **D1.** Pourquoi faut-il un **second** fichier de réponse pour **installer** `MASTER` ?
 

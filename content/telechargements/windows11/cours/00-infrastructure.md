@@ -19,7 +19,7 @@
 | **SRV01** | Contrôleur de domaine (AD DS, DNS, DHCP) | `192.168.3.1` | `.254` | `192.168.3.1` | chap. 10 |
 | **PC01** | Poste d'administration Windows 11 Pro | `192.168.3.10` | `.254` | `1.1.1.1` → `192.168.3.1` (chap. 10) | chap. 01-02 |
 | **PC02** | Poste cible du déploiement | DHCP (`.100`–`.200`) | via DHCP | via DHCP | chap. 16 |
-| **MASTER** | VM de référence (image) | DHCP du Default Switch | — | — | chap. 14 |
+| **MASTER** | VM de référence (image) — *approfondissement* | DHCP du Default Switch | — | — | chap. 14 |
 
 > [!NOTE] Chronologie
 > `PC01` reçoit son IP fixe au chapitre 03. `SRV01` n'existe qu'à partir du chapitre 10 : avant, `PC01` utilise un DNS public. `MASTER` (chapitre 14) n'est **jamais** jointe au domaine et vit sur le **Default Switch** (Internet sans configuration). `PC02` n'apparaît qu'au chapitre 16.
@@ -92,7 +92,7 @@ New-NetNat -Name "NAT-Rennes" -InternalIPInterfaceAddressPrefix "192.168.3.0/24"
 |--------|---------|
 | `D:\HyperV\` | VM et disques (`Set-VMHost`) |
 | `D:\ISO\` | ISO Windows 11, Windows Server 2025, ISO générées |
-| `D:\Images\` | `install.wim`, `MASTER.wim`, `autounattend.xml` |
+| `D:\Images\` | `autounattend.xml`, mini-ISO de réponses ; `install.wim`, `MASTER.wim` (approfondissement) |
 | `D:\WinPE\` | Dossier de travail WinPE (`copype`) |
 | `D:\ISO-Deploiement\` | Copie de l'ISO à reconstruire (`oscdimg`) |
 
@@ -105,7 +105,7 @@ New-NetNat -Name "NAT-Rennes" -InternalIPInterfaceAddressPrefix "192.168.3.0/24"
 > - **SRV01** : `192.168.3.1`, Windows Server 2025 Core — AD DS, DNS, DHCP
 > - **PC01** : `192.168.3.10`, Windows 11 Pro 26H2 — poste d'administration
 > - **PC02** : adresse DHCP — cible du déploiement (chapitre 16)
-> - **MASTER** : sur `Default Switch` — VM de référence réutilisable (chapitre 14)
+> - **MASTER** *(approfondissement)* : sur `Default Switch` — VM de référence (chapitre 14), inutile pour le déploiement du chapitre 16
 > - **Domaine** : `ad.fournil.lab`, NetBIOS `FOURNIL`, niveau fonctionnel `Win2025`
 > - **DHCP** : plage `192.168.3.100` → `192.168.3.200`, routeur `.254`, DNS `.1`
 > - **Comptes** : `admin`, `Administrateur`, `stagiaire`, `adm.stagiaire`

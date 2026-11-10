@@ -65,7 +65,7 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 
 **D2.** Sous quel compte s'exécute-t-il ? Que fait le script lancé ? Pourquoi le nom de la tâche est-il trompeur ?
 
-**D3.** Si Sysmon est actif (chapitre 19), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent.
+**D3.** Si Sysmon est actif (chapitre 19), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
 
 **D4.** Supprime la persistance et le script. Vérifie après une nouvelle ouverture de session.
 

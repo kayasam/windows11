@@ -78,7 +78,7 @@ PC02  26H2    26300.9457          60 KB5129195            417 FullyDecrypted / O
 
 Trois anomalies en une ligne de commande :
 - **Signatures Defender vieilles de 417 jours** sur les deux postes — alors qu'Internet fonctionne (voir section 4) ;
-- **`PC02` non chiffré** : hérité de `PreventDeviceEncryption` capturé dans l'image (chapitre 14) ;
+- **`PC02` non chiffré** : conséquence de `PreventDeviceEncryption` dans le fichier de réponse du déploiement (chapitre 16) ;
 - dernière mise à jour cumulative du **13/09/2026** : deux mois de retard.
 
 > [!TIP] Le poste local et WinRM
@@ -151,7 +151,7 @@ Remarquer la différence avec la tâche malveillante du TP 19 : rangée dans un 
 
 Windows exécute chaque jour (par défaut à **2 h**, ou dès que le poste est inactif) la *maintenance automatique* : défragmentation/TRIM, analyses Defender, nettoyage du magasin de composants, diagnostics. Elle se configure dans *Panneau de configuration → Sécurité et maintenance → Maintenance*, ou par GPO (*Composants Windows → Planificateur de maintenance*). Un poste toujours éteint la nuit la rattrape à la prochaine période d'inactivité.
 
-### Magasin de composants (WinSxS)
+### Magasin de composants (WinSxS) *(approfondissement)*
 
 ```cmd
 Dism /Online /Cleanup-Image /AnalyzeComponentStore

@@ -11,6 +11,9 @@ title: "TP 14. Poste de référence : mode audit et Sysprep"
 
 > Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
 
+> [!abstract] Niveau : approfondissement
+> TP facultatif pour un public TSSR : le déploiement du TP 16 (ISO officielle + fichier de réponse) n'a pas besoin de `MASTER`. À réserver à un groupe avancé, ou à montrer en démonstration.
+
 ---
 
 ## Objectifs

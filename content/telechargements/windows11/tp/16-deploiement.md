@@ -8,50 +8,51 @@
 
 ## Objectifs
 
-- Construire une ISO de déploiement **zéro clic** à partir de `MASTER.wim`
-- Déployer `PC02`, diagnostiquer un échec de Setup, vérifier le résultat
-- Joindre `PC02` au domaine et y migrer les données de `stagiaire` avec USMT
+- Déployer `PC02` **sans clic** depuis l'ISO **officielle** et un `autounattend.xml` complet (jonction au domaine, applications)
+- Vérifier le résultat et savoir où chercher en cas d'échec
+- Migrer les données de `stagiaire` avec USMT
 - Choisir une méthode de déploiement selon le contexte (WDS, MDT, ConfigMgr, Autopilot)
+- *(approfondissement)* Construire une ISO personnalisée à partir de `MASTER.wim`
 
 ---
 
 ## Prérequis
 
-- `MASTER.wim` (TP 15), `autounattend-fournil-26h2.xml` (TP 13), ISO officielle 26H2
+- ISO officielle Windows 11 26H2
+- `autounattend-iso-officielle.xml` et `postinstall.ps1` (dossier `Ressources/Fichier-reponse/`)
+- Domaine `ad.fournil.lab` avec DHCP actif et l'OU `OU=Ordinateurs,OU=Fournil` (TP 10)
 - ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$`
-- **40 Go libres** sur l'hôte
+- Partie F seulement : `MASTER.wim` (TP 15) et **40 Go libres** sur l'hôte
 
 ---
 
-## Partie A — L'ISO personnalisée (30 min)
+## Partie A — Lire le fichier de réponse (20 min)
 
-**A1.** Copie le contenu de l'ISO officielle dans `D:\ISO-Deploiement`. Pourquoi `robocopy` plutôt que `Copy-Item` ?
+**A1.** Ouvre `autounattend-iso-officielle.xml`. Pour chacune des trois passes (`windowsPE`, `specialize`, `oobeSystem`), indique ce qu'elle règle.
 
-**A2.** Remplace `sources\install.wim` par `MASTER.wim`. Quel obstacle rencontres-tu ?
+**A2.** Quel composant fait rejoindre le domaine au poste ? Que doit-il exister dans l'Active Directory avant le déploiement ?
 
-**A3.** Dépose le fichier de réponse à la racine. Sous quel nom ?
+**A3.** Pourquoi le bloc `AutoLogon` contient-il `<Domain>PC02</Domain>` ?
 
-**A4.** Construis `MASTER-Deploiement.iso` en BIOS + UEFI, **sans** le message « Press any key ». Quel risque cela crée-t-il ?
+**A4.** À quoi sert `PreventDeviceEncryption` ici, puisqu'on ne fait pas de Sysprep ?
 
 ---
 
-## Partie B — Déployer PC02 (30 min)
+## Partie B — Déployer PC02 (40 min)
 
-**B1.** Crée `PC02` (Gen 2, TPM, 2 vCPU, 6 Go statiques, `vSwitch-Rennes`) et démarre-la sur l'ISO. Combien de clics faut-il ?
+**B1.** Construis la mini-ISO `reponses-pc02.iso` qui contient le fichier de réponse et `postinstall.ps1`. Sous quel nom le fichier de réponse doit-il y figurer ?
 
-**B2.** *(Situation vécue sur le lab)* L'installation s'arrête sur « **Échec de l'installation de Windows 11** ». Comment lire les journaux de Setup sur ce poste ?
+**B2.** Crée `PC02` (Gen 2, TPM, 2 vCPU, 4 Go statiques, `vSwitch-Rennes`) avec **deux** lecteurs DVD : l'ISO officielle et la mini-ISO. Démarre-la. Combien de gestes faut-il ?
 
-**B3.** Le journal contient `CAddUnattend::DoExecute: Failed to save copy of answer file to …\Panther\unattend-original.xml (0x80070050)`. Explique et corrige.
+**B3.** Une fois l'écran de connexion affiché, vérifie : nom du poste, domaine, OU dans l'AD, BitLocker, applications installées, journal de post-installation.
 
-**B4.** Une fois sur le bureau, vérifie : nom du poste, compte créé, version de l'image, logiciels, partitions, fuseau, BitLocker, adresse IP.
-
-**B5.** Le compte `Administrateur` intégré est-il actif sur `PC02` ? Pourquoi est-ce important ?
+**B4.** Sur un autre poste, la jonction au domaine a échoué mais l'installation est allée au bout. Où chercher la cause ?
 
 ---
 
 ## Partie C — Domaine et migration (35 min)
 
-**C1.** Joins `PC02` au domaine dans `OU=Ordinateurs,OU=Fournil`, sous le nom `PC02`.
+**C1.** Depuis `SRV01`, vérifie que `PC02` est bien dans `OU=Ordinateurs,OU=Fournil` et qu'il est enregistré dans le DNS.
 
 **C2.** Sur `PC01`, capture le profil de `stagiaire` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
 
@@ -77,7 +78,21 @@
 
 **E1.** Récupère le *hash matériel* de `PC02` pour Autopilot. Que contient le fichier ? À qui l'envoie-t-on ?
 
-**E2.** Comment `PC02` pourrait-il rejoindre le domaine **automatiquement** pendant le déploiement ?
+**E2.** Tu dois déployer 10 postes avec le même support. Comment éviter qu'ils portent tous le nom `PC02` ?
+
+---
+
+## Partie F — L'ISO personnalisée avec une image maître *(approfondissement)*
+
+**F1.** Copie le contenu de l'ISO officielle dans `D:\ISO-Deploiement`. Pourquoi `robocopy` plutôt que `Copy-Item` ?
+
+**F2.** Remplace `sources\install.wim` par `MASTER.wim`. Quel obstacle rencontres-tu ?
+
+**F3.** Construis `MASTER-Deploiement.iso` en BIOS + UEFI, **sans** le message « Press any key ». Quel risque cela crée-t-il ?
+
+**F4.** *(Situation vécue sur le lab)* L'installation s'arrête sur « **Échec de l'installation de Windows 11** ». Comment lire les journaux de Setup sur ce poste ?
+
+**F5.** Le journal contient `CAddUnattend::DoExecute: Failed to save copy of answer file to …\Panther\unattend-original.xml (0x80070050)`. Explique et corrige.
 
 ---
 

@@ -13,7 +13,7 @@ title: "05. Pilotes, applications et WinGet"
 > **Commandes à connaître :** `Get-PnpDevice`, `pnputil /enum-drivers`, `winget search/install/upgrade/export/import`, `Get-AppxProvisionedPackage`, `Get-WindowsCapability`
 
 > [!INFO] Fil rouge — Fournil
-> Sur `PC01`, on prépare le **socle logiciel standard** du Fournil (7-Zip, Notepad++…) et on l'exporte dans un fichier qui servira à nouveau pour `MASTER` (chapitre 14).
+> Sur `PC01`, on prépare le **socle logiciel standard** du Fournil (7-Zip, Notepad++…) et on l'exporte dans un fichier qui servira à installer les applications des nouveaux postes au déploiement (chapitre 16).
 
 ---
 

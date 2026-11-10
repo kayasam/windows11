@@ -255,7 +255,7 @@ Une fois le redémarrage terminé, se connecter avec un compte du domaine (`FOUR
 
 ## Création d'UO, utilisateurs et groupes
 
-Une **UO** (Unité d'Organisation) est un conteneur AD permettant de structurer les objets (utilisateurs, ordinateurs, groupes) et d'y appliquer des GPO spécifiques (chapitre 16).
+Une **UO** (Unité d'Organisation) est un conteneur AD permettant de structurer les objets (utilisateurs, ordinateurs, groupes) et d'y appliquer des GPO spécifiques (chapitre 11).
 
 ```powershell
 # Créer une structure d'UO

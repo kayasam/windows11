@@ -203,7 +203,7 @@ Set-Service -Name sshd -StartupType Automatic
 > New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
 > ```
 
-### PowerShell Remoting par-dessus SSH
+### PowerShell Remoting par-dessus SSH *(approfondissement)*
 
 Depuis **PowerShell 7**, `Enter-PSSession` et `New-PSSession` peuvent utiliser le **transport SSH** au lieu de WinRM — utile pour administrer une machine Linux avec PowerShell 7, ou éviter WinRM dans un environnement où seul le port 22 est ouvert.
 
@@ -271,7 +271,7 @@ Depuis `PC01` (dans `pwsh`, PowerShell 7) :
 Enter-PSSession -HostName SRV01 -UserName Administrateur
 ```
 
-### Authentification par clé publique
+### Authentification par clé publique *(approfondissement)*
 
 ```powershell
 # Générer une paire de clés sur le poste client
@@ -297,7 +297,7 @@ ssh-keygen -t ed25519
 > [!WARNING] Compte Microsoft côté technicien
 > La personne qui **donne** l'assistance doit se connecter avec un **compte Microsoft** (personnel ou professionnel). Celle qui **reçoit** l'aide saisit seulement le code. Ce n'est pas un outil d'entreprise : aucune journalisation centrale, aucun contrôle de qui peut aider qui — et un vecteur d'arnaque connu (faux supports techniques qui demandent un code Quick Assist).
 
-### Remote Help : la version entreprise
+### Remote Help : la version entreprise *(approfondissement)*
 
 **Remote Help** (module payant d'Intune, inclus dans certaines offres) reprend le principe d'Assistance rapide avec : authentification par le tenant de l'entreprise, rôles (qui peut aider qui), **journal** des sessions, affichage du nom et de la conformité du poste avant de se connecter, élévation UAC possible côté technicien.
 
@@ -338,7 +338,7 @@ Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.
 Add-WindowsCapability -Online -Name "Rsat.Dns.Tools~~~~0.0.1.0"
 Add-WindowsCapability -Online -Name "Rsat.DHCP.Tools~~~~0.0.1.0"
 
-# Installer la console de gestion des stratégies de groupe (GPMC, utile dès le chapitre 16)
+# Installer la console de gestion des stratégies de groupe (GPMC : déjà installée au chapitre 11, inutile de la réinstaller)
 Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
 ```
 

@@ -262,7 +262,7 @@
 > ```
 > `cipher /x` exporte le certificat **et sa clé privée** dans un `.pfx` protégé par mot de passe. Sans lui, une réinstallation ou la suppression du profil rend les fichiers **définitivement illisibles**, même pour un administrateur (sauf agent de récupération EFS configuré dans le domaine).
 
-**F2.** Interroge l'état de VBS/Credential Guard sur `PC01`. Explique le résultat.
+**F2.** Interroge l'état de VBS/Credential Guard sur `PC01`. Explique le résultat. *(approfondissement)*
 
 > [!success]- Afficher la correction — F2
 > ```powershell

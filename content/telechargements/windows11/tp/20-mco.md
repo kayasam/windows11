@@ -41,7 +41,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **B3.** Vérifie l'état de Windows Update sur `PC02` : dernière mise à jour, stratégie appliquée (report), redémarrage en attente. Lance une recherche de mises à jour.
 
-**B4.** Analyse le magasin de composants de `PC02`. Faut-il le nettoyer ? Avec ou sans `/ResetBase` ?
+**B4.** Analyse le magasin de composants de `PC02`. Faut-il le nettoyer ? Avec ou sans `/ResetBase` ? *(approfondissement)*
 
 **B5.** Relance l'inventaire : quelles non-conformités restent ? Pourquoi ?
 

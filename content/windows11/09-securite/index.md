@@ -501,7 +501,7 @@ Test-AppLockerPolicy -XmlPolicy C:\Temp\applocker.xml -Path C:\Temp\bloc.exe -Us
 Set-AppLockerPolicy -XmlPolicy C:\Temp\applocker.xml
 ```
 
-### AppLocker fonctionne-t-il sur Windows 11 Pro ? — testé sur le lab
+### AppLocker fonctionne-t-il sur Windows 11 Pro ? — testé sur le lab *(approfondissement)*
 
 La documentation de Microsoft reste ambiguë et beaucoup de sites affirment encore « Enterprise uniquement ». Test sur `PC01` (Pro 26H2) : règles par défaut en mode **Appliquer**, copie de `notepad.exe` en `C:\Temp\bloc.exe`, exécution par l'utilisateur standard `employe1` :
 
@@ -518,7 +518,7 @@ Journal AppLocker/EXE and DLL — ID 8004 : L'exécution de %OSDRIVE%\TEMP\BLOC.
 
 **AppLocker est bien appliqué sur Windows 11 Pro.**
 
-### App Control for Business (ex-WDAC / Device Guard)
+### App Control for Business (ex-WDAC / Device Guard) *(approfondissement)*
 
 Successeur plus strict d'AppLocker, **renommé** *App Control for Business* (anciennement *Windows Defender Application Control*, et avant *Device Guard*). La politique est appliquée **par le noyau**, dès le démarrage, et peut être rendue non modifiable même par un administrateur. Officiellement supportée sur **Pro**.
 
@@ -530,13 +530,13 @@ Successeur plus strict d'AppLocker, **renommé** *App Control for Business* (anc
 | Outils | GPO, `*-AppLockerPolicy` | *App Control Policy Wizard*, `New-CIPolicy`, Intune |
 | Complexité | Modérée | Élevée |
 
-### Smart App Control
+### Smart App Control *(approfondissement)*
 
 Sur les installations **neuves** de Windows 11, **Smart App Control** (Sécurité Windows → Contrôle des applications et du navigateur) bloque les applications non signées ou de mauvaise réputation, en s'appuyant sur le cloud de Microsoft. Il démarre en mode **Évaluation** puis s'active ou se désactive seul selon l'usage du poste. Sur `PC01` : `VerifiedAndReputablePolicyState = 2` (évaluation). Depuis 26H2, on peut l'activer ou le désactiver **sans réinstaller** Windows. Pensé pour les particuliers et les PME sans gestion centralisée : en entreprise, on lui préfère App Control géré.
 
 ---
 
-## Sécurité basée sur la virtualisation : Credential Guard et intégrité de la mémoire
+## Sécurité basée sur la virtualisation : Credential Guard et intégrité de la mémoire *(approfondissement)*
 
 Ces protections reposent sur **VBS** : une partie du système s'exécute dans un conteneur isolé par l'hyperviseur (VTL1), inaccessible même à un noyau Windows compromis.
 

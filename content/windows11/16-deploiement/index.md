@@ -7,13 +7,13 @@ title: "16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/16-deploiement.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
-> Connaître les méthodes de déploiement d'un poste en 2026 et leur statut, réaliser un déploiement **zéro clic** par ISO personnalisée (image `MASTER.wim` + `autounattend.xml`), situer PXE/WDS et MDT (présentation : retirés ou bloqués en 2026), **migrer les profils** avec USMT, et comprendre le déploiement **moderne** (Windows Autopilot + Intune).
+> Connaître les méthodes de déploiement d'un poste en 2026 et leur statut, réaliser un déploiement **sans clic** à partir de l'**ISO officielle** et d'un `autounattend.xml` complet (jonction au domaine et applications comprises), connaître la variante par image maître (approfondissement), situer PXE/WDS et MDT (présentation : retirés ou bloqués en 2026), **migrer les profils** avec USMT, et comprendre le déploiement **moderne** (Windows Autopilot + Intune).
 >
 > **Outils :** `oscdimg.exe`, USMT (`scanstate`/`loadstate`), WinPE, PowerShell
 > **Fichiers à connaître :** `install.wim` (remplacé), `autounattend.xml`, `MigApp.xml`/`MigDocs.xml`/`MigUser.xml`
 
 > [!INFO] Fil rouge — Fournil
-> `PC02` est déployé depuis l'ISO `MASTER-Deploiement.iso`, puis joint au domaine ; les données de `stagiaire` sont migrées depuis `PC01` avec USMT.
+> `PC02` est installé depuis l'ISO officielle et `autounattend-iso-officielle.xml` : il rejoint seul le domaine et reçoit ses applications. Les données de `stagiaire` sont ensuite migrées depuis `PC01` avec USMT.
 
 ---
 
@@ -22,8 +22,8 @@ title: "16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 | Méthode | Principe | Infrastructure | Statut 2026 |
 |---------|----------|----------------|-------------|
 | **Manuelle** | ISO/clé USB officielle, on clique | Aucune | ✅ Dépannage, poste isolé |
-| **Automatisée** | ISO/clé + `autounattend.xml` | Aucune | ✅ Ce cours (chapitre 13) |
-| **Par image** | `MASTER.wim` appliquée (ISO personnalisée, WinPE + DISM) | Aucune, ou un partage | ✅ Ce chapitre et le chapitre 15 |
+| **Automatisée** | ISO/clé officielle + `autounattend.xml` | Aucune | ✅ **Méthode du lab** (section 2) |
+| **Par image** | `MASTER.wim` appliquée (ISO personnalisée, WinPE + DISM) | Aucune, ou un partage | ✅ Grands parcs — approfondissement (section 3, chapitres 14-15) |
 | **Réseau — WDS** (PXE) | Le poste démarre sur la carte réseau, WDS fournit WinPE et l'image | Serveur WDS + DHCP | ⚠️ **Mains libres bloqué depuis avril 2026**, rôle **déprécié** |
 | **Réseau — MDT** (Lite Touch) | Séquences de tâches sur un partage, souvent via WDS | Serveur de déploiement | ❌ **Retiré le 6 janvier 2026** |
 | **Réseau — ConfigMgr OSD** | Séquences de tâches, PXE, multidiffusion | Microsoft Configuration Manager | ✅ Supporté (grandes entreprises sur site) |
@@ -31,12 +31,125 @@ title: "16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 | **Package de provisionnement** | Fichier `.ppkg` appliqué sur un Windows d'usine | Windows Configuration Designer | ✅ PME, écoles |
 | **Moderne — Autopilot** | Le Windows d'usine est configuré depuis le cloud, au premier démarrage | Entra ID + Intune | ✅ **Recommandé par Microsoft** |
 
-> [!NOTE] Pourquoi une ISO personnalisée pour le lab ?
-> C'est la seule méthode « traditionnelle » encore pleinement fonctionnelle **sans infrastructure** : MDT est retiré, WDS ne sert plus de fichier de réponse par défaut, ConfigMgr est une infrastructure lourde, Autopilot exige un tenant et des licences. L'ISO personnalisée fait la même chose qu'eux sur le fond : **WinPE → partitionnement → application d'une image → fichier de réponse**.
+> [!NOTE] Pourquoi l'ISO officielle + fichier de réponse pour le lab ?
+> C'est la méthode « traditionnelle » la plus simple qui fonctionne **sans infrastructure** en 2026 : MDT est retiré, WDS ne sert plus de fichier de réponse par défaut, ConfigMgr est lourd et Autopilot exige un tenant et des licences. Elle évite aussi tous les pièges de l'image maître (Sysprep bloqué par BitLocker, image à refaire chaque mois). L'image maître reste présentée en section 3, pour les grands parcs.
+---
+
+## 2. Méthode 1 — ISO officielle + fichier de réponse
+
+C'est la méthode du lab, et celle à retenir pour un petit ou moyen parc : **on ne modifie pas l'ISO de Microsoft**, on lui ajoute seulement un fichier de réponse complet. Windows s'installe, rejoint le domaine et installe ses applications sans aucun clic.
+
+| | |
+|---|---|
+| **Ce qu'il faut** | l'ISO officielle, `autounattend-iso-officielle.xml`, `postinstall.ps1` (dans `Ressources/Fichier-reponse/`), le domaine du chapitre 10 avec son DHCP |
+| **Ce qu'il ne faut pas** | ni `MASTER`, ni Sysprep, ni capture WIM, ni reconstruction de l'ISO |
+| **Durée mesurée sur le lab** | **9 minutes** de l'appui sur une touche à la fin de la post-installation (test du 09/11/2026) |
+
+### Le principe
+
+Au démarrage, Windows Setup cherche un fichier nommé **exactement** `autounattend.xml` à la **racine de tous les supports** : le DVD d'installation, mais aussi un deuxième lecteur DVD ou une clé USB. Il suffit donc de poser le fichier à côté de l'ISO officielle, sans toucher à celle-ci.
+
+### Étape 1 — Le fichier de réponse
+
+`autounattend-iso-officielle.xml` reprend le fichier du chapitre 13 et le complète :
+
+| Passe | Réglage | Effet |
+|---|---|---|
+| `windowsPE` | `DiskConfiguration`, clé générique Pro | partitions UEFI/GPT, édition Pro, aucune question |
+| `specialize` | `ComputerName` = `PC02` | nom définitif du poste |
+| `specialize` | `PreventDeviceEncryption` | pas de chiffrement automatique : BitLocker sera activé par GPO, clé dans l'AD (chapitre 11) |
+| `specialize` | `Microsoft-Windows-UnattendedJoin` | **jonction au domaine** pendant l'installation, dans `OU=Ordinateurs,OU=Fournil` |
+| `oobeSystem` | `OOBE` + compte local `admin` | aucun écran d'accueil |
+| `oobeSystem` | `AutoLogon` (1 fois) + `FirstLogonCommands` | lance `postinstall.ps1` : applications avec WinGet, nettoyage, redémarrage |
+
+> [!WARNING] Deux réglages qui font échouer la jonction ou la post-installation
+> - L'**OU** indiquée dans `MachineObjectOU` doit **exister** avant le déploiement (chapitre 10).
+> - Dans `AutoLogon`, préciser `<Domain>PC02</Domain>` : une fois le poste joint, Windows chercherait sinon `FOURNIL\admin`, qui n'existe pas.
+
+> [!TIP] Sans domaine ?
+> `autounattend-iso-officielle-sans-domaine.xml` est le même fichier **sans** le composant `UnattendedJoin` : le poste reste en groupe de travail, avec le compte local `admin` et les mêmes applications. Pratique pour un poste isolé, ou pour s'entraîner avant le chapitre 10.
+
+> [!NOTE] Le mot de passe est en clair dans le fichier
+> Le compte de jonction (`Administrateur`) et le mot de passe du lab sont lisibles dans `autounattend.xml`. En production, on utilise un compte dédié qui a **seulement** le droit de joindre des postes, et on ne laisse pas traîner le support.
+
+### Étape 2 — Mettre le fichier sur un support
+
+Pour une VM, le plus simple est une **mini-ISO** de quelques centaines de kilo-octets, qui contient seulement les deux fichiers :
+
+```powershell
+New-Item D:\Images\reponses-pc02 -ItemType Directory -Force
+Copy-Item ...\Fichier-reponse\autounattend-iso-officielle.xml D:\Images\reponses-pc02\autounattend.xml
+Copy-Item ...\Fichier-reponse\postinstall.ps1 D:\Images\reponses-pc02\
+New-Item D:\ISO -ItemType Directory -Force
+$oscdimg = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\oscdimg.exe"
+& $oscdimg -u2 -udfver102 -lREPONSES D:\Images\reponses-pc02 D:\ISO\reponses-pc02.iso     # & = exécuter le programme dont le chemin est dans la variable
+```
+
+Sur un poste physique : copier les deux fichiers à la **racine d'une clé USB**, à côté (ou en plus) de la clé d'installation Windows.
+
+### Étape 3 — Déployer PC02
+
+```powershell
+New-VM -Name "PC02" -Generation 2 -NewVHDPath "D:\HyperV\PC02\PC02.vhdx" -NewVHDSizeBytes 64GB -SwitchName "vSwitch-Rennes" -Path "D:\HyperV"
+Set-VMMemory -VMName "PC02" -DynamicMemoryEnabled $false -StartupBytes 4GB
+Set-VMProcessor -VMName "PC02" -Count 2
+Set-VMKeyProtector -VMName "PC02" -NewLocalKeyProtector
+Enable-VMTPM -VMName "PC02"
+$dvd = Add-VMDvdDrive -VMName "PC02" -Path "D:\ISO\Win11_26H2_French_x64.iso" -Passthru   # ISO officielle, intacte
+Add-VMDvdDrive -VMName "PC02" -Path "D:\ISO\reponses-pc02.iso"                            # le fichier de réponse
+Set-VMFirmware -VMName "PC02" -FirstBootDevice $dvd
+Start-VM -Name "PC02"; vmconnect.exe localhost "PC02"
+```
+
+Au démarrage, appuyer sur une touche au message **« Press any key to boot from CD or DVD »**. C'est le seul geste de tout le déploiement.
+
+> [!WARNING] Mémoire fixe, TPM, 2 processeurs
+> Windows 11 exige 4 Go, un TPM et 2 processeurs. La mémoire **dynamique** fait échouer Setup de façon aléatoire (`0x800705AA` en appliquant l'image) : on la désactive.
+
+### Étape 4 — Vérifier
+
+Après l'installation, `PC02` ouvre une fois la session `admin`, installe les applications, se nettoie puis redémarre : il s'arrête sur l'écran de connexion, prêt pour `FOURNIL\stagiaire`.
+
+```powershell
+# Sur PC02 (session FOURNIL\Administrateur ou admin)
+(Get-CimInstance Win32_ComputerSystem) | Select-Object Name, Domain, PartOfDomain
+Get-BitLockerVolume C: | Select-Object VolumeStatus, ProtectionStatus      # FullyDecrypted : pas de chiffrement automatique
+Get-Content C:\Windows\Temp\postinstall.log                                # journal de la post-installation
+winget list --id Obsidian.Obsidian; winget list --id Microsoft.VisualStudioCode
+(Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon').AutoAdminLogon   # 0 : plus d'ouverture automatique
+Test-Path C:\Windows\Panther\unattend-original.xml                                                 # False : copie du fichier supprimée
+# Sur SRV01
+Get-ADComputer PC02 | Select-Object DistinguishedName                       # ...,OU=Ordinateurs,OU=Fournil,...
+```
+
+### Résultat sur le lab (09/11/2026)
+
+ISO officielle `Windows11_Client_x64_fr-fr_26300_9457.iso`, sans aucune modification, et la mini-ISO de réponses :
+
+| Heure | Étape | Source |
+|---|---|---|
+| 21:44:41 | Appui sur une touche, Setup démarre | — |
+| 21:49:46 | Poste joint à `ad.fournil.lab` (passe `specialize`) | `C:\Windows\debug\NetSetup.LOG` |
+| 21:50:08 | Fin de l'installation de Windows | `InstallDate` |
+| 21:52:31 | Ouverture automatique de `admin`, début de `postinstall.ps1` | `postinstall.log` |
+| 21:52:46 | WinGet disponible (11 s d'attente : App Installer pas encore enregistré) | `postinstall.log` |
+| 21:53:08 | 7-Zip et Notepad++ installés (code retour 0) — *liste du test ; le script installe maintenant Obsidian et VS Code* | `postinstall.log` |
+
+Vérifications : `Windows 11 Professionnel` build 26300 · `CN=PC02,OU=Ordinateurs,OU=Fournil,…` · BitLocker `FullyDecrypted` · adresse DHCP et enregistrement DNS `pc02` créés · `FOURNIL\Admins du domaine` dans les administrateurs locaux · compte `Administrateur` intégré désactivé · fuseau `Romance Standard Time`.
+
+> [!DANGER] Deux traces à effacer après le déploiement
+> Le test a montré que Windows laisse :
+> - l'**ouverture de session automatique active** (`AutoAdminLogon = 1`) : la session `admin` se rouvrirait au redémarrage ;
+> - une copie du fichier de réponse **avec les mots de passe en clair** dans `C:\Windows\Panther\unattend-original.xml`, dont celui du compte qui joint le domaine.
+>
+> `postinstall.ps1` corrige les deux à la fin, puis redémarre le poste (vérifié : écran de connexion, aucune session ouverte).
 
 ---
 
-## 2. Méthode 1 — l'ISO de déploiement personnalisée
+## 3. Méthode 2 — l'ISO personnalisée avec une image maître *(approfondissement)*
+
+> [!abstract] Niveau : approfondissement
+> Cette méthode remplace l'image de l'ISO par `MASTER.wim` (chapitres 14 et 15). Elle sert aux grands parcs homogènes ; pour un public TSSR, la section 2 suffit.
 
 ![Assembler l’ISO de déploiement — MASTER.wim et autounattend.xml remplacent ou complètent le contenu de l’ISO Windows 11, puis oscdimg crée l’ISO amorçable pour PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-iso-personnalisee.svg)
 
@@ -144,7 +257,7 @@ vmconnect.exe localhost "PC02"
 
 ---
 
-## 3. Déploiement par le réseau : PXE, WDS, MDT, ConfigMgr
+## 4. Déploiement par le réseau : PXE, WDS, MDT, ConfigMgr
 
 ### Le principe PXE
 
@@ -178,7 +291,7 @@ Avantage : **aucun support physique**, des dizaines de postes en parallèle (mul
 
 ---
 
-## 4. Partitionnement automatisé
+## 5. Partitionnement automatisé
 
 Deux façons, vues aux chapitres 13 et 15 :
 
@@ -194,7 +307,7 @@ Schéma UEFI/GPT recommandé : **EFI** (FAT32, 100-260 Mo) · **MSR** (16 Mo) ·
 
 ---
 
-## 5. Migrer les profils et les données : USMT
+## 6. Migrer les profils et les données : USMT
 
 Changer de poste (ou réinstaller) sans perdre les documents, le fond d'écran, les lecteurs réseau, les paramètres d'applications : c'est le rôle de **USMT** (*User State Migration Tool*), fourni avec l'ADK (dossier `User State Migration Tool\amd64`).
 
@@ -239,7 +352,7 @@ En 2026, la combinaison **OneDrive KFM + Windows Backup for Organizations** rend
 
 ---
 
-## 6. Le déploiement moderne : Windows Autopilot et Intune
+## 7. Le déploiement moderne : Windows Autopilot et Intune
 
 ### Le principe
 
@@ -285,21 +398,19 @@ En pratique, beaucoup d'organisations sont **hybrides** : jonction AD + Entra (*
 ## Récapitulatif
 
 > [!summary] L'essentiel du chapitre
-> **ISO officielle → copiée dans un dossier de travail**
-> - `sources\install.wim` : remplacé par `MASTER.wim` (chapitre 15)
-> - `autounattend.xml` : déposé à la racine (chapitre 13 — passes windowsPE/specialize/oobeSystem)
+> **Méthode du lab : ISO officielle + `autounattend.xml`**
+> - Setup lit `autounattend.xml` à la racine de **tout** support : 2e lecteur DVD, clé USB
+> - `windowsPE` (disque, édition) · `specialize` (nom, `PreventDeviceEncryption`, jonction au domaine) · `oobeSystem` (OOBE masquée, compte local, `AutoLogon` + `FirstLogonCommands`)
+> - `postinstall.ps1` : applications avec WinGet, journal dans `C:\Windows\Temp\postinstall.log`, puis nettoyage (`AutoAdminLogon = 0`, suppression de `Panther\unattend-original.xml` qui contient les mots de passe) et redémarrage
+> - Mesuré sur le lab : **9 minutes** de bout en bout
+> - Seul geste : une touche au « Press any key to boot from CD or DVD »
+> - Pièges : OU de `MachineObjectOU` existante · `<Domain>PC02</Domain>` dans `AutoLogon` · mémoire fixe, TPM, 2 vCPU
 >
-> **`oscdimg -m -o -u2 -udfver102 -bootdata:2#p0,e,b...etfsboot.com#pEF,e,b...efisys.bin <source> <iso>`**
-> - → ISO bootable BIOS + UEFI
+> **Image maître *(approfondissement)***
+> - `sources\install.wim` remplacé par `MASTER.wim` → `oscdimg` (BIOS + UEFI, `efisys_noprompt.bin` pour supprimer la touche)
+> - Image sans `Windows\Panther\unattend-original.xml` (sinon `0x80070050`)
 >
-> - `efisys_noprompt.bin` → plus de "Press any key" (vrai zéro clic, mais efface sans prévenir)
-> - Image sans `Windows\Panther\unattend-original.xml` (sinon 0x80070050 au déploiement)
->
-> **PC02 : `New-VM` (Gen2, vSwitch-Rennes) → `Add-VMDvdDrive` (ISO) → démarrage**
-> - → zéro clic → bureau directement
->
-> - **Réseau** : PXE = DHCP + TFTP + WinPE · WDS : mains libres BLOQUÉ (avril 2026), rôle déprécié
->   - **MDT** : RETIRÉ (janvier 2026) · ConfigMgr OSD : supporté
-> - **Migration** : USMT scanstate/loadstate (`/ue:*\*` `/ui:DOM\user`, tester avec /listfiles)
->   - ou OneDrive KFM + Windows Backup for Organizations (Entra)
+> **Autres méthodes**
+> - **Réseau** : PXE = DHCP + TFTP + WinPE · WDS : mains libres bloqué (avril 2026), rôle déprécié · MDT : retiré (janvier 2026) · ConfigMgr OSD : supporté
+> - **Migration** : USMT `scanstate` / `loadstate` (`/ue:*\*` `/ui:DOM\user`, tester avec `/listfiles`) · ou OneDrive KFM
 > - **Moderne** : Autopilot (hash matériel, Entra + Intune, OOBE pilotée par le cloud, pas d'image)

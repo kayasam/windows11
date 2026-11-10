@@ -59,7 +59,7 @@
 
 **C3.** Génère une paire de clés ed25519 sur `PC01` et configure l'authentification par clé pour `Administrateur` sur `SRV01`. Quel fichier particulier faut-il utiliser pour un compte administrateur ?
 
-**C4.** Installe PowerShell 7 sur `SRV01` (Server Core), déclare le sous-système SSH et ouvre une session `Enter-PSSession -HostName`.
+**C4.** Installe PowerShell 7 sur `SRV01` (Server Core), déclare le sous-système SSH et ouvre une session `Enter-PSSession -HostName`. *(approfondissement)*
 
 ---
 

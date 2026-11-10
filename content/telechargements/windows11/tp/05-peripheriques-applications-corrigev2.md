@@ -268,7 +268,7 @@
 > }
 > ```
 > Le fichier contient les **identifiants** des paquets (et la source) — **ni les installeurs, ni les versions** (sauf `--include-versions`), **ni les paramètres** des logiciels. Les logiciels inconnus des sources (« *Installed package is not available from any source* ») ne sont pas exportés.
-> Sur `MASTER` (chapitre 14) : `winget import -i socle-fournil.json --accept-package-agreements`.
+> Au déploiement (chapitre 16), `postinstall.ps1` installe ce socle sur chaque nouveau poste. Variante : `winget import -i socle-fournil.json --accept-package-agreements`.
 
 ---
 

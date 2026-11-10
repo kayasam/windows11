@@ -13,6 +13,9 @@ title: "TP 15. Images WIM et DISM — Correction"
 
 > Chapitres associés : [15. Images WIM et DISM](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/)
 
+> [!abstract] Niveau
+> Parties A et B : socle. Parties C et E *(approfondissement)* : facultatives, le TP 16 ne les utilise pas. Ce TP suppose `MASTER` (TP 14) : sans elle, faire la partie B sur l'`install.wim` de l'ISO officielle.
+
 ---
 
 ## Objectifs
@@ -100,7 +103,7 @@ title: "TP 15. Images WIM et DISM — Correction"
 
 ---
 
-## Partie C — Maintenance hors ligne (30 min)
+## Partie C — Maintenance hors ligne (30 min) *(approfondissement)*
 
 **C1.** Monte l'index 1 de `MASTER.wim` dans `C:\Mount`.
 
@@ -154,7 +157,7 @@ title: "TP 15. Images WIM et DISM — Correction"
 
 ---
 
-## Partie E — Appliquer depuis WinPE (20 min)
+## Partie E — Appliquer depuis WinPE (20 min) *(approfondissement)*
 
 **E1.** Prépare un disque contenant `MASTER.wim` et le script `partition-uefi.txt`. Démarre une VM vierge sur le WinPE du TP 13, avec ce disque attaché.
 

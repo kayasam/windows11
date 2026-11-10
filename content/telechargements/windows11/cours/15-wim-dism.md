@@ -6,6 +6,9 @@
 > **Outils :** `dism.exe`, `Mount-VHD`/`Dismount-VHD` (Hyper-V), WinPE (chapitre 13)
 > **Commandes à connaître :** `Dism /Capture-Image`, `Dism /Get-WimInfo`, `Dism /Mount-Image`, `Dism /Add-Driver`, `Dism /Add-Package`, `Dism /Unmount-Image`, `Dism /Apply-Image`, `bcdboot`
 
+> [!abstract] Niveau
+> **Socle TSSR** : le format WIM (index, `Get-WindowsImage`) et la capture d'une image. Les sections marquées *(approfondissement)* — montage, injection de pilotes, maintenance hors ligne, application manuelle depuis WinPE — sont facultatives : le déploiement du chapitre 16 ne les utilise pas.
+
 > [!INFO] Fil rouge — Fournil
 > `D:\Images\MASTER.wim` capturée depuis l'hôte le 08/11/2026 (22 min, 8,3 Go). Le WinPE du chapitre 13 a été démarré sur une VM vierge pour la procédure d'application manuelle.
 
@@ -81,7 +84,7 @@ Dismount-VHD -Path $vhdPath
 
 ---
 
-## Monter, modifier et démonter une image
+## Monter, modifier et démonter une image *(approfondissement)*
 
 Une fois capturée (ou pour modifier une image existante comme `install.wim`), DISM permet de **monter** un index précis comme un dossier accessible en lecture/écriture.
 
@@ -108,7 +111,7 @@ Dism /Unmount-Image /MountDir:C:\Mount /Discard
 
 ---
 
-## Injection de pilotes et mises à jour hors ligne
+## Injection de pilotes et mises à jour hors ligne *(approfondissement)*
 
 Modifier une image montée permet d'ajouter des pilotes ou des correctifs **sans jamais démarrer** le Windows qu'elle contient — utile pour préparer une image compatible avec du matériel qui n'était pas présent sur la machine de référence.
 
@@ -131,7 +134,7 @@ Dism /Image:C:\Mount /Add-Package /PackagePath:C:\Updates\KB5041160.msu
 
 ---
 
-## Maintenance hors ligne : applications, langues, informations
+## Maintenance hors ligne : applications, langues, informations *(approfondissement)*
 
 Sur une image **montée** (`/Image:C:\Mount`), DISM sait faire presque tout ce qu'on ferait sur un poste démarré :
 
@@ -160,7 +163,7 @@ Dism /Image:C:\Mount /Cleanup-Image /StartComponentCleanup /ResetBase
 
 ---
 
-## Appliquer une image depuis Windows PE
+## Appliquer une image depuis Windows PE *(approfondissement)*
 
 C'est ce que fait Windows Setup en coulisses, et ce que font tous les outils de déploiement : **partitionner**, **appliquer** le WIM, **rendre le disque démarrable**. On peut le faire à la main depuis le WinPE du chapitre 13 — indispensable quand on n'a ni ISO personnalisée ni infrastructure.
 

@@ -145,7 +145,7 @@ Les paramètres sont rangés sous le nœud **Windows Update**, en **quatre** sou
 > [!NOTE] Ne pas confondre avec le dossier WSUS
 > Le dossier **« … de Windows Server Update Service »** contient « Spécifier l'emplacement intranet du service de mise à jour Microsoft ». Le configurer **sans** serveur WSUS bloque toute mise à jour du poste : erreur classique quand une vieille GPO traîne dans un domaine.
 
-### Clés de registre correspondantes
+### Clés de registre correspondantes *(approfondissement)*
 
 ```powershell
 # Ce qui est réellement appliqué par GPO

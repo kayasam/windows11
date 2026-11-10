@@ -198,7 +198,7 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 > ```
 > Le script est inoffensif (il attend 10 minutes), mais tout y est : exécution en **SYSTEM**, fenêtre **cachée**, **contournement** de la stratégie d'exécution, dossier `ProgramData` accessible en écriture, et un **nom** qui imite un composant légitime (OneDrive ne crée pas de tâche à ce nom ni à la racine). C'est exactement la forme des persistances réelles.
 
-**D3.** Si Sysmon est actif (chapitre 19), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent.
+**D3.** Si Sysmon est actif (chapitre 19), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
 
 > [!success]- Afficher la correction — D3
 > ```powershell

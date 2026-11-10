@@ -166,7 +166,7 @@
 > ssh administrateur@SRV01                    # plus de mot de passe
 > ```
 
-**C4.** Installe PowerShell 7 sur `SRV01` (Server Core), déclare le sous-système SSH et ouvre une session `Enter-PSSession -HostName`.
+**C4.** Installe PowerShell 7 sur `SRV01` (Server Core), déclare le sous-système SSH et ouvre une session `Enter-PSSession -HostName`. *(approfondissement)*
 
 > [!success]- Afficher la correction — C4
 > Sur `SRV01` (pas de WinGet sur Server Core) :
