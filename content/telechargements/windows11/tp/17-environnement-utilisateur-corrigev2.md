@@ -1,10 +1,10 @@
-# TP 17. Environnement utilisateur et Microsoft 365 — Correction
+# TP 18. Environnement utilisateur et Microsoft 365 — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [17. Environnement utilisateur et Microsoft 365](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/)
+> Chapitres associés : [18. Environnement utilisateur et Microsoft 365](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/)
 
 ---
 

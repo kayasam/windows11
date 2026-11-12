@@ -13,7 +13,7 @@ title: "07. PowerShell pour l'administrateur"
 > **Commandes à connaître :** `Get-Help`, `Get-Command`, `Get-Member`, `Where-Object`, `Select-Object`, `Get-CimInstance`, `Set-ExecutionPolicy`
 
 > [!INFO] Fil rouge — Fournil
-> On écrit sur `PC01` un script d'inventaire matériel du poste (`Get-InventairePoste.ps1`), réutilisé au chapitre 20.
+> On écrit sur `PC01` un script d'inventaire matériel du poste (`Get-InventairePoste.ps1`), réutilisé au chapitre 21.
 
 ---
 

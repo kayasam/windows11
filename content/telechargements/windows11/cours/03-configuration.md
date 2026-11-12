@@ -97,7 +97,7 @@ Certaines fonctionnalités n'ont pas encore été migrées vers Paramètres :
 | Options Internet | `inetcpl.cpl` | Non |
 | Configuration IP avancée | `ncpa.cpl` | Partiellement |
 | Gestion des couleurs | `colorcpl.exe` | Non |
-| Sauvegarde et restauration (Windows 7) | `sdclt.exe` | Non — fonctionnalité héritée, remplacée par l'app **Sauvegarde Windows** + OneDrive (chap. 20) |
+| Sauvegarde et restauration (Windows 7) | `sdclt.exe` | Non — fonctionnalité héritée, remplacée par l'app **Sauvegarde Windows** + OneDrive (chap. 21) |
 | Informations système | Panneau → Système | Oui : depuis 25H2, **Paramètres → Système → Informations système** (cartes ci-dessous) |
 
 ![w11-02-parametres-informations-26h2](https://cours.kaya.ovh/windows11/assets/captures/w11-02-parametres-informations-26h2.png)

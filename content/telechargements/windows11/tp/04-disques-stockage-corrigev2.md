@@ -186,7 +186,7 @@
 > (disque perdu)  Warning  Lost Communication
 > Pain de campagne : farine T80, levain, sel
 > ```
-> Le miroir est **dégradé** mais les données restent **lisibles et modifiables** : c'est tout l'intérêt de la résilience. En revanche, une seconde panne serait fatale : il faut remplacer le disque rapidement (et surveiller ces états, chapitre 20).
+> Le miroir est **dégradé** mais les données restent **lisibles et modifiables** : c'est tout l'intérêt de la résilience. En revanche, une seconde panne serait fatale : il faut remplacer le disque rapidement (et surveiller ces états, chapitre 21).
 
 **C6.** Rattache le disque. Que se passe-t-il ?
 

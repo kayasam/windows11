@@ -1,5 +1,5 @@
 ---
-title: "TP 20. TP final : maintien en condition opérationnelle"
+title: "TP 21. TP final : maintien en condition opérationnelle"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/20-mco"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/20-mco/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -9,7 +9,7 @@ title: "TP 20. TP final : maintien en condition opérationnelle"
 
 > Durée estimée : 3h
 
-> Chapitres associés : [20. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
+> Chapitres associés : [21. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
 
 ---
 
@@ -26,7 +26,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 - `SRV01`, `PC01`, `PC02` démarrés, `PC01` et `PC02` joints au domaine
 - WinRM actif sur `PC02` (TP 12)
 - Scripts `Get-Inventaire.ps1`, `Test-Poste.ps1`, `Casse-Poste.ps1` (dossier `Ressources/scripts`) copiés sur `PC01` dans `C:\MCO`
-- Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP20"`
+- Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP21"`
 
 ---
 
@@ -34,7 +34,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **A1.** Depuis `PC01`, lance l'inventaire de `PC01` et `PC02` avec export dans `C:\MCO\inventaire.csv`. Ouvre le CSV dans Excel (ou `Import-Csv | Out-GridView`).
 
-**A2.** Pour chaque poste, liste les **non-conformités** par rapport aux seuils du chapitre 20 (version, mises à jour, antivirus, BitLocker, disque, uptime).
+**A2.** Pour chaque poste, liste les **non-conformités** par rapport aux seuils du chapitre 21 (version, mises à jour, antivirus, BitLocker, disque, uptime).
 
 **A3.** Les versions installées sont-elles supportées ? Jusqu'à quand ? Un poste Pro en 24H2 retrouvé dans un placard le serait-il ?
 
@@ -60,7 +60,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **C2.** Lance la tâche manuellement et vérifie son code retour et le journal produit.
 
-**C3.** Pourquoi `Test-Poste.ps1` ne signale-t-il pas ta propre tâche comme suspecte, alors qu'il a détecté celle du TP 19 ?
+**C3.** Pourquoi `Test-Poste.ps1` ne signale-t-il pas ta propre tâche comme suspecte, alors qu'il a détecté celle du TP 20 ?
 
 **C4.** Propose une GPO pour définir l'ordre des sources de mise à jour Defender avec une source de secours.
 

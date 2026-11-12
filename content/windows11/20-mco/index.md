@@ -1,5 +1,5 @@
 ---
-title: "20. Maintien en condition opérationnelle"
+title: "21. Maintien en condition opérationnelle"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/20-mco"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/20-mco/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -22,7 +22,7 @@ title: "20. Maintien en condition opérationnelle"
 | Type | But | Exemples sur un poste Windows 11 |
 |------|-----|-----------------------------------|
 | **Préventive** | Éviter la panne | Mises à jour, signatures antivirus, nettoyage disque, sauvegardes, contrôle de santé planifié |
-| **Corrective** | Réparer | Chapitres 18 et 19 : WinRE, SFC/DISM, dépannage réseau… |
+| **Corrective** | Réparer | Chapitres 19 et 20 : WinRE, SFC/DISM, dépannage réseau… |
 | **Évolutive** | Suivre le cycle de vie | Mise à niveau de version (25H2 → 26H2), renouvellement matériel, migration Windows 10 → 11 |
 
 Le MCO, c'est surtout de la **préventive** et de l'**évolutive** — pour faire le moins possible de corrective.
@@ -132,7 +132,7 @@ Pendant la mise à jour, le moteur et la plateforme Defender peuvent être renou
 
 ### Contrôle planifié
 
-Le script `Test-Poste.ps1` (TP 19) se planifie chaque matin, avec journalisation :
+Le script `Test-Poste.ps1` (TP 20) se planifie chaque matin, avec journalisation :
 
 ```powershell
 $a = New-ScheduledTaskAction -Execute 'powershell.exe' `
@@ -141,7 +141,7 @@ $t = New-ScheduledTaskTrigger -Daily -At 8:30
 Register-ScheduledTask -TaskPath '\Fournil\' -TaskName 'Contrôle santé' -Action $a -Trigger $t -User SYSTEM -RunLevel Highest
 ```
 
-Remarquer la différence avec la tâche malveillante du TP 19 : rangée dans un **dossier** à son nom (`\Fournil\`), nom explicite, script dans un dossier protégé (`C:\MCO`, droits d'écriture réservés aux administrateurs) et **documentée**.
+Remarquer la différence avec la tâche malveillante du TP 20 : rangée dans un **dossier** à son nom (`\Fournil\`), nom explicite, script dans un dossier protégé (`C:\MCO`, droits d'écriture réservés aux administrateurs) et **documentée**.
 
 ---
 
@@ -172,7 +172,7 @@ Dism /Online /Cleanup-Image /StartComponentCleanup
 ```
 
 > [!WARNING] `/ResetBase`
-> `/StartComponentCleanup /ResetBase` libère davantage mais rend **impossible la désinstallation** des mises à jour déjà installées. À éviter sur un poste en production (on perd une arme du chapitre 18) ; utile sur une image de référence juste avant capture.
+> `/StartComponentCleanup /ResetBase` libère davantage mais rend **impossible la désinstallation** des mises à jour déjà installées. À éviter sur un poste en production (on perd une arme du chapitre 19) ; utile sur une image de référence juste avant capture.
 
 ### Espace disque
 
@@ -185,7 +185,7 @@ Dism /Online /Cleanup-Image /StartComponentCleanup
 
 | Solution | Statut 2026 | Usage |
 |----------|-------------|-------|
-| **OneDrive** + *Déplacement des dossiers connus* (KFM) | Recommandé | Bureau, Documents, Images synchronisés et versionnés (chapitre 17) |
+| **OneDrive** + *Déplacement des dossiers connus* (KFM) | Recommandé | Bureau, Documents, Images synchronisés et versionnés (chapitre 18) |
 | Application **Sauvegarde Windows** | Actuel | Dossiers, paramètres, applications et identifiants vers OneDrive ; restauration à l'OOBE d'un nouveau poste |
 | **Historique des fichiers** | Toujours présent | Copies versionnées vers un disque externe ou un partage ; pratique hors Microsoft 365 |
 | *Sauvegarde et restauration (Windows 7)*, `wbadmin` (image système) | **Déprécié**, encore présent | Ne plus construire de procédure dessus |
@@ -229,7 +229,7 @@ Le MCO s'écrit : qui fait quoi, à quelle fréquence, comment on le vérifie.
 | Mensuelle (Patch Tuesday, 2ᵉ mardi) | Anneaux de mises à jour : pilote → large (chapitre 08) | Rapport de conformité |
 | Trimestrielle | Inventaire complet, test de restauration, revue des comptes admin et LAPS | CSV archivé, PV de test |
 | Annuelle | Mise à niveau de version (H2), revue du cycle de vie, renouvellement matériel | Plan de migration |
-| À chaque intervention | Ticket documenté (chapitre 19) | Base de connaissances |
+| À chaque intervention | Ticket documenté (chapitre 20) | Base de connaissances |
 
 ---
 

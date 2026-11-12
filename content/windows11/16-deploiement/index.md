@@ -275,7 +275,7 @@ Avantage : **aucun support physique**, des dizaines de postes en parallèle (mul
 | **Avril 2026** | **Phase 2** : le fichier de réponse servi par WDS (*hands-free*) **est bloqué par défaut**. Contournement par la valeur `AllowHandsFreeFunctionality = 1`, explicitement non recommandé |
 | Prochaine version de Windows Server | Rôle WDS **déprécié** : console, PXE, outils, composants WinPE dédiés |
 
-`boot.wim` de Windows Setup servi tel quel par WDS n'est plus supporté pour plusieurs combinaisons. **Conclusion pour la formation** : on **présente** WDS (culture, parcs existants), on ne monte plus de TP WDS.
+`boot.wim` de Windows Setup servi tel quel par WDS n'est plus supporté pour plusieurs combinaisons. **Conclusion pour la formation** : WDS ne sert plus qu'à livrer un WinPE par le réseau ; l'installation elle-même passe par `setup.exe` et le fichier de réponse de ce chapitre. C'est l'objet du [chapitre 17](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/) (démo pour les TSSR, TP complet pour les profils confirmés).
 
 ### MDT : retiré
 

@@ -1,8 +1,8 @@
-# TP 18. Démarrage et récupération
+# TP 19. Démarrage et récupération
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [18. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
+> Chapitres associés : [19. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
 
 ---
 
@@ -19,7 +19,7 @@
 ## Prérequis
 
 - `PC02` opérationnel
-- **Point de contrôle Hyper-V obligatoire** avant la partie D : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-TP18"`
+- **Point de contrôle Hyper-V obligatoire** avant la partie D : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-TP19"`
 
 ---
 
@@ -47,11 +47,11 @@
 
 ## Partie C — Points de restauration (20 min)
 
-**C1.** Active la protection du système sur `C:` et crée le point « Avant-TP18 ».
+**C1.** Active la protection du système sur `C:` et crée le point « Avant-TP19 ».
 
 **C2.** Essaie d'en créer un second immédiatement. Que se passe-t-il ? Pourquoi ?
 
-**C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP18 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
+**C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP19 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
 
 **C4.** Compare point de restauration et *point-in-time restore*.
 

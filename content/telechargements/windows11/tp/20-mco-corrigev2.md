@@ -1,10 +1,10 @@
-# TP 20. TP final : maintien en condition opérationnelle — Correction
+# TP 21. TP final : maintien en condition opérationnelle — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 3h
 
-> Chapitres associés : [20. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
+> Chapitres associés : [21. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
 
 ---
 
@@ -21,7 +21,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 - `SRV01`, `PC01`, `PC02` démarrés, `PC01` et `PC02` joints au domaine
 - WinRM actif sur `PC02` (TP 12)
 - Scripts `Get-Inventaire.ps1`, `Test-Poste.ps1`, `Casse-Poste.ps1` (dossier `Ressources/scripts`) copiés sur `PC01` dans `C:\MCO`
-- Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP20"`
+- Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP21"`
 
 ---
 
@@ -37,7 +37,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 > ```
 > Le poste local (`PC01`) est interrogé directement, `PC02` par WinRM. Si `PC02` est « *Injoignable* » : WinRM n'y est pas actif (`Enable-PSRemoting` sur `PC02`, ou GPO du chapitre 12).
 
-**A2.** Pour chaque poste, liste les **non-conformités** par rapport aux seuils du chapitre 20 (version, mises à jour, antivirus, BitLocker, disque, uptime).
+**A2.** Pour chaque poste, liste les **non-conformités** par rapport aux seuils du chapitre 21 (version, mises à jour, antivirus, BitLocker, disque, uptime).
 
 > [!success]- Afficher la correction — A2
 > Résultat obtenu dans le lab :
@@ -143,7 +143,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 > ```cmd
 > Dism /Online /Cleanup-Image /StartComponentCleanup
 > ```
-> **Sans** `/ResetBase` sur un poste en production : on veut pouvoir désinstaller la prochaine mise à jour défectueuse (chapitre 18). `/ResetBase` est pour une image de référence juste avant capture.
+> **Sans** `/ResetBase` sur un poste en production : on veut pouvoir désinstaller la prochaine mise à jour défectueuse (chapitre 19). `/ResetBase` est pour une image de référence juste avant capture.
 
 **B5.** Relance l'inventaire : quelles non-conformités restent ? Pourquoi ?
 
@@ -184,7 +184,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 > ```
 > `LastTaskResult` à **0** = succès ; `267009` = en cours ; `2147942402` (0x80070002) = fichier introuvable (chemin du script).
 
-**C3.** Pourquoi `Test-Poste.ps1` ne signale-t-il pas ta propre tâche comme suspecte, alors qu'il a détecté celle du TP 19 ?
+**C3.** Pourquoi `Test-Poste.ps1` ne signale-t-il pas ta propre tâche comme suspecte, alors qu'il a détecté celle du TP 20 ?
 
 > [!success]- Afficher la correction — C3
 > `Test-Poste.ps1` ne cherche que les tâches à la **racine** (`-TaskPath '\'`) qui lancent un interpréteur. La nôtre est rangée dans `\Fournil\`. C'est une convention, pas une sécurité : un attaquant peut aussi créer un dossier. La vraie différence est **organisationnelle** : la tâche est documentée dans le plan de MCO, son script est dans un dossier dont l'écriture est réservée aux administrateurs, et elle est déployée de la même façon sur tous les postes (idéalement par GPO : *Préférences → Paramètres du Panneau de configuration → Tâches planifiées*).
@@ -218,7 +218,7 @@ Ton binôme exécute `Casse-Poste.ps1` sur **ton** `PC02` (pendant ce temps tu e
 > Pas de tâche script à la racine     KO
 > Canal sécurisé                      OK      ← KO après redémarrage
 > ```
-> Sortie réelle obtenue sur `PC02` juste après `Casse-Poste.ps1`. Comparer avec la durée du TP 19, fait « à la main » : c'est tout l'intérêt de l'outillage. Le script ne trouve que ce qu'il cherche : une panne inédite demande toujours la méthode du chapitre 19.
+> Sortie réelle obtenue sur `PC02` juste après `Casse-Poste.ps1`. Comparer avec la durée du TP 20, fait « à la main » : c'est tout l'intérêt de l'outillage. Le script ne trouve que ce qu'il cherche : une panne inédite demande toujours la méthode du chapitre 20.
 
 **D2.** Répare, puis prouve que c'est réparé.
 
@@ -239,7 +239,7 @@ Ton binôme exécute `Casse-Poste.ps1` sur **ton** `PC02` (pendant ce temps tu e
 **D3.** Rédige le ticket d'intervention.
 
 > [!success]- Afficher la correction — D3
-> Voir le modèle du TP 19 (E2). Ajouter cette fois le **temps de détection** et le **temps de résolution** : ce sont les deux indicateurs qu'un plan de MCO cherche à réduire.
+> Voir le modèle du TP 20 (E2). Ajouter cette fois le **temps de détection** et le **temps de résolution** : ce sont les deux indicateurs qu'un plan de MCO cherche à réduire.
 
 ---
 

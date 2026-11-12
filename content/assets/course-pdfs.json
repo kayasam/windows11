@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "de4c9dc050a5140ddff4800c230b0b2993e55871c381eb59ddae0db153f9b64e",
+  "pdfSha256": "4b456baa9c27b615adb37474a12720c6984f42f14ef8d82b6b383ee1dcaf0eef",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
@@ -31,7 +31,7 @@
       "title": "03. Configuration et personnalisation",
       "href": "https://cours.kaya.ovh/windows11/windows11/03-configuration/",
       "download": "telechargements/windows11/cours/03-configuration.md",
-      "sourceSha256": "b3dcbd7d826a4fbe3f9dd3b224e5e6d795e9dcc1a55bb0108595b723f32029bd",
+      "sourceSha256": "2f7faa001202150a1e2b1eb690e39c8a04200e312d16b3557eefdb41df7bcbe0",
       "startPage": 40
     },
     {
@@ -47,7 +47,7 @@
       "title": "05. Pilotes, applications et WinGet",
       "href": "https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/",
       "download": "telechargements/windows11/cours/05-peripheriques-applications.md",
-      "sourceSha256": "e914d97d252ec31a56d4236b5d98b18932f2c9370ec86cb32cc84893ff3e3973",
+      "sourceSha256": "53eb84b818c67b1a8e702aef6cafe2a6cc4c6747bb77018bf782b51cb6c0e5f7",
       "startPage": 63
     },
     {
@@ -63,7 +63,7 @@
       "title": "07. PowerShell pour l'administrateur",
       "href": "https://cours.kaya.ovh/windows11/windows11/07-powershell/",
       "download": "telechargements/windows11/cours/07-powershell.md",
-      "sourceSha256": "9a935cee1b4678af352354746ca48d593f9875f93361bbea64ad40030462c91e",
+      "sourceSha256": "cf14b0ac0ae48c6d0c2b59fc913047916a6ef896140e867fcd250b4cc6e71d58",
       "startPage": 82
     },
     {
@@ -71,7 +71,7 @@
       "title": "08. Windows Update et gestion des mises à jour",
       "href": "https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/",
       "download": "telechargements/windows11/cours/08-mises-a-jour.md",
-      "sourceSha256": "aadf17934ea1e2334ec841c91aade397c42dd7c5cbd9fbb95fc61d6b05680166",
+      "sourceSha256": "6597578454357bca8dab08e30315da17241a7d79166f637eac55499c2688d74e",
       "startPage": 89
     },
     {
@@ -127,7 +127,7 @@
       "title": "15. Images WIM et DISM",
       "href": "https://cours.kaya.ovh/windows11/windows11/15-wim-dism/",
       "download": "telechargements/windows11/cours/15-wim-dism.md",
-      "sourceSha256": "cf1e6fff71a290a18c5ff334c9adbad270abb9a38cd8c91fab5a7995d73e33e5",
+      "sourceSha256": "2a5841c7e6cab831e0336307049e325804f6041de5906727698bf519793043ca",
       "startPage": 182
     },
     {
@@ -135,40 +135,48 @@
       "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/",
       "download": "telechargements/windows11/cours/16-deploiement.md",
-      "sourceSha256": "fb758d540f5687d49027fd959c7ebcea1d48ba3855bb2def55d74e96eab1510c",
+      "sourceSha256": "3b440c0b72d2551fdd5153786aec76964ef7ac8f56f11a08a7799f38e2c2daf4",
       "startPage": 189
     },
     {
-      "key": "windows11/17-environnement-utilisateur",
-      "title": "17. Environnement utilisateur et Microsoft 365",
-      "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
-      "download": "telechargements/windows11/cours/17-environnement-utilisateur.md",
-      "sourceSha256": "ebd9504257ea7015936ae310830d6cdba037968875bb5f52118d4ff091ce36b4",
+      "key": "windows11/17-wds-pxe",
+      "title": "17. Déployer Windows 11 par le réseau : PXE et WDS",
+      "href": "https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/",
+      "download": "telechargements/windows11/cours/17-wds-pxe.md",
+      "sourceSha256": "55b28962c619e0b42ee60b440886083c1d22a62f65dc432ab1ce86f4173b3989",
       "startPage": 206
     },
     {
+      "key": "windows11/17-environnement-utilisateur",
+      "title": "18. Environnement utilisateur et Microsoft 365",
+      "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
+      "download": "telechargements/windows11/cours/17-environnement-utilisateur.md",
+      "sourceSha256": "e7ed5dc6fbde8261212f9a8d5c3e175e3d81a55ec4ea96a5ee896ef49dfe6c8f",
+      "startPage": 225
+    },
+    {
       "key": "windows11/18-demarrage-recuperation",
-      "title": "18. Démarrage et récupération",
+      "title": "19. Démarrage et récupération",
       "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/",
       "download": "telechargements/windows11/cours/18-demarrage-recuperation.md",
-      "sourceSha256": "a74e5e125b12c5a8349cf5ecc359ad8d3cd17edaa967cbf86edce32b2fd767fd",
-      "startPage": 215
+      "sourceSha256": "ee333fa4df82f652eddef6011ce72c8b0f4989b13e1db8aa9ef9ce596bd231e5",
+      "startPage": 234
     },
     {
       "key": "windows11/19-depannage",
-      "title": "19. Diagnostic et dépannage",
+      "title": "20. Diagnostic et dépannage",
       "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/",
       "download": "telechargements/windows11/cours/19-depannage.md",
-      "sourceSha256": "b14e61e232c8884c8f8e247b350607d6aad64ebb38de81c3365402d226193225",
-      "startPage": 227
+      "sourceSha256": "fa9e18e1154e689ee48e34a508c060efb9f462b54e0ab230e6739677550696ab",
+      "startPage": 246
     },
     {
       "key": "windows11/20-mco",
-      "title": "20. Maintien en condition opérationnelle",
+      "title": "21. Maintien en condition opérationnelle",
       "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/",
       "download": "telechargements/windows11/cours/20-mco.md",
-      "sourceSha256": "6f4d72df70eee727d991aced9668f48dc0e369ad09a8d60009769f8ad19da6a2",
-      "startPage": 234
+      "sourceSha256": "46a0e09154269d548bba8704983bb57d4160f6c48a8dbd9fe5db4a4e85210e19",
+      "startPage": 253
     }
   ]
 }

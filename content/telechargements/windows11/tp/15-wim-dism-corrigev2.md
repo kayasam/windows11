@@ -7,7 +7,7 @@
 > Chapitres associés : [15. Images WIM et DISM](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/)
 
 > [!abstract] Niveau
-> Parties A et B : socle. Parties C et E *(approfondissement)* : facultatives, le TP 16 ne les utilise pas. Ce TP suppose `MASTER` (TP 14) : sans elle, faire la partie B sur l'`install.wim` de l'ISO officielle.
+> Socle TSSR : partie B seulement, sur l'`install.wim` de l'ISO officielle. Parties A (capture, suppose `MASTER` du TP 14), C et E : approfondissement. Le TP 16 n'utilise aucune de ces parties.
 
 ---
 

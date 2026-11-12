@@ -181,7 +181,7 @@
 > Resolve-DnsName google.fr                  # 3. la résolution de noms
 > ```
 > Sur le lab : `google.fr → 142.251.142.3`.
-> L'ordre suit les couches : si la passerelle ne répond pas, inutile de tester Internet ; si Internet répond par IP mais pas par nom, le problème est **DNS**. C'est la méthode de dépannage réseau du chapitre 19.
+> L'ordre suit les couches : si la passerelle ne répond pas, inutile de tester Internet ; si Internet répond par IP mais pas par nom, le problème est **DNS**. C'est la méthode de dépannage réseau du chapitre 20.
 >
 > > [!NOTE] `Test-Connection` en Windows PowerShell 5.1
 > > La sortie de `Test-Connection` diffère entre PowerShell 5.1 (`Source`, `Destination`, `IPV4Address`, `Time(ms)`) et PowerShell 7 (`Ping`, `Status`, `Latency`). Pour un simple oui/non dans un script : `Test-Connection 8.8.8.8 -Count 1 -Quiet`.

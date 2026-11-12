@@ -1,10 +1,10 @@
-# TP 19. Diagnostic et dépannage — Correction
+# TP 20. Diagnostic et dépannage — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 2h
 
-> Chapitres associés : [19. Diagnostic et dépannage](https://cours.kaya.ovh/windows11/windows11/19-depannage/)
+> Chapitres associés : [20. Diagnostic et dépannage](https://cours.kaya.ovh/windows11/windows11/19-depannage/)
 
 ---
 
@@ -43,7 +43,7 @@ Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur
 >
 > Le compte administrateur **local** est indispensable : sans DC joignable, un compte domaine jamais mis en cache ne peut pas ouvrir de session.
 
-**A2.** Ouvre une fiche d'intervention (modèle au chapitre 19) : date, poste, symptômes, qui est impacté, depuis quand.
+**A2.** Ouvre une fiche d'intervention (modèle au chapitre 20) : date, poste, symptômes, qui est impacté, depuis quand.
 
 > [!success]- Afficher la correction — A2
 > ```
@@ -139,7 +139,7 @@ Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur
 > Get-Service Spooler | Select-Object Name, Status, StartType
 > # Spooler  Stopped  Disabled
 > ```
-> Méthode générique (chapitre 19) : les services **automatiques arrêtés**, puis les services **désactivés** inhabituels.
+> Méthode générique (chapitre 20) : les services **automatiques arrêtés**, puis les services **désactivés** inhabituels.
 > **Panne 4 trouvée : spouleur.**
 
 **C2.** Retrouve dans le journal **Système** l'événement qui trace le changement de type de démarrage.
@@ -191,7 +191,7 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 > ```
 > Le script est inoffensif (il attend 10 minutes), mais tout y est : exécution en **SYSTEM**, fenêtre **cachée**, **contournement** de la stratégie d'exécution, dossier `ProgramData` accessible en écriture, et un **nom** qui imite un composant légitime (OneDrive ne crée pas de tâche à ce nom ni à la racine). C'est exactement la forme des persistances réelles.
 
-**D3.** Si Sysmon est actif (chapitre 19), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
+**D3.** Si Sysmon est actif (chapitre 20), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
 
 > [!success]- Afficher la correction — D3
 > ```powershell
@@ -240,7 +240,7 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 >     Write-Host ("{0,-35} {1}" -f $_.Key, $(if ($_.Value) {'OK'} else {'KO'})) -ForegroundColor $c
 > }
 > ```
-> Testé sur `PC02` : avant les pannes, 7 OK ; juste après `Casse-Poste.ps1`, **6 KO** — le canal sécurisé reste OK tant que le poste n'a pas redémarré (le DC est encore en cache) ; après les corrections de B4, C3 et D4, 7 OK. Ce script devient l'outil de vérification du TP 20.
+> Testé sur `PC02` : avant les pannes, 7 OK ; juste après `Casse-Poste.ps1`, **6 KO** — le canal sécurisé reste OK tant que le poste n'a pas redémarré (le DC est encore en cache) ; après les corrections de B4, C3 et D4, 7 OK. Ce script devient l'outil de vérification du TP 21.
 
 **E2.** Complète la fiche d'intervention : causes, corrections, vérifications, recommandations pour éviter la récidive.
 

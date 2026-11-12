@@ -1,4 +1,4 @@
-# 18. Démarrage et récupération
+# 19. Démarrage et récupération
 
 > [!NOTE] Objectif
 > Comprendre la séquence de démarrage UEFI, configurer le démarrage (`msconfig`, `bcdedit`), réparer un démarrage cassé (`bcdboot`), utiliser WinRE, et connaître **toute la palette de récupération 2026** : points de restauration, *point-in-time restore*, réinstallation via Windows Update, réinitialisation, Quick Machine Recovery.
@@ -26,7 +26,7 @@
 
 La séquence de démarrage d'un système UEFI/GPT est la suivante :
 
-![Séquence de démarrage Windows 11 — Le PC passe de l’UEFI et de Secure Boot au gestionnaire de démarrage, au chargeur Windows, au noyau puis à la session utilisateur.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-sequence-demarrage.svg)
+![Séquence de démarrage Windows 11 — Le PC passe de l’UEFI et de Secure Boot au gestionnaire de démarrage, au chargeur Windows, au noyau puis à la session utilisateur.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-sequence-demarrage.svg)
 
 ### Fichiers clés
 
@@ -157,7 +157,7 @@ Le **WinRE** (Windows Recovery Environment) est un environnement de récupérati
 
 ![w11-06-demarrage-recuperation-2](https://cours.kaya.ovh/windows11/assets/captures/w11-06-demarrage-recuperation-2.png)
 
-![Options avancées de WinRE — Les options WinRE servent à restaurer le système, réparer le démarrage, utiliser CMD ou retirer une mise à jour.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-options-winre.svg)
+![Options avancées de WinRE — Les options WinRE servent à restaurer le système, réparer le démarrage, utiliser CMD ou retirer une mise à jour.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-options-winre.svg)
 
 ### Commandes de réparation depuis WinRE
 
@@ -233,7 +233,7 @@ Restore-Computer -RestorePoint <SequenceNumber> -Confirm:$false
 
 ## Récupérer sans tout réinstaller (Paramètres → Système → Récupération)
 
-![w11-18-parametres-recuperation](https://cours.kaya.ovh/windows11/assets/captures/w11-18-parametres-recuperation.png)
+![w11-19-parametres-recuperation](https://cours.kaya.ovh/windows11/assets/captures/w11-19-parametres-recuperation.png)
 
 *Page Récupération d'un poste 26H2 déployé (`PC03`).*
 

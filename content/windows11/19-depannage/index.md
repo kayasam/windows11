@@ -1,5 +1,5 @@
 ---
-title: "19. Diagnostic et dépannage"
+title: "20. Diagnostic et dépannage"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/19-depannage"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/19-depannage/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -107,13 +107,13 @@ Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Service Control 
 Get-WinEvent -FilterHashtable @{LogName='Application'; Id=1000,1002} -MaxEvents 10 | Select-Object TimeCreated, Message
 ```
 
-Rapports d'erreurs détaillés : `C:\ProgramData\Microsoft\Windows\WER\ReportArchive`. Pour une application qui ne démarre plus pour **un** utilisateur : tester avec un autre profil (profil corrompu ? chapitre 17), puis réinitialiser l'application (Paramètres → Applications → Options avancées → **Réinitialiser**, pour les applications MSIX).
+Rapports d'erreurs détaillés : `C:\ProgramData\Microsoft\Windows\WER\ReportArchive`. Pour une application qui ne démarre plus pour **un** utilisateur : tester avec un autre profil (profil corrompu ? chapitre 18), puis réinitialiser l'application (Paramètres → Applications → Options avancées → **Réinitialiser**, pour les applications MSIX).
 
 ---
 
 ## 5. Réseau : du bas vers le haut
 
-![Diagnostic réseau, couche par couche — Vérifier successivement le lien, l’adressage, le DNS, le port du service, l’authentification et l’application.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-diagnostic-reseau.svg)
+![Diagnostic réseau, couche par couche — Vérifier successivement le lien, l’adressage, le DNS, le port du service, l’authentification et l’application.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-20-diagnostic-reseau.svg)
 
 | Étape | Commande | Ce qu'on cherche |
 |-------|----------|------------------|
@@ -168,7 +168,7 @@ chkdsk C: /scan                                :: analyse en ligne du système d
 chkdsk C: /f                                   :: réparation (au prochain démarrage pour C:)
 ```
 
-Ordre recommandé : **DISM d'abord, puis SFC** (SFC répare à partir du magasin que DISM vient de réparer). Journal : `C:\Windows\Logs\CBS\CBS.log`. Si rien n'y fait : *Réinstaller maintenant* via Windows Update (chapitre 18).
+Ordre recommandé : **DISM d'abord, puis SFC** (SFC répare à partir du magasin que DISM vient de réparer). Journal : `C:\Windows\Logs\CBS\CBS.log`. Si rien n'y fait : *Réinstaller maintenant* via Windows Update (chapitre 19).
 
 ---
 

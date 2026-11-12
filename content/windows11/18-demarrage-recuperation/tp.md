@@ -1,5 +1,5 @@
 ---
-title: "TP 18. Démarrage et récupération"
+title: "TP 19. Démarrage et récupération"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/18-demarrage-recuperation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -9,7 +9,7 @@ title: "TP 18. Démarrage et récupération"
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [18. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
+> Chapitres associés : [19. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
 
 ---
 
@@ -26,7 +26,7 @@ title: "TP 18. Démarrage et récupération"
 ## Prérequis
 
 - `PC02` opérationnel
-- **Point de contrôle Hyper-V obligatoire** avant la partie D : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-TP18"`
+- **Point de contrôle Hyper-V obligatoire** avant la partie D : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-TP19"`
 
 ---
 
@@ -54,11 +54,11 @@ title: "TP 18. Démarrage et récupération"
 
 ## Partie C — Points de restauration (20 min)
 
-**C1.** Active la protection du système sur `C:` et crée le point « Avant-TP18 ».
+**C1.** Active la protection du système sur `C:` et crée le point « Avant-TP19 ».
 
 **C2.** Essaie d'en créer un second immédiatement. Que se passe-t-il ? Pourquoi ?
 
-**C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP18 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
+**C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP19 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
 
 **C4.** Compare point de restauration et *point-in-time restore*.
 

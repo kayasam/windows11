@@ -168,7 +168,7 @@ Et dans **Paramètres → Windows Update → Options avancées → Stratégies d
 | **Hotpatch** | **Enterprise** 24H2+ (Intune/Autopatch), processeurs compatibles | Correctifs de sécurité appliqués **en mémoire, sans redémarrage** la plupart des mois ; redémarrage seulement aux mois « de base » (un par trimestre) |
 | **Windows Autopatch** | M365 E3/E5, Business Premium | Microsoft gère les anneaux, les échéances, Office, Edge, Teams et les pilotes |
 | **Orchestration des mises à jour d'applications** | 26H2 | Les applications compatibles peuvent faire passer leurs mises à jour par le moteur de Windows Update |
-| **Point-in-time restore** | 24H2+ | Retour arrière rapide après une mise à jour qui casse (chapitre 18) |
+| **Point-in-time restore** | 24H2+ | Retour arrière rapide après une mise à jour qui casse (chapitre 19) |
 
 ---
 
@@ -180,7 +180,7 @@ Windows Update ne met à jour **que Windows** (et, si l'option est cochée, Offi
 |------|---------|
 | Logiciels Win32 | `winget upgrade --all` (chapitre 05), Intune, Autopatch |
 | Applications du Store | Store → Téléchargements et mises à jour ; `winget upgrade` les voit aussi |
-| Microsoft 365 Apps | Canal de mise à jour d'Office (chapitre 17) |
+| Microsoft 365 Apps | Canal de mise à jour d'Office (chapitre 18) |
 | Pilotes et firmwares | Windows Update (mises à jour facultatives), outil constructeur (Dell Command Update, HP Image Assistant, Lenovo Vantage), Autopatch |
 
 Sur `PC01` fraîchement installé : **8 logiciels** à mettre à jour selon `winget upgrade` (TP 05).

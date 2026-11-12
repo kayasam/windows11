@@ -1,5 +1,5 @@
 ---
-title: "17. Environnement utilisateur et Microsoft 365"
+title: "18. Environnement utilisateur et Microsoft 365"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/17-environnement-utilisateur"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -72,7 +72,7 @@ Les deux familles de SID se voient : `…-1905685070-xxxx` = comptes **locaux** 
 
 ### Partage + NTFS : deux couches
 
-![Accès réseau et permissions NTFS — Pour ouvrir un fichier via SMB, l’accès doit être autorisé par le partage et par NTFS. La combinaison la plus restrictive s’applique.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-17-permissions-smb-ntfs.svg)
+![Accès réseau et permissions NTFS — Pour ouvrir un fichier via SMB, l’accès doit être autorisé par le partage et par NTFS. La combinaison la plus restrictive s’applique.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-permissions-smb-ntfs.svg)
 
 Bonne pratique : partage **« Tout le monde : contrôle total »** (ou *Utilisateurs authentifiés : modifier*), et les vraies restrictions en **NTFS**, par **groupes** (jamais par utilisateur — modèle AGDLP de la formation AD).
 

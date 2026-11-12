@@ -258,7 +258,7 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 >
 > ![w11-06-moniteur-fiabilite](https://cours.kaya.ovh/windows11/assets/captures/w11-06-moniteur-fiabilite.png)
 >
-> Indice de stabilité **10** (poste tout neuf). Un avertissement « **Windows Update a échoué** » pour une application Store (`9MSSGKG348SP…`) le 08/11. Un échec isolé de mise à jour d'application n'est pas grave (elle sera retentée) ; une série d'échecs ou des **échecs d'applications** quotidiens feraient baisser l'indice et justifieraient une enquête (chapitre 19).
+> Indice de stabilité **10** (poste tout neuf). Un avertissement « **Windows Update a échoué** » pour une application Store (`9MSSGKG348SP…`) le 08/11. Un échec isolé de mise à jour d'application n'est pas grave (elle sera retentée) ; une série d'échecs ou des **échecs d'applications** quotidiens feraient baisser l'indice et justifieraient une enquête (chapitre 20).
 
 ---
 

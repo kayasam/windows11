@@ -7,7 +7,7 @@
 > **Commandes à connaître :** `Dism /Capture-Image`, `Dism /Get-WimInfo`, `Dism /Mount-Image`, `Dism /Add-Driver`, `Dism /Add-Package`, `Dism /Unmount-Image`, `Dism /Apply-Image`, `bcdboot`
 
 > [!abstract] Niveau
-> **Socle TSSR** : le format WIM (index, `Get-WindowsImage`) et la capture d'une image. Les sections marquées *(approfondissement)* — montage, injection de pilotes, maintenance hors ligne, application manuelle depuis WinPE — sont facultatives : le déploiement du chapitre 16 ne les utilise pas.
+> **Socle TSSR** : le format WIM seulement (index, `Get-WindowsImage` sur l'`install.wim` de l'ISO officielle). La **capture** suppose `MASTER` (chapitre 14) : elle fait partie de l'approfondissement, comme les sections marquées *(approfondissement)* — montage, injection de pilotes, maintenance hors ligne, application depuis WinPE. Le déploiement du chapitre 16 n'utilise rien de tout cela.
 
 > [!INFO] Fil rouge — Fournil
 > `D:\Images\MASTER.wim` capturée depuis l'hôte le 08/11/2026 (22 min, 8,3 Go). Le WinPE du chapitre 13 a été démarré sur une VM vierge pour la procédure d'application manuelle.

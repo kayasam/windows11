@@ -1,10 +1,10 @@
-# TP 18. Démarrage et récupération — Correction
+# TP 19. Démarrage et récupération — Correction
 
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Durée estimée : 1h30
 
-> Chapitres associés : [18. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
+> Chapitres associés : [19. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
 
 ---
 
@@ -21,7 +21,7 @@
 ## Prérequis
 
 - `PC02` opérationnel
-- **Point de contrôle Hyper-V obligatoire** avant la partie D : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-TP18"`
+- **Point de contrôle Hyper-V obligatoire** avant la partie D : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-TP19"`
 
 ---
 
@@ -54,7 +54,7 @@
 > bcdedit /set {current} description "Windows 11 - Fournil"
 > bcdedit /timeout 5
 > ```
-> Le délai ne sert que s'il y a plusieurs entrées (ex. démarrage VHDX natif, chapitre 19).
+> Le délai ne sert que s'il y a plusieurs entrées (ex. démarrage VHDX natif, chapitre 20).
 
 **A3.** Avec `msconfig`, configure un démarrage en mode sans échec **réseau**, redémarre, vérifie, puis annule. Pourquoi faut-il penser à annuler ?
 
@@ -104,18 +104,18 @@
 
 ## Partie C — Points de restauration (20 min)
 
-**C1.** Active la protection du système sur `C:` et crée le point « Avant-TP18 ».
+**C1.** Active la protection du système sur `C:` et crée le point « Avant-TP19 ».
 
 > [!success]- Afficher la correction — C1
 > ```powershell
 > Enable-ComputerRestore -Drive "C:\"
-> Checkpoint-Computer -Description "Avant-TP18" -RestorePointType MODIFY_SETTINGS
+> Checkpoint-Computer -Description "Avant-TP19" -RestorePointType MODIFY_SETTINGS
 > Get-ComputerRestorePoint | Select-Object SequenceNumber, Description, CreationTime
 > ```
 > ```
 > SequenceNumber Description CreationTime
 > -------------- ----------- ------------
->              1 Avant-TP18  20261108104924.848358-000
+>              1 Avant-TP19  20261108104924.848358-000
 > ```
 > La protection est **désactivée par défaut** sur les postes déployés (et en VM) : il faut l'activer, idéalement par GPO.
 
@@ -130,10 +130,10 @@
 > ```
 > Windows limite à **un point par 24 heures** (via `Checkpoint-Computer`). Pour un script de maintenance qui doit toujours en créer un : `SystemRestorePointCreationFrequency = 0`.
 
-**C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP18 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
+**C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP19 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
 
 > [!success]- Afficher la correction — C3
-> `rstrui.exe` → choisir « Avant-TP18 » → **Rechercher les programmes concernés** (liste ce qui sera retiré) → Terminer → redémarrage.
+> `rstrui.exe` → choisir « Avant-TP19 » → **Rechercher les programmes concernés** (liste ce qui sera retiré) → Terminer → redémarrage.
 > Le logiciel installé après le point **disparaît** (registre et fichiers de programme restaurés). Le document créé dans `Documents` **reste** : les points de restauration ne touchent pas aux fichiers personnels.
 
 **C4.** Compare point de restauration et *point-in-time restore*.
@@ -186,7 +186,7 @@
 **D4.** Redémarre et vérifie que Windows démarre. Vérifie le BCD.
 
 > [!success]- Afficher la correction — D4
-> `wpeutil reboot` (ou Continuer) → Windows démarre. `bcdedit /enum {current}` : nouvelle entrée `Windows Boot Manager` / `Windows 11`. La `description` personnalisée (A2) a disparu : l'entrée a été recréée à neuf. Revenir au point de contrôle Hyper-V si besoin : `Restore-VMSnapshot -VMName PC02 -Name Avant-TP18`.
+> `wpeutil reboot` (ou Continuer) → Windows démarre. `bcdedit /enum {current}` : nouvelle entrée `Windows Boot Manager` / `Windows 11`. La `description` personnalisée (A2) a disparu : l'entrée a été recréée à neuf. Revenir au point de contrôle Hyper-V si besoin : `Restore-VMSnapshot -VMName PC02 -Name Avant-TP19`.
 
 ---
 

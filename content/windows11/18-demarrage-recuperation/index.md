@@ -1,5 +1,5 @@
 ---
-title: "18. Démarrage et récupération"
+title: "19. Démarrage et récupération"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/18-demarrage-recuperation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -32,7 +32,7 @@ title: "18. Démarrage et récupération"
 
 La séquence de démarrage d'un système UEFI/GPT est la suivante :
 
-![Séquence de démarrage Windows 11 — Le PC passe de l’UEFI et de Secure Boot au gestionnaire de démarrage, au chargeur Windows, au noyau puis à la session utilisateur.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-sequence-demarrage.svg)
+![Séquence de démarrage Windows 11 — Le PC passe de l’UEFI et de Secure Boot au gestionnaire de démarrage, au chargeur Windows, au noyau puis à la session utilisateur.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-sequence-demarrage.svg)
 
 ### Fichiers clés
 
@@ -163,7 +163,7 @@ Le **WinRE** (Windows Recovery Environment) est un environnement de récupérati
 
 ![w11-06-demarrage-recuperation-2](https://cours.kaya.ovh/windows11/assets/captures/w11-06-demarrage-recuperation-2.png)
 
-![Options avancées de WinRE — Les options WinRE servent à restaurer le système, réparer le démarrage, utiliser CMD ou retirer une mise à jour.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-options-winre.svg)
+![Options avancées de WinRE — Les options WinRE servent à restaurer le système, réparer le démarrage, utiliser CMD ou retirer une mise à jour.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-options-winre.svg)
 
 ### Commandes de réparation depuis WinRE
 
@@ -239,7 +239,7 @@ Restore-Computer -RestorePoint <SequenceNumber> -Confirm:$false
 
 ## Récupérer sans tout réinstaller (Paramètres → Système → Récupération)
 
-![w11-18-parametres-recuperation](https://cours.kaya.ovh/windows11/assets/captures/w11-18-parametres-recuperation.png)
+![w11-19-parametres-recuperation](https://cours.kaya.ovh/windows11/assets/captures/w11-19-parametres-recuperation.png)
 
 *Page Récupération d'un poste 26H2 déployé (`PC03`).*
 

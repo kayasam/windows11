@@ -1,4 +1,4 @@
-# 17. Environnement utilisateur et Microsoft 365
+# 18. Environnement utilisateur et Microsoft 365
 
 > [!NOTE] Objectif
 > Préparer l'environnement de travail de l'utilisateur : comprendre et dépanner les **profils**, donner accès aux **dossiers partagés**, installer et configurer **Microsoft 365 Apps**, **OneDrive** et **Teams** sur le poste, gérer le **partage de documents**, puis **remettre** un poste à un utilisateur en l'accompagnant et en lui transmettant les bons réflexes de sécurité.
@@ -66,7 +66,7 @@ Les deux familles de SID se voient : `…-1905685070-xxxx` = comptes **locaux** 
 
 ### Partage + NTFS : deux couches
 
-![Accès réseau et permissions NTFS — Pour ouvrir un fichier via SMB, l’accès doit être autorisé par le partage et par NTFS. La combinaison la plus restrictive s’applique.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-17-permissions-smb-ntfs.svg)
+![Accès réseau et permissions NTFS — Pour ouvrir un fichier via SMB, l’accès doit être autorisé par le partage et par NTFS. La combinaison la plus restrictive s’applique.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-18-permissions-smb-ntfs.svg)
 
 Bonne pratique : partage **« Tout le monde : contrôle total »** (ou *Utilisateurs authentifiés : modifier*), et les vraies restrictions en **NTFS**, par **groupes** (jamais par utilisateur — modèle AGDLP de la formation AD).
 

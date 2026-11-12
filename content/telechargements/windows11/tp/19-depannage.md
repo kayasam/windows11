@@ -1,8 +1,8 @@
-# TP 19. Diagnostic et dépannage
+# TP 20. Diagnostic et dépannage
 
 > Durée estimée : 2h
 
-> Chapitres associés : [19. Diagnostic et dépannage](https://cours.kaya.ovh/windows11/windows11/19-depannage/)
+> Chapitres associés : [20. Diagnostic et dépannage](https://cours.kaya.ovh/windows11/windows11/19-depannage/)
 
 ---
 
@@ -31,7 +31,7 @@ Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur
 
 **A1.** Note **tout** ce qui ne fonctionne pas comme avant (ouverture de session, lecteurs, impression, accès à `\\srv01`, Internet, lenteurs…).
 
-**A2.** Ouvre une fiche d'intervention (modèle au chapitre 19) : date, poste, symptômes, qui est impacté, depuis quand.
+**A2.** Ouvre une fiche d'intervention (modèle au chapitre 20) : date, poste, symptômes, qui est impacté, depuis quand.
 
 ---
 
@@ -65,7 +65,7 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 
 **D2.** Sous quel compte s'exécute-t-il ? Que fait le script lancé ? Pourquoi le nom de la tâche est-il trompeur ?
 
-**D3.** Si Sysmon est actif (chapitre 19), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
+**D3.** Si Sysmon est actif (chapitre 20), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
 
 **D4.** Supprime la persistance et le script. Vérifie après une nouvelle ouverture de session.
 

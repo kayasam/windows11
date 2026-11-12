@@ -1,4 +1,4 @@
-# 19. Diagnostic et dépannage
+# 20. Diagnostic et dépannage
 
 > [!NOTE] Objectif
 > Adopter une **méthode** de diagnostic, puis maîtriser les outils de Windows 11 pour chaque famille de pannes : système (journaux, fiabilité, Sysmon), performances, services et applications, réseau, fichiers système. **Tracer et documenter** chaque intervention, maintenant que l'Enregistreur d'actions (PSR) et les dépanneurs MSDT sont en fin de vie.
@@ -101,13 +101,13 @@ Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Service Control 
 Get-WinEvent -FilterHashtable @{LogName='Application'; Id=1000,1002} -MaxEvents 10 | Select-Object TimeCreated, Message
 ```
 
-Rapports d'erreurs détaillés : `C:\ProgramData\Microsoft\Windows\WER\ReportArchive`. Pour une application qui ne démarre plus pour **un** utilisateur : tester avec un autre profil (profil corrompu ? chapitre 17), puis réinitialiser l'application (Paramètres → Applications → Options avancées → **Réinitialiser**, pour les applications MSIX).
+Rapports d'erreurs détaillés : `C:\ProgramData\Microsoft\Windows\WER\ReportArchive`. Pour une application qui ne démarre plus pour **un** utilisateur : tester avec un autre profil (profil corrompu ? chapitre 18), puis réinitialiser l'application (Paramètres → Applications → Options avancées → **Réinitialiser**, pour les applications MSIX).
 
 ---
 
 ## 5. Réseau : du bas vers le haut
 
-![Diagnostic réseau, couche par couche — Vérifier successivement le lien, l’adressage, le DNS, le port du service, l’authentification et l’application.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-19-diagnostic-reseau.svg)
+![Diagnostic réseau, couche par couche — Vérifier successivement le lien, l’adressage, le DNS, le port du service, l’authentification et l’application.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-20-diagnostic-reseau.svg)
 
 | Étape | Commande | Ce qu'on cherche |
 |-------|----------|------------------|
@@ -162,7 +162,7 @@ chkdsk C: /scan                                :: analyse en ligne du système d
 chkdsk C: /f                                   :: réparation (au prochain démarrage pour C:)
 ```
 
-Ordre recommandé : **DISM d'abord, puis SFC** (SFC répare à partir du magasin que DISM vient de réparer). Journal : `C:\Windows\Logs\CBS\CBS.log`. Si rien n'y fait : *Réinstaller maintenant* via Windows Update (chapitre 18).
+Ordre recommandé : **DISM d'abord, puis SFC** (SFC répare à partir du magasin que DISM vient de réparer). Journal : `C:\Windows\Logs\CBS\CBS.log`. Si rien n'y fait : *Réinstaller maintenant* via Windows Update (chapitre 19).
 
 ---
 

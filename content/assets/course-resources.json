@@ -297,12 +297,30 @@
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
   ],
+  "windows11/17-wds-pxe": [
+    {
+      "kind": "markdown",
+      "href": "https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/",
+      "label": "Cours",
+      "chapterTitle": "17. Déployer Windows 11 par le réseau : PXE et WDS",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
+    },
+    {
+      "kind": "tp",
+      "href": "https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp",
+      "label": "TP",
+      "chapterTitle": "17. Déployer Windows 11 par le réseau : PXE et WDS",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
+    }
+  ],
   "windows11/17-environnement-utilisateur": [
     {
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
       "label": "Cours",
-      "chapterTitle": "17. Environnement utilisateur et Microsoft 365",
+      "chapterTitle": "18. Environnement utilisateur et Microsoft 365",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -310,7 +328,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/tp",
       "label": "TP",
-      "chapterTitle": "17. Environnement utilisateur et Microsoft 365",
+      "chapterTitle": "18. Environnement utilisateur et Microsoft 365",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -320,7 +338,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/",
       "label": "Cours",
-      "chapterTitle": "18. Démarrage et récupération",
+      "chapterTitle": "19. Démarrage et récupération",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -328,7 +346,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp",
       "label": "TP",
-      "chapterTitle": "18. Démarrage et récupération",
+      "chapterTitle": "19. Démarrage et récupération",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -338,7 +356,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/",
       "label": "Cours",
-      "chapterTitle": "19. Diagnostic et dépannage",
+      "chapterTitle": "20. Diagnostic et dépannage",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -346,7 +364,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/tp",
       "label": "TP",
-      "chapterTitle": "19. Diagnostic et dépannage",
+      "chapterTitle": "20. Diagnostic et dépannage",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }
@@ -356,7 +374,7 @@
       "kind": "markdown",
       "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/",
       "label": "Cours",
-      "chapterTitle": "20. Maintien en condition opérationnelle",
+      "chapterTitle": "21. Maintien en condition opérationnelle",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
@@ -364,7 +382,7 @@
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/tp",
       "label": "TP",
-      "chapterTitle": "20. Maintien en condition opérationnelle",
+      "chapterTitle": "21. Maintien en condition opérationnelle",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"2\" y=\"4\" width=\"28\" height=\"24\" rx=\"5\" fill=\"#237b60\"/><path d=\"m8 12 5 4-5 4m9 0h7\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n"
     }

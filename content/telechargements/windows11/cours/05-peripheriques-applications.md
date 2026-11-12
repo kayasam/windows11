@@ -141,7 +141,7 @@ Quelques changements récents, constatés sur la 26H2 :
 | **PowerShell 2.0** | **Supprimé** |
 | **VBScript** | Capacité encore installée, en cours de dépréciation → PowerShell |
 | **WordPad** | Supprimé (24H2) |
-| **Sysmon** | **Nouveau** : fonctionnalité intégrée (désactivée par défaut) — chapitre 19 |
+| **Sysmon** | **Nouveau** : fonctionnalité intégrée (désactivée par défaut) — chapitre 20 |
 
 ---
 
@@ -200,7 +200,7 @@ Terminal Windows                 Microsoft.WindowsTerminal      1.24.11911.0    
 8 upgrades available.
 ```
 
-Un poste tout juste installé depuis l'ISO a déjà **8 logiciels à mettre à jour** — y compris WinGet lui-même (App Installer 1.26 → 1.29). C'est tout l'intérêt d'un `winget upgrade --all` dans la préparation d'un master (chapitre 14) et dans la maintenance (chapitre 20).
+Un poste tout juste installé depuis l'ISO a déjà **8 logiciels à mettre à jour** — y compris WinGet lui-même (App Installer 1.26 → 1.29). C'est tout l'intérêt d'un `winget upgrade --all` dans la préparation d'un master (chapitre 14) et dans la maintenance (chapitre 21).
 
 ### Export / import : le socle logiciel standard
 

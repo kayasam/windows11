@@ -9,7 +9,7 @@
     {
       "id": "windows11",
       "title": "Windows 11 : administration et déploiement",
-      "description": "Du lab Hyper-V au maintien en condition opérationnelle : 21 chapitres et 20 travaux pratiques.",
+      "description": "Du lab Hyper-V au maintien en condition opérationnelle : 22 chapitres et 21 travaux pratiques.",
       "chapters": [
         {
           "slug": "00-infrastructure",
@@ -112,28 +112,34 @@
           "correction": "cours/16-deploiement/tp/16-tp-deploiement-correction.md"
         },
         {
+          "slug": "17-wds-pxe",
+          "course": "cours/17-wds-pxe/17-wds-pxe.md",
+          "tp": "cours/17-wds-pxe/tp/17-tp-wds-pxe.md",
+          "correction": "cours/17-wds-pxe/tp/17-tp-wds-pxe-correction.md"
+        },
+        {
           "slug": "17-environnement-utilisateur",
-          "course": "cours/17-environnement-utilisateur/17-environnement-utilisateur.md",
-          "tp": "cours/17-environnement-utilisateur/tp/17-tp-environnement-utilisateur.md",
-          "correction": "cours/17-environnement-utilisateur/tp/17-tp-environnement-utilisateur-correction.md"
+          "course": "cours/18-environnement-utilisateur/18-environnement-utilisateur.md",
+          "tp": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur.md",
+          "correction": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-correction.md"
         },
         {
           "slug": "18-demarrage-recuperation",
-          "course": "cours/18-demarrage-recuperation/18-demarrage-recuperation.md",
-          "tp": "cours/18-demarrage-recuperation/tp/18-tp-demarrage-recuperation.md",
-          "correction": "cours/18-demarrage-recuperation/tp/18-tp-demarrage-recuperation-correction.md"
+          "course": "cours/19-demarrage-recuperation/19-demarrage-recuperation.md",
+          "tp": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation.md",
+          "correction": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-correction.md"
         },
         {
           "slug": "19-depannage",
-          "course": "cours/19-depannage/19-depannage.md",
-          "tp": "cours/19-depannage/tp/19-tp-depannage.md",
-          "correction": "cours/19-depannage/tp/19-tp-depannage-correction.md"
+          "course": "cours/20-depannage/20-depannage.md",
+          "tp": "cours/20-depannage/tp/20-tp-depannage.md",
+          "correction": "cours/20-depannage/tp/20-tp-depannage-correction.md"
         },
         {
           "slug": "20-mco",
-          "course": "cours/20-mco/20-mco.md",
-          "tp": "cours/20-mco/tp/20-tp-mco.md",
-          "correction": "cours/20-mco/tp/20-tp-mco-correction.md"
+          "course": "cours/21-mco/21-mco.md",
+          "tp": "cours/21-mco/tp/21-tp-mco.md",
+          "correction": "cours/21-mco/tp/21-tp-mco-correction.md"
         }
       ],
       "logo": "assets/brands/windows11.svg"

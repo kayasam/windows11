@@ -107,10 +107,10 @@
 
 > [!success]- Afficher la correction — B4
 > 1. **Restaurer le pilote** (Propriétés → Pilote → Restaurer le pilote) : revient à la version précédente, qui est encore dans le magasin.
-> 2. Si le poste ne s'affiche plus : **mode sans échec** (pilote vidéo de base) puis restauration (chapitre 18).
+> 2. Si le poste ne s'affiche plus : **mode sans échec** (pilote vidéo de base) puis restauration (chapitre 19).
 > 3. Désinstaller le périphérique **en cochant « Tenter de supprimer le pilote »**, redémarrer : Windows reprend un pilote générique.
 > 4. Bloquer la réinstallation automatique via Windows Update (GPO « Ne pas inclure les pilotes avec les mises à jour Windows », chapitre 08) le temps que le constructeur corrige.
-> 5. En dernier recours : point de restauration ou point-in-time restore (chapitre 18).
+> 5. En dernier recours : point de restauration ou point-in-time restore (chapitre 19).
 
 ---
 

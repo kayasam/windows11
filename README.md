@@ -2,7 +2,8 @@
 
 Site de formation : https://cours.kaya.ovh/windows11/
 
-21 cours (00 à 20), 20 TP et leurs corrigés publiés, un ZIP Obsidian et un PDF complet.
+22 cours (00 à 21), 21 TP et leurs corrigés publiés, un ZIP Obsidian et un PDF complet.
+Les chapitres renumérotés après l’ajout de PXE et WDS conservent leurs adresses historiques.
 Le dossier `cours/` de la formation dans le coffre Obsidian est la source de référence ; les anciens TP, sauvegardes, sessions et archives ne sont pas publiés.
 `site.json` indique la source locale. Pour mettre à jour : `./publier.ps1 -Push`.
 Les publications GitHub déclenchent la construction puis l’envoi SSH sur le VPS, dans `/opt/docker-compose/cours/sites/windows11/`. La clé GitHub Actions est limitée à ce dossier par `rrsync`. Le site utilise l’authentification propre au cours et conserve l’accès formateur. Aucun mot de passe ne figure dans le dépôt.
