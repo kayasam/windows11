@@ -89,7 +89,4 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp-corrigev2)

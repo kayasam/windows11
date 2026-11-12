@@ -93,7 +93,4 @@ L'ordinateur portable d'une vendeuse est remplacé. Il est joint au domaine, chi
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/20-mco/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/20-mco/tp-corrigev2)

@@ -81,7 +81,4 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp-corrigev2)

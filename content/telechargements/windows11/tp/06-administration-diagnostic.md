@@ -97,7 +97,4 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp-corrigev2)

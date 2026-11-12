@@ -72,7 +72,4 @@ Le Fournil veut que les postes de production reçoivent les correctifs **7 jours
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/tp-corrigev2)

@@ -134,6 +134,9 @@ def prepare():
             key=tid+'/annexe/'+annex['slug']; assert re.fullmatch(r'[a-z0-9-]+',annex['slug']) and key not in keys; keys.add(key)
             item=dict(annex,key=key,track=tid,path=source(annex['file']),href=base+'/'+key)
             item['title']=title(read_doc(item['path'])); annexes.append(item); routes[item['path']]=item['href']
+    private_corrections = {exercise['correctionPath'] for item in chapters
+                           for exercise in item['exercises']
+                           if exercise['correctionPath'] and not exercise['visible']}
     # Inspect only public documents so private corrections and media remain private.
     for document in list(routes):
         if document.suffix == '.md': read_doc(document)
@@ -156,6 +159,7 @@ def prepare():
             parsed=urlsplit(m[2])
             if parsed.scheme or parsed.netloc or not parsed.path: return m[0]
             target=(origin.parent/unquote(parsed.path)).resolve()
+            if target in private_corrections: return ''
             if target in offline_names and offline_names[target][0]==track:
                 url=posixpath.relpath(offline_names[target][1],posixpath.dirname(name))
                 return m[1]+url+('#'+parsed.fragment if parsed.fragment else '')+m[3]
@@ -164,12 +168,13 @@ def prepare():
             if target in routes: return m[1]+routes[target]+m[3]
             raise ValueError('Lien hors ligne non déclaré : '+m[2])
         return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))',link,text)
-    # Resolve only declared, publishable documents. Private correction links are rejected.
+    # Omit links to declared private corrections; reject other undeclared links.
     def resolve(text, origin):
         def link(m):
             parsed=urlsplit(m[2])
             if parsed.scheme or parsed.netloc or not parsed.path: return m[0]
             target=(origin.parent/unquote(parsed.path)).resolve()
+            if target in private_corrections: return ''
             if target in routes: return m[1]+routes[target]+('#'+parsed.fragment if parsed.fragment else '')+m[3]
             raise ValueError(f'Lien local non déclaré : {origin.name} → {m[2]}')
         return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))',link,text)

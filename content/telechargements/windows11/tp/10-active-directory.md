@@ -84,7 +84,4 @@
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp-corrigev2)
