@@ -127,6 +127,33 @@ Les comptes locaux sont stockés dans la **base SAM** (Security Accounts Manager
 
 Chaque compte est identifié par un **SID** (Security Identifier) unique, de la forme `S-1-5-21-XXXXXXXXX-XXXXXXXXX-XXXXXXXXX-XXXX`. C'est le SID, et non le nom du compte, qui est utilisé en interne par Windows pour les permissions NTFS, les jetons d'accès et les journaux d'événements.
 
+### Lire un SID : préfixe, machine ou domaine, puis compte
+
+Exemple pédagogique pour un compte `employe1` :
+
+```text
+S-1-5-21 - 3623811015-3361044348-30300820 - 1001
+|______|   |____________________________|   |__|
+Préfixe          Machine ou domaine         RID 
+```
+
+Les espaces servent uniquement à séparer les trois parties dans le schéma. Le SID complet s’écrit sans espaces : `S-1-5-21-3623811015-3361044348-30300820-1001`.
+
+| Partie | Signification |
+|--------|---------------|
+| `S-1-5-21` | Préfixe commun à ce type de SID, pour des comptes locaux **ou** de domaine Active Directory. |
+| `3623811015-3361044348-30300820` | Bloc qui identifie le **poste**, pour un compte local, ou le **domaine Active Directory**, pour un compte de domaine. |
+| `1001` | **RID** (*Relative Identifier*) : dernier nombre, qui distingue le compte à l’intérieur de ce poste ou de ce domaine. |
+
+> [!TIP] À retenir
+> **Bloc central = poste ou domaine ; dernier nombre = compte.** Deux comptes locaux du même poste partagent le même bloc central, mais ont des RID différents. Deux comptes d’un même domaine AD partagent le bloc central du domaine.
+>
+> `1001` n’est pas une valeur réservée à `employe1` : c’est un exemple. Le RID de ton compte peut être différent. Un RID seul n’est pas unique entre tous les postes : c’est le **SID complet** qui identifie le compte.
+
+Renommer un compte conserve son SID. Le supprimer puis recréer un compte portant le même nom produit un **nouveau SID** : les anciennes permissions ne se rattachent pas automatiquement à ce nouveau compte.
+
+Référence : [Microsoft Learn — Identificateurs de sécurité](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers).
+
 > [!TIP] Voir les SID
 > ```powershell
 > Get-LocalUser | Select-Object Name, SID
