@@ -1,13 +1,14 @@
 # 15. Images WIM et DISM
 
+> [!abstract] Parcours TSSR
+> Socle : partie B uniquement, sur install.wim de l’ISO officielle. MASTER et les parties A, C, D, E sont (bonus) ; aucune capture n’est nécessaire pour suivre le TP 16.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Comprendre le format WIM, **capturer** l'image généralisée de `MASTER` (chapitre 14) avec DISM, la **maintenir hors ligne** (pilotes, mises à jour, applications, langues), et l'**appliquer** sur un disque vierge depuis Windows PE (`Dism /Apply-Image` + `bcdboot`).
 >
 > **Outils :** `dism.exe`, `Mount-VHD`/`Dismount-VHD` (Hyper-V), WinPE (chapitre 13)
 > **Commandes à connaître :** `Dism /Capture-Image`, `Dism /Get-WimInfo`, `Dism /Mount-Image`, `Dism /Add-Driver`, `Dism /Add-Package`, `Dism /Unmount-Image`, `Dism /Apply-Image`, `bcdboot`
-
-> [!abstract] Niveau
-> **Socle TSSR** : le format WIM seulement (index, `Get-WindowsImage` sur l'`install.wim` de l'ISO officielle). La **capture** suppose `MASTER` (chapitre 14) : elle fait partie de l'approfondissement, comme les sections marquées *(approfondissement)* — montage, injection de pilotes, maintenance hors ligne, application depuis WinPE. Le déploiement du chapitre 16 n'utilise rien de tout cela.
 
 > [!INFO] Fil rouge — Fournil
 > `D:\Images\MASTER.wim` capturée depuis l'hôte le 08/11/2026 (22 min, 8,3 Go). Le WinPE du chapitre 13 a été démarré sur une VM vierge pour la procédure d'application manuelle.
@@ -36,7 +37,7 @@ Get-WindowsImage -ImagePath "D:\Images\install.wim" -Index 6
 
 ---
 
-## Capturer une image avec DISM
+## Capturer une image avec DISM (bonus)
 
 `MASTER` a été généralisée et éteinte au chapitre 14. Plutôt que de démarrer un environnement WinPE, on peut **monter directement le VHDX** depuis l'hôte Hyper-V et capturer son contenu avec DISM.
 
@@ -84,7 +85,7 @@ Dismount-VHD -Path $vhdPath
 
 ---
 
-## Monter, modifier et démonter une image *(approfondissement)*
+## Monter, modifier et démonter une image (bonus)
 
 Une fois capturée (ou pour modifier une image existante comme `install.wim`), DISM permet de **monter** un index précis comme un dossier accessible en lecture/écriture.
 
@@ -111,7 +112,7 @@ Dism /Unmount-Image /MountDir:C:\Mount /Discard
 
 ---
 
-## Injection de pilotes et mises à jour hors ligne *(approfondissement)*
+## Injection de pilotes et mises à jour hors ligne (bonus)
 
 Modifier une image montée permet d'ajouter des pilotes ou des correctifs **sans jamais démarrer** le Windows qu'elle contient — utile pour préparer une image compatible avec du matériel qui n'était pas présent sur la machine de référence.
 
@@ -134,7 +135,7 @@ Dism /Image:C:\Mount /Add-Package /PackagePath:C:\Updates\KB5041160.msu
 
 ---
 
-## Maintenance hors ligne : applications, langues, informations *(approfondissement)*
+## Maintenance hors ligne : applications, langues, informations (bonus)
 
 Sur une image **montée** (`/Image:C:\Mount`), DISM sait faire presque tout ce qu'on ferait sur un poste démarré :
 
@@ -163,7 +164,7 @@ Dism /Image:C:\Mount /Cleanup-Image /StartComponentCleanup /ResetBase
 
 ---
 
-## Appliquer une image depuis Windows PE *(approfondissement)*
+## Appliquer une image depuis Windows PE (bonus)
 
 C'est ce que fait Windows Setup en coulisses, et ce que font tous les outils de déploiement : **partitionner**, **appliquer** le WIM, **rendre le disque démarrable**. On peut le faire à la main depuis le WinPE du chapitre 13 — indispensable quand on n'a ni ISO personnalisée ni infrastructure.
 

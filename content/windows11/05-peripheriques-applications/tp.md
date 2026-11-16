@@ -7,7 +7,8 @@ title: "TP 05. Pilotes, applications et WinGet"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/05-peripheriques-applications.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Socle : inventaire, export de pilotes, applications et WinGet. Les réinjections, suppressions Appx et épinglages avancés sont (bonus). Le formateur fournit un pilote tiers de démonstration si la VM ne contient aucun pilote exportable.
 
 > Chapitres associés : [05. Pilotes, applications et WinGet](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/)
 
@@ -29,7 +30,7 @@ title: "TP 05. Pilotes, applications et WinGet"
 
 ---
 
-## Partie A — Périphériques (20 min)
+## Partie A — Périphériques
 
 **A1.** Ouvre le Gestionnaire de périphériques. Combien de cartes réseau vois-tu ? Affiche les périphériques cachés : qu'est-ce qui apparaît en plus ?
 
@@ -39,23 +40,23 @@ title: "TP 05. Pilotes, applications et WinGet"
 
 ---
 
-## Partie B — Magasin de pilotes (25 min)
+## Partie B — Magasin de pilotes
 
 **B1.** Liste les pilotes tiers du magasin avec `pnputil`. Que signifient « Nom publié » et « Nom d'origine » ?
 
 **B2.** Exporte tous les pilotes tiers dans `C:\Sauvegarde\Pilotes`. Dans quelle situation cet export est-il précieux ?
 
-**B3.** Réinjecte l'un des pilotes exportés dans le magasin avec `pnputil /add-driver`. Que répond l'outil, et pourquoi ?
+**B3.** (bonus) Réinjecte l'un des pilotes exportés dans le magasin avec `pnputil /add-driver`. Que répond l'outil, et pourquoi ?
 
 **B4.** Une mise à jour de pilote graphique provoque des écrans noirs depuis hier. Quelles sont tes options, de la plus douce à la plus radicale ?
 
 ---
 
-## Partie C — Applications et fonctionnalités (20 min)
+## Partie C — Applications et fonctionnalités
 
 **C1.** Liste les applications **provisionnées** de l'image. Quelle est la différence avec `Get-AppxPackage` ?
 
-**C2.** Le Fournil ne veut pas de `Microsoft.BingNews` pour les **futurs** utilisateurs du poste. Retire-le de l'image. Les utilisateurs qui ont déjà un profil le perdent-ils ?
+**C2.** (bonus) Le Fournil ne veut pas de `Microsoft.BingNews` pour les **futurs** utilisateurs du poste. Retire-le de l'image. Les utilisateurs qui ont déjà un profil le perdent-ils ?
 
 **C3.** Vérifie si `wmic` existe encore sur le poste. Un vieux script du Fournil contient `wmic bios get serialnumber` : réécris-le.
 
@@ -63,7 +64,7 @@ title: "TP 05. Pilotes, applications et WinGet"
 
 ---
 
-## Partie D — WinGet : le socle logiciel du Fournil (25 min)
+## Partie D — WinGet : le socle logiciel du Fournil
 
 **D1.** Vérifie la version de WinGet et les sources configurées.
 
@@ -73,13 +74,13 @@ title: "TP 05. Pilotes, applications et WinGet"
 
 **D4.** Liste les mises à jour disponibles. Combien y en a-t-il sur un poste tout juste installé, et pourquoi ?
 
-**D5.** Bloque les mises à jour de Microsoft Teams (le Fournil veut valider chaque version), puis mets à jour tout le reste.
+**D5.** (bonus) Bloque les mises à jour de Microsoft Teams (le Fournil veut valider chaque version), puis mets à jour tout le reste.
 
 **D6.** Exporte la liste des logiciels dans `C:\Temp\socle-fournil.json`. Que contient ce fichier ? Que n'y trouve-t-on pas ?
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Installe le module PowerShell `Microsoft.WinGet.Client` et liste les paquets installés sous forme d'objets, triés par nom.
 

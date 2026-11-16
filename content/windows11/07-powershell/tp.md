@@ -7,7 +7,8 @@ title: "TP 07. PowerShell pour l'administrateur"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/07-powershell.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Socle en Windows PowerShell 5.1 : aide, objets, pipeline, CIM et script paramétré. Le formateur fournit une trame du script à compléter ; la découverte des syntaxes est guidée. Installer PowerShell 7 est (bonus).
 
 > Chapitres associés : [07. PowerShell pour l'administrateur](https://cours.kaya.ovh/windows11/windows11/07-powershell/)
 
@@ -19,7 +20,7 @@ title: "TP 07. PowerShell pour l'administrateur"
 - Exploiter le pipeline : filtrer, trier, sélectionner, mesurer
 - Interroger le poste avec CIM (sans WMIC)
 - Écrire un script paramétré qui produit un inventaire CSV
-- Installer PowerShell 7 correctement et comprendre la politique d'exécution
+- Installer PowerShell 7 correctement et comprendre la politique d'exécution (bonus)
 
 ---
 
@@ -29,7 +30,7 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 ---
 
-## Partie A — Se repérer (15 min)
+## Partie A — Se repérer
 
 **A1.** Quelle version de PowerShell s'ouvre par défaut ? Comment le vérifier ?
 
@@ -41,7 +42,7 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 ---
 
-## Partie B — Pipeline (20 min)
+## Partie B — Pipeline
 
 **B1.** Combien de processus tournent sur le poste ?
 
@@ -53,19 +54,47 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 ---
 
-## Partie C — CIM / WMI (20 min)
+## Partie C — CIM / WMI
 
 **C1.** Le support te demande le **numéro de série** du poste. WMIC a disparu : quelle commande ?
 
 **C2.** Affiche le modèle de la machine, la RAM en Go, la version de Windows et la date du dernier démarrage.
 
-**C3.** Trouve, sans Internet, le nom de la classe CIM qui décrit les cartes réseau.
+**C3.** (bonus) Trouve, sans Internet, le nom de la classe CIM qui décrit les cartes réseau.
 
 ---
 
-## Partie D — Un script d'inventaire (25 min)
+## Partie D — Un script d'inventaire
 
-**D1.** Écris `C:\Scripts\Get-InventairePoste.ps1` qui produit **un objet** avec : nom du poste, modèle, numéro de série, processeur, RAM (Go), Windows (édition + version + build), espace libre sur C: (Go), dernier démarrage — et l'exporte dans un CSV dont le chemin est un **paramètre** (par défaut `C:\Temp\inventaire-<poste>.csv`).
+**D1.** Complète la trame ci-dessous et enregistre-la dans `C:\Scripts\Get-InventairePoste.ps1` qui produit **un objet** avec : nom du poste, modèle, numéro de série, processeur, RAM (Go), Windows (édition + version + build), espace libre sur C: (Go), dernier démarrage — et l'exporte dans un CSV dont le chemin est un **paramètre** (par défaut `C:\Temp\inventaire-<poste>.csv`).
+
+Trame de départ : compléter les champs marqués TODO avec les commandes découvertes dans les parties A à C. Créer `C:\Scripts` et `C:\Temp` si nécessaire. L’écriture intégrale sans trame est (bonus).
+
+```powershell
+param([string]$Sortie = "C:\Temp\inventaire-$env:COMPUTERNAME.csv")
+$os = Get-CimInstance Win32_OperatingSystem
+$cs = Get-CimInstance Win32_ComputerSystem
+$inv = [pscustomobject]@{
+    Poste = $env:COMPUTERNAME
+    Modele = $cs.Model
+    NumeroSerie = $null   # TODO : interroger le BIOS
+    Processeur = $null    # TODO : interroger le processeur
+    RAM_Go = $null        # TODO : convertir les octets de $cs.TotalPhysicalMemory
+    Windows = $null       # TODO : édition, version et build
+    C_Libre_Go = $null    # TODO : espace libre du disque système en Go
+    DernierBoot = $os.LastBootUpTime
+}
+$inv
+$inv | Export-Csv -Path $Sortie -NoTypeInformation -Encoding UTF8 -Delimiter ';'
+```
+
+Avant de conclure, vérifier qu’aucun champ du CSV n’est resté vide.
+
+> [!TIP] Créer le fichier sans se tromper
+> 1. `Win + R` → `notepad` → coller la trame, compléter les `TODO`.
+> 2. **Fichier → Enregistrer sous** → nom `C:\Scripts\Get-InventairePoste.ps1` (le Bloc-notes de Windows 11 garde bien l'extension `.ps1` tapée, même si le type affiché est *Fichiers texte*).
+> 3. Créer les dossiers avant si besoin : `New-Item C:\Scripts, C:\Temp -ItemType Directory -Force`.
+> 4. Dans le Terminal : `cd C:\Scripts` puis `.\Get-InventairePoste.ps1` (le `.\` est obligatoire).
 
 **D2.** Lance-le. Que se passe-t-il sur un Windows 11 fraîchement installé ? Corrige **pour ton utilisateur seulement**.
 
@@ -73,7 +102,7 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 ---
 
-## Partie E — PowerShell 7 (10 min)
+## Partie E — PowerShell 7 (bonus)
 
 **E1.** Installe PowerShell 7 avec WinGet. Où s'est-il installé ? Lance-le et vérifie sa version.
 
@@ -81,7 +110,7 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 ---
 
-## Partie F — Bonus
+## Partie F — Exercices complémentaires (bonus)
 
 **F1.** Dans `pwsh` 7, tape `Get-WmiObject Win32_BIOS`. Ça marche… alors que la commande n'existe pas en PowerShell 7. Explique (indice : `(Get-Command Get-WmiObject).Module.Path`).
 

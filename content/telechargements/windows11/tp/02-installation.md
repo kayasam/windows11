@@ -1,6 +1,7 @@
 # TP 02. Installation, mise à niveau et comptes
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 
 > Chapitres associés : [02. Installation, mise à niveau et comptes](https://cours.kaya.ovh/windows11/windows11/02-installation/)
 
@@ -22,9 +23,9 @@
 
 ---
 
-## Partie A — Installation (40 min)
+## Partie A — Installation
 
-**A1.** Démarre `PC01` sur l'ISO. Choisis Français, puis **Windows 11 Professionnel**, installation **personnalisée** sur le disque vierge. Pourquoi ne crée-t-on aucune partition à la main ?
+**A1.** Démarre `PC01` sur l'ISO. Choisis Français, coche *J'accepte que tout soit supprimé*, sélectionne **Windows 11 Professionnel** (attention : Famille est présélectionnée) et installe sur l'espace non alloué. Pourquoi ne crée-t-on aucune partition à la main ?
 
 **A2.** Pendant l'installation, explique ce que fait chacun des écrans de l'OOBE qui vont suivre.
 
@@ -34,11 +35,11 @@
 
 **A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 
-**A6.** Le poste s'appelle `DESKTOP-XXXXXXX`. Renomme-le `PC01`.
+**A6.** Le poste s'appelle `DESKTOP-XXXXXXX`. Renomme-le `PC01`, en graphique ou en PowerShell.
 
 ---
 
-## Partie B — Analyser l'installation (20 min)
+## Partie B — Analyser l'installation
 
 **B1.** Vérifie l'édition, la version et le build.
 
@@ -52,7 +53,7 @@
 
 ---
 
-## Partie C — Compatibilité et mise à niveau (20 min)
+## Partie C — Compatibilité et mise à niveau
 
 **C1.** Vérifie en PowerShell les trois prérequis clés de Windows 11 : TPM 2.0, Secure Boot, processeur.
 
@@ -64,7 +65,7 @@
 
 ---
 
-## Partie D — Comptes (10 min)
+## Partie D — Comptes
 
 **D1.** Complète le tableau : où est stocké le compte, comment se connecte-t-on, à quoi sert-il ?
 
@@ -79,7 +80,7 @@
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Qu'affiche la valeur `ProductName` du registre sur ton `PC01` ? Pourquoi ne faut-il pas s'y fier ?
 
@@ -87,4 +88,7 @@
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2)

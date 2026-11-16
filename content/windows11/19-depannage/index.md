@@ -6,6 +6,10 @@ title: "20. Diagnostic et dépannage"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/19-depannage/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/19-depannage.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Les pannes sont préparées par le formateur. En E1, adapter le script Test-Poste.ps1 fourni, l’exécuter et expliquer ses limites ; l’écriture intégrale sans trame est (bonus). Le ticket et les preuves de réparation restent obligatoires.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Adopter une **méthode** de diagnostic, puis maîtriser les outils de Windows 11 pour chaque famille de pannes : système (journaux, fiabilité, Sysmon), performances, services et applications, réseau, fichiers système. **Tracer et documenter** chaque intervention, maintenant que l'Enregistreur d'actions (PSR) et les dépanneurs MSDT sont en fin de vie.
 >
@@ -42,7 +46,7 @@ title: "20. Diagnostic et dépannage"
 | **Obtenir de l'aide** (*Get Help*) | Dépannages guidés (audio, réseau, impression…) | **Remplace les dépanneurs MSDT** (retirés) |
 | **Sysmon** (intégré en 26H2) | Traçage fin des processus, connexions, fichiers | Voir ci-dessous |
 
-### Sysmon intégré à Windows 11 26H2 *(approfondissement)*
+### Sysmon intégré à Windows 11 26H2 (bonus)
 
 **Sysmon** (*System Monitor*, de la suite Sysinternals) journalise ce que les journaux standard ne voient pas : chaque **création de processus** avec sa ligne de commande et son parent, les **connexions réseau** par processus, les créations de fichiers exécutables, les chargements de pilotes… Depuis 26H2, il fait partie de Windows (fonctionnalité facultative, désactivée par défaut). Testé sur `PC01` :
 
@@ -189,7 +193,7 @@ Un bon compte rendu d'intervention répond à : **quoi** (symptôme), **pourquoi
 
 ---
 
-## 9. Bonus : démarrer sur un disque virtuel (VHDX natif) *(approfondissement)*
+## 9. Bonus : démarrer sur un disque virtuel (VHDX natif) (bonus)
 
 Windows peut **démarrer directement sur un fichier VHDX** stocké sur le disque physique (*native boot*), sans hyperviseur — pratique pour tester une image sur du vrai matériel, ou avoir un second système jetable :
 

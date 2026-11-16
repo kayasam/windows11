@@ -1,6 +1,7 @@
 # TP 19. Démarrage et récupération
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Socle : lire le démarrage, accéder à WinRE, tester une restauration et choisir l’outil adapté. Supprimer le BCD pour le réparer et réactiver F8 sont (bonus). Attendre la fin du redémarrage avant de poursuivre.
 
 > Chapitres associés : [19. Démarrage et récupération](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/)
 
@@ -11,7 +12,7 @@
 - Lire et modifier la configuration de démarrage (BCD) sans casser le poste
 - Accéder à WinRE de plusieurs façons
 - Créer et utiliser des points de restauration
-- **Casser puis réparer** le démarrage UEFI d'un poste
+- **Casser puis réparer** le démarrage UEFI d'un poste (bonus)
 - Choisir l'outil de récupération adapté à une situation
 
 ---
@@ -23,19 +24,19 @@
 
 ---
 
-## Partie A — Configuration du démarrage (20 min)
+## Partie A — Configuration du démarrage
 
 **A1.** Affiche l'entrée de démarrage courante et le gestionnaire de démarrage avec `bcdedit`. Où est le chargeur ? Quel est le délai d'attente ?
 
-**A2.** Renomme l'entrée en « Windows 11 - Fournil » et ramène le délai à 5 secondes.
+**A2.** (bonus) Renomme l'entrée en « Windows 11 - Fournil » et ramène le délai à 5 secondes.
 
 **A3.** Avec `msconfig`, configure un démarrage en mode sans échec **réseau**, redémarre, vérifie, puis annule. Pourquoi faut-il penser à annuler ?
 
-**A4.** Quelle commande réactive le menu F8 ? Est-ce une bonne idée sur un poste de production ?
+**A4.** (bonus) Quelle commande réactive le menu F8 ? Est-ce une bonne idée sur un poste de production ?
 
 ---
 
-## Partie B — WinRE (15 min)
+## Partie B — WinRE
 
 **B1.** Vérifie l'état de WinRE et son emplacement.
 
@@ -45,11 +46,11 @@
 
 ---
 
-## Partie C — Points de restauration (20 min)
+## Partie C — Points de restauration
 
 **C1.** Active la protection du système sur `C:` et crée le point « Avant-TP19 ».
 
-**C2.** Essaie d'en créer un second immédiatement. Que se passe-t-il ? Pourquoi ?
+**C2.** (bonus) Essaie d'en créer un second immédiatement. Que se passe-t-il ? Pourquoi ?
 
 **C3.** Installe un logiciel avec WinGet, puis restaure le point « Avant-TP19 ». Le logiciel est-il encore là ? Et un document créé entre-temps ?
 
@@ -57,7 +58,7 @@
 
 ---
 
-## Partie D — Casser et réparer le démarrage (25 min)
+## Partie D — Casser et réparer le démarrage (bonus)
 
 > Point de contrôle Hyper-V fait ? Sinon, ne commence pas.
 
@@ -71,7 +72,7 @@
 
 ---
 
-## Partie E — Quelle arme ? (10 min)
+## Partie E — Quelle arme ?
 
 **E1.** Pour chaque situation, propose l'outil :
 1. Depuis la mise à jour d'hier, le poste fait un écran bleu au démarrage.

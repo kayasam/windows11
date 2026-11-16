@@ -1,5 +1,9 @@
 # 07. PowerShell pour l'administrateur
 
+> [!abstract] Parcours TSSR
+> Socle en Windows PowerShell 5.1 : aide, objets, pipeline, CIM et script paramétré. Le formateur fournit une trame du script à compléter ; la découverte des syntaxes est guidée. Installer PowerShell 7 est (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Utiliser PowerShell pour administrer Windows 11 : distinguer les consoles disponibles, manipuler le pipeline, interroger le système avec **CIM/WMI** (WMIC n'existe plus), écrire un script de base et comprendre la politique d'exécution.
 >

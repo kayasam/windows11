@@ -1,5 +1,9 @@
 # 09. Sécuriser un poste Windows 11
 
+> [!abstract] Parcours TSSR
+> Socle : moindre privilège, UAC, Defender, pare-feu et BitLocker système. L’activation d’Administrator protection, BitLocker To Go, EFS et l’application d’AppLocker sont (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Appliquer le **moindre privilège** (comptes, groupes, élévation), configurer les protections natives de Windows 11 — UAC et *Administrator protection*, Microsoft Defender, Smart App Control, pare-feu, BitLocker, EFS —, restreindre l'exécution des applications (AppLocker / App Control for Business) et découvrir les stratégies de sécurité locales.
 >
@@ -363,7 +367,7 @@ $kp = (Get-BitLockerVolume C:).KeyProtector | Where-Object KeyProtectorType -eq 
 Backup-BitLockerKeyProtector -MountPoint C: -KeyProtectorId $kp.KeyProtectorId
 ```
 
-### BitLocker To Go (supports amovibles)
+### BitLocker To Go (supports amovibles) (bonus)
 
 Clic droit sur une clé USB → **Activer BitLocker** → déverrouillage par **mot de passe** (pas de TPM sur une clé). Le mode de chiffrement « **compatible** » (AES-CBC) permet de lire la clé sur d'anciennes versions de Windows. En GPO : *Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs de données amovibles → Refuser l'accès en écriture aux lecteurs amovibles non protégés par BitLocker*.
 
@@ -388,7 +392,7 @@ manage-bde -off C:
 
 ---
 
-## EFS — Encrypting File System
+## EFS — Encrypting File System (bonus)
 
 **EFS** chiffre des **fichiers ou dossiers individuels**, contrairement à BitLocker qui chiffre le volume entier. Basé sur un certificat lié au profil utilisateur Windows.
 
@@ -449,7 +453,7 @@ Get-ChildItem "C:\Users\Sam\Documents\Confidentiel" | Select-Object Name, Attrib
 
 ## Restreindre les applications : AppLocker et App Control for Business
 
-### AppLocker
+### AppLocker — mise en application (bonus)
 
 **AppLocker** restreint l'exécution des applications à une liste autorisée (*allowlisting*), par utilisateur ou groupe.
 
@@ -478,7 +482,7 @@ Get-ChildItem "C:\Users\Sam\Documents\Confidentiel" | Select-Object Name, Attrib
 > Les 3 règles par défaut — tout le monde peut exécuter depuis `%PROGRAMFILES%` et `%WINDIR%`, les Administrateurs partout — évitent de bloquer Windows lui-même. Clic droit sur **Règles de l'exécutable → Créer des règles par défaut**.
 
 > [!WARNING] Le service « Identité de l'application » (`AppIDSvc`)
-> AppLocker s'appuie sur `AppIDSvc`. Par défaut en démarrage manuel déclenché, on le passe en **Automatique** sur les postes où AppLocker est appliqué (`Set-Service AppIDSvc -StartupType Automatic`).
+> AppLocker s'appuie sur `AppIDSvc`. Par défaut en démarrage manuel déclenché, on le passe en **Automatique** sur les postes où AppLocker est appliqué (`sc.exe config AppIDSvc start= auto   # Set-Service : « Accès refusé »`).
 
 ```powershell
 # Générer des règles Éditeur à partir des exécutables d'un dossier
@@ -495,7 +499,7 @@ Test-AppLockerPolicy -XmlPolicy C:\Temp\applocker.xml -Path C:\Temp\bloc.exe -Us
 Set-AppLockerPolicy -XmlPolicy C:\Temp\applocker.xml
 ```
 
-### AppLocker fonctionne-t-il sur Windows 11 Pro ? — testé sur le lab *(approfondissement)*
+### AppLocker fonctionne-t-il sur Windows 11 Pro ? — testé sur le lab (bonus)
 
 La documentation de Microsoft reste ambiguë et beaucoup de sites affirment encore « Enterprise uniquement ». Test sur `PC01` (Pro 26H2) : règles par défaut en mode **Appliquer**, copie de `notepad.exe` en `C:\Temp\bloc.exe`, exécution par l'utilisateur standard `employe1` :
 
@@ -512,7 +516,7 @@ Journal AppLocker/EXE and DLL — ID 8004 : L'exécution de %OSDRIVE%\TEMP\BLOC.
 
 **AppLocker est bien appliqué sur Windows 11 Pro.**
 
-### App Control for Business (ex-WDAC / Device Guard) *(approfondissement)*
+### App Control for Business (ex-WDAC / Device Guard) (bonus)
 
 Successeur plus strict d'AppLocker, **renommé** *App Control for Business* (anciennement *Windows Defender Application Control*, et avant *Device Guard*). La politique est appliquée **par le noyau**, dès le démarrage, et peut être rendue non modifiable même par un administrateur. Officiellement supportée sur **Pro**.
 
@@ -524,13 +528,13 @@ Successeur plus strict d'AppLocker, **renommé** *App Control for Business* (anc
 | Outils | GPO, `*-AppLockerPolicy` | *App Control Policy Wizard*, `New-CIPolicy`, Intune |
 | Complexité | Modérée | Élevée |
 
-### Smart App Control *(approfondissement)*
+### Smart App Control (bonus)
 
 Sur les installations **neuves** de Windows 11, **Smart App Control** (Sécurité Windows → Contrôle des applications et du navigateur) bloque les applications non signées ou de mauvaise réputation, en s'appuyant sur le cloud de Microsoft. Il démarre en mode **Évaluation** puis s'active ou se désactive seul selon l'usage du poste. Sur `PC01` : `VerifiedAndReputablePolicyState = 2` (évaluation). Depuis 26H2, on peut l'activer ou le désactiver **sans réinstaller** Windows. Pensé pour les particuliers et les PME sans gestion centralisée : en entreprise, on lui préfère App Control géré.
 
 ---
 
-## Sécurité basée sur la virtualisation : Credential Guard et intégrité de la mémoire *(approfondissement)*
+## Sécurité basée sur la virtualisation : Credential Guard et intégrité de la mémoire (bonus)
 
 Ces protections reposent sur **VBS** : une partie du système s'exécute dans un conteneur isolé par l'hyperviseur (VTL1), inaccessible même à un noyau Windows compromis.
 

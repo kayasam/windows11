@@ -1,6 +1,7 @@
 # TP 01. Introduction à Windows 11 et lab Hyper-V
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 
 > Chapitres associés : [01. Introduction à Windows 11 et lab Hyper-V](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/)
 
@@ -24,7 +25,7 @@
 
 ---
 
-## Partie A — Identifier son Windows (15 min)
+## Partie A — Identifier son Windows
 
 **A1.** Ouvre `winver`. Relève la version et le build complet (avec le numéro après le point).
 
@@ -38,7 +39,7 @@
 
 ---
 
-## Partie B — Prérequis et activation d'Hyper-V (15 min)
+## Partie B — Prérequis et activation d'Hyper-V
 
 **B1.** Vérifie que le processeur et le firmware permettent Hyper-V. Donne deux méthodes.
 
@@ -48,21 +49,21 @@
 
 ---
 
-## Partie C — Réseau du lab (20 min)
+## Partie C — Réseau du lab
 
 **C1.** Définis `D:\HyperV` comme dossier par défaut des VM et des disques.
 
-**C2.** Crée le switch interne `vSwitch-Rennes`, donne l'IP `192.168.3.254/24` à son interface hôte, puis crée le NAT `NAT-Rennes` pour `192.168.3.0/24`.
+**C2.** Vérifie d'abord avec `Get-VMSwitch` que le switch n'existe pas déjà. Crée ensuite le switch interne `vSwitch-Rennes` (en PowerShell **ou** dans le Gestionnaire de commutateur virtuel), donne l'IP `192.168.3.254/24` à son interface hôte, puis crée le NAT `NAT-Rennes` pour `192.168.3.0/24` (le NAT se crée uniquement en PowerShell).
 
-**C3.** `New-NetNat` répond : *« Instance MSFT_NetNat already exists »*. Que se passe-t-il et comment corriger sans casser l'existant ?
+**C3.** `New-NetNat` répond : *« Vous n'étiez pas connecté car il y avait un nom en double sur le réseau… »*. Que se passe-t-il et comment corriger sans casser l'existant ?
 
 **C4.** Pourquoi n'utilise-t-on pas le **Default Switch** pour `PC01` et `SRV01` ? Pourquoi l'utilisera-t-on quand même pour `MASTER` ?
 
 ---
 
-## Partie D — Créer la VM PC01 (25 min)
+## Partie D — Créer la VM PC01
 
-**D1.** Crée `PC01` en PowerShell : Génération 2, 64 Go, `vSwitch-Rennes`, 2 vCPU, 4 Go de mémoire **statique**, ISO Windows 11 montée, démarrage sur le DVD.
+**D1.** Crée `PC01` en PowerShell (ou avec l'assistant *Nouvel ordinateur virtuel*, voir le cours) : Génération 2, 64 Go, `vSwitch-Rennes`, 2 vCPU, 4 Go de mémoire **statique**, ISO Windows 11 montée, démarrage sur le DVD.
 
 **D2.** Ajoute un TPM virtuel. Pourquoi faut-il d'abord un protecteur de clé ?
 
@@ -76,7 +77,7 @@
 
 ---
 
-## Partie E — Points de contrôle (15 min)
+## Partie E — Points de contrôle
 
 **E1.** Éteins `PC01`, crée un checkpoint `Avant-installation` et liste les checkpoints.
 
@@ -88,7 +89,7 @@
 
 ---
 
-## Partie F — Bonus
+## Partie F — Exercices complémentaires (bonus)
 
 **F1.** Écris un script `New-LabVM.ps1` qui prend un paramètre `-Name` et crée une VM conforme à la partie D.
 
@@ -96,4 +97,7 @@
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp-corrigev2)

@@ -7,7 +7,8 @@ title: "TP 21. TP final : maintien en condition opérationnelle"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/20-mco.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 3h
+> [!abstract] Parcours TSSR
+> Évaluation du socle : A, B (hors B4), C (hors C4) et F. Utiliser les scripts fournis et une trame de plan MCO. L’incident répété, la procédure complète de sortie du parc et la maintenance avancée sont (bonus). Les principes de sortie du parc sont expliqués dans le cours.
 
 > Chapitres associés : [21. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
 
@@ -30,7 +31,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 ---
 
-## Partie A — État des lieux (30 min)
+## Partie A — État des lieux
 
 **A1.** Depuis `PC01`, lance l'inventaire de `PC01` et `PC02` avec export dans `C:\MCO\inventaire.csv`. Ouvre le CSV dans Excel (ou `Import-Csv | Out-GridView`).
 
@@ -40,7 +41,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 ---
 
-## Partie B — Remise en conformité (45 min)
+## Partie B — Remise en conformité
 
 **B1.** Mets à jour les signatures Defender sur les deux postes. Si la mise à jour échoue, trouve une source alternative.
 
@@ -48,13 +49,13 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **B3.** Vérifie l'état de Windows Update sur `PC02` : dernière mise à jour, stratégie appliquée (report), redémarrage en attente. Lance une recherche de mises à jour.
 
-**B4.** Analyse le magasin de composants de `PC02`. Faut-il le nettoyer ? Avec ou sans `/ResetBase` ? *(approfondissement)*
+**B4.** (bonus) Analyse le magasin de composants de `PC02`. Faut-il le nettoyer ? Avec ou sans `/ResetBase` ?
 
 **B5.** Relance l'inventaire : quelles non-conformités restent ? Pourquoi ?
 
 ---
 
-## Partie C — Maintenance préventive (30 min)
+## Partie C — Maintenance préventive
 
 **C1.** Sur `PC02`, planifie l'exécution quotidienne de `Test-Poste.ps1` à 8 h 30 sous le compte SYSTEM, avec un journal par jour dans `C:\MCO\Logs`. Range la tâche dans un dossier `\Fournil\`.
 
@@ -62,15 +63,15 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **C3.** Pourquoi `Test-Poste.ps1` ne signale-t-il pas ta propre tâche comme suspecte, alors qu'il a détecté celle du TP 20 ?
 
-**C4.** Propose une GPO pour définir l'ordre des sources de mise à jour Defender avec une source de secours.
+**C4.** (bonus) Propose une GPO pour définir l'ordre des sources de mise à jour Defender avec une source de secours.
 
 ---
 
-## Partie D — Incident chronométré (30 min)
+## Partie D — Incident complémentaire (bonus)
 
 Ton binôme exécute `Casse-Poste.ps1` sur **ton** `PC02` (pendant ce temps tu exécutes le sien), puis redémarre le poste.
 
-**D1.** Chronomètre : combien de temps pour **détecter** toutes les pannes avec tes outils, sans chercher à la main ?
+**D1.** Détecte toutes les pannes avec tes outils automatisés, puis explique les résultats obtenus.
 
 **D2.** Répare, puis prouve que c'est réparé.
 
@@ -78,7 +79,7 @@ Ton binôme exécute `Casse-Poste.ps1` sur **ton** `PC02` (pendant ce temps tu e
 
 ---
 
-## Partie E — Fin de vie d'un poste (20 min)
+## Partie E — Fin de vie d'un poste (bonus)
 
 L'ordinateur portable d'une vendeuse est remplacé. Il est joint au domaine, chiffré par BitLocker, géré par LAPS.
 
@@ -90,7 +91,25 @@ L'ordinateur portable d'une vendeuse est remplacé. Il est joint au domaine, chi
 
 ---
 
-## Partie F — Le plan de MCO (25 min)
+## Partie F — Le plan de MCO
+
+Trame du livrable à compléter dans `Plan-MCO.md` :
+
+```markdown
+Plan MCO — Fournil
+## Périmètre et inventaire
+Postes, versions, utilisateurs et date du contrôle : …
+## Écarts et décisions
+Écart / risque / action / responsable / échéance / preuve : …
+## Maintenance planifiée
+Tâche / fréquence / compte d’exécution / journal / contrôle du résultat : …
+## Cycle de vie
+Version / fin de support vérifiée / date de revue / migration prévue : …
+## Sauvegarde et restauration
+Données / règle 3-2-1 / emplacement / responsable / date du test de restauration : …
+```
+
+La trame ne vaut pas validation : chaque ligne doit correspondre à l’état observé sur le lab.
 
 **F1.** Rédige dans `C:\MCO\Plan-MCO.md` le plan de MCO du parc Fournil : tâches, fréquences, responsables, vérifications.
 

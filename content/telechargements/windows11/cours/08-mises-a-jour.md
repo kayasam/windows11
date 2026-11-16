@@ -1,5 +1,9 @@
 # 08. Windows Update et gestion des mises à jour
 
+> [!abstract] Parcours TSSR
+> Lancer les recherches de mises à jour au début du TP, puis travailler sur la stratégie pendant leur exécution. Lire et adapter le bloc API COM du cours ; ne pas attendre un téléchargement ou un redémarrage pour poursuivre. PSWindowsUpdate est (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Comprendre les types de mises à jour de Windows 11, les piloter sur un poste puis sur un parc (stratégies *Windows Update client policies*), connaître le paysage 2026 (WSUS déprécié, Autopatch, Hotpatch) et ne pas oublier les **applications** et les **pilotes**.
 >
@@ -93,7 +97,7 @@ Cette API COM (`Microsoft.Update.Session`) est intégrée à Windows depuis touj
 
 ```powershell
 # Consulter l'historique des mises à jour installées
-Get-HotFix | Sort-Object InstalledOn -Descending
+Get-HotFix | Where-Object InstalledOn | Sort-Object InstalledOn -Descending
 
 # Générer un journal lisible de Windows Update (fichier .log sur le Bureau par défaut)
 Get-WindowsUpdateLog
@@ -139,7 +143,7 @@ Les paramètres sont rangés sous le nœud **Windows Update**, en **quatre** sou
 > [!NOTE] Ne pas confondre avec le dossier WSUS
 > Le dossier **« … de Windows Server Update Service »** contient « Spécifier l'emplacement intranet du service de mise à jour Microsoft ». Le configurer **sans** serveur WSUS bloque toute mise à jour du poste : erreur classique quand une vieille GPO traîne dans un domaine.
 
-### Clés de registre correspondantes *(approfondissement)*
+### Clés de registre correspondantes (bonus)
 
 ```powershell
 # Ce qui est réellement appliqué par GPO
@@ -154,7 +158,7 @@ Et dans **Paramètres → Windows Update → Options avancées → Stratégies d
 
 ---
 
-## Les nouveautés à connaître
+## Les nouveautés à connaître (bonus)
 
 | Technologie | Pour qui | Principe |
 |-------------|----------|----------|

@@ -6,6 +6,10 @@ title: "03. Configuration et personnalisation"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/03-configuration/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/03-configuration.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Maîtriser l'interface Windows 11, gérer les comptes utilisateurs locaux, configurer une adresse IP fixe et manipuler les variables d'environnement.
 >
@@ -25,7 +29,11 @@ Le menu Démarrer de Windows 11 est **centré** par défaut (déplaçable à gau
 *Menu Démarrer de `PC01` (26H2) : Épinglé, Nos recommandations, Tout (vue Catégorie).*
 
 - **Épinglé** : applications choisies par l'utilisateur — clic droit sur une app → **Épingler au menu Démarrer**. « Afficher tout » déplie la grille
-- **Nos recommandations** : fichiers récents et applications suggérées. Masquable : Paramètres → Personnalisation → Accueil → désactiver les éléments recommandés (ou par GPO en entreprise)
+- **Nos recommandations** : fichiers récents et applications suggérées. Masquable : **Paramètres → Personnalisation → Démarrer** → désactiver les interrupteurs de la rubrique *Recommandée* (ou par GPO en entreprise)
+
+![w11-03-parametres-demarrer-recommandations](https://cours.kaya.ovh/windows11/assets/captures/w11-03-parametres-demarrer-recommandations.png)
+
+*Sur un Windows non activé, la page affiche « Vous devez activer Windows… », mais ces interrupteurs restent utilisables.*
 - **Tout** : toutes les applications installées, en vue **Catégorie**, **Grille** ou **Liste** (menu « Affichage »)
 - La **recherche** en haut indexe les applications, fichiers, paramètres et le web
 
@@ -151,9 +159,14 @@ Un compte peut appartenir à **plusieurs groupes simultanément** — ses droits
 **Via Paramètres** (méthode simplifiée) :
 Paramètres → Comptes → Autres utilisateurs → Ajouter un autre utilisateur
 
-**Via Gestion de l'ordinateur** (méthode avancée) :
-`lusrmgr.msc` → Utilisateurs → clic droit → Nouvel utilisateur
+**Via Utilisateurs et groupes locaux** (méthode avancée) :
+`Win + R` → `lusrmgr.msc` → **Utilisateurs** → clic droit → **Nouvel utilisateur…**
 ![w11-03-configuration-6](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-6.png)
+
+![w11-03-lusrmgr-nouvel-utilisateur](https://cours.kaya.ovh/windows11/assets/captures/w11-03-lusrmgr-nouvel-utilisateur.png)
+
+> [!NOTE] Graphique ou PowerShell : une différence à connaître
+> Un compte créé dans `lusrmgr.msc` est **automatiquement** ajouté au groupe **Utilisateurs**. Un compte créé avec `New-LocalUser` n'est membre d'**aucun** groupe : il faut ajouter `Add-LocalGroupMember`, sinon il ne peut pas ouvrir de session.
 
 **Via PowerShell** (méthode automatisable) :
 ```powershell
@@ -237,7 +250,7 @@ Set-DnsClientServerAddress -InterfaceAlias $adaptateur -ServerAddresses "8.8.8.8
 2. Sélectionner **Protocole Internet version 4 (TCP/IPv4)** → Propriétés
 3. Cocher **"Utiliser l'adresse IP suivante"**
 4. Remplir : IP `192.168.3.10`, masque `255.255.255.0`, passerelle `192.168.3.254`
-5. Cocher **"Utiliser l'adresse de serveur DNS suivante"** : `8.8.8.8`
+5. Cocher **"Utiliser l'adresse de serveur DNS suivante"** : `8.8.8.8` (préféré) et `1.1.1.1` (auxiliaire) (préféré) et `1.1.1.1` (auxiliaire)
 
 ![w11-03-configuration-7](https://cours.kaya.ovh/windows11/assets/captures/w11-03-configuration-7.png)
 

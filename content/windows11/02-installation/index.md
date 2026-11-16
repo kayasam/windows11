@@ -6,6 +6,10 @@ title: "02. Installation, mise à niveau et comptes"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/02-installation.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Connaître les prérequis matériels de Windows 11, choisir l'édition, réaliser une installation propre, mettre à niveau un poste existant, et comprendre les trois types de comptes (local, Microsoft, professionnel).
 >
@@ -95,47 +99,59 @@ Pour le lab, on utilise le **téléchargement ISO direct** qu'on monte ensuite d
 
 ### Lancer l'installation
 
-1. Démarrer la VM (ou le PC) sur l'ISO
-2. Appuyer sur une touche quand le message "Press any key to boot from CD or DVD" apparaît
+1. Ouvrir la console de la VM (**Connecter…**) **avant** de la démarrer
+2. Démarrer la VM et appuyer sur une touche dès que le message *Press any key to boot from CD or DVD* apparaît (quelques secondes seulement)
 
-### Écrans de l'installation
+![w11-02-press-any-key](https://cours.kaya.ovh/windows11/assets/captures/w11-02-press-any-key.png)
 
-#### 1. Langue et clavier
+### Écrans de l'installation (installeur 24H2 et suivants)
 
-- Langue : **Français**
-- Format horaire : **Français (France)**
-- Clavier : **Français** (ou Français AZERTY)
+Depuis la 24H2, l'installeur a été refait. Les anciens écrans « Installer maintenant » et « Personnalisée (avancé) » n'existent plus, sauf en cliquant sur le lien *Version précédente de la configuration*. Relevé sur l'ISO 26300.9457 du lab :
 
-#### 2. Installer maintenant
+#### 1. Langue et format
 
-Cliquer sur **Installer maintenant**. L'écran "Le programme d'installation démarre" apparaît.
+*Langage à installer* et *Format de l'heure et de la devise* : **Français (France)** → **Suivant**.
 
-#### 3. Clé de produit
+![w11-02-setup-langue](https://cours.kaya.ovh/windows11/assets/captures/w11-02-setup-langue.png)
+
+#### 2. Clavier
+
+**Français (Traditionnel, AZERTY)**, c'est l'AZERTY habituel → **Suivant**.
+
+#### 3. Option d'installation
+
+Laisser **Installer Windows 11**, puis **cocher** *J'accepte que tout soit supprimé, y compris les fichiers, les applications et les paramètres*. **Tant que la case n'est pas cochée, le bouton Suivant reste grisé.**
+
+![w11-02-setup-option-installation](https://cours.kaya.ovh/windows11/assets/captures/w11-02-setup-option-installation.png)
+
+#### 4. Clé de produit
 
 - En entreprise : entrer la clé de licence volume
-- En lab : cliquer sur **"Je n'ai pas de clé de produit"** → choisir **Windows 11 Pro**
+- En lab : cliquer sur le lien **Je n'ai pas de clé de produit (Product Key)**, en bas à gauche
+
+![w11-02-setup-cle-produit](https://cours.kaya.ovh/windows11/assets/captures/w11-02-setup-cle-produit.png)
 
 > [!TIP] Sans clé de produit
-> Windows 11 s'installe et fonctionne normalement sans clé. Certaines personnalisations sont limitées et un filigrane "Activer Windows" apparaît, mais tout le reste fonctionne pour un lab.
+> Windows 11 s'installe et fonctionne normalement sans clé. Un filigrane « Activer Windows » apparaît et la page **Personnalisation** affiche *« Vous devez activer Windows pour pouvoir personnaliser votre PC »*. Sur le lab, les réglages utiles au TP 03 (menu Démarrer, barre des tâches) restent pourtant modifiables. Seuls le fond d'écran et les couleurs sont bloqués.
 
-#### 4. Choix de l'édition
+#### 5. Choix de l'image (édition)
 
-Si on n'a pas entré de clé, l'installeur demande quelle édition installer. Choisir **Windows 11 Pro**.
+> [!WARNING] L'édition présélectionnée est **Windows 11 Famille**
+> Cliquer **Windows 11 Professionnel** avant **Suivant**. Un poste installé en Famille ne pourra **ni rejoindre le domaine (chapitre 10) ni recevoir de GPO** : il faudrait tout réinstaller.
 
-#### 5. Type d'installation
+![w11-02-setup-edition](https://cours.kaya.ovh/windows11/assets/captures/w11-02-setup-edition.png)
 
-| Option | Description |
-|--------|------------|
-| **Mise à niveau** | Conserve fichiers, paramètres et applications (depuis Windows 10) |
-| **Personnalisée** | Installation propre — formate le disque et installe un système neuf |
+#### 6. Contrat de licence
 
-Pour le lab : **Personnalisée (avancé)**.
+**Accepter**.
 
-#### 6. Partitionnement du disque
+#### 7. Emplacement d'installation
 
-Sur un disque vierge (cas de notre VM), l'installeur propose l'espace non alloué.
+Sur un disque vierge (cas de notre VM), l'installeur affiche *Espace disque 0 non alloué* (64 Go).
 
-- Sélectionner **Espace non alloué** → **Suivant**
+![w11-02-setup-disque](https://cours.kaya.ovh/windows11/assets/captures/w11-02-setup-disque.png)
+
+- Laisser **Espace non alloué** sélectionné → **Suivant**, sans rien créer
 - Windows crée automatiquement les partitions nécessaires :
 
 ![Partitions du disque d’installation — Exemple de disque de 64 Go avec, dans l’ordre, les partitions EFI, MSR, Windows et Récupération.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-02-partitions-installation.svg)
@@ -157,9 +173,13 @@ PartitionNumber Type        MB DriveLetter
 > [!TIP] Partitions automatiques
 > Il n'est pas nécessaire de créer manuellement les partitions. L'installeur gère tout seul la structure GPT/UEFI. Ne touche pas aux partitions système/EFI/récupération.
 
-#### 7. Installation
+#### 8. Prêt pour l'installation
 
-L'installeur copie les fichiers, installe les fonctionnalités et les mises à jour. La VM redémarre plusieurs fois. **Ne pas appuyer sur une touche** lors des redémarrages (sinon on relance l'installeur).
+Le résumé doit indiquer **Installer Windows 11 Professionnel** et **Ne rien conserver** → **Installer**.
+
+![w11-02-setup-pret](https://cours.kaya.ovh/windows11/assets/captures/w11-02-setup-pret.png)
+
+L'installeur copie les fichiers, installe les fonctionnalités et les mises à jour. La VM redémarre plusieurs fois. **Ne pas appuyer sur une touche** lors des redémarrages (sinon on relance l'installeur). Sur le lab, il a fallu **environ 15 minutes** entre le clic sur *Installer* et le premier écran de l'OOBE.
 
 ---
 
@@ -179,10 +199,20 @@ Après l'installation, Windows lance l'**OOBE** (Out-Of-Box Experience) : l'assi
 
 #### Nom du PC
 
-Donner un nom parlant à la machine : `PC01`
+Selon le chemin suivi, l'OOBE propose parfois de nommer l'appareil. **Sur le lab (sans Internet, compte local), cet écran n'apparaît pas** : le poste reçoit un nom aléatoire `DESKTOP-XXXXXXX`, qu'on renomme juste après l'OOBE.
 
-> [!TIP] Nommer le PC dès le départ
-> Le nom du PC est utilisé dans le réseau, le DNS et Active Directory. Mieux vaut le définir dès l'OOBE plutôt que de le changer après (un changement nécessite un redémarrage et peut causer des problèmes en domaine).
+**En graphique** : **Paramètres → Système → Informations système → Renommer ce PC** → `PC01` → **Suivant** → **Redémarrer maintenant**.
+
+![w11-02-renommer-ce-pc](https://cours.kaya.ovh/windows11/assets/captures/w11-02-renommer-ce-pc.png)
+
+**En PowerShell** (administrateur) :
+
+```powershell
+Rename-Computer -NewName PC01 -Restart
+```
+
+> [!TIP] Nommer le PC avant la jonction au domaine
+> Le nom du PC est utilisé dans le réseau, le DNS et Active Directory. Il faut le fixer **avant** de joindre le domaine (chapitre 10) : un renommage après jonction est possible, mais il touche aussi l'objet ordinateur dans AD.
 
 #### Connexion réseau et compte Microsoft
 
@@ -255,13 +285,36 @@ Débrancher le réseau **ne suffit plus**. Sur le lab, sans carte réseau connec
 
 ![w11-02-oobe-reseau-obligatoire](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-reseau-obligatoire.png)
 
-Après `Shift+F10` → `OOBE\BYPASSNRO` (qui ne fait qu'écrire la clé `BypassNRO=1` puis redémarrer), le même écran affiche le lien **« Je n'ai pas Internet »**, qui mène directement à la création d'un compte local :
+C'est exactement la situation de `PC01` dans le lab : `vSwitch-Rennes` n'a **pas encore de serveur DHCP** (il arrivera avec SRV01 au chapitre 10), la VM n'a donc ni adresse ni Internet pendant l'OOBE.
+
+Procédure validée sur le lab (ISO 26300.9457) :
+
+1. Sur l'écran *Il est temps de vous connecter à un réseau*, appuyer sur **`Shift + F10`** : une invite de commandes **administrateur** s'ouvre (cliquer dedans si le curseur ne clignote pas).
+2. Taper `OOBE\BYPASSNRO` puis **Entrée**. Le clavier est déjà en AZERTY : le `\` s'obtient avec **`AltGr + 8`**. Ce script écrit la clé `BypassNRO=1`, puis redémarre la VM.
+
+![w11-02-oobe-shift-f10-bypassnro](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-shift-f10-bypassnro.png)
+
+3. Après le redémarrage, l'OOBE **reprend au début** : refaire *Pays* et *Clavier*.
+4. L'écran réseau affiche maintenant le lien **« Je n'ai pas Internet »** → cliquer dessus.
 
 ![w11-02-oobe-bypassnro-pas-internet](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-bypassnro-pas-internet.png)
 
+5. *Qui utilisera cet appareil ?* → `admin` → mot de passe `Fournil2026!` (deux fois).
+
 ![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)
 
-Ça fonctionne **aujourd'hui sur cette build** — rien ne garantit que ce sera le cas sur la prochaine ISO.
+6. **Trois questions de sécurité**, obligatoires pour un compte local : choisir une question dans la liste, saisir la réponse, recommencer trois fois.
+
+![w11-02-oobe-questions-securite](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-questions-securite.png)
+
+7. Les écrans de confidentialité défilent ensuite **un par un** (emplacement, Localiser mon appareil, diagnostic, saisie, expériences personnalisées, publicité…) : choisir **Non** à chaque fois, puis **Accepter**.
+
+> [!WARNING] Écran « Envoyer des données de diagnostic »
+> Sur cet écran, la première carte (**Inclure facultatif**) est très haute : l'option **Obligatoire uniquement** est **en dessous**, il faut faire défiler la liste pour la voir. Un clic trop rapide active les données facultatives. Ce n'est pas grave : on corrige ensuite dans **Paramètres → Confidentialité et sécurité → Diagnostics et commentaires**.
+
+![w11-02-oobe-diagnostic-piege](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-diagnostic-piege.png)
+
+Ça fonctionne **aujourd'hui sur cette build** — rien ne garantit que ce sera le cas sur la prochaine ISO. Si `BYPASSNRO` a disparu, la solution de repli est un fichier de réponse (méthode 1) ou une VM de reprise préparée par le formateur.
 
 ### 3. Pro : « Configurer pour le travail ou l'école »
 

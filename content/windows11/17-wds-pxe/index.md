@@ -1,10 +1,14 @@
 ---
-title: "17. Déployer Windows 11 par le réseau : PXE et WDS"
+title: "17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/17-wds-pxe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/17-wds-pxe.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+
+> [!abstract] Parcours TSSR — (bonus)
+> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 16. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
+> Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
 > Faire de `SRV01` un **serveur de déploiement** : le poste démarre sur sa **carte réseau** (PXE), reçoit un WinPE servi par **WDS**, puis installe Windows 11 **sans clic** depuis un partage, avec le **même `autounattend.xml`** qu'au chapitre 16. Savoir ce que WDS fait encore en 2026, ce qu'il ne fait plus, et dépanner un démarrage PXE.
@@ -144,7 +148,7 @@ wdsutil /Set-Server /UseDhcpPorts:No /DhcpOption60:Yes
 
 ![Propriétés de SRV01, onglet DHCP — les deux cases cochées quand le DHCP Microsoft est sur le même serveur](https://cours.kaya.ovh/windows11/assets/captures/w11-wds-prop-dhcp.png)
 
-> [!TIP] DHCP sur un autre équipement *(approfondissement)*
+> [!TIP] DHCP sur un autre équipement (bonus)
 > - **Routeur ou autre VLAN** : configurer un relais DHCP (*IP helper*) vers le DHCP **et** vers le serveur WDS.
 > - **DHCP non Microsoft sur le même serveur** : cocher seulement « Ne pas écouter sur les ports DHCP » et créer l'option 60 à la main.
 > - Les options **66/67** (serveur et fichier de démarrage) fonctionnent aussi, mais imposent un seul fichier pour tous les postes. Un parc qui mélange BIOS et UEFI ne démarre alors pas en entier.
@@ -255,7 +259,7 @@ Get-WdsBootImage | Select-Object Name, Architecture, FileName
 > [!WARNING] Ne pas modifier les fichiers de `RemoteInstall` à la main
 > Remplacer un `.wim` directement dans `E:\RemoteInstall\Boot\x64\Images` provoque une erreur de démarrage (`0xc0000098`, BCD incohérent). On modifie le `boot.wim` **avant** l'import. Pour changer une image déjà importée : `Remove-WdsBootImage`, puis nouvel import.
 
-> [!TIP] Variante : WinPE de l'ADK *(approfondissement)*
+> [!TIP] Variante : WinPE de l'ADK (bonus)
 > Le WinPE construit au chapitre 13 (`copype`) convient aussi, et c'est la voie que Microsoft documente pour WDS. On n'a pas besoin de `winpeshl.ini` : on ajoute les lignes de `deploiement.cmd` à la fin de `Windows\System32\startnet.cmd`, puis on importe `C:\WinPE_amd64\media\sources\boot.wim`.
 
 ---

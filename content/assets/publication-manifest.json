@@ -10,13 +10,13 @@
       "key": "windows11/01-introduction-hyperv",
       "title": "01. Introduction à Windows 11 et lab Hyper-V",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/02-installation",
       "title": "02. Installation, mise à niveau et comptes",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/03-configuration",
@@ -86,7 +86,7 @@
     },
     {
       "key": "windows11/14-sysprep-audit",
-      "title": "14. Poste de référence : mode audit et Sysprep",
+      "title": "14. Poste de référence : mode audit et Sysprep (bonus)",
       "tp": true,
       "correction": false
     },
@@ -104,7 +104,7 @@
     },
     {
       "key": "windows11/17-wds-pxe",
-      "title": "17. Déployer Windows 11 par le réseau : PXE et WDS",
+      "title": "17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)",
       "tp": true,
       "correction": false
     },
@@ -139,14 +139,14 @@
       "correctionKey": "windows11/01-introduction-hyperv/tp-corrigev2",
       "downloadStem": "01-introduction-hyperv",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/02-installation/tp",
       "correctionKey": "windows11/02-installation/tp-corrigev2",
       "downloadStem": "02-installation",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/03-configuration/tp",
@@ -282,7 +282,10 @@
       "correction": false
     }
   ],
-  "corrections": [],
+  "corrections": [
+    "windows11/01-introduction-hyperv/tp",
+    "windows11/02-installation/tp"
+  ],
   "tracks": [
     {
       "id": "windows11",

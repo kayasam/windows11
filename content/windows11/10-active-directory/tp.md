@@ -7,8 +7,6 @@ title: "TP 10. Intégration Active Directory"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/10-active-directory.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 2h
-
 > Chapitres associés : [10. Intégration Active Directory](https://cours.kaya.ovh/windows11/windows11/10-active-directory/)
 
 ---
@@ -29,7 +27,7 @@ title: "TP 10. Intégration Active Directory"
 
 ---
 
-## Partie A — SRV01 en Server Core (25 min)
+## Partie A — SRV01 en Server Core
 
 **A1.** Crée la VM `SRV01` (Gen 2, 4 Go **statiques**, 64 Go, `vSwitch-Rennes`) et installe **Windows Server 2025 Standard Evaluation** — laquelle des quatre entrées choisir ?
 
@@ -39,7 +37,7 @@ title: "TP 10. Intégration Active Directory"
 
 ---
 
-## Partie B — Domaine, DNS, DHCP (30 min)
+## Partie B — Domaine, DNS, DHCP
 
 **B1.** Installe les rôles AD DS, DNS et DHCP en une commande.
 
@@ -55,7 +53,7 @@ title: "TP 10. Intégration Active Directory"
 
 ---
 
-## Partie C — Structure du Fournil (20 min)
+## Partie C — Structure du Fournil
 
 **C1.** Crée l'arborescence d'UO : `Fournil` › `Utilisateurs`, `Ordinateurs`, `Groupes`, `Admins`.
 
@@ -67,7 +65,7 @@ title: "TP 10. Intégration Active Directory"
 
 ---
 
-## Partie D — Joindre PC01 (25 min)
+## Partie D — Joindre PC01
 
 **D1.** Sur `PC01`, essaie de résoudre `ad.fournil.lab`. Que se passe-t-il ? Corrige.
 
@@ -83,7 +81,7 @@ title: "TP 10. Intégration Active Directory"
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** `w32tm /query /source` sur `PC01` renvoie « VM IC Time Synchronization Provider ». Pourquoi est-ce un problème pour un membre du domaine ? Comment corriger ?
 

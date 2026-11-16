@@ -1,5 +1,9 @@
 # 20. Diagnostic et dépannage
 
+> [!abstract] Parcours TSSR
+> Les pannes sont préparées par le formateur. En E1, adapter le script Test-Poste.ps1 fourni, l’exécuter et expliquer ses limites ; l’écriture intégrale sans trame est (bonus). Le ticket et les preuves de réparation restent obligatoires.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Adopter une **méthode** de diagnostic, puis maîtriser les outils de Windows 11 pour chaque famille de pannes : système (journaux, fiabilité, Sysmon), performances, services et applications, réseau, fichiers système. **Tracer et documenter** chaque intervention, maintenant que l'Enregistreur d'actions (PSR) et les dépanneurs MSDT sont en fin de vie.
 >
@@ -36,7 +40,7 @@
 | **Obtenir de l'aide** (*Get Help*) | Dépannages guidés (audio, réseau, impression…) | **Remplace les dépanneurs MSDT** (retirés) |
 | **Sysmon** (intégré en 26H2) | Traçage fin des processus, connexions, fichiers | Voir ci-dessous |
 
-### Sysmon intégré à Windows 11 26H2 *(approfondissement)*
+### Sysmon intégré à Windows 11 26H2 (bonus)
 
 **Sysmon** (*System Monitor*, de la suite Sysinternals) journalise ce que les journaux standard ne voient pas : chaque **création de processus** avec sa ligne de commande et son parent, les **connexions réseau** par processus, les créations de fichiers exécutables, les chargements de pilotes… Depuis 26H2, il fait partie de Windows (fonctionnalité facultative, désactivée par défaut). Testé sur `PC01` :
 
@@ -183,7 +187,7 @@ Un bon compte rendu d'intervention répond à : **quoi** (symptôme), **pourquoi
 
 ---
 
-## 9. Bonus : démarrer sur un disque virtuel (VHDX natif) *(approfondissement)*
+## 9. Bonus : démarrer sur un disque virtuel (VHDX natif) (bonus)
 
 Windows peut **démarrer directement sur un fichier VHDX** stocké sur le disque physique (*native boot*), sans hyperviseur — pratique pour tester une image sur du vrai matériel, ou avoir un second système jetable :
 

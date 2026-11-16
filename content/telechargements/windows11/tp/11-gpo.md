@@ -1,6 +1,7 @@
 # TP 11. Stratégies de groupe et gestion centralisée
 
-> Durée estimée : 2h
+> [!abstract] Parcours TSSR
+> Les RSAT sont préchargés et vérifiés en A1. Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C. Les GPO restent créées et testées par le stagiaire.
 
 > Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://cours.kaya.ovh/windows11/windows11/11-gpo/)
 
@@ -23,17 +24,17 @@
 
 ---
 
-## Partie A — Outils (15 min)
+## Partie A — Outils
 
-**A1.** Installe sur `PC01` la console GPMC et les outils AD (RSAT). Combien de temps cela prend-il, et pourquoi ?
+**A1.** Vérifie sur `PC01` la console GPMC et les outils AD (RSAT), préchargés par le formateur. S’ils manquent, lance leur installation et utilise le poste de secours pendant le téléchargement.
 
 **A2.** Ouvre `gpmc.msc`. Quelles GPO existent déjà ? Où sont-elles liées ?
 
-**A3.** Où sont stockées physiquement les GPO ? Retrouve le dossier de la *Default Domain Policy*.
+**A3.** (bonus) Où sont stockées physiquement les GPO ? Retrouve le dossier de la *Default Domain Policy*.
 
 ---
 
-## Partie B — GPO ordinateur « GPO-Postes-Securite » (45 min)
+## Partie B — GPO ordinateur « GPO-Postes-Securite »
 
 **B1.** Crée la GPO `GPO-Postes-Securite` et lie-la à `OU=Ordinateurs,OU=Fournil`.
 
@@ -53,9 +54,18 @@
 
 ---
 
-## Partie C — GPO utilisateur filtrée (35 min)
+## Partie C — GPO utilisateur filtrée
 
-Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au groupe `G-Boulangerie`.
+Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au groupe `G-Boulangerie`. Avant C1, prépare-le avec ce modèle guidé (sur SRV01, après le TP 10) :
+
+```powershell
+New-Item C:\Partages\Commun -ItemType Directory -Force
+icacls C:\Partages\Commun /inheritance:r
+icacls C:\Partages\Commun /grant 'SYSTEM:(OI)(CI)F' 'BUILTIN\Administrateurs:(OI)(CI)F' 'FOURNIL\G-Boulangerie:(OI)(CI)M'
+New-SmbShare -Name Commun -Path C:\Partages\Commun -ChangeAccess 'FOURNIL\G-Boulangerie' -FullAccess 'FOURNIL\Admins du domaine'
+```
+
+Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 
 **C1.** Crée la GPO `GPO-Boulangerie-Utilisateurs`, liée à `OU=Utilisateurs,OU=Fournil`.
 
@@ -71,7 +81,7 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 
 ---
 
-## Partie D — Diagnostic (15 min)
+## Partie D — Diagnostic
 
 **D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. Produis aussi un rapport HTML.
 
@@ -81,7 +91,7 @@ Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au group
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
 

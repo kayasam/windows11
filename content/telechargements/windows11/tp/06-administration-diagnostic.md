@@ -1,6 +1,7 @@
 # TP 06. Processus, services, tâches planifiées et journaux
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Le script Inventaire-Disques.ps1 est fourni ci-dessous : le lire, adapter le chemin et tester sa tâche. Son écriture autonome, les exports et les déclencheurs avancés sont (bonus).
 
 > Chapitres associés : [06. Processus, services, tâches planifiées et journaux](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/)
 
@@ -22,7 +23,7 @@
 
 ---
 
-## Partie A — Processus et démarrage (15 min)
+## Partie A — Processus et démarrage
 
 **A1.** Ouvre le Gestionnaire des tâches directement sur la page **Applications de démarrage**. Quelles applications se lancent à l'ouverture de session ? Quel est leur impact ?
 
@@ -32,7 +33,7 @@
 
 ---
 
-## Partie B — Services (20 min)
+## Partie B — Services
 
 **B1.** Liste les services en démarrage **automatique** qui ne tournent pas. Est-ce forcément anormal ?
 
@@ -44,13 +45,22 @@
 
 ---
 
-## Partie C — Planificateur de tâches (30 min)
+## Partie C — Planificateur de tâches
 
 Le Fournil veut un **relevé quotidien de l'espace disque** de chaque poste, pour anticiper les disques pleins.
 
-**C1.** Crée le script `C:\Scripts\Inventaire-Disques.ps1`, qui ajoute une ligne par disque fixe dans `C:\Scripts\inventaire-disques.log` : date, lettre, espace libre en Go.
+**C1.** Crée le script `C:\Scripts\Inventaire-Disques.ps1` en exécutant le bloc ci-dessous dans un Terminal administrateur, puis lis-le (`notepad C:\Scripts\Inventaire-Disques.ps1`) : il ajoute une ligne par disque fixe dans `C:\Scripts\inventaire-disques.log` (date, lettre, espace libre en Go).
 
-**C2.** Crée la tâche `\Fournil\Inventaire-Disques` :
+```powershell
+New-Item C:\Scripts -ItemType Directory -Force
+@'
+Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3" | ForEach-Object {
+    "{0} {1} {2:N1} Go libres" -f (Get-Date -Format s), $_.DeviceID, ($_.FreeSpace/1GB)
+} | Add-Content C:\Scripts\inventaire-disques.log
+'@ | Set-Content C:\Scripts\Inventaire-Disques.ps1
+```
+
+**C2.** Crée la tâche `\Fournil\Inventaire-Disques`, dans `taskschd.msc` **ou** en PowerShell :
 - tous les jours à 07:30,
 - sous le compte **SYSTEM**,
 - rattrapée si le PC était éteint,
@@ -59,15 +69,15 @@ Le Fournil veut un **relevé quotidien de l'espace disque** de chaque poste, pou
 
 **C3.** Lance-la immédiatement et vérifie son résultat de trois façons.
 
-**C4.** Exporte-la en XML. À quoi ce fichier peut-il servir ?
+**C4.** (bonus) Exporte-la en XML. À quoi ce fichier peut-il servir ?
 
-**C5.** Avec `schtasks`, affiche la tâche au format liste. Quelle option permettrait de la lancer sur `PC02` depuis `PC01` ?
+**C5.** (bonus) Avec `schtasks`, affiche la tâche au format liste. Quelle option permettrait de la lancer sur `PC02` depuis `PC01` ?
 
-**C6.** Une autre tâche affiche `LastTaskResult = 2147942402`. Diagnostique.
+**C6.** (bonus) Une autre tâche affiche `LastTaskResult = 2147942402`. Diagnostique.
 
 ---
 
-## Partie D — Journaux d'événements (20 min)
+## Partie D — Journaux d'événements
 
 **D1.** Un collègue tape :
 ```powershell
@@ -75,23 +85,23 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 ```
 Ça échoue. Pourquoi ? Corrige.
 
-**D2.** Liste les 4 derniers démarrages/arrêts du poste (6005, 6006, 6008, 6013).
+**D2.** (bonus) Liste les 4 derniers démarrages/arrêts du poste (6005, 6006, 6008, 6013).
 
 **D3.** Liste les erreurs et événements critiques du journal Système des dernières 24 heures. Quelle est la source la plus fréquente ?
 
 **D4.** Pourquoi `Get-WinEvent -FilterHashtable` est-il préférable à `Get-WinEvent -LogName System | Where-Object Level -eq 2` ?
 
-**D5.** Crée une **vue personnalisée** dans l'Observateur d'événements : « Fournil — Erreurs 24h » (Critique + Erreur, journaux Système et Application, dernières 24 heures).
+**D5.** (bonus) Crée une **vue personnalisée** dans l'Observateur d'événements : « Fournil — Erreurs 24h » (Critique + Erreur, journaux Système et Application, dernières 24 heures).
 
 ---
 
-## Partie E — Fiabilité (5 min)
+## Partie E — Fiabilité
 
 **E1.** Ouvre le Moniteur de fiabilité. Quel est l'indice de stabilité de `PC01` ? Quel avertissement apparaît, et que signifie-t-il ?
 
 ---
 
-## Partie F — Bonus
+## Partie F — Exercices complémentaires (bonus)
 
 **F1.** Crée une tâche planifiée déclenchée par un **événement** : à chaque échec d'ouverture de session (ID 4625 du journal Sécurité), ajouter une ligne dans `C:\Scripts\echecs.log`.
 

@@ -6,6 +6,10 @@ title: "04. Gestion des disques et du stockage"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/04-disques-stockage.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Socle : A, B et D ; le volume G: est conservé pour la suite. Le miroir et sa panne simulée sont (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Comprendre les structures de partitionnement Windows, gérer les disques et volumes avec les outils graphiques et en ligne de commande, et découvrir les espaces de stockage.
 >
@@ -30,7 +34,7 @@ Les disques sont structurés selon une **table de partitions** qui décrit l'org
 | **Identifiant partition** | Numéro séquentiel | GUID unique |
 
 > [!WARNING] Windows 11 impose GPT
-> Windows 11 s'installe uniquement sur un disque GPT avec firmware UEFI. C'est pour cela que l'installeur crée automatiquement un disque GPT avec 4 partitions (Recovery, EFI, MSR, Windows).
+> Windows 11 s'installe uniquement sur un disque GPT avec firmware UEFI. C'est pour cela que l'installeur crée automatiquement un disque GPT avec 4 partitions (EFI, MSR, Windows, Récupération).
 
 ### Disques basiques vs dynamiques
 
@@ -67,6 +71,29 @@ Interface graphique principale pour la gestion des disques. Accessible via :
 
 
 ![w11-04-disques-stockage](https://cours.kaya.ovh/windows11/assets/captures/w11-04-disques-stockage.png)
+
+#### Pas à pas : préparer un disque de données en graphique
+
+1. À l'ouverture de `diskmgmt.msc`, la fenêtre **Initialiser le disque** apparaît seule pour chaque disque neuf. **Ne cocher que le disque à préparer**, laisser **GPT** → **OK**.
+
+![w11-04-diskmgmt-initialiser](https://cours.kaya.ovh/windows11/assets/captures/w11-04-diskmgmt-initialiser.png)
+
+2. Clic droit sur l'espace **Non alloué** → **Nouveau volume simple…**
+
+![w11-04-diskmgmt-nouveau-volume-simple](https://cours.kaya.ovh/windows11/assets/captures/w11-04-diskmgmt-nouveau-volume-simple.png)
+
+3. Taille en **Mo** (5 Go = `5120`) → lettre de lecteur → **Formater** : NTFS, nom de volume, formatage rapide → **Terminer**.
+
+![w11-04-diskmgmt-lettre](https://cours.kaya.ovh/windows11/assets/captures/w11-04-diskmgmt-lettre.png)
+
+![w11-04-diskmgmt-resume](https://cours.kaya.ovh/windows11/assets/captures/w11-04-diskmgmt-resume.png)
+
+4. Les autres opérations sont dans le **clic droit sur le volume** : *Modifier la lettre de lecteur et les chemins d'accès…*, *Étendre le volume…*, *Réduire le volume…*, *Supprimer le volume…*
+
+![w11-04-diskmgmt-menu-volume](https://cours.kaya.ovh/windows11/assets/captures/w11-04-diskmgmt-menu-volume.png)
+
+> [!NOTE] « Chiffré avec BitLocker » sur un volume neuf
+> Sur le lab, `G:` apparaît **« NTFS (Chiffré avec BitLocker) »** juste après sa création. C'est le **chiffrement automatique de l'appareil** (vu au chapitre 02) : il s'applique aussi aux nouveaux volumes fixes. Le volume reste utilisable normalement. On reprend BitLocker en détail au chapitre 09.
 
 ### DiskPart
 
@@ -167,7 +194,7 @@ Add-PartitionAccessPath -DiskNumber 1 -PartitionNumber 2 -AccessPath "C:\Donnée
 
 ---
 
-## Espaces de stockage (Storage Spaces)
+## Espaces de stockage (Storage Spaces) (bonus)
 
 Les **Espaces de stockage** permettent de regrouper plusieurs disques physiques en un pool, puis de créer des volumes virtuels avec redondance ou agrégation.
 
@@ -235,7 +262,7 @@ Get-VirtualDisk -FriendlyName "Données-Miroir" | Get-Disk |
 ```
 
 > [!WARNING] Pièges rencontrés sur le lab
-> - **« The requested access path is already in use »** : la lettre demandée (`-DriveLetter E`) est déjà prise — typiquement par un lecteur DVD virtuel (ISO montée). Vérifier avec `Get-Volume` avant de choisir une lettre.
+> - **« The requested access path is already in use »** : la lettre demandée (par exemple `-DriveLetter D`) est déjà prise — typiquement par le lecteur DVD virtuel (ISO montée). Vérifier avec `Get-Volume` avant de choisir une lettre.
 > - **`CanPool` menteur** : juste après avoir partitionné un disque, `Get-PhysicalDisk -CanPool $true` peut encore le lister, et `New-StoragePool` échoue (« espace utilisable insuffisant »). Rafraîchir avec `Update-StorageProviderCache -DiscoveryLevel Full`, et désigner les disques explicitement (`Where-Object DeviceId -in '2','3'`).
 > - **Capacité réelle** : un miroir 2 voies sur 2 disques de 10 Go donne **8 Go** utilisables sur `PC01`, et non 10 : le pool réserve de l'espace pour ses métadonnées.
 

@@ -1,6 +1,7 @@
 # TP 13. ADK, Windows PE et fichier de réponse
 
-> Durée estimée : 2h
+> [!abstract] Parcours TSSR
+> ADK, WinPE et catalogue WSIM sont préchargés ou mis en cache par le formateur. Socle : vérifier les outils, créer un WinPE standard, puis compléter et valider un fichier de réponse fourni. PowerShell dans WinPE et la préparation de MASTER sont (bonus).
 
 > Chapitres associés : [13. ADK, Windows PE et fichier de réponse](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/)
 
@@ -9,9 +10,9 @@
 ## Objectifs
 
 - Installer Windows ADK et son module WinPE **dans la bonne version**
-- Créer un WinPE personnalisé (PowerShell, clavier français) et le démarrer
+- Créer et démarrer un WinPE standard ; personnalisation PowerShell et clavier français (bonus)
 - Construire avec WSIM le fichier de réponse `autounattend.xml` du Fournil
-- Préparer le petit fichier d'installation de `MASTER` (anti-chiffrement)
+- Préparer le petit fichier d'installation de `MASTER` (anti-chiffrement) (bonus)
 
 ---
 
@@ -22,7 +23,7 @@
 
 ---
 
-## Partie A — Installer l'ADK (25 min)
+## Partie A — Installer l'ADK
 
 **A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et le module WinPE ? Quel problème vois-tu ?
 
@@ -32,27 +33,27 @@
 
 ---
 
-## Partie B — Windows PE (40 min)
+## Partie B — Windows PE
 
 **B1.** Ouvre l'invite « Environnement de déploiement et d'outils de création d'images » en administrateur. Pourquoi cette invite plutôt qu'un terminal ordinaire ?
 
 **B2.** Crée l'arborescence WinPE amd64 dans `C:\WinPE_amd64`. Que contient-elle ?
 
-**B3.** Monte `boot.wim` et ajoute : WMI, NetFx, Scripting, PowerShell, StorageWMI, DismCmdlets — avec leurs packs `fr-fr`. Dans quel ordre, et pourquoi ? *(approfondissement)*
+**B3.** Monte `boot.wim` et ajoute : WMI, NetFx, Scripting, PowerShell, StorageWMI, DismCmdlets — avec leurs packs `fr-fr`. Dans quel ordre, et pourquoi ? (bonus)
 
-**B4.** Passe le clavier de WinPE en français, vérifie les paquets, puis démonte en validant. *(approfondissement)*
+**B4.** Passe le clavier de WinPE en français, vérifie les paquets, puis démonte en validant. (bonus)
 
 **B5.** Crée l'ISO `WinPE-Fournil.iso`. Quelle taille fait-elle ?
 
-**B6.** Démarre une VM vierge sur cette ISO. Vérifie que PowerShell fonctionne et liste les disques.
+**B6.** Démarre une VM vierge sur cette ISO. Dans l’invite CMD de WinPE standard, utilise `diskpart`, `list disk`, `list volume`, puis `exit`. PowerShell ne sera disponible que si tu as réalisé B3 et B4 (bonus).
 
 ---
 
-## Partie C — Le fichier de réponse avec WSIM (45 min)
+## Partie C — Le fichier de réponse avec WSIM
 
-**C1.** Copie `install.wim` depuis l'ISO, ouvre WSIM, sélectionne l'image **Windows 11 Professionnel**. Combien d'index contient ce `install.wim` ? Que se passe-t-il au premier chargement ?
+**C1.** Utilise la copie en écriture de `install.wim` et le catalogue préparés par le formateur, ouvre WSIM, sélectionne l'image **Windows 11 Professionnel**. Combien d'index contient ce `install.wim` ? Que se passe-t-il au premier chargement ?
 
-**C2.** Passe **windowsPE** : langue fr-FR, disque 0 effacé, partitions EFI 200 Mo / MSR 16 Mo / Windows (tout le reste), installation sur la partition 3, contrat accepté, clé générique Pro.
+**C2.** Ouvre le fichier fourni `autounattend-fournil-26h2.xml` dans WSIM, puis vérifie et adapte la passe **windowsPE** : langue fr-FR, disque 0 effacé, partitions EFI 200 Mo / MSR 16 Mo / Windows (tout le reste), installation sur la partition 3, contrat accepté, clé générique Pro.
 
 **C3.** Pourquoi ne crée-t-on pas de partition de récupération dans le fichier ?
 
@@ -64,7 +65,7 @@
 
 ---
 
-## Partie D — Le fichier d'installation de MASTER (10 min) *(approfondissement)*
+## Partie D — Le fichier d'installation de MASTER (bonus)
 
 **D1.** Pourquoi faut-il un **second** fichier de réponse pour **installer** `MASTER` ?
 
@@ -72,7 +73,7 @@
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Le fichier contient un mot de passe en clair. Que propose WSIM ? Est-ce un vrai chiffrement ?
 

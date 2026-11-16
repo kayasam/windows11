@@ -1,7 +1,5 @@
 # TP 10. Intégration Active Directory
 
-> Durée estimée : 2h
-
 > Chapitres associés : [10. Intégration Active Directory](https://cours.kaya.ovh/windows11/windows11/10-active-directory/)
 
 ---
@@ -22,7 +20,7 @@
 
 ---
 
-## Partie A — SRV01 en Server Core (25 min)
+## Partie A — SRV01 en Server Core
 
 **A1.** Crée la VM `SRV01` (Gen 2, 4 Go **statiques**, 64 Go, `vSwitch-Rennes`) et installe **Windows Server 2025 Standard Evaluation** — laquelle des quatre entrées choisir ?
 
@@ -32,7 +30,7 @@
 
 ---
 
-## Partie B — Domaine, DNS, DHCP (30 min)
+## Partie B — Domaine, DNS, DHCP
 
 **B1.** Installe les rôles AD DS, DNS et DHCP en une commande.
 
@@ -48,7 +46,7 @@
 
 ---
 
-## Partie C — Structure du Fournil (20 min)
+## Partie C — Structure du Fournil
 
 **C1.** Crée l'arborescence d'UO : `Fournil` › `Utilisateurs`, `Ordinateurs`, `Groupes`, `Admins`.
 
@@ -60,7 +58,7 @@
 
 ---
 
-## Partie D — Joindre PC01 (25 min)
+## Partie D — Joindre PC01
 
 **D1.** Sur `PC01`, essaie de résoudre `ad.fournil.lab`. Que se passe-t-il ? Corrige.
 
@@ -76,7 +74,7 @@
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** `w32tm /query /source` sur `PC01` renvoie « VM IC Time Synchronization Provider ». Pourquoi est-ce un problème pour un membre du domaine ? Comment corriger ?
 

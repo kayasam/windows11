@@ -6,6 +6,10 @@ title: "19. Démarrage et récupération"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/18-demarrage-recuperation.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Socle : lire le démarrage, accéder à WinRE, tester une restauration et choisir l’outil adapté. Supprimer le BCD pour le réparer et réactiver F8 sont (bonus). Attendre la fin du redémarrage avant de poursuivre.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Comprendre la séquence de démarrage UEFI, configurer le démarrage (`msconfig`, `bcdedit`), réparer un démarrage cassé (`bcdboot`), utiliser WinRE, et connaître **toute la palette de récupération 2026** : points de restauration, *point-in-time restore*, réinstallation via Windows Update, réinitialisation, Quick Machine Recovery.
 >
@@ -85,7 +89,7 @@ La séquence de démarrage d'un système UEFI/GPT est la suivante :
 > [!WARNING] msconfig vs services.msc
 > Désactiver un service dans `msconfig` → onglet Services est équivalent à le passer en "Désactivé" dans `services.msc`. Ne pas désactiver les services Microsoft essentiels.
 
-### bcdedit — Gestion avancée du BCD *(approfondissement)*
+### bcdedit — Gestion avancée du BCD (bonus)
 
 `bcdedit` est l'outil en ligne de commande pour modifier la BCD. À utiliser depuis un terminal **administrateur**.
 
@@ -186,7 +190,7 @@ DISM /Image:C:\ /Cleanup-Image /RestoreHealth /Source:D:\sources\install.wim:6 /
 ```
 
 > [!WARNING] `bootrec` sur un disque GPT/UEFI
-> `bootrec /fixmbr` et `/fixboot` concernent le **MBR/BIOS**. Sur un Windows 11 (GPT/UEFI), `bootrec /fixboot` répond souvent « *Accès refusé* » : c'est normal, il ne sait pas écrire dans la partition EFI. La commande qui répare réellement le démarrage UEFI est **`bcdboot`** (c'est aussi elle qui rend démarrable une image appliquée à la main, chapitre 15, approfondissement). `bootrec /rebuildbcd` reste utile pour rechercher des installations.
+> `bootrec /fixmbr` et `/fixboot` concernent le **MBR/BIOS**. Sur un Windows 11 (GPT/UEFI), `bootrec /fixboot` répond souvent « *Accès refusé* » : c'est normal, il ne sait pas écrire dans la partition EFI. La commande qui répare réellement le démarrage UEFI est **`bcdboot`** (c'est aussi elle qui rend démarrable une image appliquée à la main, chapitre 15, bonus). `bootrec /rebuildbcd` reste utile pour rechercher des installations.
 
 > [!WARNING] `/Online` n'a pas de sens dans WinRE
 > `sfc /scannow` et `DISM /Online` sans options vérifient… WinRE lui-même. Depuis WinRE, toujours cibler l'installation hors ligne (`/offwindir`, `/Image:`). La v1 de ce cours contenait l'erreur.

@@ -1,5 +1,9 @@
 # 21. Maintien en condition opérationnelle
 
+> [!abstract] Parcours TSSR
+> Évaluation du socle : A, B (hors B4), C (hors C4) et F. Utiliser les scripts fournis et une trame de plan MCO. L’incident répété, la procédure complète de sortie du parc et la maintenance avancée sont (bonus). Les principes de sortie du parc sont expliqués dans le cours.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Passer du dépannage au coup par coup à une **maintenance organisée** du parc : savoir ce que l'on a (inventaire), savoir dans quel état c'est (santé), garder les postes à jour et supportés (cycle de vie), protéger les données (sauvegarde), et retirer proprement un poste en fin de vie.
 >
@@ -96,7 +100,7 @@ Le script PowerShell dépanne et sert à **vérifier** un point précis ; pour u
 | Indicateur | Commande | Seuil d'alerte (exemple) |
 |------------|----------|--------------------------|
 | Version supportée | `(Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').DisplayVersion` | Fin de support < 3 mois |
-| Dernière mise à jour | `Get-HotFix \| Sort-Object InstalledOn -Desc \| Select -First 1` | > 35 jours |
+| Dernière mise à jour | `Get-HotFix | Where-Object InstalledOn | Sort-Object InstalledOn -Desc | Select -First 1`\| Sort-Object InstalledOn -Desc \| Select -First 1` | > 35 jours |
 | Redémarrage en attente | clé `…\WindowsUpdate\Auto Update\RebootRequired` | Présente depuis > 7 jours |
 | Signatures antivirus | `(Get-MpComputerStatus).AntivirusSignatureAge` | > 3 jours |
 | Protection temps réel | `(Get-MpComputerStatus).RealTimeProtectionEnabled` | `False` |
@@ -145,7 +149,7 @@ Remarquer la différence avec la tâche malveillante du TP 20 : rangée dans un 
 
 Windows exécute chaque jour (par défaut à **2 h**, ou dès que le poste est inactif) la *maintenance automatique* : défragmentation/TRIM, analyses Defender, nettoyage du magasin de composants, diagnostics. Elle se configure dans *Panneau de configuration → Sécurité et maintenance → Maintenance*, ou par GPO (*Composants Windows → Planificateur de maintenance*). Un poste toujours éteint la nuit la rattrape à la prochaine période d'inactivité.
 
-### Magasin de composants (WinSxS) *(approfondissement)*
+### Magasin de composants (WinSxS) (bonus)
 
 ```cmd
 Dism /Online /Cleanup-Image /AnalyzeComponentStore

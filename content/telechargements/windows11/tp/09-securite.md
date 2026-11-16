@@ -1,6 +1,7 @@
 # TP 09. Sécuriser un poste Windows 11
 
-> Durée estimée : 2h
+> [!abstract] Parcours TSSR
+> Socle : moindre privilège, UAC, Defender, pare-feu et BitLocker système. L’activation d’Administrator protection, BitLocker To Go, EFS et l’application d’AppLocker sont (bonus).
 
 > Chapitres associés : [09. Sécuriser un poste Windows 11](https://cours.kaya.ovh/windows11/windows11/09-securite/)
 
@@ -13,7 +14,7 @@
 - Vérifier Microsoft Defender et comprendre la protection contre les falsifications
 - Ouvrir un port proprement dans le pare-feu, par profil
 - Terminer la protection BitLocker laissée « à moitié » par Windows
-- Mettre en place et **tester** AppLocker sur l'édition Pro
+- Mettre en place et **tester** AppLocker sur l'édition Pro (bonus)
 
 ---
 
@@ -24,7 +25,7 @@
 
 ---
 
-## Partie A — Moindre privilège (15 min)
+## Partie A — Moindre privilège
 
 **A1.** Qui est administrateur de `PC01` ? Que faut-il penser du compte `admin` utilisé au quotidien ?
 
@@ -34,17 +35,17 @@
 
 ---
 
-## Partie B — UAC et Administrator protection (15 min)
+## Partie B — UAC et Administrator protection
 
 **B1.** Lis les valeurs UAC du registre. À quel niveau de la réglette correspondent-elles ?
 
 **B2.** Depuis la session `employe1`, lance un terminal **en tant qu'administrateur**. Que demande l'UAC ? Et depuis la session `admin` ?
 
-**B3.** Quelle valeur de `TypeOfAdminApprovalMode` est relevée sur `PC01` ? Que change le passage à `2` ?
+**B3.** (bonus) Quelle valeur de `TypeOfAdminApprovalMode` est relevée sur `PC01` ? Que change le passage à `2` ?
 
 ---
 
-## Partie C — Defender et pare-feu (25 min)
+## Partie C — Defender et pare-feu
 
 **C1.** Relève l'état de Defender : protection temps réel, version des signatures, protection contre les falsifications.
 
@@ -58,7 +59,7 @@
 
 ---
 
-## Partie D — BitLocker (30 min)
+## Partie D — BitLocker
 
 **D1.** Relève l'état BitLocker de `C:` **sans rien avoir activé**. Le disque est-il chiffré ? Les données sont-elles protégées ?
 
@@ -70,11 +71,11 @@
 
 **D5.** Avant une mise à jour du firmware UEFI, que fais-tu pour éviter de devoir saisir la clé au redémarrage ?
 
-**D6.** Chiffre une clé USB virtuelle (ou le volume `G:` du TP 04) avec BitLocker To Go et un mot de passe.
+**D6.** (bonus) Chiffre une clé USB virtuelle (ou le volume `G:` du TP 04) avec BitLocker To Go et un mot de passe.
 
 ---
 
-## Partie E — AppLocker sur Windows 11 Pro (25 min)
+## Partie E — AppLocker sur Windows 11 Pro (bonus)
 
 **E1.** Crée les **règles par défaut** des exécutables et passe la collection en **Appliquer**. Démarre le service nécessaire.
 
@@ -88,11 +89,11 @@
 
 ---
 
-## Partie F — Bonus
+## Partie F — Exercices complémentaires (bonus)
 
 **F1.** Chiffre avec EFS le dossier `C:\Users\admin\Documents\Confidentiel`, puis exporte le certificat EFS. Pourquoi cette exportation est-elle vitale ?
 
-**F2.** Interroge l'état de VBS/Credential Guard sur `PC01`. Explique le résultat. *(approfondissement)*
+**F2.** Interroge l'état de VBS/Credential Guard sur `PC01`. Explique le résultat. (bonus)
 
 ---
 

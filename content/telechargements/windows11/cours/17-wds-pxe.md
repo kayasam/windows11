@@ -1,4 +1,8 @@
-# 17. Déployer Windows 11 par le réseau : PXE et WDS
+# 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)
+
+> [!abstract] Parcours TSSR — (bonus)
+> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 16. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
+> Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
 > Faire de `SRV01` un **serveur de déploiement** : le poste démarre sur sa **carte réseau** (PXE), reçoit un WinPE servi par **WDS**, puis installe Windows 11 **sans clic** depuis un partage, avec le **même `autounattend.xml`** qu'au chapitre 16. Savoir ce que WDS fait encore en 2026, ce qu'il ne fait plus, et dépanner un démarrage PXE.
@@ -138,7 +142,7 @@ wdsutil /Set-Server /UseDhcpPorts:No /DhcpOption60:Yes
 
 ![Propriétés de SRV01, onglet DHCP — les deux cases cochées quand le DHCP Microsoft est sur le même serveur](https://cours.kaya.ovh/windows11/assets/captures/w11-wds-prop-dhcp.png)
 
-> [!TIP] DHCP sur un autre équipement *(approfondissement)*
+> [!TIP] DHCP sur un autre équipement (bonus)
 > - **Routeur ou autre VLAN** : configurer un relais DHCP (*IP helper*) vers le DHCP **et** vers le serveur WDS.
 > - **DHCP non Microsoft sur le même serveur** : cocher seulement « Ne pas écouter sur les ports DHCP » et créer l'option 60 à la main.
 > - Les options **66/67** (serveur et fichier de démarrage) fonctionnent aussi, mais imposent un seul fichier pour tous les postes. Un parc qui mélange BIOS et UEFI ne démarre alors pas en entier.
@@ -249,7 +253,7 @@ Get-WdsBootImage | Select-Object Name, Architecture, FileName
 > [!WARNING] Ne pas modifier les fichiers de `RemoteInstall` à la main
 > Remplacer un `.wim` directement dans `E:\RemoteInstall\Boot\x64\Images` provoque une erreur de démarrage (`0xc0000098`, BCD incohérent). On modifie le `boot.wim` **avant** l'import. Pour changer une image déjà importée : `Remove-WdsBootImage`, puis nouvel import.
 
-> [!TIP] Variante : WinPE de l'ADK *(approfondissement)*
+> [!TIP] Variante : WinPE de l'ADK (bonus)
 > Le WinPE construit au chapitre 13 (`copype`) convient aussi, et c'est la voie que Microsoft documente pour WDS. On n'a pas besoin de `winpeshl.ini` : on ajoute les lignes de `deploiement.cmd` à la fin de `Windows\System32\startnet.cmd`, puis on importe `C:\WinPE_amd64\media\sources\boot.wim`.
 
 ---

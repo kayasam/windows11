@@ -6,6 +6,10 @@ title: "21. Maintien en condition opérationnelle"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/20-mco/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/20-mco.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Évaluation du socle : A, B (hors B4), C (hors C4) et F. Utiliser les scripts fournis et une trame de plan MCO. L’incident répété, la procédure complète de sortie du parc et la maintenance avancée sont (bonus). Les principes de sortie du parc sont expliqués dans le cours.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Passer du dépannage au coup par coup à une **maintenance organisée** du parc : savoir ce que l'on a (inventaire), savoir dans quel état c'est (santé), garder les postes à jour et supportés (cycle de vie), protéger les données (sauvegarde), et retirer proprement un poste en fin de vie.
 >
@@ -102,7 +106,7 @@ Le script PowerShell dépanne et sert à **vérifier** un point précis ; pour u
 | Indicateur | Commande | Seuil d'alerte (exemple) |
 |------------|----------|--------------------------|
 | Version supportée | `(Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').DisplayVersion` | Fin de support < 3 mois |
-| Dernière mise à jour | `Get-HotFix \| Sort-Object InstalledOn -Desc \| Select -First 1` | > 35 jours |
+| Dernière mise à jour | `Get-HotFix | Where-Object InstalledOn | Sort-Object InstalledOn -Desc | Select -First 1`\| Sort-Object InstalledOn -Desc \| Select -First 1` | > 35 jours |
 | Redémarrage en attente | clé `…\WindowsUpdate\Auto Update\RebootRequired` | Présente depuis > 7 jours |
 | Signatures antivirus | `(Get-MpComputerStatus).AntivirusSignatureAge` | > 3 jours |
 | Protection temps réel | `(Get-MpComputerStatus).RealTimeProtectionEnabled` | `False` |
@@ -151,7 +155,7 @@ Remarquer la différence avec la tâche malveillante du TP 20 : rangée dans un 
 
 Windows exécute chaque jour (par défaut à **2 h**, ou dès que le poste est inactif) la *maintenance automatique* : défragmentation/TRIM, analyses Defender, nettoyage du magasin de composants, diagnostics. Elle se configure dans *Panneau de configuration → Sécurité et maintenance → Maintenance*, ou par GPO (*Composants Windows → Planificateur de maintenance*). Un poste toujours éteint la nuit la rattrape à la prochaine période d'inactivité.
 
-### Magasin de composants (WinSxS) *(approfondissement)*
+### Magasin de composants (WinSxS) (bonus)
 
 ```cmd
 Dism /Online /Cleanup-Image /AnalyzeComponentStore

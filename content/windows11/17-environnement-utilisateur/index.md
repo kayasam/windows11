@@ -6,6 +6,10 @@ title: "18. Environnement utilisateur et Microsoft 365"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/17-environnement-utilisateur.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Socle : profils, permissions, usages de Microsoft 365/OneDrive/Teams et remise du poste. Sans tenant, lire les principes du cours et vérifier le client Teams ; ODT et GPO OneDrive sont (bonus). Pour Direction, adapter le modèle de partage du cours.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Préparer l'environnement de travail de l'utilisateur : comprendre et dépanner les **profils**, donner accès aux **dossiers partagés**, installer et configurer **Microsoft 365 Apps**, **OneDrive** et **Teams** sur le poste, gérer le **partage de documents**, puis **remettre** un poste à un utilisateur en l'accompagnant et en lui transmettant les bons réflexes de sécurité.
 >
@@ -108,7 +112,7 @@ Get-SmbShareAccess -Name Commun
 | **Entreprise mensuel** (*Monthly Enterprise*) | 2ᵉ mardi du mois | Entreprises qui veulent un rythme prévisible |
 | **Entreprise semestriel** (*Semi-Annual*) | Janvier / juillet | Postes sensibles (macros, compléments métiers) |
 
-### Installer avec l'Office Deployment Tool (ODT)
+### Installer avec l'Office Deployment Tool (ODT) (bonus)
 
 ```xml
 <!-- configuration-fournil.xml — généré sur https://config.office.com -->
@@ -147,7 +151,7 @@ setup.exe /configure configuration-fournil.xml    :: installation silencieuse
 
 OneDrive est **intégré à Windows 11** (relevé sur `PC01` : `C:\Users\<utilisateur>\AppData\Local\Microsoft\OneDrive\OneDrive.exe`, version 26.198 — installé **par utilisateur** à la première connexion).
 
-### Les réglages qui comptent (GPO)
+### Les réglages qui comptent (GPO) (bonus)
 
 Les modèles ADMX sont livrés avec le client : `%LOCALAPPDATA%\Microsoft\OneDrive\<version>\adm\OneDrive.admx` (+ `fr\OneDrive.adml` — dossier **`fr`**, pas `fr-FR`, relevé sur le lab ; à renommer en `fr-FR` dans le magasin central) — à copier dans le **magasin central** (`\\ad.fournil.lab\SYSVOL\ad.fournil.lab\Policies\PolicyDefinitions`).
 

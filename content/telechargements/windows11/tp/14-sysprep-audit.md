@@ -1,11 +1,9 @@
-# TP 14. Poste de référence : mode audit et Sysprep
+# TP 14. Poste de référence : mode audit et Sysprep (bonus)
 
-> Durée estimée : 2h
+> [!abstract] Parcours TSSR — (bonus)
+> Chapitre et TP entièrement (bonus). Les principes du mode audit et de Sysprep sont expliqués avec les notions sur les images ; aucune VM MASTER n’est requise pour le socle.
 
 > Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
-
-> [!abstract] Niveau : approfondissement
-> TP facultatif pour un public TSSR : le déploiement du TP 16 (ISO officielle + fichier de réponse) n'a pas besoin de `MASTER`. À réserver à un groupe avancé, ou à montrer en démonstration.
 
 ---
 
@@ -25,7 +23,7 @@
 
 ---
 
-## Partie A — Installer MASTER (25 min)
+## Partie A — Installer MASTER (bonus)
 
 **A1.** Crée l'ISO `unattend-master.iso` contenant `autounattend-installation-master.xml` renommé en `autounattend.xml`.
 
@@ -35,7 +33,7 @@
 
 ---
 
-## Partie B — Mode audit (30 min)
+## Partie B — Mode audit (bonus)
 
 **B1.** À l'écran « Est-ce le bon pays ou la bonne région ? », passe en mode audit. Que se passe-t-il ? Quel compte est utilisé ?
 
@@ -49,7 +47,7 @@
 
 ---
 
-## Partie C — Préparer la généralisation (15 min)
+## Partie C — Préparer la généralisation (bonus)
 
 **C1.** Depuis l'hôte, copie `autounattend-fournil-26h2.xml` dans `C:\Sysprep\autounattend.xml` de `MASTER` **sans réseau ni partage**.
 
@@ -57,7 +55,7 @@
 
 ---
 
-## Partie D — Sysprep et dépannage (40 min)
+## Partie D — Sysprep et dépannage (bonus)
 
 **D1.** Lance Sysprep en ligne de commande (généralisation, OOBE, arrêt, fichier de réponse). La VM ne s'éteint pas. Où regarder ?
 
@@ -78,7 +76,7 @@ Explique et corrige.
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Le mois prochain, décris la procédure complète pour produire `MASTER` v2026.12.
 

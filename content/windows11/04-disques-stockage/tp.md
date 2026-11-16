@@ -7,7 +7,8 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/04-disques-stockage.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 1h15
+> [!abstract] Parcours TSSR
+> Socle : A, B et D ; le volume G: est conservé pour la suite. Le miroir et sa panne simulée sont (bonus).
 
 > Chapitres associés : [04. Disques, volumes et systèmes de fichiers](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/)
 
@@ -18,7 +19,7 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 - Ajouter des disques à une VM et les préparer (GPT, partition, NTFS)
 - Utiliser `diskmgmt.msc`, `diskpart` et le module PowerShell `Storage`
 - Monter un volume dans un dossier
-- Créer un espace de stockage en miroir et **simuler la panne d'un disque**
+- Créer un espace de stockage en miroir et **simuler la panne d'un disque** (bonus)
 
 ---
 
@@ -36,7 +37,7 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 
 ---
 
-## Partie A — Observer (10 min)
+## Partie A — Observer
 
 **A1.** Dans `PC01`, liste les disques en PowerShell. Quel est le style de partition des nouveaux disques ?
 
@@ -44,13 +45,13 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 
 ---
 
-## Partie B — Préparer un disque de données (20 min)
+## Partie B — Préparer un disque de données
 
-**B1.** Initialise le disque 1 en **GPT**.
+**B1.** Initialise le disque 1 en **GPT** (dans `diskmgmt.msc` ou en PowerShell). Les disques 2 et 3 doivent rester **non initialisés** pour la partie C.
 
-**B2.** Crée une partition de **5 Go** avec la lettre `G:`, formatée en NTFS, nommée `Data`.
+**B2.** Crée une partition de **5 Go** avec la lettre `G:`, formatée en NTFS, nommée `Data` (assistant *Nouveau volume simple* ou PowerShell).
 
-**B3.** Un collègue a tapé `-DriveLetter E` et obtenu *« The requested access path is already in use »*. Explique.
+**B3.** Un collègue a tapé `New-Partition -DiskNumber 1 -Size 1GB -DriveLetter D` et obtenu *« The requested access path is already in use »*. Explique. La partition a-t-elle été créée ?
 
 **B4.** Étends `G:` à tout l'espace disponible du disque, puis vérifie sa taille.
 
@@ -58,7 +59,7 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 
 ---
 
-## Partie C — Espace de stockage en miroir (25 min)
+## Partie C — Espace de stockage en miroir (bonus)
 
 **C1.** Liste les disques qui peuvent rejoindre un pool. Le disque 1 y figure-t-il ? Que faire si oui ?
 
@@ -74,7 +75,7 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 
 ---
 
-## Partie D — Systèmes de fichiers (10 min)
+## Partie D — Systèmes de fichiers
 
 **D1.** Un formateur doit copier une ISO de 8 Go sur une clé USB lisible sur Mac et Linux. Quel système de fichiers ?
 
@@ -82,9 +83,9 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
-**E1.** Écris un script DiskPart (`diskpart /s`) qui nettoie le disque 1, le convertit en GPT et crée une partition NTFS unique `Archives` en `H:`. Quelle commande du script est irréversible ?
+**E1.** Sur l'hôte, ajoute à `PC01` un quatrième disque `Data4.vhdx` de 5 Go. Écris un script DiskPart (`diskpart /s`) qui nettoie **ce disque**, le convertit en GPT et crée une partition NTFS unique `Archives` en `H:`. Quelle commande du script est irréversible ? (Ne touche pas au disque 1 : `G:` sert encore aux TP 06 et 09.)
 
 ---
 

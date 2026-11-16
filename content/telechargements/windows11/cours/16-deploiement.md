@@ -1,7 +1,11 @@
 # 16. Déployer Windows 11 : ISO, réseau, migration, moderne
 
+> [!abstract] Parcours TSSR
+> Socle : déployer PC02 avec l’ISO officielle et les fichiers fournis, migrer un profil de test avec USMT et choisir une méthode selon le contexte. Un petit jeu de documents est préparé avant la capture. L’image maître et l’ISO personnalisée sont (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
-> Connaître les méthodes de déploiement d'un poste en 2026 et leur statut, réaliser un déploiement **sans clic** à partir de l'**ISO officielle** et d'un `autounattend.xml` complet (jonction au domaine et applications comprises), connaître la variante par image maître (approfondissement), situer PXE/WDS et MDT (présentation : retirés ou bloqués en 2026), **migrer les profils** avec USMT, et comprendre le déploiement **moderne** (Windows Autopilot + Intune).
+> Connaître les méthodes de déploiement d'un poste en 2026 et leur statut, réaliser un déploiement **sans clic** à partir de l'**ISO officielle** et d'un `autounattend.xml` complet (jonction au domaine et applications comprises), connaître la variante par image maître (bonus), situer PXE/WDS et MDT (présentation : retirés ou bloqués en 2026), **migrer les profils** avec USMT, et comprendre le déploiement **moderne** (Windows Autopilot + Intune).
 >
 > **Outils :** `oscdimg.exe`, USMT (`scanstate`/`loadstate`), WinPE, PowerShell
 > **Fichiers à connaître :** `install.wim` (remplacé), `autounattend.xml`, `MigApp.xml`/`MigDocs.xml`/`MigUser.xml`
@@ -17,7 +21,7 @@
 |---------|----------|----------------|-------------|
 | **Manuelle** | ISO/clé USB officielle, on clique | Aucune | ✅ Dépannage, poste isolé |
 | **Automatisée** | ISO/clé officielle + `autounattend.xml` | Aucune | ✅ **Méthode du lab** (section 2) |
-| **Par image** | `MASTER.wim` appliquée (ISO personnalisée, WinPE + DISM) | Aucune, ou un partage | ✅ Grands parcs — approfondissement (section 3, chapitres 14-15) |
+| **Par image** | `MASTER.wim` appliquée (ISO personnalisée, WinPE + DISM) | Aucune, ou un partage | ✅ Grands parcs — bonus (section 3, chapitres 14-15) |
 | **Réseau — WDS** (PXE) | Le poste démarre sur la carte réseau, WDS fournit WinPE et l'image | Serveur WDS + DHCP | ⚠️ **Mains libres bloqué depuis avril 2026**, rôle **déprécié** |
 | **Réseau — MDT** (Lite Touch) | Séquences de tâches sur un partage, souvent via WDS | Serveur de déploiement | ❌ **Retiré le 6 janvier 2026** |
 | **Réseau — ConfigMgr OSD** | Séquences de tâches, PXE, multidiffusion | Microsoft Configuration Manager | ✅ Supporté (grandes entreprises sur site) |
@@ -140,9 +144,9 @@ Vérifications : `Windows 11 Professionnel` build 26300 · `CN=PC02,OU=Ordinateu
 
 ---
 
-## 3. Méthode 2 — l'ISO personnalisée avec une image maître *(approfondissement)*
+## 3. Méthode 2 — l'ISO personnalisée avec une image maître (bonus)
 
-> [!abstract] Niveau : approfondissement
+> [!abstract] Niveau : bonus
 > Cette méthode remplace l'image de l'ISO par `MASTER.wim` (chapitres 14 et 15). Elle sert aux grands parcs homogènes ; pour un public TSSR, la section 2 suffit.
 
 ![Assembler l’ISO de déploiement — MASTER.wim et autounattend.xml remplacent ou complètent le contenu de l’ISO Windows 11, puis oscdimg crée l’ISO amorçable pour PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-iso-personnalisee.svg)
@@ -400,7 +404,7 @@ En pratique, beaucoup d'organisations sont **hybrides** : jonction AD + Entra (*
 > - Seul geste : une touche au « Press any key to boot from CD or DVD »
 > - Pièges : OU de `MachineObjectOU` existante · `<Domain>PC02</Domain>` dans `AutoLogon` · mémoire fixe, TPM, 2 vCPU
 >
-> **Image maître *(approfondissement)***
+> **Image maître (bonus)**
 > - `sources\install.wim` remplacé par `MASTER.wim` → `oscdimg` (BIOS + UEFI, `efisys_noprompt.bin` pour supprimer la touche)
 > - Image sans `Windows\Panther\unattend-original.xml` (sinon `0x80070050`)
 >

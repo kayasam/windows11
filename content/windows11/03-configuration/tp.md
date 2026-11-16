@@ -7,7 +7,8 @@ title: "TP 03. Configuration et personnalisation"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/03-configuration.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 1h15
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 
 > Chapitres associés : [03. Configuration et personnalisation](https://cours.kaya.ovh/windows11/windows11/03-configuration/)
 
@@ -30,7 +31,7 @@ title: "TP 03. Configuration et personnalisation"
 
 ---
 
-## Partie A — Interface (15 min)
+## Partie A — Interface
 
 **A1.** Ouvre le menu Démarrer. Nomme ses trois zones. Masque les recommandations.
 
@@ -42,7 +43,7 @@ title: "TP 03. Configuration et personnalisation"
 
 ---
 
-## Partie B — Paramètres ou Panneau de configuration ? (10 min)
+## Partie B — Paramètres ou Panneau de configuration ?
 
 **B1.** Pour chaque réglage, indique l'outil et la commande la plus rapide pour l'ouvrir :
 1. Changer l'adresse IP de la carte réseau
@@ -53,7 +54,7 @@ title: "TP 03. Configuration et personnalisation"
 
 ---
 
-## Partie C — Comptes locaux (20 min)
+## Partie C — Comptes locaux
 
 **C1.** Crée, en PowerShell, l'utilisateur standard `employe1` (mot de passe `Fournil2026!`, nom complet « Employé 1 ») et ajoute-le au groupe **Utilisateurs**.
 
@@ -61,17 +62,17 @@ title: "TP 03. Configuration et personnalisation"
 
 **C3.** Liste les membres du groupe **Utilisateurs**. Pourquoi y trouve-t-on aussi `admin` et des entrées `AUTORITE NT\…` ?
 
-**C4.** Crée le compte `stagiaire` dans `lusrmgr.msc`, avec « L'utilisateur doit changer le mot de passe à la prochaine ouverture de session ». Désactive-le ensuite en PowerShell.
+**C4.** Crée le compte `employe2` dans `lusrmgr.msc`, avec « L'utilisateur doit changer le mot de passe à la prochaine ouverture de session ». Vérifie à quel groupe il appartient, puis désactive-le en PowerShell.
 
 **C5.** Quels sont les comptes locaux présents par défaut sur le poste ? Lesquels sont désactivés, et pourquoi ?
 
 ---
 
-## Partie D — Réseau (20 min)
+## Partie D — Réseau
 
 **D1.** Relève la configuration IP actuelle de `PC01`. D'où vient l'adresse ?
 
-**D2.** Configure en PowerShell : IP `192.168.3.10/24`, passerelle `192.168.3.254`, DNS `1.1.1.1` et `8.8.8.8`.
+**D2.** Configure en PowerShell **ou** dans `ncpa.cpl` : IP `192.168.3.10/24`, passerelle `192.168.3.254`, DNS `8.8.8.8` et `1.1.1.1`.
 
 **D3.** Teste la passerelle, Internet par IP, puis la résolution DNS. Dans quel ordre, et pourquoi cet ordre ?
 
@@ -79,7 +80,7 @@ title: "TP 03. Configuration et personnalisation"
 
 ---
 
-## Partie E — Variables d'environnement (10 min)
+## Partie E — Variables d'environnement
 
 **E1.** Affiche `COMPUTERNAME`, `USERPROFILE` et le `PATH` en PowerShell, puis en CMD.
 
@@ -89,7 +90,7 @@ title: "TP 03. Configuration et personnalisation"
 
 ---
 
-## Partie F — Bonus
+## Partie F — Exercices complémentaires (bonus)
 
 **F1.** Réécris la partie D en un script `Set-IPFixe.ps1` paramétrable (`-IP`, `-Passerelle`, `-DNS`).
 

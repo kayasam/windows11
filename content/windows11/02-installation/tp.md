@@ -5,9 +5,10 @@ title: "TP 02. Installation, mise à niveau et comptes"
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/02-installation"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/02-installation/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/02-installation.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2">Afficher les corrections</a></nav>
 
-
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 
 > Chapitres associés : [02. Installation, mise à niveau et comptes](https://cours.kaya.ovh/windows11/windows11/02-installation/)
 
@@ -29,9 +30,9 @@ title: "TP 02. Installation, mise à niveau et comptes"
 
 ---
 
-## Partie A — Installation (40 min)
+## Partie A — Installation
 
-**A1.** Démarre `PC01` sur l'ISO. Choisis Français, puis **Windows 11 Professionnel**, installation **personnalisée** sur le disque vierge. Pourquoi ne crée-t-on aucune partition à la main ?
+**A1.** Démarre `PC01` sur l'ISO. Choisis Français, coche *J'accepte que tout soit supprimé*, sélectionne **Windows 11 Professionnel** (attention : Famille est présélectionnée) et installe sur l'espace non alloué. Pourquoi ne crée-t-on aucune partition à la main ?
 
 **A2.** Pendant l'installation, explique ce que fait chacun des écrans de l'OOBE qui vont suivre.
 
@@ -41,11 +42,11 @@ title: "TP 02. Installation, mise à niveau et comptes"
 
 **A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 
-**A6.** Le poste s'appelle `DESKTOP-XXXXXXX`. Renomme-le `PC01`.
+**A6.** Le poste s'appelle `DESKTOP-XXXXXXX`. Renomme-le `PC01`, en graphique ou en PowerShell.
 
 ---
 
-## Partie B — Analyser l'installation (20 min)
+## Partie B — Analyser l'installation
 
 **B1.** Vérifie l'édition, la version et le build.
 
@@ -59,7 +60,7 @@ title: "TP 02. Installation, mise à niveau et comptes"
 
 ---
 
-## Partie C — Compatibilité et mise à niveau (20 min)
+## Partie C — Compatibilité et mise à niveau
 
 **C1.** Vérifie en PowerShell les trois prérequis clés de Windows 11 : TPM 2.0, Secure Boot, processeur.
 
@@ -71,7 +72,7 @@ title: "TP 02. Installation, mise à niveau et comptes"
 
 ---
 
-## Partie D — Comptes (10 min)
+## Partie D — Comptes
 
 **D1.** Complète le tableau : où est stocké le compte, comment se connecte-t-on, à quoi sert-il ?
 
@@ -86,7 +87,7 @@ title: "TP 02. Installation, mise à niveau et comptes"
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Qu'affiche la valeur `ProductName` du registre sur ton `PC01` ? Pourquoi ne faut-il pas s'y fier ?
 
@@ -94,4 +95,4 @@ title: "TP 02. Installation, mise à niveau et comptes"
 
 ---
 
-
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/02-installation/tp-corrigev2)

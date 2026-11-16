@@ -7,7 +7,8 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/16-deploiement.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 2h30
+> [!abstract] Parcours TSSR
+> Socle : déployer PC02 avec l’ISO officielle et les fichiers fournis, migrer un profil de test avec USMT et choisir une méthode selon le contexte. Un petit jeu de documents est préparé avant la capture. L’image maître et l’ISO personnalisée sont (bonus).
 
 > Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
 
@@ -19,7 +20,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 - Vérifier le résultat et savoir où chercher en cas d'échec
 - Migrer les données de `stagiaire` avec USMT
 - Choisir une méthode de déploiement selon le contexte (WDS, MDT, ConfigMgr, Autopilot)
-- *(approfondissement)* Construire une ISO personnalisée à partir de `MASTER.wim`
+- (bonus) Construire une ISO personnalisée à partir de `MASTER.wim`
 
 ---
 
@@ -28,12 +29,12 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 - ISO officielle Windows 11 26H2
 - `autounattend-iso-officielle.xml` et `postinstall.ps1` (dossier `Ressources/Fichier-reponse/`)
 - Domaine `ad.fournil.lab` avec DHCP actif et l'OU `OU=Ordinateurs,OU=Fournil` (TP 10)
-- ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$`
+- ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$` créé par l’élève avec la préparation ci-dessous ; compte de lab autorisé à lire les outils et à écrire le magasin et les journaux
 - Partie F seulement : `MASTER.wim` (TP 15) et **40 Go libres** sur l'hôte
 
 ---
 
-## Partie A — Lire le fichier de réponse (20 min)
+## Partie A — Lire le fichier de réponse
 
 **A1.** Ouvre `autounattend-iso-officielle.xml`. Pour chacune des trois passes (`windowsPE`, `specialize`, `oobeSystem`), indique ce qu'elle règle.
 
@@ -45,7 +46,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 ---
 
-## Partie B — Déployer PC02 (40 min)
+## Partie B — Déployer PC02
 
 **B1.** Construis la mini-ISO `reponses-pc02.iso` qui contient le fichier de réponse et `postinstall.ps1`. Sous quel nom le fichier de réponse doit-il y figurer ?
 
@@ -57,9 +58,27 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 ---
 
-## Partie C — Domaine et migration (35 min)
+## Partie C — Domaine et migration
 
 **C1.** Depuis `SRV01`, vérifie que `PC02` est bien dans `OU=Ordinateurs,OU=Fournil` et qu'il est enregistré dans le DNS.
+
+Préparation de la migration, à réaliser par chaque élève sous le compte d’administration du domaine. Sur SRV01 :
+
+```powershell
+New-Item C:\USMT\USMT,C:\USMT\Store -ItemType Directory -Force
+icacls C:\USMT /inheritance:r
+icacls C:\USMT /grant 'SYSTEM:(OI)(CI)F' 'FOURNIL\Admins du domaine:(OI)(CI)F'
+New-SmbShare -Name 'USMT$' -Path C:\USMT -FullAccess 'FOURNIL\Admins du domaine'
+```
+
+Depuis PC01, dans la session d’administration du domaine :
+
+```powershell
+Copy-Item 'C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\User State Migration Tool\amd64\*' '\\SRV01\USMT$\USMT' -Recurse -Force
+Test-Path '\\SRV01\USMT$\USMT\scanstate.exe'
+```
+
+Préparer quelques documents identifiables dans le profil de `stagiaire`, fermer sa session et effectuer capture/restauration depuis une session administrateur. Au premier essai, vérifier la liste des fichiers avant de capturer un gros profil. Le magasin doit rester petit pour ce TP ; le volume de données n’est pas un objectif d’évaluation.
 
 **C2.** Sur `PC01`, capture le profil de `stagiaire` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
 
@@ -69,7 +88,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 ---
 
-## Partie D — Choisir une méthode (20 min)
+## Partie D — Choisir une méthode
 
 **D1.** Pour chaque situation, propose une méthode de déploiement et justifie :
 1. Le Fournil (35 postes, un DC, pas de Microsoft 365) renouvelle 10 postes par an.
@@ -81,7 +100,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 ---
 
-## Partie E — Bonus
+## Partie E — Exercices complémentaires (bonus)
 
 **E1.** Récupère le *hash matériel* de `PC02` pour Autopilot. Que contient le fichier ? À qui l'envoie-t-on ?
 
@@ -89,7 +108,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 ---
 
-## Partie F — L'ISO personnalisée avec une image maître *(approfondissement)*
+## Partie F — L'ISO personnalisée avec une image maître (bonus)
 
 **F1.** Copie le contenu de l'ISO officielle dans `D:\ISO-Deploiement`. Pourquoi `robocopy` plutôt que `Copy-Item` ?
 

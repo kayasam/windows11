@@ -1,5 +1,9 @@
 # 11. Stratégies de groupe et gestion centralisée
 
+> [!abstract] Parcours TSSR
+> Les RSAT sont préchargés et vérifiés en A1. Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C. Les GPO restent créées et testées par le stagiaire.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Centraliser la configuration des postes du domaine avec les **stratégies de groupe** : comprendre l'ordre d'application, distinguer paramètres ordinateur et utilisateur, cibler une GPO (liaison, filtrage, préférences), diagnostiquer avec `gpresult`. Mettre en place les GPO de sécurité modernes : **Windows LAPS**, sauvegarde des clés **BitLocker** dans AD, administrateurs locaux, anneau Windows Update. Situer **Intune / Entra ID** face aux GPO.
 >
@@ -87,7 +91,7 @@ Set-GPPermission -Name "GPO-Boulangerie-Utilisateurs" -TargetName "G-Boulangerie
 > [!WARNING] Garder la **lecture** pour Utilisateurs authentifiés
 > Depuis le correctif MS16-072 (2016), les GPO utilisateur sont lues avec le **compte ordinateur**. Retirer complètement *Utilisateurs authentifiés* (au lieu de ne lui laisser que *Lire*) empêche la GPO de s'appliquer à quiconque — erreur encore très répandue dans les tutoriels.
 
-### Filtre WMI *(approfondissement)*
+### Filtre WMI (bonus)
 
 ```
 SELECT * FROM Win32_OperatingSystem WHERE BuildNumber >= 22000      ← Windows 11 uniquement

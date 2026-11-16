@@ -1,5 +1,9 @@
 # 12. Administration et assistance à distance
 
+> [!abstract] Parcours TSSR
+> À réaliser en J4, APRÈS le TP 16 : PC02 existe alors et est joint au domaine. Activer WinRM depuis la console Hyper-V de PC02 en B2 AVANT A2, puis reprendre A et B. OpenSSH est (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Configurer et utiliser les différents moyens d'accès distant à un poste Windows 11 : Bureau à distance (RDP), PowerShell Remoting/WinRS, OpenSSH, Assistance rapide (et Remote Help), et les outils RSAT — maintenant que `PC01`, `PC02` et `SRV01` sont joints au domaine `ad.fournil.lab` (chapitres 10 et 16).
 >
@@ -126,7 +130,7 @@ Remove-PSSession $session
 > [!TIP] Pourquoi une session persistante (`New-PSSession`) ?
 > `Invoke-Command` sans `-Session` ouvre et ferme une connexion à chaque appel. Si plusieurs commandes doivent partager un état (variables, modules importés), `New-PSSession` garde la connexion ouverte et le contexte en mémoire entre les appels.
 
-### WinRS — shell CMD distant
+### WinRS — shell CMD distant (bonus)
 
 ```cmd
 :: Exécuter une commande CMD unique sur une machine distante
@@ -138,7 +142,7 @@ winrs -r:http://SRV01:5985 cmd
 
 ---
 
-## OpenSSH — l'alternative ouverte et multiplateforme
+## OpenSSH — l'alternative ouverte et multiplateforme (bonus)
 
 **OpenSSH** est aujourd'hui intégré à Windows en tant que fonctionnalité optionnelle, et fonctionne **en parallèle** de WinRM plutôt qu'en remplacement — contrairement à WinRM (protocole Microsoft, principalement Windows-à-Windows), SSH est un standard ouvert, universel entre Windows, Linux et macOS.
 
@@ -197,7 +201,7 @@ Set-Service -Name sshd -StartupType Automatic
 > New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
 > ```
 
-### PowerShell Remoting par-dessus SSH *(approfondissement)*
+### PowerShell Remoting par-dessus SSH (bonus)
 
 Depuis **PowerShell 7**, `Enter-PSSession` et `New-PSSession` peuvent utiliser le **transport SSH** au lieu de WinRM — utile pour administrer une machine Linux avec PowerShell 7, ou éviter WinRM dans un environnement où seul le port 22 est ouvert.
 
@@ -265,7 +269,7 @@ Depuis `PC01` (dans `pwsh`, PowerShell 7) :
 Enter-PSSession -HostName SRV01 -UserName Administrateur
 ```
 
-### Authentification par clé publique *(approfondissement)*
+### Authentification par clé publique (bonus)
 
 ```powershell
 # Générer une paire de clés sur le poste client
@@ -291,7 +295,7 @@ ssh-keygen -t ed25519
 > [!WARNING] Compte Microsoft côté technicien
 > La personne qui **donne** l'assistance doit se connecter avec un **compte Microsoft** (personnel ou professionnel). Celle qui **reçoit** l'aide saisit seulement le code. Ce n'est pas un outil d'entreprise : aucune journalisation centrale, aucun contrôle de qui peut aider qui — et un vecteur d'arnaque connu (faux supports techniques qui demandent un code Quick Assist).
 
-### Remote Help : la version entreprise *(approfondissement)*
+### Remote Help : la version entreprise (bonus)
 
 **Remote Help** (module payant d'Intune, inclus dans certaines offres) reprend le principe d'Assistance rapide avec : authentification par le tenant de l'entreprise, rôles (qui peut aider qui), **journal** des sessions, affichage du nom et de la conformité du poste avant de se connecter, élévation UAC possible côté technicien.
 

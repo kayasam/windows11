@@ -1,13 +1,14 @@
-# 14. Poste de référence : mode audit et Sysprep
+# 14. Poste de référence : mode audit et Sysprep (bonus)
+
+> [!abstract] Parcours TSSR — (bonus)
+> Chapitre et TP entièrement (bonus). Les principes du mode audit et de Sysprep sont expliqués avec les notions sur les images ; aucune VM MASTER n’est requise pour le socle.
+> Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
 > Créer la VM de référence `MASTER`, la personnaliser en **mode audit**, puis la généraliser avec Sysprep en appliquant le fichier de réponse construit au chapitre 13. `MASTER` est pensée pour être **réutilisée** dans le temps (mises à jour périodiques de l'image) grâce à un simple point de contrôle Hyper-V. Savoir **diagnostiquer un échec de Sysprep** — trois pièges modernes ont été rencontrés en construisant le lab.
 >
 > **Outils :** `sysprep.exe`, `Copy-VMFile`, `Checkpoint-VM`
 > **Fichiers à connaître :** `C:\Windows\System32\Sysprep\Panther\setupact.log` / `setuperr.log`, `autounattend-installation-master.xml`, `autounattend-fournil-26h2.xml`
-
-> [!abstract] Niveau : approfondissement
-> L'image maître est la méthode des **grands parcs**. Le déploiement du chapitre 16 (ISO officielle + `autounattend.xml`) **n'en dépend pas**. Pour un public TSSR, ce chapitre peut être présenté en démonstration (principe de Sysprep, pourquoi généraliser, mode audit) sans faire réaliser toute la chaîne.
 
 > [!INFO] Fil rouge — Fournil
 > `MASTER` : Windows 11 Pro 26H2, 7-Zip + Notepad++, applications grand public retirées, fichier `C:\Fournil\version-image.txt`. Généralisée avec succès le 08/11/2026 après avoir résolu les trois pièges ci-dessous.
@@ -192,7 +193,7 @@ Get-VMCheckpoint -VMName MASTER | Remove-VMCheckpoint
 Checkpoint-VM -Name MASTER -SnapshotName "Avant-Sysprep"
 ```
 
-### 4. Le piège qui n'apparaît qu'au déploiement : `unattend-original.xml` *(approfondissement)*
+### 4. Le piège qui n'apparaît qu'au déploiement : `unattend-original.xml` (bonus)
 
 Sysprep réussit, la capture aussi… et c'est le **déploiement** qui échoue (« *Échec de l'installation de Windows 11* », chapitre 16). Cause trouvée dans `$WINDOWS.~BT\Sources\Panther\setupact.log` du poste cible :
 
@@ -215,7 +216,7 @@ del C:\Mount\Windows\Panther\unattend-original.xml C:\Mount\Windows\Panther\unat
 Dism /Unmount-Image /MountDir:C:\Mount /Commit
 ```
 
-### 5. Encore au déploiement : un `Windows.old` vide dans l'image — `0x800700B7` *(approfondissement)*
+### 5. Encore au déploiement : un `Windows.old` vide dans l'image — `0x800700B7` (bonus)
 
 Une fois le n° 4 corrigé, le déploiement suivant est allé plus loin… puis a échoué en phase *Finalize* :
 
@@ -252,7 +253,7 @@ Ou, en amont, sur `MASTER` avant Sysprep : `rd C:\Windows.old` et `rd C:\Recover
 
 ---
 
-## Rafraîchir l'image plus tard *(approfondissement)*
+## Rafraîchir l'image plus tard (bonus)
 
 Le mois suivant, pour produire une nouvelle version de l'image avec les derniers correctifs :
 

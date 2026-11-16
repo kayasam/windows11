@@ -7,7 +7,8 @@ title: "TP 18. Environnement utilisateur et Microsoft 365"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/17-environnement-utilisateur.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 1h30
+> [!abstract] Parcours TSSR
+> Socle : profils, permissions, usages de Microsoft 365/OneDrive/Teams et remise du poste. Sans tenant, lire les principes du cours et vérifier le client Teams ; ODT et GPO OneDrive sont (bonus). Pour Direction, adapter le modèle de partage du cours.
 
 > Chapitres associés : [18. Environnement utilisateur et Microsoft 365](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/)
 
@@ -29,7 +30,7 @@ title: "TP 18. Environnement utilisateur et Microsoft 365"
 
 ---
 
-## Partie A — Profils (20 min)
+## Partie A — Profils
 
 **A1.** Sur `PC01`, liste les profils (hors profils système) avec leur SID et leur date de dernière utilisation. Comment distingue-t-on un compte local d'un compte du domaine ?
 
@@ -41,31 +42,33 @@ title: "TP 18. Environnement utilisateur et Microsoft 365"
 
 ---
 
-## Partie B — Dossiers partagés (20 min)
+## Partie B — Dossiers partagés
 
 **B1.** Sur `SRV01`, crée `\\SRV01\Direction` : seuls les membres d'un nouveau groupe `G-Direction` peuvent y écrire, les autres utilisateurs du domaine ne doivent même pas le voir.
 
 **B2.** Vérifie les permissions de partage et les permissions NTFS. Laquelle s'applique quand elles diffèrent ?
 
-**B3.** Depuis `PC01`, monte `\\SRV01\Commun` en `Q:` manuellement, de façon persistante, en PowerShell. Pourquoi ce n'est pas la bonne méthode à l'échelle du Fournil ?
+**B3.** (bonus) Depuis `PC01`, monte `\\SRV01\Commun` en `Q:` manuellement, de façon persistante, en PowerShell. Pourquoi ce n'est pas la bonne méthode à l'échelle du Fournil ?
 
 ---
 
-## Partie C — Microsoft 365 Apps, OneDrive, Teams (30 min)
+## Partie C — Usages Microsoft 365, OneDrive, Teams
 
-**C1.** Écris le fichier `configuration-fournil.xml` de l'Office Deployment Tool : Microsoft 365 Apps pour les entreprises, 64 bits, français, canal Entreprise mensuel, sans Skype ni OneDrive Groove, installation silencieuse, suppression des anciens Office MSI.
+**C1.** (bonus) Écris le fichier `configuration-fournil.xml` de l'Office Deployment Tool : Microsoft 365 Apps pour les entreprises, 64 bits, français, canal Entreprise mensuel, sans Skype ni OneDrive Groove, installation silencieuse, suppression des anciens Office MSI.
 
 **C2.** Quelle commande installe Office avec ce fichier ? Pourquoi Teams n'apparaîtra-t-il pas ?
 
-**C3.** Où trouver les modèles ADMX de OneDrive sur `PC01` ? Copie-les dans le magasin central du domaine.
+**C3.** (bonus) Où trouver les modèles ADMX de OneDrive sur `PC01` ? Copie-les dans le magasin central du domaine.
 
-**C4.** Crée une GPO `GPO-OneDrive` (ordinateurs) : connexion silencieuse, Fichiers à la demande, et **déplacement silencieux des dossiers connus** vers OneDrive. Quelle information manque pour la dernière stratégie dans le lab ?
+**C4.** (bonus) Crée une GPO `GPO-OneDrive` (ordinateurs) : connexion silencieuse, Fichiers à la demande, et **déplacement silencieux des dossiers connus** vers OneDrive. Quelle information manque pour la dernière stratégie dans le lab ?
+
+Dans le socle, explique oralement la différence entre synchronisation OneDrive, partage et sauvegarde, puis identifie l’outil adapté à une collaboration Teams. Aucun tenant ni installation Office n’est requis.
 
 **C5.** Le nouveau Teams est-il présent sur `PC02` sans rien faire ? Comment le vérifier ?
 
 ---
 
-## Partie D — Remise du poste (20 min)
+## Partie D — Remise du poste
 
 **D1.** Exécute la check-list technique de remise sur `PC02` (domaine, mises à jour, BitLocker, Defender, LAPS, lecteurs, numéro de série).
 

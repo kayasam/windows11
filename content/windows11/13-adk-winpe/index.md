@@ -6,6 +6,10 @@ title: "13. ADK, Windows PE et fichier de réponse"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/13-adk-winpe.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> ADK, WinPE et catalogue WSIM sont préchargés ou mis en cache par le formateur. Socle : vérifier les outils, créer un WinPE standard, puis compléter et valider un fichier de réponse fourni. PowerShell dans WinPE et la préparation de MASTER sont (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Préparer les outils du déploiement : installer **Windows ADK et son module Windows PE** (en versions assorties), créer un support de démarrage **WinPE** personnalisé, et construire avec Windows SIM le fichier de réponse unique (`autounattend.xml`) qui servira au Sysprep de `MASTER` (chapitre 14) et à l'installation automatisée des postes (chapitre 16).
 >
@@ -19,7 +23,7 @@ title: "13. ADK, Windows PE et fichier de réponse"
 
 ## Deux stratégies de déploiement
 
-| | **Installation automatisée** (socle) | **Image maître** (approfondissement) |
+| | **Installation automatisée** (socle) | **Image maître** (bonus) |
 |---|---|---|
 | Principe | ISO **officielle** + `autounattend.xml` : Windows s'installe et se configure seul | Un poste de référence est préparé, généralisé (Sysprep), capturé (WIM), puis déployé |
 | Préparation | un fichier XML (ce chapitre) | VM `MASTER`, mode audit, Sysprep, capture DISM (chapitres 14 et 15) |
@@ -29,7 +33,7 @@ title: "13. ADK, Windows PE et fichier de réponse"
 
 Le fichier de réponse construit dans ce chapitre sert aux **deux** stratégies. Le chapitre 16 déploie `PC02` avec la première ; les chapitres 14 et 15 présentent la seconde.
 
-## Stratégie d'image master *(approfondissement)*
+## Stratégie d'image master (bonus)
 
 Plutôt que réinstaller Windows 11 et reconfigurer chaque poste individuellement, on peut préparer une **image master** (ou "image de référence") : un poste configuré une fois (applications, paramètres, pilotes courants), puis **généralisé** et capturé sous forme de fichier `.wim` (chapitre 15), redéployable ensuite sur d'autres machines (chapitre 16).
 
@@ -130,7 +134,7 @@ copype amd64 C:\WinPE_amd64
 Dism /Mount-Image /ImageFile:C:\WinPE_amd64\media\sources\boot.wim /Index:1 /MountDir:C:\WinPE_amd64\mount
 ```
 
-### Personnaliser WinPE avec DISM : ajouter PowerShell *(approfondissement)*
+### Personnaliser WinPE avec DISM : ajouter PowerShell (bonus)
 
 WinPE de base n'a ni PowerShell ni WMI. On ajoute des **composants optionnels** (fichiers `.cab` du module WinPE) — **toujours avec leur pack de langue** :
 
@@ -311,7 +315,7 @@ Puis, toujours dans `Microsoft-Windows-Shell-Setup`, sous `UserAccounts > LocalA
 
 Le fichier complet, testé sur le lab, est fourni : `Ressources/Fichier-reponse/autounattend-fournil-26h2.xml`.
 
-### Un second petit fichier : empêcher le chiffrement automatique de MASTER *(approfondissement)*
+### Un second petit fichier : empêcher le chiffrement automatique de MASTER (bonus)
 
 > [!DANGER] Le piège de 2026 : Sysprep refuse un disque chiffré
 > Depuis la 24H2, Windows active le **chiffrement automatique de l'appareil** (BitLocker) dès l'installation, y compris pendant le mode audit. Vécu sur le lab au premier Sysprep de `MASTER` :

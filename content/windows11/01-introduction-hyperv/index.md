@@ -6,6 +6,10 @@ title: "01. Introduction à Windows 11 et lab Hyper-V"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/01-introduction-hyperv.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Situer Windows 11 (architecture, versions, cycle de vie, offre cloud), puis activer Hyper-V sur le poste hôte et construire le réseau du lab.
 >
@@ -43,6 +47,9 @@ Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
 (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion') |
     Select-Object DisplayVersion, CurrentBuild, UBR, EditionID
 ```
+
+> [!NOTE] `OSDisplayVersion` parfois vide
+> Sur certains postes 26H2 (constaté sur l'hôte du formateur), `Get-ComputerInfo` laisse la colonne `OSDisplayVersion` **vide**. La valeur `DisplayVersion` du registre (deuxième commande) est toujours renseignée : c'est elle qu'il faut retenir.
 
 > [!WARNING] « Windows 10 Pro » dans le registre d'un Windows 11 ?
 > La valeur `ProductName` de `HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion` affiche encore **`Windows 10 Pro`** sur un Windows 11 26H2 (constaté sur le lab). Microsoft n'a jamais modifié cette valeur pour compatibilité. Pour identifier un Windows 11 dans un script, tester le **build** : `CurrentBuild -ge 22000`.
@@ -133,7 +140,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
 
 ### Via l'interface graphique
 
-1. **Paramètres** → **Systemes** → **Fonctionnalités facultatives** → **Plus de fonctionnalités Windows**
+1. **Paramètres** → **Système** → **Fonctionnalités facultatives** → **Plus de fonctionnalités Windows**
 2. Cocher **Hyper-V** (inclut les outils de gestion et la plateforme)
 3. Redémarrer
 
@@ -203,9 +210,32 @@ C'est la configuration recommandée pour un lab. L'idée :
 
 Les VM utilisent la passerelle `.254` sur l'hôte, et Windows traduit les adresses (NAT) pour leur donner accès à Internet.
 
+### Étape par étape en graphique
+
+1. **Gestionnaire Hyper-V** → **Action** → **Gestionnaire de commutateur virtuel…**
+2. **Nouveau commutateur réseau virtuel** → choisir **Interne** → **Créer le commutateur virtuel**
+
+![w11-01-switch-nouveau-interne](https://cours.kaya.ovh/windows11/assets/captures/w11-01-switch-nouveau-interne.png)
+
+3. Nom : `vSwitch-Rennes`, type de connexion **Réseau interne** → **OK**
+
+![w11-01-switch-vswitch-rennes](https://cours.kaya.ovh/windows11/assets/captures/w11-01-switch-vswitch-rennes.png)
+
+4. Sur l'hôte, `ncpa.cpl` → clic droit sur **vEthernet (vSwitch-Rennes)** → **Propriétés** → **Protocole Internet version 4** → adresse `192.168.3.254`, masque `255.255.255.0`, **sans passerelle ni DNS** (c'est l'hôte qui sert de passerelle).
+5. Le **NAT n'a pas d'interface graphique** : l'étape 4 ci-dessous (`New-NetNat`) se fait obligatoirement en PowerShell.
+
+> [!NOTE] Sur le poste du formateur
+> Les captures montrent d'autres commutateurs (`ADTEST-…`, `WSL…`) issus d'autres labs : seuls `vSwitch-Rennes` et `Default Switch` concernent cette formation.
+
 ### Étape par étape en PowerShell
 
+> [!WARNING] Vérifier avant de créer
+> `New-VMSwitch` **ne refuse pas** un nom déjà utilisé : il crée un **second** `vSwitch-Rennes` (avec une interface `vEthernet (vSwitch-Rennes) 2` en 169.254.x.x), et les VM risquent d'être branchées sur le mauvais. Toujours commencer par `Get-VMSwitch`. Pour supprimer un doublon : `Get-VMSwitch vSwitch-Rennes | Select-Object Name, Id`, puis `Get-VMSwitch | Where-Object Id -eq '<Id du doublon>' | Remove-VMSwitch -Force`.
+
 ```powershell
+# 0) Le switch existe-t-il déjà ?
+Get-VMSwitch
+
 # 1) Créer le switch interne
 New-VMSwitch -Name "vSwitch-Rennes" -SwitchType Internal
 
@@ -222,6 +252,10 @@ New-NetIPAddress -InterfaceAlias "vEthernet (vSwitch-Rennes)" `
 New-NetNat -Name "NAT-Rennes" `
     -InternalIPInterfaceAddressPrefix "192.168.3.0/24"
 ```
+
+> [!WARNING] Messages d'erreur si le lab existe déjà
+> - `New-NetIPAddress` : *« Instance MSFT_NetIPAddress already exists »* → l'IP `.254` est déjà en place, rien à faire.
+> - `New-NetNat` : *« Vous n'étiez pas connecté car il y avait un nom en double sur le réseau… »* → ce message trompeur signifie qu'un **autre NAT couvre déjà** `192.168.3.0/24` (`Get-NetNat`). Windows n'en accepte qu'un par préfixe : réutiliser celui qui existe.
 
 ### Vérification
 
@@ -246,7 +280,7 @@ Chaque VM devra être configurée avec une IP fixe sur ce réseau :
 | Adresse IP | `192.168.3.X` (X = selon la VM) |
 | Masque | `255.255.255.0` (/24) |
 | Passerelle | `192.168.3.254` |
-| DNS | `8.8.8.8` (ou DNS du futur serveur) |
+| DNS | `8.8.8.8` et `1.1.1.1` (puis le DNS de SRV01 au chapitre 10) |
 
 > [!TIP] Supprimer la configuration
 > Si tu dois tout refaire proprement :
@@ -341,14 +375,27 @@ Une fois les VM créées, le dossier ressemble à ceci :
 ### Création via l'interface graphique (Gestionnaire Hyper-V)
 
 1. **Action** → **Nouveau** → **Ordinateur virtuel**
-2. Nom : `PC01`
+2. Nom : `PC01` — cocher *Stocker l'ordinateur virtuel à un autre emplacement* si le dossier par défaut n'est pas `D:\HyperV`
 3. Génération : **Génération 2**
-4. Mémoire : `4096 Mo` (cocher mémoire dynamique)
+4. Mémoire : `4096 Mo`, **décocher** *Utiliser la mémoire dynamique* (voir l'avertissement plus bas)
 5. Réseau : `vSwitch-Rennes`
-6. Disque : VHDX dynamique, `60 Go`
-7. Installation : monter l'ISO Windows 11
+6. Disque : *Créer un disque dur virtuel*, taille `64 Go` (le disque est dynamique par défaut)
+7. Options d'installation : *Installer un système d'exploitation à partir d'un fichier image* → choisir l'ISO Windows 11
+8. **Terminer**, **sans démarrer** la VM
 
 ![w11-01-hyperv-1](https://cours.kaya.ovh/windows11/assets/captures/w11-01-hyperv-1.png)
+
+L'assistant ne règle ni le TPM, ni le nombre de processeurs, ni les points de contrôle. Avant le premier démarrage : clic droit sur `PC01` → **Paramètres** :
+
+| Page des paramètres | Réglage |
+|---------------------|---------|
+| **Sécurité** | cocher **Activer le module de plateforme sécurisée** (le démarrage sécurisé est déjà coché, modèle *Microsoft Windows*) |
+| **Processeur** | **2** processeurs virtuels |
+| **Microprogramme** | vérifier que le **lecteur de DVD** est en tête de l'ordre de démarrage |
+| **Points de contrôle** | **Points de contrôle standard**, décocher *Utiliser des points de contrôle automatiques* (capture plus bas) |
+
+> [!TIP] En graphique, le protecteur de clé est automatique
+> En cochant le TPM dans **Sécurité**, Hyper-V crée seul le protecteur de clé local. En PowerShell, il faut le faire explicitement avec `Set-VMKeyProtector` (ci-dessous).
 
 ### Création via PowerShell
 
@@ -432,6 +479,15 @@ Restore-VMCheckpoint -VMName "PC01" -Name "Avant-installation" -Confirm:$false
 Remove-VMCheckpoint -VMName "PC01" -Name "Avant-installation"
 ```
 
+**En graphique**, dans le Gestionnaire Hyper-V :
+
+| Action | Clic |
+|--------|------|
+| Créer | clic droit sur la VM → **Point de contrôle** ; il apparaît dans le volet *Points de contrôle* avec la date et l'heure |
+| Nommer | clic droit sur le point de contrôle → **Renommer** → `Avant-installation` |
+| Restaurer | clic droit sur le point de contrôle → **Appliquer…** → **Appliquer** |
+| Supprimer | clic droit → **Supprimer le point de contrôle…** (les données sont fusionnées, rien n'est perdu sur la VM) |
+
 ### Désactiver les checkpoints automatiques
 
 Par défaut, Hyper-V crée un checkpoint automatique **à chaque démarrage** de la VM. Ces checkpoints s'accumulent, consomment de l'espace disque et peuvent ralentir les performances. En lab, on préfère les créer **manuellement** quand on en a besoin.
@@ -449,7 +505,7 @@ Get-VM -Name "PC01" | Select-Object Name, AutomaticCheckpointsEnabled
 
 ---
 
-## Export et import de VM
+## Export et import de VM (bonus)
 
 Utile pour dupliquer une VM ou la transférer sur un autre poste.
 

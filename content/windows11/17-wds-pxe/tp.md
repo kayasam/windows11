@@ -1,5 +1,5 @@
 ---
-title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
+title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/17-wds-pxe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -7,7 +7,8 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/17-wds-pxe.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 2h30
+> [!abstract] Parcours TSSR — (bonus)
+> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 16. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
 
 > Chapitres associés : [17. Déployer Windows 11 par le réseau : PXE et WDS](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/)
 
@@ -32,7 +33,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie A — Comprendre le démarrage réseau (15 min)
+## Partie A — Comprendre le démarrage réseau (bonus)
 
 **A1.** Remets dans l'ordre ce qui se passe quand `PC03` démarre sur sa carte réseau, et indique le protocole de chaque étape : chargement de `boot.wim` · ouverture du partage `Deploy$` · obtention d'une adresse IP · téléchargement de `wdsmgfw.efi` · réponse du serveur PXE.
 
@@ -42,7 +43,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie B — Préparer SRV01 et installer WDS (25 min)
+## Partie B — Préparer SRV01 et installer WDS (bonus)
 
 **B1.** Ajoute à `SRV01` un second disque virtuel de 60 Go, formate-le en `E:` (label `Deploiement`), et insère l'ISO officielle dans son lecteur DVD.
 
@@ -54,7 +55,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie C — Accélérer TFTP (10 min)
+## Partie C — Accélérer TFTP (bonus)
 
 **C1.** Règle la taille de bloc TFTP à 16384 et redémarre le service.
 
@@ -62,7 +63,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie D — L'image de démarrage (30 min)
+## Partie D — L'image de démarrage (bonus)
 
 **D1.** Copie `boot.wim` de l'ISO dans `E:\WinPE` et liste ses images. Laquelle WDS démarre-t-il ? Que se passe-t-il si on l'importe sans modification ?
 
@@ -74,7 +75,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie E — Le partage de déploiement (20 min)
+## Partie E — Le partage de déploiement (bonus)
 
 **E1.** Crée le compte `svc.deploiement` (mot de passe `Fournil2026!`, n'expire jamais) dans `OU=Fournil`. Pourquoi un compte dédié plutôt que `Administrateur` ?
 
@@ -86,7 +87,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie F — Déployer PC03 (40 min)
+## Partie F — Déployer PC03 (bonus)
 
 **F1.** Crée `PC03` (Gen 2, TPM, 2 vCPU, 4 Go statiques, disque de 64 Go, `vSwitch-Rennes`, **aucun DVD**), avec la carte réseau en premier périphérique de démarrage. Démarre-la et observe les écrans successifs.
 
@@ -96,7 +97,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie G — Dépannage (10 min)
+## Partie G — Dépannage (bonus)
 
 **G1.** Un poste affiche « *A boot image was not found* » pour sa carte réseau. Cite trois causes possibles et où les vérifier.
 
@@ -106,7 +107,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS"
 
 ---
 
-## Partie H — Bonus
+## Partie H — Exercices complémentaires (bonus)
 
 **H1.** Où voir, sur `SRV01`, qu'un poste a demandé un démarrage PXE sans obtenir d'image ?
 

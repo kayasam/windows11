@@ -1,5 +1,9 @@
 # 05. Pilotes, applications et WinGet
 
+> [!abstract] Parcours TSSR
+> Socle : inventaire, export de pilotes, applications et WinGet. Les réinjections, suppressions Appx et épinglages avancés sont (bonus). Le formateur fournit un pilote tiers de démonstration si la VM ne contient aucun pilote exportable.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Gérer les périphériques et leurs pilotes (magasin de pilotes, `pnputil`), comprendre les différents types d'applications Windows, et installer/mettre à jour/inventorier des logiciels avec **WinGet**, le gestionnaire de paquets intégré à Windows 11.
 >
@@ -33,6 +37,10 @@ Windows n'installe un pilote **que depuis le magasin**. Ajouter un pilote = le *
 
 ### Le Gestionnaire de périphériques — `devmgmt.msc`
 
+Accès le plus rapide : **`Win + X`** → **Gestionnaire de périphériques** (ce menu donne aussi la Gestion des disques, l'Observateur d'événements, le Terminal administrateur…).
+
+![w11-05-menu-win-x](https://cours.kaya.ovh/windows11/assets/captures/w11-05-menu-win-x.png)
+
 | Icône | Signification |
 |-------|---------------|
 | ⚠️ Triangle jaune | Périphérique en erreur (pilote manquant, conflit) — voir le **code d'erreur** dans Propriétés |
@@ -44,8 +52,12 @@ Onglet **Pilote** d'un périphérique :
 - **Restaurer le pilote** — revenir à la version précédente (si une mise à jour a cassé quelque chose)
 - **Désactiver / Désinstaller** — avec la case « Tenter de supprimer le pilote » pour le retirer aussi du magasin
 
+![w11-05-devmgmt-onglet-pilote](https://cours.kaya.ovh/windows11/assets/captures/w11-05-devmgmt-onglet-pilote.png)
+
 > [!TIP] Afficher les périphériques fantômes
-> Menu **Affichage → Afficher les périphériques cachés** : on voit les périphériques déconnectés (anciennes clés USB, cartes réseau d'une VM supprimée…). Utile pour nettoyer un conflit d'IP fixe restée sur une ancienne carte réseau.
+> Menu **Affichage → Afficher les périphériques cachés** : on voit les périphériques déconnectés (anciennes clés USB, cartes réseau d'une VM supprimée…). Utile pour nettoyer un conflit d'IP fixe restée sur une ancienne carte réseau. Sur `PC01`, cette vue fait apparaître une catégorie **Autres périphériques → Périphérique inconnu** (fantôme, sans conséquence) et la carte *Microsoft Kernel Debug Network Adapter*.
+>
+> ![w11-05-devmgmt-cartes-reseau-caches](https://cours.kaya.ovh/windows11/assets/captures/w11-05-devmgmt-cartes-reseau-caches.png)
 
 ### En PowerShell et `pnputil`
 
@@ -74,19 +86,24 @@ pnputil /delete-driver oem3.inf /uninstall
 pnputil /export-driver * C:\Sauvegarde\Pilotes
 ```
 
-Extrait réel sur `PC01` :
+Extrait réel sur `PC01` juste après l'installation (un seul pilote tiers : l'imprimante *Microsoft Print to PDF*) :
 
 ```
-Nom publié :          oem1.inf
-Nom d'origine :       voiceclarityep_audio_component.inf
-Nom du fournisseur :  Microsoft Corporation
-Nom de la classe :    AudioProcessingObject
-Version du pilote :   06/16/2026 1.0.4.7057
-Nom du signataire :   Microsoft Windows Hardware Compatibility Publisher
+Nom publié :          oem0.inf
+Nom d'origine :       prnms009.inf
+Nom du fournisseur :  Microsoft
+Nom de la classe :    Printer
+Version du pilote :   06/21/2006 10.0.26100.4484
+Nom du signataire :   Microsoft Windows
 ```
+
+Après quelques passages de Windows Update, d'autres pilotes apparaissent (par exemple `oem1.inf` = `voiceclarityep_audio_component.inf`, un composant audio).
 
 > [!NOTE] Nom publié vs nom d'origine
-> Dans le magasin, un pilote tiers est renommé `oemNN.inf` (« nom publié »). C'est ce nom que demandent `/delete-driver` et le Gestionnaire de périphériques ; le nom d'origine (`voiceclarityep_audio_component.inf`) sert à le reconnaître.
+> Dans le magasin, un pilote tiers est renommé `oemNN.inf` (« nom publié »). C'est ce nom que demandent `/delete-driver` et le Gestionnaire de périphériques ; le nom d'origine (`prnms009.inf`) sert à le reconnaître.
+
+> [!TIP] Accents illisibles dans `pnputil` ?
+> Lancé depuis PowerShell 5.1, `pnputil` peut afficher `Nom publiÚ` au lieu de `Nom publié` : c'est un problème d'encodage de la console, pas une erreur. Le résultat est correct.
 
 ---
 
@@ -120,7 +137,17 @@ Sur `PC01` (26H2), on trouve une quarantaine d'applications provisionnées, dont
 > [!TIP] Nouveauté 26H2 (Enterprise/Education)
 > Une stratégie de groupe permet désormais de **supprimer des applications préinstallées** sans script : *Configuration ordinateur → Modèles d'administration → Composants Windows → Déploiement de package Appx → « Supprimez du système les packages par défaut du Microsoft Store »*. Une liste à cocher propose les applications courantes, et une liste dynamique accepte d'autres noms de famille de packages (ex. `Microsoft.BingNews_8wekyb3d8bbwe`). La stratégie est visible dans le `gpedit.msc` d'un Pro, mais elle n'est **effective que sur Enterprise/Education**. Sur Pro, on reste sur `Remove-AppxProvisionedPackage` (dans l'image, chapitre 15, ou en mode audit, chapitre 14).
 
+### Applications installées en graphique
+
+**Paramètres → Applications → Applications installées** (`ms-settings:appsfeatures`) liste les logiciels Win32 **et** les applications empaquetées ; le bouton **…** de chaque ligne propose *Modifier* ou *Désinstaller*. Le Panneau de configuration (`appwiz.cpl`) ne montre que les logiciels Win32.
+
+![w11-05-parametres-applications-installees](https://cours.kaya.ovh/windows11/assets/captures/w11-05-parametres-applications-installees.png)
+
 ### Fonctionnalités facultatives et « Features on Demand »
+
+**En graphique** : **Paramètres → Système → Fonctionnalités facultatives** → **Afficher les fonctionnalités** (une invite UAC s'affiche) : la liste montre les *Fonctionnalités ajoutées* (ici *Client OpenSSH*) et le lien *Afficher les fonctionnalités disponibles* pour en ajouter. Le lien **Plus de fonctionnalités Windows** ouvre l'ancienne fenêtre (`optionalfeatures.exe`), celle d'Hyper-V au chapitre 01.
+
+![w11-05-parametres-fonctionnalites-ajoutees](https://cours.kaya.ovh/windows11/assets/captures/w11-05-parametres-fonctionnalites-ajoutees.png)
 
 Certaines briques de Windows sont des **capacités** téléchargées à la demande :
 
@@ -186,21 +213,19 @@ winget install --id 7zip.7zip -e `
 
 > [!WARNING] Toujours utiliser l'identifiant exact
 > `winget install 7zip` cherche par nom : sur le lab, la recherche renvoie aussi `mcmilk.7zip-zstd`, `ozone10.7zip.Dark`, `7zip.7zr`… Avec `--id 7zip.7zip -e`, on installe exactement le paquet voulu.
+>
+> ![w11-05-winget-search-7zip](https://cours.kaya.ovh/windows11/assets/captures/w11-05-winget-search-7zip.png)
+
+> [!NOTE] WinGet n'a pas d'interface graphique
+> WinGet s'utilise **dans un terminal**. Il faut l'ouvrir **en administrateur** pour une installation `--scope machine` : `Win + X` → **Terminal (administrateur)** → **Oui** à l'invite UAC. L'équivalent « tout graphique » pour un utilisateur est le **Microsoft Store**, mais il ne permet ni script, ni export, ni installation silencieuse.
+
+![w11-05-winget-install-7zip](https://cours.kaya.ovh/windows11/assets/captures/w11-05-winget-install-7zip.png)
 
 ### Résultat réel sur PC01
 
-```
-> winget upgrade
-Microsoft Edge WebView2 Runtime  Microsoft.EdgeWebView2Runtime  152.0.4191.66     157.0.4341.42
-Microsoft OneDrive               Microsoft.OneDrive             25.087.0506.0001  26.183.0920.0005
-Microsoft Teams                  Microsoft.Teams                1.0.0.1           26276.513.5241.9675
-App Installer                    Microsoft.AppInstaller         1.26.509.0        1.29.380
-Terminal Windows                 Microsoft.WindowsTerminal      1.24.11911.0      1.25.2733.0
-...
-8 upgrades available.
-```
+![w11-05-winget-upgrade](https://cours.kaya.ovh/windows11/assets/captures/w11-05-winget-upgrade.png)
 
-Un poste tout juste installé depuis l'ISO a déjà **8 logiciels à mettre à jour** — y compris WinGet lui-même (App Installer 1.26 → 1.29). C'est tout l'intérêt d'un `winget upgrade --all` dans la préparation d'un master (chapitre 14) et dans la maintenance (chapitre 21).
+Un poste tout juste installé depuis l'ISO a déjà **5 à 8 logiciels à mettre à jour** (5 sur le lab le 12/11/2026, le nombre varie avec la date) — y compris WinGet lui-même (App Installer 1.26 → 1.29). C'est tout l'intérêt d'un `winget upgrade --all` dans la préparation d'un master (chapitre 14) et dans la maintenance (chapitre 21).
 
 ### Export / import : le socle logiciel standard
 

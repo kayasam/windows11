@@ -6,6 +6,10 @@ title: "07. PowerShell pour l'administrateur"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/07-powershell/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/07-powershell.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR
+> Socle en Windows PowerShell 5.1 : aide, objets, pipeline, CIM et script paramétré. Le formateur fournit une trame du script à compléter ; la découverte des syntaxes est guidée. Installer PowerShell 7 est (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Utiliser PowerShell pour administrer Windows 11 : distinguer les consoles disponibles, manipuler le pipeline, interroger le système avec **CIM/WMI** (WMIC n'existe plus), écrire un script de base et comprendre la politique d'exécution.
 >

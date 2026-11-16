@@ -1,5 +1,9 @@
 # 06. Processus, services, tâches planifiées et journaux
 
+> [!abstract] Parcours TSSR
+> Le script Inventaire-Disques.ps1 est fourni ci-dessous : le lire, adapter le chemin et tester sa tâche. Son écriture autonome, les exports et les déclencheurs avancés sont (bonus).
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Maîtriser les outils de surveillance et d'administration intégrés à Windows 11 : analyser les performances, gérer les services et processus, **automatiser avec le Planificateur de tâches**, lire les journaux d'événements.
 >
@@ -113,6 +117,10 @@ Un **service** est un processus en arrière-plan qui démarre avec Windows, sans
 | **Automatique (début différé)** | Démarre après les services critiques (réduit l'impact au boot) |
 | **Manuel** | Démarre uniquement à la demande |
 | **Désactivé** | Ne peut pas démarrer |
+
+**En graphique** : `services.msc` → cliquer dans la liste, taper les premières lettres du nom (`Spouleur`) → double-clic : boutons **Démarrer / Arrêter**, liste **Type de démarrage**, onglet **Dépendances**.
+
+![w11-06-services-spouleur-arrete-desactive](https://cours.kaya.ovh/windows11/assets/captures/w11-06-services-spouleur-arrete-desactive.png)
 
 ```powershell
 # Lister tous les services
@@ -233,6 +241,39 @@ Le **Planificateur de tâches** (`taskschd.msc`) exécute un programme ou un scr
 ![Anatomie d’une tâche planifiée — Une tâche combine le moment du déclenchement, l’action à exécuter, l’identité et les conditions d’exécution.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-06-tache-planifiee.svg)
 
 Windows en contient déjà plus de 250 (`(Get-ScheduledTask).Count` → 254 sur `PC01`) : défragmentation, mises à jour, télémétrie… On range les siennes dans un **dossier dédié** (`\Fournil\`).
+
+### Créer une tâche en graphique
+
+`taskschd.msc` (ou `Win + R` → `taskschd.msc`) :
+
+1. Clic droit sur **Bibliothèque du Planificateur de tâches** → **Nouveau dossier…** → `Fournil`. Sélectionner ce dossier.
+2. Volet *Actions* → **Créer une tâche…** (et non *Créer une tâche de base*, qui masque les options utiles).
+3. Onglet **Général** : nom `Inventaire-Disques` → **Utilisateur ou groupe…** → taper **`Système`** → **Vérifier les noms** → **OK** ; cocher **Exécuter avec les autorisations maximales**.
+
+> [!WARNING] `SYSTEM` ou `Système` ?
+> Sur un Windows **français**, la boîte de sélection ne trouve pas `SYSTEM` (« Aucun objet… n'a été trouvé ») : le compte s'appelle **`Système`** (affiché ensuite `AUTORITE NT\Système`). En PowerShell, `-UserId "SYSTEM"` fonctionne dans toutes les langues.
+
+![w11-06-taskschd-system-introuvable](https://cours.kaya.ovh/windows11/assets/captures/w11-06-taskschd-system-introuvable.png)
+
+![w11-06-taskschd-general](https://cours.kaya.ovh/windows11/assets/captures/w11-06-taskschd-general.png)
+
+4. Onglet **Déclencheurs** → **Nouveau…** → *À l'heure programmée*, **Chaque jour**, `07:30:00` → **OK**.
+
+![w11-06-taskschd-declencheur](https://cours.kaya.ovh/windows11/assets/captures/w11-06-taskschd-declencheur.png)
+
+5. Onglet **Actions** → **Nouveau…** → *Démarrer un programme* : programme `powershell.exe`, arguments `-NoProfile -ExecutionPolicy Bypass -File C:\Scripts\Inventaire-Disques.ps1` → **OK**.
+
+![w11-06-taskschd-action](https://cours.kaya.ovh/windows11/assets/captures/w11-06-taskschd-action.png)
+
+6. Onglet **Paramètres** : cocher **Exécuter la tâche dès que possible si un démarrage planifié est manqué** ; *Arrêter la tâche si elle s'exécute plus de* : taper `30 minutes` (la liste ne le propose pas, mais la saisie est acceptée) → **OK**.
+
+![w11-06-taskschd-parametres](https://cours.kaya.ovh/windows11/assets/captures/w11-06-taskschd-parametres.png)
+
+7. Test : clic droit sur la tâche → **Exécuter**, puis **F5** : la colonne *Résultat de la dernière exécution* affiche *L'opération a réussi (0x0)*.
+
+![w11-06-taskschd-resultat](https://cours.kaya.ovh/windows11/assets/captures/w11-06-taskschd-resultat.png)
+
+Sur le lab, la tâche créée ainsi est **strictement identique** à celle créée en PowerShell ci-dessous (`Get-ScheduledTask` : compte Système, `RunLevel Highest`, `ExecutionTimeLimit PT30M`, `StartWhenAvailable True`).
 
 ### Créer une tâche en PowerShell
 

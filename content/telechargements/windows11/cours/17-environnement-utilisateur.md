@@ -1,5 +1,9 @@
 # 18. Environnement utilisateur et Microsoft 365
 
+> [!abstract] Parcours TSSR
+> Socle : profils, permissions, usages de Microsoft 365/OneDrive/Teams et remise du poste. Sans tenant, lire les principes du cours et vérifier le client Teams ; ODT et GPO OneDrive sont (bonus). Pour Direction, adapter le modèle de partage du cours.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Préparer l'environnement de travail de l'utilisateur : comprendre et dépanner les **profils**, donner accès aux **dossiers partagés**, installer et configurer **Microsoft 365 Apps**, **OneDrive** et **Teams** sur le poste, gérer le **partage de documents**, puis **remettre** un poste à un utilisateur en l'accompagnant et en lui transmettant les bons réflexes de sécurité.
 >
@@ -102,7 +106,7 @@ Get-SmbShareAccess -Name Commun
 | **Entreprise mensuel** (*Monthly Enterprise*) | 2ᵉ mardi du mois | Entreprises qui veulent un rythme prévisible |
 | **Entreprise semestriel** (*Semi-Annual*) | Janvier / juillet | Postes sensibles (macros, compléments métiers) |
 
-### Installer avec l'Office Deployment Tool (ODT)
+### Installer avec l'Office Deployment Tool (ODT) (bonus)
 
 ```xml
 <!-- configuration-fournil.xml — généré sur https://config.office.com -->
@@ -141,7 +145,7 @@ setup.exe /configure configuration-fournil.xml    :: installation silencieuse
 
 OneDrive est **intégré à Windows 11** (relevé sur `PC01` : `C:\Users\<utilisateur>\AppData\Local\Microsoft\OneDrive\OneDrive.exe`, version 26.198 — installé **par utilisateur** à la première connexion).
 
-### Les réglages qui comptent (GPO)
+### Les réglages qui comptent (GPO) (bonus)
 
 Les modèles ADMX sont livrés avec le client : `%LOCALAPPDATA%\Microsoft\OneDrive\<version>\adm\OneDrive.admx` (+ `fr\OneDrive.adml` — dossier **`fr`**, pas `fr-FR`, relevé sur le lab ; à renommer en `fr-FR` dans le magasin central) — à copier dans le **magasin central** (`\\ad.fournil.lab\SYSVOL\ad.fournil.lab\Policies\PolicyDefinitions`).
 

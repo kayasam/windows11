@@ -7,7 +7,8 @@ title: "TP 20. Diagnostic et dépannage"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/19-depannage.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-> Durée estimée : 2h
+> [!abstract] Parcours TSSR
+> Les pannes sont préparées par le formateur. En E1, adapter le script Test-Poste.ps1 fourni, l’exécuter et expliquer ses limites ; l’écriture intégrale sans trame est (bonus). Le ticket et les preuves de réparation restent obligatoires.
 
 > Chapitres associés : [20. Diagnostic et dépannage](https://cours.kaya.ovh/windows11/windows11/19-depannage/)
 
@@ -32,7 +33,7 @@ title: "TP 20. Diagnostic et dépannage"
 
 ---
 
-## Partie A — Recueillir les symptômes (15 min)
+## Partie A — Recueillir les symptômes
 
 Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur local.
 
@@ -42,7 +43,7 @@ Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur
 
 ---
 
-## Partie B — Réseau et résolution de noms (30 min)
+## Partie B — Réseau et résolution de noms
 
 **B1.** Vérifie la configuration IP et DNS de la carte. Qu'est-ce qui est anormal sur un poste du domaine ?
 
@@ -54,7 +55,7 @@ Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur
 
 ---
 
-## Partie C — Services et impression (15 min)
+## Partie C — Services et impression
 
 **C1.** Impossible d'imprimer. Trouve le service en cause, son état et son type de démarrage.
 
@@ -64,7 +65,7 @@ Ouvre une session avec l'utilisateur de test, puis avec le compte administrateur
 
 ---
 
-## Partie D — Le programme mystère (25 min)
+## Partie D — Le programme mystère
 
 Un utilisateur trouve son poste « lent depuis hier » et voit parfois un processus PowerShell dans le Gestionnaire des tâches.
 
@@ -72,15 +73,15 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 
 **D2.** Sous quel compte s'exécute-t-il ? Que fait le script lancé ? Pourquoi le nom de la tâche est-il trompeur ?
 
-**D3.** Si Sysmon est actif (chapitre 20), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. *(approfondissement)*
+**D3.** Si Sysmon est actif (chapitre 20), retrouve la création du processus (ID 1) et sa ligne de commande complète, avec le processus parent. (bonus)
 
 **D4.** Supprime la persistance et le script. Vérifie après une nouvelle ouverture de session.
 
 ---
 
-## Partie E — Vérifier et clore (15 min)
+## Partie E — Vérifier et clore
 
-**E1.** Écris un petit script `Test-Poste.ps1` qui vérifie en une passe : DNS = contrôleur de domaine, `srv01` résolu vers la bonne adresse, port 445 ouvert vers `srv01`, Spooler démarré et automatique, aucune règle de pare-feu sortante de blocage personnalisée, aucune tâche planifiée à la racine lançant `powershell.exe`.
+**E1.** Copie le script fourni `Ressources/scripts/Test-Poste.ps1`, adapte-le au poste et explique chaque contrôle. Vérifie en une passe : DNS = contrôleur de domaine, `srv01` résolu vers la bonne adresse, port 445 ouvert vers `srv01`, Spooler démarré et automatique, aucune règle de pare-feu sortante de blocage personnalisée, aucune tâche planifiée à la racine lançant `powershell.exe`.
 
 **E2.** Complète la fiche d'intervention : causes, corrections, vérifications, recommandations pour éviter la récidive.
 

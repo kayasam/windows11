@@ -1,19 +1,20 @@
 ---
-title: "14. Poste de référence : mode audit et Sysprep"
+title: "14. Poste de référence : mode audit et Sysprep (bonus)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/14-sysprep-audit"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/14-sysprep-audit.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
+> [!abstract] Parcours TSSR — (bonus)
+> Chapitre et TP entièrement (bonus). Les principes du mode audit et de Sysprep sont expliqués avec les notions sur les images ; aucune VM MASTER n’est requise pour le socle.
+> Les sections marquées (bonus) sont facultatives.
+
 > [!NOTE] Objectif
 > Créer la VM de référence `MASTER`, la personnaliser en **mode audit**, puis la généraliser avec Sysprep en appliquant le fichier de réponse construit au chapitre 13. `MASTER` est pensée pour être **réutilisée** dans le temps (mises à jour périodiques de l'image) grâce à un simple point de contrôle Hyper-V. Savoir **diagnostiquer un échec de Sysprep** — trois pièges modernes ont été rencontrés en construisant le lab.
 >
 > **Outils :** `sysprep.exe`, `Copy-VMFile`, `Checkpoint-VM`
 > **Fichiers à connaître :** `C:\Windows\System32\Sysprep\Panther\setupact.log` / `setuperr.log`, `autounattend-installation-master.xml`, `autounattend-fournil-26h2.xml`
-
-> [!abstract] Niveau : approfondissement
-> L'image maître est la méthode des **grands parcs**. Le déploiement du chapitre 16 (ISO officielle + `autounattend.xml`) **n'en dépend pas**. Pour un public TSSR, ce chapitre peut être présenté en démonstration (principe de Sysprep, pourquoi généraliser, mode audit) sans faire réaliser toute la chaîne.
 
 > [!INFO] Fil rouge — Fournil
 > `MASTER` : Windows 11 Pro 26H2, 7-Zip + Notepad++, applications grand public retirées, fichier `C:\Fournil\version-image.txt`. Généralisée avec succès le 08/11/2026 après avoir résolu les trois pièges ci-dessous.
@@ -198,7 +199,7 @@ Get-VMCheckpoint -VMName MASTER | Remove-VMCheckpoint
 Checkpoint-VM -Name MASTER -SnapshotName "Avant-Sysprep"
 ```
 
-### 4. Le piège qui n'apparaît qu'au déploiement : `unattend-original.xml` *(approfondissement)*
+### 4. Le piège qui n'apparaît qu'au déploiement : `unattend-original.xml` (bonus)
 
 Sysprep réussit, la capture aussi… et c'est le **déploiement** qui échoue (« *Échec de l'installation de Windows 11* », chapitre 16). Cause trouvée dans `$WINDOWS.~BT\Sources\Panther\setupact.log` du poste cible :
 
@@ -221,7 +222,7 @@ del C:\Mount\Windows\Panther\unattend-original.xml C:\Mount\Windows\Panther\unat
 Dism /Unmount-Image /MountDir:C:\Mount /Commit
 ```
 
-### 5. Encore au déploiement : un `Windows.old` vide dans l'image — `0x800700B7` *(approfondissement)*
+### 5. Encore au déploiement : un `Windows.old` vide dans l'image — `0x800700B7` (bonus)
 
 Une fois le n° 4 corrigé, le déploiement suivant est allé plus loin… puis a échoué en phase *Finalize* :
 
@@ -258,7 +259,7 @@ Ou, en amont, sur `MASTER` avant Sysprep : `rd C:\Windows.old` et `rd C:\Recover
 
 ---
 
-## Rafraîchir l'image plus tard *(approfondissement)*
+## Rafraîchir l'image plus tard (bonus)
 
 Le mois suivant, pour produire une nouvelle version de l'image avec les derniers correctifs :
 
