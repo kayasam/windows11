@@ -211,6 +211,9 @@ def prepare():
                 if kind=='html':
                     raw=item['htmlPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
                     offline_html=raw.replace(base+'/assets/','../assets/'); files['cours/'+slug+'.html']=offline_html
+                elif item['quizPath'].suffix.lower()=='.html':
+                    raw=item['quizPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
+                    files['cours/'+slug+'-quiz.html']=raw.replace(base+'/assets/','../assets/')
                 else:
                     bank=json.loads(item['quizPath'].read_text(encoding='utf-8-sig')); questions=bank['questions']; assert len(questions)==20
                     for q in questions: assert len(q['choices'])==4 and 0<=q['answer']<4 and q['explanation']

@@ -9,3 +9,4 @@ Lire README.md et site.json avant adaptation. Les documents s’écrivent dans s
 - Annexe sobre, aucune multiplication de badges/cartes dans l’explorateur. Ne pas restaurer graphe, backlinks ou mémo supprimés.
 - Vérifier construire.ps1, puis clair/sombre, mobile, navigation et téléchargements. Ne jamais publier sur le dépôt Linux depuis une copie.
 - Les empreintes de template-manifest.json servent à détecter les divergences ; leur mise à jour suit une validation consciente.
+- Quiz de cette formation : 16 questions par quiz, pour les 16 élèves (préférence de Samuel).

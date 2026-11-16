@@ -25,13 +25,15 @@
           "slug": "02-installation",
           "course": "cours/02-installation/02-installation.md",
           "tp": "cours/02-installation/tp/02-tp-installation.md",
-          "correction": "cours/02-installation/tp/02-tp-installation-correction.md"
+          "correction": "cours/02-installation/tp/02-tp-installation-correction.md",
+          "quiz": "cours/02-installation/02-installation-quiz.html"
         },
         {
           "slug": "03-configuration",
           "course": "cours/03-configuration/03-configuration.md",
           "tp": "cours/03-configuration/tp/03-tp-configuration.md",
-          "correction": "cours/03-configuration/tp/03-tp-configuration-correction.md"
+          "correction": "cours/03-configuration/tp/03-tp-configuration-correction.md",
+          "quiz": "cours/03-configuration/03-configuration-quiz.html"
         },
         {
           "slug": "04-disques-stockage",
