@@ -89,6 +89,14 @@
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "04. Gestion des disques et du stockage",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
+    },
+    {
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp",
       "label": "TP",

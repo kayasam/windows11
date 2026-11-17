@@ -39,7 +39,8 @@
           "slug": "04-disques-stockage",
           "course": "cours/04-disques-stockage/04-disques-stockage.md",
           "tp": "cours/04-disques-stockage/tp/04-tp-disques-stockage.md",
-          "correction": "cours/04-disques-stockage/tp/04-tp-disques-stockage-correction.md"
+          "correction": "cours/04-disques-stockage/tp/04-tp-disques-stockage-correction.md",
+          "quiz": "cours/04-disques-stockage/04-disques-stockage-quiz.html"
         },
         {
           "slug": "05-peripheriques-applications",
