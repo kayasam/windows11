@@ -40,7 +40,7 @@
       "key": "windows11/06-administration-diagnostic",
       "title": "06. Processus, services, tâches planifiées et journaux",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/07-powershell",
@@ -174,7 +174,7 @@
       "correctionKey": "windows11/06-administration-diagnostic/tp-corrigev2",
       "downloadStem": "06-administration-diagnostic",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/07-powershell/tp",
@@ -287,7 +287,8 @@
     "windows11/02-installation/tp",
     "windows11/03-configuration/tp",
     "windows11/04-disques-stockage/tp",
-    "windows11/05-peripheriques-applications/tp"
+    "windows11/05-peripheriques-applications/tp",
+    "windows11/06-administration-diagnostic/tp"
   ],
   "tracks": [
     {
