@@ -22,6 +22,106 @@ title: "07. PowerShell pour l'administrateur"
 
 ---
 
+## Avant de commencer : comprendre le vocabulaire
+
+### Une commande : une action sur quelque chose
+
+Une **cmdlet** est une commande PowerShell. Son nom suit la forme **Verbe-Nom**, en anglais **Verb-Noun**. Le verbe indique **l’action**, le nom indique **ce sur quoi elle porte**.
+
+```text
+Get-Service
+ │     │
+ │     └── Service : les services Windows
+ └──────── Get : obtenir des informations
+```
+
+| Commande | Verbe : quelle action ? | Nom : sur quoi ? |
+|---|---|---|
+| `Get-Service` | `Get` : obtenir / consulter | `Service` : les services |
+| `Get-Process` | `Get` : obtenir / consulter | `Process` : les processus |
+| `Stop-Service` | `Stop` : arrêter | `Service` : un ou plusieurs services |
+
+`Get-Service` consulte les services ; `Stop-Service` peut les arrêter. **Lire le verbe aide à comprendre l’effet avant d’exécuter la commande.** Dans cette introduction, on utilise les commandes de consultation.
+
+### Un paramètre : préciser la demande
+
+```powershell
+Get-Service -Name Spooler
+```
+
+| Élément | Rôle |
+|---|---|
+| `Get-Service` | La commande : consulter les services |
+| `-Name` | Un **paramètre** : préciser le nom recherché |
+| `Spooler` | La **valeur** donnée à ce paramètre |
+
+Lire la ligne : « donne-moi les informations du service nommé Spooler ». Le tiret de `Get-Service` sépare le verbe du nom ; le tiret placé au début de `-Name` annonce un paramètre.
+
+### Un objet : le résultat décrit quelque chose
+
+PowerShell renvoie souvent des **objets**, pas seulement le texte visible à l’écran. Un objet peut représenter un service, un processus, une date ou même un texte. Il possède des **propriétés** et peut proposer des **méthodes**.
+
+Prenons une fiche de service :
+
+```text
+Objet : le service Spooler
+├── Name        : Spooler                ← propriété
+├── DisplayName : Spouleur d’impression  ← propriété
+└── Status      : Running ou Stopped     ← propriété
+```
+
+Une **propriété** décrit l’objet : son nom, son état, sa taille… Ce sont des informations que l’on peut lire. Le tableau affiché dans la console n’en montre qu’une partie.
+
+### Une variable : donner un nom à une valeur
+
+Une variable commence par `$`. Elle permet de conserver un résultat pour le réutiliser. Le signe `=` affecte la valeur située à droite au nom situé à gauche :
+
+```powershell
+$service = Get-Service -Name Spooler
+$service.Status
+```
+
+La première ligne conserve l’objet service dans `$service`. La seconde lit sa **propriété** `Status` : le **point** permet d’accéder à un membre de l’objet.
+
+> [!NOTE] Lire une propriété ne change pas l’objet
+> `$service.Status` affiche l’état du service ; cela ne le démarre ni ne l’arrête. Ce petit exemple sert à comprendre la lecture d’un résultat, pas à construire un script.
+
+### Une méthode : une action proposée par l’objet
+
+Une **méthode** est une action que l’objet sait effectuer. Pour la reconnaître dans ces exemples : **son appel se termine par des parenthèses**.
+
+Utilisons un texte pour essayer sans modifier la configuration du poste :
+
+```powershell
+$texte = "bonjour"
+$texte.Length
+$texte.ToUpper()
+```
+
+| Expression | Nature | Résultat |
+|---|---|---|
+| `$texte.Length` | Lecture d’une **propriété** | `7` : le nombre de caractères |
+| `$texte.ToUpper()` | Appel d’une **méthode** | `BONJOUR` : une version du texte en majuscules |
+
+`ToUpper()` renvoie un nouveau texte ; `$texte` contient toujours `bonjour` si on ne lui réaffecte pas le résultat. On ne demande pas de mémoriser les méthodes : il faut simplement reconnaître **une information à lire** et **une action à appeler**.
+
+Pour découvrir ce que propose un objet, `Get-Member` affiche notamment ses propriétés (`Property`) et ses méthodes (`Method`) :
+
+```powershell
+Get-Service -Name Spooler | Get-Member
+```
+
+La barre `|` transmet l’objet à la commande suivante ; elle sera expliquée pas à pas dans la partie sur le pipeline. Ici, observer seulement les noms et la colonne `MemberType`.
+
+> [!summary] Les mots à distinguer
+> - **Verbe-Nom** : le nom d’une commande, par exemple `Get-Service`.
+> - **Paramètre et valeur** : précisent la demande, par exemple `-Name Spooler`.
+> - **Objet** : représente l’élément renvoyé, par exemple le service Spooler.
+> - **Propriété** : une information de cet objet, par exemple `.Status`.
+> - **Méthode** : une action proposée par cet objet, par exemple `.ToUpper()` sur un texte.
+
+---
+
 ## 1. Ouvrir la bonne console
 
 **Windows Terminal** est la fenêtre qui héberge des onglets. **Windows PowerShell** est l’interpréteur qui comprend nos commandes. Dans Terminal, sélectionner **Windows PowerShell** pour ce chapitre.
@@ -213,6 +313,7 @@ Une stratégie d’entreprise peut être prioritaire sur le réglage local. `Rem
 > [!summary] À retenir pour cette première découverte
 > - Windows Terminal héberge la console ; Windows PowerShell exécute les commandes.
 > - Une commande a un nom, puis éventuellement des paramètres et leurs valeurs.
+> - Le nom d’une cmdlet suit la forme **Verbe-Nom** ; une **propriété** décrit l’objet, une **méthode** permet d’appeler une action.
 > - `Get-Command` trouve une commande ; `Get-Help` explique son usage.
 > - `|` transmet le résultat à la commande suivante.
 > - `Select-Object` choisit les colonnes, `Sort-Object` trie, `Where-Object` filtre.
