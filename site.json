@@ -13,13 +13,15 @@
       "chapters": [
         {
           "slug": "00-infrastructure",
-          "course": "cours/00-infrastructure/00-infrastructure.md"
+          "course": "cours/00-infrastructure/00-infrastructure.md",
+          "quiz": "cours/00-infrastructure/00-infrastructure-quiz.html"
         },
         {
           "slug": "01-introduction-hyperv",
           "course": "cours/01-introduction-hyperv/01-introduction-hyperv.md",
           "tp": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv.md",
-          "correction": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv-correction.md"
+          "correction": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv-correction.md",
+          "quiz": "cours/01-introduction-hyperv/01-introduction-hyperv-quiz.html"
         },
         {
           "slug": "02-installation",
@@ -46,37 +48,43 @@
           "slug": "05-peripheriques-applications",
           "course": "cours/05-peripheriques-applications/05-peripheriques-applications.md",
           "tp": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications.md",
-          "correction": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications-correction.md"
+          "correction": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications-correction.md",
+          "quiz": "cours/05-peripheriques-applications/05-peripheriques-applications-quiz.html"
         },
         {
           "slug": "06-administration-diagnostic",
           "course": "cours/06-administration-diagnostic/06-administration-diagnostic.md",
           "tp": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic.md",
-          "correction": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic-correction.md"
+          "correction": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic-correction.md",
+          "quiz": "cours/06-administration-diagnostic/06-administration-diagnostic-quiz.html"
         },
         {
           "slug": "07-powershell",
           "course": "cours/07-powershell/07-powershell.md",
           "tp": "cours/07-powershell/tp/07-tp-powershell.md",
-          "correction": "cours/07-powershell/tp/07-tp-powershell-correction.md"
+          "correction": "cours/07-powershell/tp/07-tp-powershell-correction.md",
+          "quiz": "cours/07-powershell/07-powershell-quiz.html"
         },
         {
           "slug": "08-mises-a-jour",
           "course": "cours/08-mises-a-jour/08-mises-a-jour.md",
           "tp": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour.md",
-          "correction": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour-correction.md"
+          "correction": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour-correction.md",
+          "quiz": "cours/08-mises-a-jour/08-mises-a-jour-quiz.html"
         },
         {
           "slug": "09-securite",
           "course": "cours/09-securite/09-securite.md",
           "tp": "cours/09-securite/tp/09-tp-securite.md",
-          "correction": "cours/09-securite/tp/09-tp-securite-correction.md"
+          "correction": "cours/09-securite/tp/09-tp-securite-correction.md",
+          "quiz": "cours/09-securite/09-securite-quiz.html"
         },
         {
           "slug": "10-active-directory",
           "course": "cours/10-active-directory/10-active-directory.md",
           "tp": "cours/10-active-directory/tp/10-tp-active-directory.md",
-          "correction": "cours/10-active-directory/tp/10-tp-active-directory-correction.md"
+          "correction": "cours/10-active-directory/tp/10-tp-active-directory-correction.md",
+          "quiz": "cours/10-active-directory/10-active-directory-quiz.html"
         },
         {
           "slug": "11-gpo",

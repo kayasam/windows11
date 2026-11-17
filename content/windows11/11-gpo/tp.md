@@ -27,13 +27,13 @@ title: "TP 11. Stratégies de groupe et gestion centralisée"
 
 - `SRV01` contrôleur de domaine, `PC01` joint dans `OU=Ordinateurs,OU=Fournil` (TP 10)
 - BitLocker actif sur `PC01` avec une clé de récupération (TP 09)
-- Session sur `PC01` avec un compte membre de *Admins du domaine* pour ce TP
+- Session `FOURNIL\Administrateur` sur `SRV01` pour créer les GPO ; sur `PC01`, une session `FOURNIL\Administrateur` (ou `PC01\admin`) pour les vérifications, puis `FOURNIL\stagiaire` pour la partie C
 
 ---
 
 ## Partie A — Outils
 
-**A1.** Vérifie sur `PC01` la console GPMC et les outils AD (RSAT), préchargés par le formateur. S’ils manquent, lance leur installation et utilise le poste de secours pendant le téléchargement.
+**A1.** Ouvre la console **Gestion de stratégie de groupe** sur `SRV01` (session `FOURNIL\Administrateur`). Où la trouve-t-on ? (bonus : installe aussi les RSAT sur `PC01`.)
 
 **A2.** Ouvre `gpmc.msc`. Quelles GPO existent déjà ? Où sont-elles liées ?
 
@@ -43,7 +43,7 @@ title: "TP 11. Stratégies de groupe et gestion centralisée"
 
 ## Partie B — GPO ordinateur « GPO-Postes-Securite »
 
-**B1.** Crée la GPO `GPO-Postes-Securite` et lie-la à `OU=Ordinateurs,OU=Fournil`.
+**B1.** Crée la GPO `GPO-Postes-Securite` et lie-la à `OU=Ordinateurs,OU=Fournil` (GPMC ou PowerShell).
 
 **B2.** Fais en sorte que `FOURNIL\GG-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
 
@@ -82,7 +82,7 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 
 **C4.** Restreins la GPO aux membres de `G-Boulangerie`. Quelle erreur classique faut-il éviter ?
 
-**C5.** Ouvre une session `FOURNIL\stagiaire` sur `PC01`. Vérifie le lecteur `P:` et la restriction.
+**C5.** Ferme la session en cours sur `PC01` et ouvre une session `FOURNIL\stagiaire`. Vérifie le lecteur `P:` et la restriction.
 
 **C6.** Crée un utilisateur `test.vendeur` dans `OU=Utilisateurs`, **hors** de `G-Boulangerie`. Que reçoit-il ?
 

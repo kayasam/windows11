@@ -1,7 +1,7 @@
 # 11. Stratégies de groupe et gestion centralisée
 
 > [!abstract] Parcours TSSR
-> Les RSAT sont préchargés et vérifiés en A1. Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C. Les GPO restent créées et testées par le stagiaire.
+> Les GPO se créent directement sur **SRV01** (console *Gestion de stratégie de groupe*, installée avec AD DS) : aucun téléchargement n'est nécessaire. Installer les RSAT sur PC01 est facultatif (≈ 10 min). Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C.
 > Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
@@ -60,7 +60,7 @@ Le poste télécharge et applique les GPO :
 
 | Outil | Rôle |
 |-------|------|
-| **GPMC** — `gpmc.msc` | Créer, lier, filtrer, sauvegarder, modéliser les GPO. Sur un poste Windows 11 : capacité RSAT `Rsat.GroupPolicy.Management.Tools` |
+| **GPMC** — `gpmc.msc` | Créer, lier, filtrer, sauvegarder, modéliser les GPO. **Déjà présente sur SRV01** (Gestionnaire de serveur → Outils → *Gestion de stratégie de groupe*) ; sur un poste Windows 11 : capacité RSAT `Rsat.GroupPolicy.Management.Tools` |
 | **Éditeur de GPO** | Modifier le contenu d'une GPO (clic droit → Modifier depuis GPMC) |
 | `gpedit.msc` | Stratégie **locale** du poste (n'existe pas sur Home) |
 | `gpupdate /force` | Réappliquer immédiatement |
@@ -68,10 +68,25 @@ Le poste télécharge et applique les GPO :
 | `rsop.msc` | Jeu de stratégies résultant, en console |
 | Module PowerShell `GroupPolicy` | `New-GPO`, `New-GPLink`, `Set-GPRegistryValue`, `Set-GPPermission`, `Backup-GPO`… |
 
-```powershell
-# Installer GPMC sur PC01 (Feature on Demand, accès Windows Update requis)
-Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
-```
+> [!TIP] Où travailler ?
+> Dans ce cours, on crée les GPO **sur SRV01**, connecté en `FOURNIL\Administrateur` : la console est déjà là. En entreprise, on évite d'ouvrir une session sur un contrôleur de domaine pour administrer : on installe les **RSAT** sur un poste d'administration (facultatif dans le lab, ≈ 10 minutes de téléchargement par Windows Update) :
+> ```powershell
+> Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
+> Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
+> ```
+
+### Créer et lier une GPO en graphique
+
+1. `gpmc.msc` → déplier **Forêt → Domaines → ad.fournil.lab → Fournil**.
+2. Clic droit sur l'UO cible (ici `Ordinateurs`) → **Créer un objet GPO dans ce domaine, et le lier ici…** → nom `GPO-Postes-Securite` → **OK**.
+
+![w11-11-gpmc-creer-lier](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpmc-creer-lier.png)
+
+3. La GPO apparaît sous l'UO, *Lien activé : Oui*. Clic droit sur la GPO → **Modifier** ouvre l'**Éditeur de gestion des stratégies de groupe**, avec ses deux branches *Configuration ordinateur* et *Configuration utilisateur*.
+
+![w11-11-gpmc-gpo-liee](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpmc-gpo-liee.png)
+
+En PowerShell : `New-GPO -Name "GPO-Postes-Securite" | New-GPLink -Target "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"`.
 
 ---
 
@@ -82,6 +97,12 @@ Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.
 ### Filtrage de sécurité
 
 Par défaut, *Utilisateurs authentifiés* a **Lire** + **Appliquer**. Pour réserver une GPO à un groupe :
+
+**En graphique** : GPMC → sélectionner la GPO → onglet **Étendue** → section *Filtrage de sécurité* : **Ajouter…** `G-Boulangerie`, puis sélectionner *Utilisateurs authentifiés* → **Supprimer**. GPMC propose alors de garder la lecture : vérifier ensuite dans l'onglet **Délégation** que *Utilisateurs authentifiés* a toujours **Lecture**.
+
+![w11-11-gpmc-etendue-filtrage](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpmc-etendue-filtrage.png)
+
+**En PowerShell** (plus sûr : la lecture est conservée explicitement) :
 
 ```powershell
 Set-GPPermission -Name "GPO-Boulangerie-Utilisateurs" -TargetName "Utilisateurs authentifiés" -TargetType Group -PermissionLevel GpoRead -Replace
@@ -110,9 +131,13 @@ Coûteux (requête évaluée à chaque application) : à utiliser avec parcimoni
 | Exemples | Interdire le Panneau de configuration, report WU, BitLocker | **Lecteurs mappés**, raccourcis, imprimantes, tâches planifiées, valeurs de registre, groupes locaux |
 | Ciblage fin | Non (filtrage de la GPO entière) | **Ciblage au niveau de l'élément** (groupe, OS, plage IP…) |
 
-Sur le lab, le lecteur `P:` est une **préférence** (*Configuration utilisateur → Préférences → Paramètres Windows → Mappages de lecteurs*, action « Mettre à jour », `\\SRV01\Commun`, lettre `P`) :
+Sur le lab, le lecteur `P:` est une **préférence** : *Configuration utilisateur → Préférences → Paramètres Windows → **Mappages de lecteurs*** → clic droit → **Nouveau → Lecteur mappé** : action **Mettre à jour**, emplacement `\\SRV01\Commun`, *Reconnecter* coché, libellé `Commun`, lettre **Utiliser : P**.
 
-![w11-11-lecteur-p-gpo](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
+![w11-11-gpo-preference-lecteur-p](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-preference-lecteur-p.png)
+
+Résultat dans la session de `stagiaire`, *Ce PC* → *Emplacements réseau* :
+
+![w11-11-pc01-lecteur-p-stagiaire](https://cours.kaya.ovh/windows11/assets/captures/w11-11-pc01-lecteur-p-stagiaire.png)
 
 *Session `FOURNIL\stagiaire` sur `PC01` : « Commun (P:) » monté par GPO. Le cadenas sur `C:` rappelle que BitLocker est actif.*
 
@@ -127,6 +152,10 @@ Objectif : `GG-Admins-Postes` (les techniciens) administrateur de tous les poste
 | Méthode | Où | Remarque |
 |---------|----|---------|
 | **Groupes restreints** → « Ce groupe est membre de : Administrateurs » | Paramètres de sécurité → Groupes restreints | Ajoute sans retirer les autres membres (utilisé sur le lab) |
+
+En graphique : *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → **Groupes restreints*** → clic droit → **Ajouter un groupe…** → `FOURNIL\GG-Admins-Postes` → dans la section du **bas**, *Ce groupe est membre de*, **Ajouter…** → `Administrateurs`. (Ne rien mettre dans *Membres de ce groupe*.)
+
+![w11-11-gpo-groupes-restreints](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-groupes-restreints.png)
 | **Préférences → Utilisateurs et groupes locaux** | Préférences | Plus souple : ajouter/retirer, ciblage par élément |
 
 Résultat sur `PC01` après `gpupdate` :
@@ -150,7 +179,20 @@ Update-LapsADSchema
 Set-LapsADComputerSelfPermission -Identity "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 ```
 
-GPO : *Configuration ordinateur → Modèles d'administration → Système → LAPS* → **Configurer le répertoire de sauvegarde des mots de passe** = *Active Directory* ; longueur 14 ; âge 30 jours.
+GPO : *Configuration ordinateur → Stratégies → Modèles d'administration → Système → LAPS* :
+
+![w11-11-gpo-laps-liste](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-laps-liste.png)
+
+- **Configurer le répertoire de sauvegarde de mot de passe** → Activé → **Active Directory**.
+
+> [!WARNING] La valeur proposée est « Azure Active Directory »
+> Dès qu'on coche *Activé*, la liste affiche **Azure Active Directory** (Entra ID). Sur un domaine AD sans Entra, le mot de passe ne serait alors sauvegardé nulle part. Choisir **Active Directory**.
+>
+> ![w11-11-gpo-laps-repertoire-piege](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-laps-repertoire-piege.png)
+
+- **Paramètres du mot de passe** → Activé : longueur `14`, âge `30` jours (valeurs par défaut). Pour la complexité, choisir *Lettres majuscules + lettres minuscules + chiffres + spéciaux* (le libellé par défaut, « Lettres minuscules + lettres minuscules », est une erreur de traduction).
+
+![w11-11-gpo-laps-parametres](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-laps-parametres.png)
 
 ```powershell
 Get-LapsADPassword -Identity PC01 -AsPlainText
@@ -163,7 +205,11 @@ PasswordUpdateTime  : 08/11/2026 07:15:06
 ExpirationTimestamp : 08/12/2026 07:15:06
 ```
 
-Journal du poste : *Applications et services → Microsoft → Windows → LAPS → Operational* (10018 « LAPS a mis à jour Active Directory », 10020 « … le compte d'administrateur local »).
+**En graphique**, sur SRV01 : `dsa.msc` → propriétés de l'ordinateur `PC01` → onglet **LAPS** → **Afficher le mot de passe** (et *Expirer maintenant* pour forcer un changement).
+
+![w11-11-aduc-onglet-laps](https://cours.kaya.ovh/windows11/assets/captures/w11-11-aduc-onglet-laps.png)
+
+Journal du poste : *Applications et services → Microsoft → Windows → LAPS → Operational* (10018 « LAPS a mis à jour Active Directory », 10020 « … le compte d'administrateur local », et **10067 « Le compte local configuré est actuellement désactivé »** : voir l'avertissement ci-dessous).
 
 > [!WARNING] LAPS gère l'Administrateur intégré… qui est désactivé
 > Par défaut, LAPS gère le compte RID 500 (`Administrateur`) — désactivé sur Windows 11. Le mot de passe est bien changé, mais inutilisable tant que le compte est désactivé. Deux choix : activer ce compte (par GPO), ou indiquer un autre compte dans **Nom du compte administrateur à gérer** (depuis 24H2, LAPS peut même **créer et gérer** ce compte lui-même : *Configurer la gestion automatique des comptes*).
@@ -178,7 +224,9 @@ GPO : *Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du s
 > $kp = (Get-BitLockerVolume C:).KeyProtector | Where-Object KeyProtectorType -eq RecoveryPassword
 > Backup-BitLockerKeyProtector -MountPoint C: -KeyProtectorId $kp.KeyProtectorId
 > ```
-> La clé apparaît alors sous l'objet ordinateur (`msFVE-RecoveryInformation`, onglet **Récupération BitLocker** de la console AD).
+> La clé apparaît alors sous l'objet ordinateur (`msFVE-RecoveryInformation`), dans l'onglet **Récupération BitLocker** de `dsa.msc`. Cet onglet n'existe qu'après l'installation, sur SRV01, de la fonctionnalité **Visionneuse de mots de passe de récupération BitLocker** : Gestionnaire de serveur → Ajouter des rôles et fonctionnalités → *Fonctionnalités* → *Outils d'administration de serveur distant* → *Outils d'administration de fonctionnalités* → *Outils de Chiffrement de lecteur BitLocker*, ou `Install-WindowsFeature RSAT-Feature-Tools-BitLocker-BdeAducExt`.
+>
+> ![w11-11-aduc-onglet-bitlocker](https://cours.kaya.ovh/windows11/assets/captures/w11-11-aduc-onglet-bitlocker.png)
 
 ### Anneau Windows Update
 

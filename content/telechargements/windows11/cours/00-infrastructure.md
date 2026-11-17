@@ -102,7 +102,7 @@ New-NetNat -Name "NAT-Rennes" -InternalIPInterfaceAddressPrefix "192.168.3.0/24"
 
 > [!summary] L'essentiel du lab en un coup d'œil
 > - **Réseau** : `192.168.3.0/24` sur `vSwitch-Rennes` (interne + NAT), passerelle `192.168.3.254`
-> - **SRV01** : `192.168.3.1`, Windows Server 2025 Core — AD DS, DNS, DHCP
+> - **SRV01** : `192.168.3.1`, Windows Server 2025 (expérience de bureau) — AD DS, DNS, DHCP
 > - **PC01** : `192.168.3.10`, Windows 11 Pro 26H2 — poste d'administration
 > - **PC02** : adresse DHCP — cible du déploiement (chapitre 16)
 > - **MASTER** (bonus) : sur `Default Switch` — VM de référence (chapitre 14), inutile pour le déploiement du chapitre 16

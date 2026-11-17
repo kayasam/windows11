@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz · 06. Processus, services, tâches planifiées et journaux · Windows 11</title>
+<style>
+:root{color-scheme:light;--bg:#f5f5fb;--surface:#fff;--surface2:#eef1f7;--text:#182d3e;--dim:#455d70;--border:#b5bfce;--violet:#6940bd;--tint:#eeebfa;--mint:#087465;--mint-bg:#e7f6f1;--amber:#925500;--amber-bg:#fff4dd;--blue:#245db7;--blue-bg:#eaf1ff;--shadow:0 16px 45px #23314a09;--terminal:#132232;--terminal-text:#e7f3fc;--terminal-mint:#93e5ca;--accent:var(--violet)}
+html[data-theme=dark]{color-scheme:dark;--bg:#101827;--surface:#192638;--surface2:#223249;--text:#edf4ff;--dim:#bacce0;--border:#566a85;--violet:#c4a4ff;--tint:#302a49;--mint:#80dec6;--mint-bg:#163b36;--amber:#ffcb77;--amber-bg:#42341c;--blue:#9dbfff;--blue-bg:#203456;--shadow:0 16px 45px #0002;--terminal:#0c1725}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 'Segoe UI',system-ui,sans-serif}button{font:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.6}a{color:var(--violet);text-underline-offset:4px}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--violet);outline-offset:4px}h1,h2,h3,p,figure{margin:0}h1,h2,h3{line-height:1.18}p+p{margin-top:.7rem}code,kbd,pre{font-family:'Cascadia Code',Consolas,monospace}code{background:var(--surface2);border-radius:5px;padding:.12em .35em;font-size:.91em}pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:.87rem;line-height:1.85}pre code{padding:0;background:none;font-size:inherit}ul{padding-left:1.25rem}.wrap{max-width:1180px;margin:auto;padding:0 28px}.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:20px 0 0;font-size:.78rem}.toolbar a{text-decoration:none}.secondary{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 14px;font-weight:650;font-size:.83rem}.primary{border:0;background:var(--violet);color:#fff;border-radius:10px;padding:11px 18px;font-size:.88rem;font-weight:750}html[data-theme=dark] .primary{color:#1b1530}.eyebrow{text-transform:uppercase;font-size:.69rem;letter-spacing:.16em;font-weight:800;color:var(--violet)}.hero{display:grid;grid-template-columns:1fr 310px;align-items:center;gap:2rem;padding:35px 0 30px}.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);letter-spacing:-.05em;margin:.75rem 0 1rem}.hero h1 em{color:var(--violet);font-style:normal}.hero p{max-width:59ch;color:var(--dim);font-size:1.02rem}.chapter-tabs{display:flex;gap:6px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow-x:auto;margin-bottom:27px;box-shadow:var(--shadow)}.chapter-tabs button{flex:1;white-space:nowrap;border:0;background:none;border-radius:11px;color:var(--dim);font-size:.88rem;font-weight:700;padding:12px 15px}.chapter-tabs button[aria-selected=true]{color:var(--violet);background:var(--tint)}.tab-number{opacity:.65;margin-right:7px;font-size:.75rem}.section-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin:0 0 20px}.section-head h2{font-size:1.55rem;letter-spacing:-.025em;margin:5px 0}.section-head p{color:var(--dim);font-size:.9rem;max-width:65ch}.pill{border:1px solid var(--border);border-radius:30px;padding:6px 12px;font-size:.73rem;white-space:nowrap;color:var(--dim)}.terminal{background:var(--terminal);color:var(--terminal-text);border-radius:14px;overflow:hidden}.terminal-top{display:flex;align-items:center;gap:6px;padding:11px 15px;border-bottom:1px solid #ffffff16;color:#c8d7e6;font-size:.68rem}.terminal-top i{width:7px;height:7px;border-radius:50%;background:#91a2b4;display:inline-block}.terminal-top span{margin-left:auto}.terminal-body{padding:18px 21px}.terminal code{background:none;color:inherit}.prompt{color:var(--terminal-mint)}.terminal-label{font-size:.72rem;color:var(--dim);margin-bottom:8px}.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.surface{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow);min-width:0}.surface h3{font-size:1.15rem;margin:0 0 10px}.surface>p,.muted{color:var(--dim)}.surface>p{font-size:.9rem}.spaced{margin-top:24px}.note{border-left:3px solid var(--mint);padding:13px 17px;background:var(--mint-bg);border-radius:0 12px 12px 0;margin-top:17px;font-size:.87rem}.note strong{color:var(--mint)}.warning{background:var(--amber-bg);border-color:var(--amber)}.warning strong{color:var(--amber)}.result{min-height:55px;font-size:.9rem;margin-top:12px;padding:12px 15px;border-radius:11px;background:var(--surface2);overflow-wrap:anywhere}.button-row,.mode-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.mode-row{margin-bottom:16px}.mode-row button[aria-pressed=true],.button-row button[aria-pressed=true]{background:var(--tint);border-color:var(--violet);color:var(--violet)}.step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:20px}.step-card{border:1px solid var(--border);border-radius:17px;padding:20px;background:var(--surface);text-align:left;color:var(--text)}.step-card[aria-pressed=true]{background:var(--tint);border-color:var(--violet)}.step-card strong{display:block;margin:10px 0 5px}.step-card small{display:block;color:var(--dim);font-size:.8rem}.code-block{margin-top:15px;padding:17px 19px;background:var(--surface2);border-radius:12px}.timeline{display:flex;gap:7px;margin:19px 0}.timeline span{height:5px;border-radius:5px;background:var(--surface2);flex:1}.timeline span.active{background:var(--violet)}.mini-label,.simulation{font-size:.69rem;text-transform:uppercase;letter-spacing:.1em;font-weight:750;color:var(--dim)}.simulation{color:var(--mint)}.small-note{font-size:.8rem;color:var(--dim);margin-top:12px}.footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;margin:35px 0 24px;padding-top:22px;border-top:1px solid var(--border);font-size:.8rem;color:var(--dim)}.quiz-frame{width:100%;height:1100px;border:1px solid var(--border);border-radius:18px;background:var(--surface);margin-top:22px}.destination-card{display:flex;flex-direction:column;gap:12px}.destination-card a{font-weight:750;margin-top:auto}.panel-bottom{margin:24px 0}.panel-bottom button{width:100%}.noscript{padding:20px;background:var(--amber-bg)}label{display:block;font-size:.85rem;font-weight:650;margin:14px 0 6px}input,select{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;width:100%;max-width:100%}.tokens{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.token{padding:9px 14px;border-radius:12px;background:var(--tint);border:1px solid var(--violet);color:var(--violet);font-family:Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+@media(max-width:850px){.hero{grid-template-columns:1fr 210px}.chapter-tabs button{padding:12px 14px}}@media(max-width:620px){.wrap{padding:0 17px}.hero{grid-template-columns:1fr;padding:26px 0 24px;gap:20px}.hero-visual{display:none}.hero h1{font-size:2.3rem}.grid-two,.step-grid{grid-template-columns:1fr}.section-head{align-items:start}.section-head h2{font-size:1.4rem}.pill{white-space:normal;font-size:.68rem}.surface{padding:20px}.chapter-tabs{margin-bottom:24px}.toolbar{font-size:.7rem}.terminal-body{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+.wrap{max-width:860px}.hero{display:block;padding:30px 0 24px}.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero p{max-width:62ch}.toolbar{font-size:.85rem}.quiz-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.quiz-meta p{font-weight:700;font-size:.9rem}
+progress{display:block;width:100%;height:8px;border:0;border-radius:9px;overflow:hidden;accent-color:var(--violet);margin-bottom:26px;background:var(--surface2)}progress::-webkit-progress-bar{background:var(--surface2)}progress::-webkit-progress-value{background:var(--violet)}
+fieldset{border:0;padding:0;margin:0;min-width:0}legend{font-size:1.35rem;font-weight:750;line-height:1.45;margin-bottom:22px;width:100%}
+.choices{display:grid;gap:12px}.choice{display:flex;align-items:center;gap:13px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:0;font-weight:500;font-size:1rem;cursor:pointer;line-height:1.5;background:var(--surface)}
+.choice:has(input:checked){border-color:var(--violet);background:var(--tint)}.choice:has(input:focus-visible){outline:3px solid var(--violet);outline-offset:3px}
+.choice input{appearance:auto;width:19px;height:19px;flex:0 0 19px;margin:0;padding:0;accent-color:var(--violet)}.choice.correct{border-color:var(--mint);background:var(--mint-bg)}.choice.wrong{border-color:var(--amber);background:var(--amber-bg)}
+fieldset:disabled .choice{cursor:default}.feedback{margin-top:22px;padding:18px;border-radius:12px;background:var(--mint-bg);border-left:4px solid var(--mint)}.feedback.wrong{background:var(--amber-bg);border-color:var(--amber)}.feedback strong{display:block;margin-bottom:5px}.actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}.primary,.secondary{font-size:.95rem;min-height:44px}
+.result-score{font-size:3.4rem;font-weight:800;letter-spacing:-.05em;color:var(--violet);margin:14px 0}.review{padding:0;list-style:none;display:grid;gap:14px;margin:24px 0 0}.review li{padding:16px;border:1px solid var(--border);border-radius:12px}.review p{font-size:.92rem;margin-top:7px}.review .status{font-size:.8rem;font-weight:750;color:var(--mint)}.review .status.revise{color:var(--amber)}.footer{justify-content:center}.small-note{margin:10px 0 0}.surface{padding:28px}h2:focus{outline:none}
+@media(max-width:500px){.surface{padding:20px 16px}.hero{padding-top:22px}.hero h1{font-size:2rem}legend{font-size:1.15rem}.choice{padding:12px}.actions button{flex:1}.quiz-meta{align-items:flex-start}.pill{font-size:.7rem}.result-score{font-size:2.8rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="toolbar"><span>Windows 11 · Chapitre 06</span><button class="secondary" id="theme" type="button" aria-pressed="false">Thème sombre</button></div>
+ <header class="hero"><p class="eyebrow">Révision TSSR · 16 questions</p><h1>06. Processus, services, tâches planifiées et journaux</h1><p>Choisis une réponse, puis valide pour comprendre. Pas de chronomètre : prends le temps de réfléchir.</p></header>
+ <main>
+  <section class="surface" id="quiz" aria-label="Quiz du chapitre 6">
+   <div class="quiz-meta"><p id="counter"></p><span class="pill" id="topic"></span></div>
+   <progress id="progress" value="0" max="16" aria-label="Questions validées"></progress>
+   <form id="form">
+    <fieldset id="question"><legend id="prompt"></legend><div class="choices" id="choices"></div></fieldset>
+    <div id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1" hidden></div>
+    <div class="actions"><button class="primary" id="validate" type="submit" disabled>Valider ma réponse</button><button class="primary" id="next" type="button" hidden>Question suivante →</button></div>
+   </form>
+  </section>
+  <section class="surface" id="results" aria-labelledby="result-title" hidden>
+   <p class="eyebrow">Ton bilan</p><h2 id="result-title" tabindex="-1">Quiz terminé</h2><p class="result-score" id="score"></p><p id="conclusion"></p>
+   <div class="button-row"><button id="restart" class="primary" type="button">Recommencer le quiz</button></div>
+   <h3 class="spaced">Les réponses à retenir</h3><ol class="review" id="review"></ol>
+  </section>
+ </main>
+ <footer class="footer">Quiz d’entraînement · 06. Processus, services, tâches planifiées et journaux · Aucune donnée envoyée</footer>
+</div>
+<noscript><p class="noscript">Active JavaScript pour utiliser ce quiz interactif.</p></noscript>
+<script>
+'use strict';
+const questions = [
+ {
+  "topic": "Identifier un processus",
+  "q": "À quoi sert le PID d’un processus ?",
+  "choices": [
+   "Indiquer le port réseau qu’il écoute forcément",
+   "Identifier une instance de processus sur le poste",
+   "Connaître le mot de passe de son utilisateur",
+   "Définir son type de démarrage"
+  ],
+  "answer": 1,
+  "explanation": "Le PID distingue les instances de processus ; plusieurs processus peuvent porter le même nom."
+ },
+ {
+  "topic": "Observer la mémoire",
+  "q": "Pour trouver les processus les plus consommateurs de mémoire, quelle démarche convient ?",
+  "choices": [
+   "Lister les volumes par lettre",
+   "Trier les utilisateurs par SID",
+   "Lister les mises à jour par date",
+   "Trier les processus par consommation mémoire"
+  ],
+  "answer": 3,
+  "explanation": "Il faut observer l’indicateur lié au symptôme ; le tri rend les plus fortes consommations visibles."
+ },
+ {
+  "topic": "Arrêter proprement",
+  "q": "Avant de forcer l’arrêt d’un logiciel, quel risque faut-il considérer ?",
+  "choices": [
+   "La perte de données non enregistrées",
+   "La suppression automatique de son pilote",
+   "Le changement du nom de la machine",
+   "La suppression du compte utilisateur"
+  ],
+  "answer": 0,
+  "explanation": "Un arrêt forcé peut interrompre une écriture ou faire perdre un travail non sauvegardé."
+ },
+ {
+  "topic": "Lire un service",
+  "q": "Quelle différence faut-il faire entre état et type de démarrage d’un service ?",
+  "choices": [
+   "Les deux champs sont strictement identiques",
+   "L’état détermine le numéro de série du poste",
+   "L’état indique son fonctionnement actuel, le type règle les conditions de démarrage",
+   "Le type indique le compte utilisateur connecté"
+  ],
+  "answer": 2,
+  "explanation": "Un service automatique peut être arrêté au moment de l’observation ; il faut interpréter les deux propriétés."
+ },
+ {
+  "topic": "Diagnostiquer un service",
+  "q": "Un service automatique est arrêté. Que faut-il faire avant de conclure à une panne ?",
+  "choices": [
+   "Passer tous les services en automatique",
+   "Effacer le journal Système",
+   "Vérifier son rôle, ses déclencheurs et les journaux",
+   "Réinstaller tous les services"
+  ],
+  "answer": 2,
+  "explanation": "Certains services démarrent à la demande ou s’arrêtent normalement ; un état isolé ne suffit pas."
+ },
+ {
+  "topic": "Réparer l’impression",
+  "q": "Quel service observe-t-on dans le TP pour l’impression Windows ?",
+  "choices": [
+   "Service Windows Time",
+   "Service DHCP",
+   "Spouleur d’impression, Spooler",
+   "Service DNS"
+  ],
+  "answer": 2,
+  "explanation": "Le Spooler gère les travaux d’impression ; son arrêt peut empêcher notamment l’impression PDF."
+ },
+ {
+  "topic": "Éviter une dépendance oubliée",
+  "q": "Pourquoi examiner les dépendances d’un service ?",
+  "choices": [
+   "Pour copier automatiquement son exécutable",
+   "Pour connaître le volume de son journal uniquement",
+   "Pour désactiver tous les autres services",
+   "Parce qu’un composant requis arrêté peut empêcher son démarrage"
+  ],
+  "answer": 3,
+  "explanation": "Le diagnostic doit considérer les services nécessaires au fonctionnement du composant."
+ },
+ {
+  "topic": "Planifier une action",
+  "q": "Quels éléments définissent le cœur d’une tâche planifiée ?",
+  "choices": [
+   "Un déclencheur, une action et un contexte de sécurité",
+   "Une forêt, une UO et un domaine",
+   "Une ISO, un index et une partition",
+   "Un volume, un format et une lettre"
+  ],
+  "answer": 0,
+  "explanation": "Il faut savoir quand la tâche part, ce qu’elle exécute et avec quels droits."
+ },
+ {
+  "topic": "Choisir le compte",
+  "q": "Une tâche s’exécute sous SYSTEM. Quelle affirmation est correcte ?",
+  "choices": [
+   "Elle ne peut pas accéder au disque local",
+   "Elle s’exécute dans un contexte distinct de la session de l’élève",
+   "Elle récupère forcément le bureau et les alias de l’élève",
+   "Elle demande à chaque exécution le mot de passe de stagiaire"
+  ],
+  "answer": 1,
+  "explanation": "Le compte d’exécution change les droits, l’environnement et les ressources accessibles."
+ },
+ {
+  "topic": "Valider une tâche",
+  "q": "Une tâche vient d’être créée. Quelle validation est la plus complète ?",
+  "choices": [
+   "Vérifier seulement que son nom existe",
+   "La lancer, lire son résultat et vérifier le journal produit",
+   "Supposer qu’elle a réussi si aucune fenêtre n’apparaît",
+   "Attendre sans examiner son résultat"
+  ],
+  "answer": 1,
+  "explanation": "L’existence de la tâche ne prouve pas que l’action fonctionne ; le résultat attendu doit être contrôlé."
+ },
+ {
+  "topic": "Vérifier les chemins",
+  "q": "Une tâche indique « fichier introuvable ». Quel contrôle est prioritaire ?",
+  "choices": [
+   "Le chemin de l’exécutable, du script et ses arguments",
+   "La taille de la partition EFI",
+   "Le nom NetBIOS du domaine uniquement",
+   "Le thème du terminal"
+  ],
+  "answer": 0,
+  "explanation": "Une tâche peut échouer sur une simple erreur de chemin ou de guillemets."
+ },
+ {
+  "topic": "Retrouver les événements",
+  "q": "Quelle console graphique permet de consulter les journaux Système et Application ?",
+  "choices": [
+   "Observateur d’événements",
+   "Gestion des disques",
+   "Gestionnaire de périphériques",
+   "Gestionnaire de comptes locaux"
+  ],
+  "answer": 0,
+  "explanation": "L’Observateur d’événements permet de consulter et filtrer les événements journalisés."
+ },
+ {
+  "topic": "Filtrer à la source",
+  "q": "Pourquoi utiliser Get-WinEvent -FilterHashtable pour cibler un journal et des erreurs ?",
+  "choices": [
+   "Pour transformer les erreurs en informations",
+   "Pour augmenter automatiquement la rétention du journal",
+   "Pour effacer les événements non retenus",
+   "Pour limiter les événements récupérés dès la requête"
+  ],
+  "answer": 3,
+  "explanation": "Le filtrage côté journal évite de charger des événements inutiles avant de les filtrer."
+ },
+ {
+  "topic": "Interpréter un journal",
+  "q": "Que faut-il rapprocher d’un événement d’erreur pour lui donner du sens ?",
+  "choices": [
+   "Le nombre de lettres de son nom",
+   "Le fond d’écran du poste",
+   "Uniquement sa couleur dans la console",
+   "Son heure, sa source, son contenu et le symptôme observé"
+  ],
+  "answer": 3,
+  "explanation": "Un événement peut être sans lien avec l’incident ; le contexte et la chronologie aident à établir un rapport."
+ },
+ {
+  "topic": "Lire la fiabilité",
+  "q": "Quel outil donne une chronologie de stabilité et d’incidents du poste ?",
+  "choices": [
+   "La console DHCP",
+   "Le Moniteur de fiabilité",
+   "Le catalogue WSIM",
+   "Le gestionnaire de partitions"
+  ],
+  "answer": 1,
+  "explanation": "La chronologie de fiabilité aide à rapprocher installations, erreurs et dégradation de stabilité."
+ },
+ {
+  "topic": "Clore une manipulation",
+  "q": "Après avoir désactivé le Spooler pour un test, que faut-il faire ?",
+  "choices": [
+   "Effacer l’historique pour masquer le test",
+   "Supprimer le pilote réseau",
+   "Rétablir son fonctionnement attendu et tester l’impression",
+   "Laisser le service désactivé pour le TP suivant"
+  ],
+  "answer": 2,
+  "explanation": "La validation inclut le retour à un état utilisable, pas seulement l’observation de la panne."
+ }
+];
+const $=id=>document.getElementById(id);
+let index=0,answers=[];
+function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function render(focus=false){
+ const q=questions[index];$('counter').textContent=`Question ${index+1} sur ${questions.length}`;$('topic').textContent=q.topic;
+ $('progress').value=answers.length;$('progress').max=questions.length;$('prompt').textContent=q.q;
+ $('question').disabled=false;$('choices').replaceChildren();$('feedback').hidden=true;$('feedback').replaceChildren();
+ $('validate').hidden=false;$('validate').disabled=true;$('next').hidden=true;
+ q.choices.forEach((text,i)=>{const label=node('label',undefined,'choice');const input=document.createElement('input');input.type='radio';input.name='answer';input.value=String(i);input.required=true;input.addEventListener('change',()=>{$('validate').disabled=false;});label.append(input,node('span',text));$('choices').append(label);});
+ if(focus){$('prompt').tabIndex=-1;$('prompt').focus();}
+}
+$('form').addEventListener('submit',e=>{
+ e.preventDefault();if(answers.length>index)return;const chosen=document.querySelector('input[name="answer"]:checked');if(!chosen)return;
+ const value=Number(chosen.value),q=questions[index],correct=value===q.answer;answers.push(value);$('progress').value=answers.length;$('question').disabled=true;
+ [...$('choices').children].forEach((label,i)=>{if(i===q.answer)label.classList.add('correct');else if(i===value)label.classList.add('wrong');});
+ const feedback=$('feedback');feedback.className='feedback'+(correct?'':' wrong');feedback.append(node('strong',correct?'Bonne réponse !':'À retenir : '+q.choices[q.answer]),node('p',q.explanation));feedback.hidden=false;
+ $('validate').hidden=true;$('next').hidden=false;$('next').textContent=index===questions.length-1?'Voir mon bilan →':'Question suivante →';feedback.focus();
+});
+$('next').addEventListener('click',()=>{if(answers.length<=index)return;if(index<questions.length-1){index++;render(true);}else finish();});
+function finish(){
+ $('quiz').hidden=true;$('results').hidden=false;const score=answers.filter((a,i)=>a===questions[i].answer).length;
+ $('score').textContent=`${score} / ${questions.length}`;
+ $('conclusion').textContent=score===questions.length?'Tous les bons réflexes sont là. Tu peux reprendre le TP avec ces repères.':score>=Math.ceil(questions.length*0.7)?'Les bases sont bien engagées. Relis les explications des questions à revoir.':'Prends le temps de relire les explications, puis réessaie tranquillement.';
+ $('review').replaceChildren();questions.forEach((q,i)=>{const correct=answers[i]===q.answer,li=node('li');li.append(node('span',`${i+1}. ${correct?'Acquis':'À revoir'}`,'status'+(correct?'':' revise')),node('p',q.q),node('p','Bonne réponse : '+q.choices[q.answer]));if(!correct)li.append(node('p','Ta réponse : '+q.choices[answers[i]]));li.append(node('p',q.explanation));$('review').append(li);});$('result-title').focus();
+}
+$('restart').addEventListener('click',()=>{index=0;answers=[];$('results').hidden=true;$('quiz').hidden=false;render(true);});
+function setTheme(theme){document.documentElement.dataset.theme=theme;$('theme').textContent=theme==='dark'?'Thème clair':'Thème sombre';$('theme').setAttribute('aria-pressed',String(theme==='dark'));try{localStorage.setItem('theme',theme);}catch{}}
+let initial='light';try{if(localStorage.getItem('theme')==='dark')initial='dark';}catch{}setTheme(initial);
+$('theme').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+window.addEventListener('message',e=>{if(e.source!==window.parent||!e.data||e.data.type!=='linux-theme')return;if(e.data.theme==='light'||e.data.theme==='dark')setTheme(e.data.theme);});
+render();
+</script>
+</body>
+</html>

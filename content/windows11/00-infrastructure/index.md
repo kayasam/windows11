@@ -3,7 +3,8 @@ title: "00. Infrastructure de référence (fil rouge)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/00-infrastructure"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/00-infrastructure/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/00-infrastructure.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="quiz" href="https://cours.kaya.ovh/windows11/windows11/00-infrastructure/quiz/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="6" fill="#7652ad"/><path d="M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="1.6" fill="#fff"/></svg>
+</span><span class="resource-label">Quiz</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/00-infrastructure.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!NOTE] Objectif
 > Ce chapitre n'a pas de TP — c'est la fiche de référence du **fil rouge Entreprise Fournil** qui traverse toute la formation. Adressage IP, domaine, UO, comptes, DHCP, réseau virtuel : tout ce qui est posé progressivement est récapitulé ici, à consulter à tout moment.
@@ -107,7 +108,7 @@ New-NetNat -Name "NAT-Rennes" -InternalIPInterfaceAddressPrefix "192.168.3.0/24"
 
 > [!summary] L'essentiel du lab en un coup d'œil
 > - **Réseau** : `192.168.3.0/24` sur `vSwitch-Rennes` (interne + NAT), passerelle `192.168.3.254`
-> - **SRV01** : `192.168.3.1`, Windows Server 2025 Core — AD DS, DNS, DHCP
+> - **SRV01** : `192.168.3.1`, Windows Server 2025 (expérience de bureau) — AD DS, DNS, DHCP
 > - **PC01** : `192.168.3.10`, Windows 11 Pro 26H2 — poste d'administration
 > - **PC02** : adresse DHCP — cible du déploiement (chapitre 16)
 > - **MASTER** (bonus) : sur `Default Switch` — VM de référence (chapitre 14), inutile pour le déploiement du chapitre 16

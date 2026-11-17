@@ -7,6 +7,14 @@
       "chapterTitle": "00. Infrastructure de référence (fil rouge)",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
+    },
+    {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/00-infrastructure/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "00. Infrastructure de référence (fil rouge)",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
     }
   ],
   "windows11/01-introduction-hyperv": [
@@ -17,6 +25,14 @@
       "chapterTitle": "01. Introduction à Windows 11 et lab Hyper-V",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
+    },
+    {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "01. Introduction à Windows 11 et lab Hyper-V",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
     },
     {
       "kind": "tp",
@@ -115,6 +131,14 @@
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "05. Pilotes, applications et WinGet",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
+    },
+    {
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp",
       "label": "TP",
@@ -131,6 +155,14 @@
       "chapterTitle": "06. Processus, services, tâches planifiées et journaux",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
+    },
+    {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "06. Processus, services, tâches planifiées et journaux",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
     },
     {
       "kind": "tp",
@@ -151,6 +183,14 @@
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/07-powershell/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "07. PowerShell pour l'administrateur",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
+    },
+    {
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/07-powershell/tp",
       "label": "TP",
@@ -167,6 +207,14 @@
       "chapterTitle": "08. Windows Update et gestion des mises à jour",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
+    },
+    {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "08. Windows Update et gestion des mises à jour",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
     },
     {
       "kind": "tp",
@@ -187,6 +235,14 @@
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
     },
     {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/09-securite/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "09. Sécuriser un poste Windows 11",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
+    },
+    {
       "kind": "tp",
       "href": "https://cours.kaya.ovh/windows11/windows11/09-securite/tp",
       "label": "TP",
@@ -203,6 +259,14 @@
       "chapterTitle": "10. Active Directory et services réseau",
       "track": "windows11",
       "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 24\"><rect x=\"1\" y=\"1\" width=\"30\" height=\"22\" rx=\"3\" fill=\"none\" stroke=\"#34495e\" stroke-width=\"2\"/><path d=\"M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z\" fill=\"#34495e\"/><path d=\"M23 6h3v7h3l-4.5 5-4.5-5h3Z\" fill=\"#34495e\"/></svg>\n"
+    },
+    {
+      "kind": "quiz",
+      "href": "https://cours.kaya.ovh/windows11/windows11/10-active-directory/quiz/",
+      "label": "Quiz",
+      "chapterTitle": "10. Active Directory et services réseau",
+      "track": "windows11",
+      "symbol": "<svg class=\"resource-symbol\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect x=\"4\" y=\"3\" width=\"24\" height=\"26\" rx=\"6\" fill=\"#7652ad\"/><path d=\"M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2.8\" stroke-linecap=\"round\"/><circle cx=\"16\" cy=\"23\" r=\"1.6\" fill=\"#fff\"/></svg>\n"
     },
     {
       "kind": "tp",
