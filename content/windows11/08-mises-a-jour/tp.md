@@ -27,7 +27,7 @@ title: "TP 08. Windows Update et gestion des mises à jour"
 ## Prérequis
 
 - `PC01` avec accès Internet, terminal **administrateur**
-- Stratégie d'exécution `RemoteSigned` (TP 07)
+- (bonus) Pour le module PSWindowsUpdate, vérifier la politique d’exécution et suivre les consignes de chargement du module ; le script du TP 07 n’est pas un prérequis.
 
 ---
 

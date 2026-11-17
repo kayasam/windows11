@@ -50,196 +50,196 @@ fieldset:disabled .choice{cursor:default}.feedback{margin-top:22px;padding:18px;
 'use strict';
 const questions = [
  {
-  "topic": "Identifier l’environnement",
-  "q": "Quelle différence existe entre Windows Terminal et PowerShell ?",
+  "topic": "Terminal et PowerShell",
+  "q": "Quelle différence faut-il faire entre Windows Terminal et Windows PowerShell ?",
   "choices": [
-   "Terminal héberge des consoles, PowerShell est un interpréteur de commandes",
-   "Les deux sont des versions du même service",
-   "Terminal remplace le moteur PowerShell",
-   "PowerShell ne peut fonctionner que dans Terminal"
+   "Terminal est une commande de suppression de fichiers",
+   "Terminal héberge la console, PowerShell comprend les commandes",
+   "Terminal et PowerShell sont deux noms du BIOS",
+   "PowerShell est uniquement un éditeur de texte"
+  ],
+  "answer": 1,
+  "explanation": "La fenêtre et l’interpréteur ont des rôles différents ; ce chapitre utilise Windows PowerShell dans Terminal."
+ },
+ {
+  "topic": "Vérifier la version",
+  "q": "Quelle commande fournie dans le cours affiche la version du moteur ouvert ?",
+  "choices": [
+   "Get-NetAdapter -Name Version",
+   "Get-Date -Version",
+   "$PSVersionTable.PSVersion",
+   "Get-Service -Name Version"
+  ],
+  "answer": 2,
+  "explanation": "Il suffit de lire la version affichée ; aucune installation supplémentaire n’est nécessaire pour débuter dans le lab."
+ },
+ {
+  "topic": "Lire un paramètre",
+  "q": "Dans Get-Service -Name Spooler, que représente Spooler ?",
+  "choices": [
+   "Le nom du dossier où enregistrer la sortie",
+   "Une demande de redémarrage du poste",
+   "La valeur du paramètre Name, qui choisit un service",
+   "Le nom du compte administrateur à créer"
+  ],
+  "answer": 2,
+  "explanation": "Get-Service est la commande, -Name est le paramètre et Spooler est la valeur recherchée."
+ },
+ {
+  "topic": "Trouver une commande",
+  "q": "Quelle commande aide à trouver les cmdlets portant sur les services ?",
+  "choices": [
+   "Get-Process -Name Help",
+   "Get-NetAdapter -Name Command",
+   "Get-Command -Noun Service",
+   "Get-Date -Name Service"
+  ],
+  "answer": 2,
+  "explanation": "Get-Command recherche les commandes disponibles ; Noun permet de chercher la partie nominale de leur nom."
+ },
+ {
+  "topic": "Consulter les exemples",
+  "q": "Comment consulter les exemples de Get-Service sans lancer une modification ?",
+  "choices": [
+   "Get-Help Get-Service -Examples",
+   "Set-Service -Name Help",
+   "Stop-Service -Name Get-Help",
+   "Remove-Service -Name Examples"
   ],
   "answer": 0,
-  "explanation": "Un terminal peut héberger plusieurs interpréteurs ; il ne faut pas confondre l’hôte et le langage exécuté."
+  "explanation": "Get-Help présente l’usage d’une commande. Lire l’aide n’exécute pas les actions décrites dans les exemples."
  },
  {
-  "topic": "Lire la version",
-  "q": "Quelle variable donne notamment la version du moteur PowerShell courant ?",
+  "topic": "Compléter la saisie",
+  "q": "Quelle touche peut aider à compléter un nom de commande ?",
   "choices": [
-   "$LASTEXITCODE",
-   "$env:PATH",
-   "$env:USERPROFILE",
-   "$PSVersionTable"
+   "Verr. Num",
+   "Impr. écran",
+   "Pause",
+   "Tabulation"
   ],
   "answer": 3,
-  "explanation": "PSVersionTable décrit le moteur ; PATH et USERPROFILE sont des variables d’environnement d’un autre usage."
+  "explanation": "La complétion aide à saisir les noms ; il faut toujours relire la commande obtenue avant de l’exécuter."
  },
  {
-  "topic": "Découvrir les commandes",
-  "q": "Quelle commande aide à trouver les cmdlets liées aux services ?",
+  "topic": "Utiliser un motif",
+  "q": "Que demande Get-Service -Name Sp* ?",
   "choices": [
-   "Get-Volume -Name Service",
-   "Get-Service -Noun Command",
-   "Get-Help -Noun Process",
-   "Get-Command -Noun Service"
+   "Uniquement le service dont le nom est exactement Sp*",
+   "Les services dont le nom commence par Sp",
+   "Le démarrage de tous les services arrêtés",
+   "La suppression des services commençant par Sp"
   ],
-  "answer": 3,
-  "explanation": "Get-Command sert à découvrir les commandes ; Noun cible la partie nominale des cmdlets."
+  "answer": 1,
+  "explanation": "L’étoile représente une suite de caractères dans cette recherche. Get-Service consulte les services sans les démarrer."
  },
  {
-  "topic": "Consulter l’aide",
-  "q": "Comment afficher les exemples de Stop-Service ?",
+  "topic": "Lire les colonnes",
+  "q": "Dans le résultat de Get-Service, que décrit Status ?",
   "choices": [
-   "Get-Command -Run Stop-Service",
-   "Get-Service Stop-Help",
-   "Stop-Service -ShowExamples",
-   "Get-Help Stop-Service -Examples"
-  ],
-  "answer": 3,
-  "explanation": "Get-Help explique l’usage d’une commande sans exécuter l’action décrite."
- },
- {
-  "topic": "Comprendre les objets",
-  "q": "Que transporte généralement le pipeline PowerShell entre cmdlets ?",
-  "choices": [
-   "Uniquement des fichiers CSV",
-   "Uniquement des codes de retour",
-   "Des objets avec des propriétés",
-   "Uniquement une image du texte affiché"
-  ],
-  "answer": 2,
-  "explanation": "Les objets gardent leurs propriétés ; l’affichage en tableau n’est qu’une représentation."
- },
- {
-  "topic": "Découvrir les propriétés",
-  "q": "Quelle commande permet d’explorer les membres d’un objet ?",
-  "choices": [
-   "Get-Member",
-   "Get-Volume",
-   "Get-HotFix",
-   "Get-LocalUser"
+   "L’état du service, par exemple Running ou Stopped",
+   "Le chemin du profil de l’utilisateur",
+   "Le numéro de série du disque",
+   "L’adresse IP du poste"
   ],
   "answer": 0,
-  "explanation": "Get-Member révèle les propriétés et méthodes disponibles et aide à construire un filtre."
+  "explanation": "Chaque ligne décrit un service et chaque colonne une de ses propriétés ; Status est son état."
  },
  {
-  "topic": "Filtrer les objets",
-  "q": "Quelle cmdlet garde les objets qui satisfont une condition ?",
+  "topic": "Lire de gauche à droite",
+  "q": "À quoi sert la barre verticale entre deux commandes PowerShell ?",
   "choices": [
-   "Measure-Object",
-   "Select-Object -First",
-   "Where-Object",
-   "Sort-Object"
+   "Ajouter automatiquement des droits administrateur",
+   "Exécuter la deuxième sur toutes les VM du réseau",
+   "Effacer le résultat de la première sur le disque",
+   "Transmettre le résultat de la première à la suivante"
   ],
-  "answer": 2,
-  "explanation": "Where-Object filtre ; trier, sélectionner les premiers et compter sont d’autres opérations."
- },
- {
-  "topic": "Trier les résultats",
-  "q": "Quelle cmdlet classe des objets selon une propriété ?",
-  "choices": [
-   "Export-Csv",
-   "Get-Member",
-   "Sort-Object",
-   "Where-Object"
-  ],
-  "answer": 2,
-  "explanation": "Sort-Object ordonne les résultats, avec Descending pour inverser le sens."
+  "answer": 3,
+  "explanation": "Le pipeline permet de traiter progressivement un résultat : consulter, sélectionner, trier ou filtrer."
  },
  {
   "topic": "Choisir les colonnes",
-  "q": "Quelle cmdlet sélectionne les propriétés à afficher ou à exporter ?",
+  "q": "Que fait Select-Object Name, Status après Get-Service ?",
   "choices": [
-   "Set-ExecutionPolicy",
-   "Select-Object",
-   "Stop-Process",
-   "Get-Command"
-  ],
-  "answer": 1,
-  "explanation": "Select-Object permet de choisir les champs utiles plutôt que de tout conserver."
- },
- {
-  "topic": "Compter les résultats",
-  "q": "Quelle cmdlet permet de compter les objets reçus ?",
-  "choices": [
-   "Measure-Object",
-   "Out-GridView",
-   "Format-List",
-   "Import-Csv"
-  ],
-  "answer": 0,
-  "explanation": "Measure-Object fournit notamment Count ; mettre en forme ne réalise pas ce comptage."
- },
- {
-  "topic": "Interroger le poste",
-  "q": "Quelle classe CIM utilise-t-on pour interroger le BIOS ?",
-  "choices": [
-   "Win32_UserProfile",
-   "Win32_LogicalDisk",
-   "Win32_BIOS",
-   "Win32_Service"
-  ],
-  "answer": 2,
-  "explanation": "Chaque classe représente un type d’information ; le BIOS et les disques ne se lisent pas dans la même classe."
- },
- {
-  "topic": "Exporter un inventaire",
-  "q": "Pourquoi produire un objet avant Export-Csv ?",
-  "choices": [
-   "Pour empêcher toute modification du fichier",
-   "Pour conserver des champs structurés réutilisables",
-   "Pour chiffrer automatiquement le CSV",
-   "Pour intégrer tous les installeurs dans le fichier"
-  ],
-  "answer": 1,
-  "explanation": "Un inventaire structuré se trie, se filtre et s’exporte sans dépendre d’un texte décoratif."
- },
- {
-  "topic": "Créer un paramètre",
-  "q": "À quoi sert le bloc param au début d’un script ?",
-  "choices": [
-   "Déclarer les entrées configurables du script",
-   "Ajouter une interface graphique",
-   "Exécuter le script sous SYSTEM",
-   "Installer automatiquement les modules requis"
-  ],
-  "answer": 0,
-  "explanation": "Les paramètres permettent de réutiliser un script sans modifier son contenu à chaque exécution."
- },
- {
-  "topic": "Limiter la portée",
-  "q": "Pour modifier la politique d’exécution uniquement pour son utilisateur, quelle portée choisir ?",
-  "choices": [
-   "MachinePolicy",
-   "CurrentUser",
-   "UserPolicy définie dans AD",
-   "LocalMachine"
-  ],
-  "answer": 1,
-  "explanation": "CurrentUser limite le réglage à l’utilisateur ; une stratégie d’entreprise peut néanmoins être prioritaire."
- },
- {
-  "topic": "Comprendre RemoteSigned",
-  "q": "Un script téléchargé est bloqué avec RemoteSigned. Quel réflexe convient avant de le débloquer ?",
-  "choices": [
-   "Le lancer sous SYSTEM pour ignorer le problème",
-   "Supprimer systématiquement son extension",
-   "Désactiver toutes les protections du poste",
-   "Vérifier sa provenance et lire son contenu"
+   "Il renomme les services en Name et Status",
+   "Il démarre les services sélectionnés",
+   "Il crée deux nouveaux comptes locaux",
+   "Il conserve ces deux propriétés dans le résultat"
   ],
   "answer": 3,
-  "explanation": "Le déblocage ne garantit pas l’innocuité du script ; la confiance dans la source et la lecture restent nécessaires."
+  "explanation": "Select-Object choisit les colonnes ; il ne modifie pas les services eux-mêmes."
  },
  {
-  "topic": "Lire un CSV",
-  "q": "Quelle cmdlet recharge un inventaire CSV en objets PowerShell ?",
+  "topic": "Comprendre le tri",
+  "q": "À quoi sert -Descending avec Sort-Object ?",
   "choices": [
-   "Get-Member",
-   "Import-Csv",
-   "Format-Table",
-   "Export-Csv"
+   "Enregistrer les résultats dans un script",
+   "Convertir les valeurs en mégaoctets",
+   "Conserver uniquement les éléments arrêtés",
+   "Trier par ordre décroissant"
+  ],
+  "answer": 3,
+  "explanation": "Descending change le sens du tri, du plus grand au plus petit pour une valeur numérique."
+ },
+ {
+  "topic": "Lire une condition",
+  "q": "Dans Where-Object Status -eq Stopped, que signifie -eq ?",
+  "choices": [
+   "Égal à",
+   "Différent de",
+   "Contient obligatoirement plusieurs mots",
+   "Supérieur à"
+  ],
+  "answer": 0,
+  "explanation": "Cette condition garde les objets dont Status est égal à Stopped. Une seule condition suffit dans le socle."
+ },
+ {
+  "topic": "Limiter les résultats",
+  "q": "À quoi sert Select-Object -First 5 après un tri ?",
+  "choices": [
+   "Changer les cinq premières lignes du système",
+   "Conserver les cinq premiers résultats",
+   "Répéter la commande cinq fois",
+   "Attendre cinq secondes avant d’afficher"
   ],
   "answer": 1,
-  "explanation": "Import-Csv relit les colonnes en propriétés d’objets, avec le séparateur correspondant à celui de l’export."
+  "explanation": "First limite les résultats conservés ; son effet dépend donc de l’ordre donné par le tri précédent."
+ },
+ {
+  "topic": "Lire sans calculer",
+  "q": "WorkingSet64 est affiché pour les processus dans le TP. Que doit faire un débutant ?",
+  "choices": [
+   "Convertir chaque valeur à la main en Go",
+   "Créer un objet personnalisé avant de continuer",
+   "Conserver les valeurs en octets et comparer leur ordre",
+   "Écrire obligatoirement une formule d’arrondi"
+  ],
+  "answer": 2,
+  "explanation": "Le TP demande de comprendre le tri et la sélection. Aucun calcul ni colonne personnalisée n’est nécessaire."
+ },
+ {
+  "topic": "Identifier un poste",
+  "q": "Quel résultat cherche-t-on avec Get-CimInstance Win32_BIOS suivi de Select-Object SerialNumber ?",
+  "choices": [
+   "Le mot de passe du compte local",
+   "Le numéro de série du poste",
+   "La liste des programmes à désinstaller",
+   "La taille du dossier Documents"
+  ],
+  "answer": 1,
+  "explanation": "La commande est fournie pour lire une information d’inventaire ; il n’est pas demandé de mémoriser les noms des classes."
+ },
+ {
+  "topic": "Lire le dernier démarrage",
+  "q": "Que représente LastBootUpTime dans les informations du système ?",
+  "choices": [
+   "La date et l’heure du dernier démarrage de Windows",
+   "La date de création du compte de domaine",
+   "L’heure du prochain redémarrage planifié",
+   "La date d’achat de l’ordinateur"
+  ],
+  "answer": 0,
+  "explanation": "Cette propriété aide à comprendre depuis quand le système fonctionne ; on lit directement la valeur affichée."
  }
 ];
 const $=id=>document.getElementById(id);

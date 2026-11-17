@@ -45,7 +45,7 @@ title: "TP 15. Images WIM et DISM"
 
 ## Partie B — Inspecter
 
-**B1.** Affiche les informations de l’`install.wim` officiel copié dans `D:\Images\install.wim`, repère l’index de Windows 11 Professionnel, puis affiche son détail. Combien d’index ? Quelle édition ? Quelle taille décompressée ?
+**B1.** Dans un Terminal administrateur sur `PC01`, affiche les informations de l’`install.wim` officiel copié au TP 13 (`C:\Images\install.wim`), repère l’index de Windows 11 Professionnel, puis affiche son détail. Combien d’index ? Quelle édition ? Quelle taille décompressée ?
 
 **B2.** Explique à quoi sert l’index lors d’une installation automatisée. Pourquoi faut-il le vérifier pour chaque nouvelle ISO ? La comparaison avec `MASTER.wim` est (bonus).
 

@@ -9,7 +9,7 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 
 > [!abstract] Parcours TSSR
-> Socle en Windows PowerShell 5.1 : aide, objets, pipeline, CIM et script paramétré. Le formateur fournit une trame du script à compléter ; la découverte des syntaxes est guidée. Installer PowerShell 7 est (bonus).
+> Socle débutant : lire des commandes, utiliser l’aide et essayer un pipeline simple avec les exemples du cours. Aucun calcul ni script à écrire n’est requis. Les parties D, E et F sont entièrement (bonus).
 
 > Chapitres associés : [07. PowerShell pour l'administrateur](https://cours.kaya.ovh/windows11/windows11/07-powershell/)
 
@@ -17,10 +17,10 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 ## Objectifs
 
-- Trouver une commande et son aide sans Internet
-- Exploiter le pipeline : filtrer, trier, sélectionner, mesurer
-- Interroger le poste avec CIM (sans WMIC)
-- Écrire un script paramétré qui produit un inventaire CSV
+- Trouver une commande et lire ses exemples avec le cours ouvert
+- Lire un pipeline simple : choisir des colonnes, trier et filtrer avec une seule condition
+- Lire les informations du poste avec les commandes CIM fournies
+- Écrire un script paramétré qui produit un inventaire CSV (bonus)
 - Installer PowerShell 7 correctement et comprendre la politique d'exécution (bonus)
 
 ---
@@ -37,35 +37,38 @@ title: "TP 07. PowerShell pour l'administrateur"
 
 **A2.** Liste toutes les cmdlets dont le nom (partie « Nom ») est `Service`.
 
-**A3.** Affiche uniquement les **exemples** de l'aide de `Stop-Service`. Que faire si l'aide est minimale ?
+**A3.** Affiche uniquement les **exemples** de l'aide de `Get-Service`. Que faire si l'aide est minimale ?
 
-**A4.** Quelles propriétés possède un objet renvoyé par `Get-Service` ? Lesquelles indiquent l'état et le type de démarrage ?
+**A4.** Exécute `Get-Service`. Repère les colonnes `Status`, `Name` et `DisplayName`. Laquelle donne l’état du service ? Quelle différence entre le nom technique et le nom affiché ?
 
 ---
 
 ## Partie B — Pipeline
 
-**B1.** Combien de processus tournent sur le poste ?
+**B1.** Exécute `Get-Process`, puis `Get-Process | Measure-Object`. Combien de processus indique la valeur `Count` ?
 
-**B2.** Affiche les 5 processus les plus gourmands en mémoire, avec une colonne « Mo » arrondie.
+**B2.** Avec la commande fournie dans le cours, affiche les cinq processus les plus consommateurs de mémoire avec `Name` et `WorkingSet64`. Garde les valeurs en octets : aucun calcul ni arrondi n’est demandé. Explique le rôle de `-Descending` et de `-First 5`.
 
-**B3.** Liste les services en démarrage automatique mais arrêtés, en n'affichant que leur nom.
+**B3.** Avec `Get-Service | Where-Object Status -eq Stopped`, affiche les services arrêtés. Ajoute ensuite `Select-Object Name, Status` pour choisir les colonnes. Que signifie `-eq` ? Un service arrêté est-il toujours en panne ?
 
-**B4.** Exporte la liste des services (nom, nom affiché, état, type de démarrage) dans `C:\Temp\services.csv`, séparateur `;`, ouvrable dans Excel.
+**B4.** (bonus) Exporte la liste des services (nom, nom affiché, état, type de démarrage) dans `C:\Temp\services.csv`, séparateur `;`, ouvrable dans Excel.
 
 ---
 
-## Partie C — CIM / WMI
+## Partie C — Lire les informations du poste
 
-**C1.** Le support te demande le **numéro de série** du poste. WMIC a disparu : quelle commande ?
+**C1.** Exécute la commande fournie : `Get-CimInstance Win32_BIOS | Select-Object SerialNumber`. Relève le numéro de série et explique son utilité pour un inventaire ou une demande au support.
 
-**C2.** Affiche le modèle de la machine, la RAM en Go, la version de Windows et la date du dernier démarrage.
+**C2.** Utilise les commandes fournies dans le cours pour afficher le fabricant, le modèle, la version de Windows et la date du dernier démarrage. Aucun calcul de RAM ni conversion d’unité n’est demandé.
 
 **C3.** (bonus) Trouve, sans Internet, le nom de la classe CIM qui décrit les cartes réseau.
 
 ---
 
-## Partie D — Un script d'inventaire
+## Partie D — Un script d'inventaire (bonus)
+
+> [!NOTE] Pour aller plus loin uniquement
+> Cette partie est facultative. Les variables, paramètres, objets personnalisés et conversions qu’elle utilise ne sont pas à maîtriser pour suivre la suite. Le script Get-Inventaire.ps1 du TP final est fourni séparément.
 
 **D1.** Complète la trame ci-dessous et enregistre-la dans `C:\Scripts\Get-InventairePoste.ps1` qui produit **un objet** avec : nom du poste, modèle, numéro de série, processeur, RAM (Go), Windows (édition + version + build), espace libre sur C: (Go), dernier démarrage — et l'exporte dans un CSV dont le chemin est un **paramètre** (par défaut `C:\Temp\inventaire-<poste>.csv`).
 

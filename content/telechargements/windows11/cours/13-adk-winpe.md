@@ -1,7 +1,7 @@
 # 13. ADK, Windows PE et fichier de réponse
 
 > [!abstract] Parcours TSSR
-> ADK, WinPE et catalogue WSIM sont préchargés ou mis en cache par le formateur. Socle : vérifier les outils, créer un WinPE standard, puis compléter et valider un fichier de réponse fourni. PowerShell dans WinPE et la préparation de MASTER sont (bonus).
+> L'ADK et le module WinPE s'installent en **3 minutes** avec WinGet (testé sur le lab). La création du catalogue WSIM prend **≈ 10 minutes** : à lancer avant une pause. Socle : vérifier les outils, créer un WinPE standard, puis compléter et valider un fichier de réponse fourni. PowerShell dans WinPE et la préparation de MASTER sont (bonus).
 > Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
@@ -59,10 +59,15 @@ Windows SIM a besoin d'un fichier `install.wim` pour construire et valider le fi
 2. Copier `sources\install.wim` depuis le lecteur monté vers un dossier de travail, par exemple `D:\Images\install.wim`.
 
 ```powershell
-Mount-DiskImage -ImagePath "D:\ISO\Win11_25H2_French.iso"
+Mount-DiskImage -ImagePath "D:\ISO\Win11_26H2_French.iso"
 Copy-Item "E:\sources\install.wim" -Destination "D:\Images\install.wim"
-Dismount-DiskImage -ImagePath "D:\ISO\Win11_25H2_French.iso"
+Dismount-DiskImage -ImagePath "D:\ISO\Win11_26H2_French.iso"
 ```
+
+> [!NOTE] Sur PC01 dans le lab
+> On travaille **dans `PC01`** : sur l'hôte, insérer l'ISO dans le lecteur DVD de la VM (`Set-VMDvdDrive -VMName PC01 -Path <ISO>`), copier `D:\sources\install.wim` vers `C:\Images\` (**7,6 Go**, 30 secondes sur le lab), puis **éjecter l'ISO** (`Set-VMDvdDrive -VMName PC01 -Path $null`) : BitLocker (TPM) n'aime pas un média de démarrage présent au redémarrage (chapitre 09). Prévoir **≈ 10 Go libres** sur `C:`.
+>
+> La copie arrive en **lecture seule** (fichier issu d'un DVD) : `attrib -r C:\Images\install.wim`, sinon WSIM ne peut pas créer le catalogue.
 
 > [!NOTE] Plus besoin de convertir un .esd
 > Certaines anciennes éditions livraient un fichier `install.esd` (compressé/chiffré) à la place de `install.wim`, nécessitant une conversion préalable via `dism /Export-Image`. Les supports d'installation Windows 11 actuels fournissent directement `install.wim` dans le dossier `sources` — cette étape de conversion n'est plus nécessaire.
@@ -118,7 +123,11 @@ Windows Setup
 
 ### Créer un WinPE (environnement « Outils de déploiement et de création d'images »)
 
-Les commandes s'exécutent dans l'invite **« Environnement de déploiement et d'outils de création d'images »** (menu Démarrer → Windows Kits), en administrateur — elle positionne les variables d'environnement de l'ADK.
+Les commandes s'exécutent dans l'invite **« Environnement de déploiement et d'outils de création d'images »** (menu Démarrer : taper *Environnement de déploiement* → **Exécuter en tant qu'administrateur**). Elle positionne les variables d'environnement de l'ADK ; depuis un terminal ordinaire, `copype` est introuvable.
+
+![w11-13-menu-environnement-deploiement](https://cours.kaya.ovh/windows11/assets/captures/w11-13-menu-environnement-deploiement.png)
+
+![w11-13-copype](https://cours.kaya.ovh/windows11/assets/captures/w11-13-copype.png)
 
 ```cmd
 :: 1) Copier les fichiers WinPE dans un dossier de travail
@@ -162,14 +171,27 @@ L'ordre compte : **WMI → NetFx → Scripting → PowerShell** (dépendances).
 ### Créer le support de démarrage
 
 ```cmd
-:: ISO (pour une VM ou une gravure)
-MakeWinPEMedia /ISO C:\WinPE_amd64 D:\ISO\WinPE-Fournil.iso
+:: ISO (pour une VM ou une gravure) — /F écrase un fichier existant sans demander
+MakeWinPEMedia /ISO /F C:\WinPE_amd64 C:\Temp\WinPE-Fournil.iso
 
 :: Clé USB (la clé sera formatée !)
 MakeWinPEMedia /UFD C:\WinPE_amd64 P:
 ```
 
-Au démarrage, WinPE ouvre une invite de commandes (`X:\Windows\System32>`), avec `wpeinit` déjà exécuté (réseau DHCP initialisé). `powershell` y est disponible grâce aux composants ajoutés. On s'en servira au chapitre 15 pour appliquer une image avec `Dism /Apply-Image` + `bcdboot`.
+Sur le lab : ISO de **398 Mo** pour un WinPE standard (≈ 567 Mo avec les composants PowerShell du bonus).
+
+![w11-13-makewinpemedia](https://cours.kaya.ovh/windows11/assets/captures/w11-13-makewinpemedia.png)
+
+Au démarrage, WinPE ouvre une invite de commandes (`X:\Windows\System32>`), avec `wpeinit` déjà exécuté (réseau DHCP initialisé). `powershell` n'y est disponible **que** si on a ajouté les composants du bonus.
+
+![w11-13-winpe-diskpart](https://cours.kaya.ovh/windows11/assets/captures/w11-13-winpe-diskpart.png)
+
+> [!WARNING] WinPE standard : anglais et clavier QWERTY
+> Un WinPE créé par `copype` est en **anglais** avec un clavier **américain (QWERTY)**. Sur un clavier AZERTY, `list volume` s'écrit… `list volu;e` (le M est à la place de la virgule), le A et le Q sont inversés. Deux solutions : taper en tenant compte du QWERTY, ou changer la disposition dès le démarrage :
+> ```cmd
+> wpeutil SetKeyboardLayout 040c:0000040c
+> ```
+> (commande Microsoft documentée, qui répond *The command completed successfully* sur le lab). Le bonus « WinPE personnalisé » règle le clavier de façon permanente (`Dism /Set-InputLocale:fr-FR`).
 
 > [!TIP] Clé USB de plus de 32 Go ou image de plus de 4 Go
 > Une clé UEFI doit être en **FAT32** pour démarrer, et FAT32 limite les fichiers à 4 Go. Pour transporter un `install.wim` plus gros sur la même clé : `Dism /Split-Image` en fichiers `.swm` de 3,8 Go, ou une seconde partition NTFS pour les données.
@@ -206,7 +228,18 @@ Le schéma officiel Microsoft ci-dessous montre que la passe `specialize` n'est 
 > [!NOTE] Ce que ça change concrètement
 > `MASTER` ne termine jamais elle-même la passe `oobeSystem` — on l'interrompt en mode audit avant. C'est chaque machine **déployée** à partir de l'image capturée qui rejoue `specialize` puis `oobeSystem` pour de vrai, avec un SID propre et un nom généré (`FOURNIL-XXXXXXX`). C'est exactement pour ça que la généralisation (chapitre 14) est indispensable avant toute capture.
 
-**Étape 1 — Charger l'image.** Fichier → Sélectionner une image Windows... → pointer vers `D:\Images\install.wim` → choisir l'édition (Windows 11 Pro). Si aucun fichier catalogue (`.clg`) n'existe encore, WSIM propose de le créer (quelques minutes, une seule fois par image).
+> [!WARNING] Où est WSIM dans le menu Démarrer ?
+> Sur un Windows français, *Windows System Image Manager* apparaît sous le nom **« Assistant Gestion d'installation »**. Chercher « Windows System Image Manager » ne donne **aucun résultat**.
+>
+> ![w11-13-menu-wsim-nom-francais](https://cours.kaya.ovh/windows11/assets/captures/w11-13-menu-wsim-nom-francais.png)
+
+**Étape 1 — Charger l'image.** Clic droit sur *Sélectionner une image Windows ou un fichier catalogue* (volet *Image Windows*) → **Sélectionner l'image Windows…** → `C:\Images\install.wim` → choisir l'édition. Les noms sont **en anglais** : choisir **Windows 11 Pro** (pas *Home*, présélectionné).
+
+![w11-13-wsim-choix-edition](https://cours.kaya.ovh/windows11/assets/captures/w11-13-wsim-choix-edition.png)
+
+Si aucun fichier catalogue (`.clg`) n'existe encore, WSIM propose de le créer → **Oui** → **Oui à l'invite UAC** (elle peut passer derrière la fenêtre : si rien ne se passe, regarder la barre des tâches ; sans réponse, l'UAC expire et il faut recommencer). Compter **≈ 10 minutes**, une seule fois par image.
+
+![w11-13-wsim-creer-catalogue](https://cours.kaya.ovh/windows11/assets/captures/w11-13-wsim-creer-catalogue.png)
 ![w11-12-sysprep-images-1](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images-1.png)
 **Étape 2 — Nouveau fichier de réponse.** Fichier → Nouveau fichier de réponse...
 ![w11-12-sysprep-images-2](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images-2.png)
@@ -300,7 +333,7 @@ Puis, toujours dans `Microsoft-Windows-Shell-Setup`, sous `UserAccounts > LocalA
 | `DisplayName` | `Utilisateur` | Nom affiché à l'écran de connexion. |
 | `Description` | `Compte Local Principal` | Description du compte (visible dans la gestion des utilisateurs). |
 | `Group` | `Administrators` | Le compte est créé avec des droits administrateur local. |
-| `Password > Value` | `Fournil2026!` (`PlainText` = `true`) | Mot de passe du compte. WSIM propose d'**obscurcir** les mots de passe à l'enregistrement (*Fichier → Masquer les mots de passe sensibles*) : c'est un simple encodage Base64, pas un chiffrement — le fichier reste sensible. |
+| `Password > Value` | `Fournil2026!` (`PlainText` = `true`) | Mot de passe du compte. WSIM **obscurcit** les mots de passe à l'enregistrement (*Outils → Masquer les données sensibles*, coché par défaut : le fichier enregistré contient `PlainText` = `false`) : c'est un simple encodage Base64, pas un chiffrement — le fichier reste sensible. |
 
 > [!WARNING] Sans compte local défini, `HideLocalAccountScreen` bloque l'installation
 > Masquer l'écran de création de compte sans fournir de compte local en remplacement ne fait pas disparaître le besoin d'un compte : Windows Setup n'a alors aucune information pour continuer et l'installation reste bloquée. Les deux réglages (masquage + `LocalAccount`) vont toujours de pair.

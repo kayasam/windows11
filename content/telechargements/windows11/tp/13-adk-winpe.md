@@ -51,7 +51,7 @@
 
 ## Partie C — Le fichier de réponse avec WSIM
 
-**C1.** Utilise la copie en écriture de `install.wim` et le catalogue préparés par le formateur, ouvre WSIM, sélectionne l'image **Windows 11 Professionnel**. Combien d'index contient ce `install.wim` ? Que se passe-t-il au premier chargement ?
+**C1.** Copie `install.wim` de l'ISO dans `C:\Images` (ou utilise la copie préparée par le formateur), ouvre WSIM (« Assistant Gestion d'installation » dans le menu Démarrer), sélectionne l'image **Windows 11 Pro**. Combien d'index contient ce `install.wim` ? Que se passe-t-il au premier chargement ?
 
 **C2.** Ouvre le fichier fourni `autounattend-fournil-26h2.xml` dans WSIM, puis vérifie et adapte la passe **windowsPE** : langue fr-FR, disque 0 effacé, partitions EFI 200 Mo / MSR 16 Mo / Windows (tout le reste), installation sur la partition 3, contrat accepté, clé générique Pro.
 
