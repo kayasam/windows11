@@ -46,7 +46,7 @@
       "key": "windows11/07-powershell",
       "title": "07. PowerShell pour l'administrateur",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/08-mises-a-jour",
@@ -181,7 +181,7 @@
       "correctionKey": "windows11/07-powershell/tp-corrigev2",
       "downloadStem": "07-powershell",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/08-mises-a-jour/tp",
@@ -288,7 +288,8 @@
     "windows11/03-configuration/tp",
     "windows11/04-disques-stockage/tp",
     "windows11/05-peripheriques-applications/tp",
-    "windows11/06-administration-diagnostic/tp"
+    "windows11/06-administration-diagnostic/tp",
+    "windows11/07-powershell/tp"
   ],
   "tracks": [
     {
