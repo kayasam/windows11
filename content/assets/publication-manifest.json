@@ -64,13 +64,13 @@
       "key": "windows11/10-active-directory",
       "title": "10. Active Directory et services réseau",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/11-gpo",
       "title": "11. Stratégies de groupe et gestion centralisée",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/12-acces-distant",
@@ -198,18 +198,32 @@
       "correction": false
     },
     {
-      "key": "windows11/10-active-directory/tp",
-      "correctionKey": "windows11/10-active-directory/tp-corrigev2",
+      "key": "windows11/10-active-directory/tp/standard",
+      "correctionKey": "windows11/10-active-directory/tp/standard-corrigev2",
       "downloadStem": "10-active-directory",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/11-gpo/tp",
-      "correctionKey": "windows11/11-gpo/tp-corrigev2",
+      "key": "windows11/10-active-directory/tp/guide",
+      "correctionKey": "windows11/10-active-directory/tp/guide-corrigev2",
+      "downloadStem": "10-active-directory-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/11-gpo/tp/standard",
+      "correctionKey": "windows11/11-gpo/tp/standard-corrigev2",
       "downloadStem": "11-gpo",
       "track": "windows11",
       "correction": false
+    },
+    {
+      "key": "windows11/11-gpo/tp/guide",
+      "correctionKey": "windows11/11-gpo/tp/guide-corrigev2",
+      "downloadStem": "11-gpo-guide",
+      "track": "windows11",
+      "correction": true
     },
     {
       "key": "windows11/12-acces-distant/tp",
@@ -289,7 +303,9 @@
     "windows11/04-disques-stockage/tp",
     "windows11/05-peripheriques-applications/tp",
     "windows11/06-administration-diagnostic/tp",
-    "windows11/07-powershell/tp"
+    "windows11/07-powershell/tp",
+    "windows11/10-active-directory/tp/guide",
+    "windows11/11-gpo/tp/guide"
   ],
   "tracks": [
     {

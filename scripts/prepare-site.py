@@ -1,6 +1,6 @@
 """Prepare a configured formation without reading or changing the original vault."""
 from pathlib import Path
-import hashlib, html, importlib.util, io, json, re, shutil, zipfile, posixpath
+import hashlib, html, importlib.util, io, json, os, re, shutil, zipfile, posixpath
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -66,7 +66,7 @@ def prepare():
     url = urlsplit(base)
     assert url.scheme in ('https','http') and url.netloc and not url.query and not url.fragment
     assert site['title'].strip() and site['tracks']
-    source_root = (ROOT/site.get('sourceRoot','sources')).resolve()
+    source_root = (ROOT/os.environ.get('QUARTZ_SOURCE_ROOT', site.get('sourceRoot','sources'))).resolve()
     def source(name):
         path = (source_root/name).resolve()
         assert path.is_relative_to(source_root) and path.is_file(), f'Source invalide : {name}'
@@ -96,7 +96,8 @@ def prepare():
                 assert target, f'Lien Obsidian non déclaré : {path.name} → {name}'
             relative = Path(__import__('os').path.relpath(target,path.parent)).as_posix()
             from urllib.parse import quote
-            return ('!' if embedded else '')+'['+(caption or Path(name).stem)+']('+quote(relative)+('#'+fragment if fragment else '')+')'
+            anchor = quote(re.sub(r'\s+', '-', fragment.strip().lower()))
+            return ('!' if embedded else '')+'['+(caption or Path(name).stem)+']('+quote(relative)+('#'+anchor if anchor else '')+')'
         return re.sub(r'(!?)\[\[([^\]]+)\]\]', wiki, text)
     chapters = []; annexes = []; routes = {}; keys = set(); tracks = set()
     for track in site['tracks']:
@@ -125,7 +126,8 @@ def prepare():
                 corrected=source(definition['correction']) if definition.get('correction') else None
                 visible=bool(corrected and published(corrected.read_text(encoding='utf-8-sig')))
                 correction_key=key+'/tp/'+stem+'-corrigev2' if len(definitions)>1 else key+'/tp-corrigev2'
-                download_stem=chapter['slug']+('-'+stem if len(definitions)>1 else '')
+                download_stem=definition.get('downloadStem', chapter['slug']+('-'+stem if len(definitions)>1 else ''))
+                assert re.fullmatch('[a-z0-9-]+',download_stem)
                 exercise=dict(key=exercise_key,path=tp_path,correctionPath=corrected,visible=visible,correctionKey=correction_key,downloadStem=download_stem)
                 item['exercises'].append(exercise); routes[tp_path]=base+'/'+exercise_key
                 if visible: routes[corrected]=base+'/'+correction_key
@@ -244,7 +246,7 @@ def prepare():
                 manifest['exercises'].append(dict(key=exercise['key'],correctionKey=exercise['correctionKey'],downloadStem=download_stem,track=tid,correction=visible))
             if len(item['exercises'])>1:
                 listing='\n\n'.join('- ['+title(read_doc(e['path']))+']('+base+'/'+e['key']+')' for e in item['exercises'])
-                write(stage/key/'tp.md',page('Travaux pratiques — '+label,bar()+'\n\n'+listing))
+                write(stage/key/'tp/index.md',page('Travaux pratiques — '+label,bar()+'\n\n'+listing))
             links.append('<a class="home-chapter" href="'+item['href']+'"><span class="home-chapter__number">'+slug[:2]+'</span><strong>'+html.escape(label)+'</strong><span aria-hidden="true">→</span></a>')
             manifest['chapters'].append(dict(key=key,title=label,tp='tp' in item,correction=any(e['visible'] for e in item['exercises'])))
         annex_links=[]

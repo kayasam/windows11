@@ -82,15 +82,37 @@
         {
           "slug": "10-active-directory",
           "course": "cours/10-active-directory/10-active-directory.md",
-          "tp": "cours/10-active-directory/tp/10-tp-active-directory.md",
-          "correction": "cours/10-active-directory/tp/10-tp-active-directory-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/10-active-directory/tp/10-tp-active-directory.md",
+              "correction": "cours/10-active-directory/tp/10-tp-active-directory-correction.md",
+              "downloadStem": "10-active-directory"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/10-active-directory/tp/10-tp-active-directory-guide.md",
+              "correction": "cours/10-active-directory/tp/10-tp-active-directory-guide-correction.md"
+            }
+          ],
           "quiz": "cours/10-active-directory/10-active-directory-quiz.html"
         },
         {
           "slug": "11-gpo",
           "course": "cours/11-gpo/11-gpo.md",
-          "tp": "cours/11-gpo/tp/11-tp-gpo.md",
-          "correction": "cours/11-gpo/tp/11-tp-gpo-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/11-gpo/tp/11-tp-gpo.md",
+              "correction": "cours/11-gpo/tp/11-tp-gpo-correction.md",
+              "downloadStem": "11-gpo"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/11-gpo/tp/11-tp-gpo-guide.md",
+              "correction": "cours/11-gpo/tp/11-tp-gpo-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "12-acces-distant",
