@@ -48,7 +48,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 
 ## Partie B — Déployer PC02
 
-**B1.** Construis la mini-ISO `reponses-pc02.iso` qui contient le fichier de réponse et `postinstall.ps1`. Sous quel nom le fichier de réponse doit-il y figurer ?
+**B1.** Sur `PC01` (où l'ADK est installé), construis la mini-ISO `reponses-pc02.iso` qui contient le fichier de réponse et `postinstall.ps1`, puis copie-la sur l'hôte. Sous quel nom le fichier de réponse doit-il y figurer ?
 
 **B2.** Crée `PC02` (Gen 2, TPM, 2 vCPU, 4 Go statiques, `vSwitch-Rennes`) avec **deux** lecteurs DVD : l'ISO officielle et la mini-ISO. Démarre-la. Combien de gestes faut-il ?
 
@@ -71,14 +71,21 @@ icacls C:\USMT /grant 'SYSTEM:(OI)(CI)F' 'FOURNIL\Admins du domaine:(OI)(CI)F'
 New-SmbShare -Name 'USMT$' -Path C:\USMT -FullAccess 'FOURNIL\Admins du domaine'
 ```
 
-Depuis PC01, dans la session d’administration du domaine :
+Depuis PC01, dans une session d’**administration du domaine**. Si tu es resté en `PC01\admin` (compte local), ouvre d'abord l'accès au partage avec le compte du domaine, dans un Terminal administrateur :
+
+```powershell
+net use \\SRV01\USMT$ /user:FOURNIL\Administrateur Fournil2026!
+```
+
+> [!WARNING] Sans cette étape
+> Un compte local n'a aucun droit sur le partage : la copie affiche une avalanche d'erreurs rouges « *Le nom d'utilisateur ou le mot de passe est incorrect* ».
 
 ```powershell
 Copy-Item 'C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\User State Migration Tool\amd64\*' '\\SRV01\USMT$\USMT' -Recurse -Force
 Test-Path '\\SRV01\USMT$\USMT\scanstate.exe'
 ```
 
-Préparer quelques documents identifiables dans le profil de `stagiaire`, fermer sa session et effectuer capture/restauration depuis une session administrateur. Au premier essai, vérifier la liste des fichiers avant de capturer un gros profil. Le magasin doit rester petit pour ce TP ; le volume de données n’est pas un objectif d’évaluation.
+Préparer quelques documents identifiables dans le profil de `stagiaire`, fermer sa session et effectuer capture/restauration depuis une session administrateur. **Avant la capture**, vider le cache de l'Optimisation de la distribution (`Delete-DeliveryOptimizationCache -Force`) et vérifier qu'il reste **au moins 10 Go libres** sur `C:` de PC01. Au premier essai, vérifier la liste des fichiers avant de capturer un gros profil. Le magasin doit rester petit pour ce TP ; le volume de données n’est pas un objectif d’évaluation.
 
 **C2.** Sur `PC01`, capture le profil de `stagiaire` avec `scanstate` vers `\\SRV01\USMT$\Store\PC01`, en n'incluant que ce profil. Teste d'abord avec `/listfiles`.
 

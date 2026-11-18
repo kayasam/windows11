@@ -41,7 +41,7 @@ C'est la méthode du lab, et celle à retenir pour un petit ou moyen parc : **on
 |---|---|
 | **Ce qu'il faut** | l'ISO officielle, `autounattend-iso-officielle.xml`, `postinstall.ps1` (dans `Ressources/Fichier-reponse/`), le domaine du chapitre 10 avec son DHCP |
 | **Ce qu'il ne faut pas** | ni `MASTER`, ni Sysprep, ni capture WIM, ni reconstruction de l'ISO |
-| **Durée mesurée sur le lab** | **9 minutes** de l'appui sur une touche à la fin de la post-installation (test du 09/11/2026) |
+| **Durée mesurée sur le lab** | **9 à 11 minutes** de l'appui sur une touche à la fin de la post-installation (tests du 09/11 et du 18/11/2026) |
 
 ### Le principe
 
@@ -74,14 +74,27 @@ Au démarrage, Windows Setup cherche un fichier nommé **exactement** `autounatt
 
 Pour une VM, le plus simple est une **mini-ISO** de quelques centaines de kilo-octets, qui contient seulement les deux fichiers :
 
+`oscdimg` fait partie de l'ADK, installé **sur PC01** au chapitre 13 : on construit donc la mini-ISO **dans PC01** (Terminal administrateur), avec les deux fichiers fournis copiés dans `C:\Images\` :
+
 ```powershell
-New-Item D:\Images\reponses-pc02 -ItemType Directory -Force
-Copy-Item ...\Fichier-reponse\autounattend-iso-officielle.xml D:\Images\reponses-pc02\autounattend.xml
-Copy-Item ...\Fichier-reponse\postinstall.ps1 D:\Images\reponses-pc02\
-New-Item D:\ISO -ItemType Directory -Force
+New-Item C:\Images\reponses-pc02 -ItemType Directory -Force
+Copy-Item C:\Images\autounattend-iso-officielle.xml C:\Images\reponses-pc02\autounattend.xml
+Copy-Item C:\Images\postinstall.ps1 C:\Images\reponses-pc02\
 $oscdimg = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg\oscdimg.exe"
-& $oscdimg -u2 -udfver102 -lREPONSES D:\Images\reponses-pc02 D:\ISO\reponses-pc02.iso     # & = exécuter le programme dont le chemin est dans la variable
+& $oscdimg -u2 -udfver102 -lREPONSES C:\Images\reponses-pc02 C:\Images\reponses-pc02.iso     # & = exécuter le programme dont le chemin est dans la variable
 ```
+
+![w11-16-oscdimg-mini-iso](https://cours.kaya.ovh/windows11/assets/captures/w11-16-oscdimg-mini-iso.png)
+
+Puis, **sur l'hôte** (PowerShell administrateur), rapatrier l'ISO hors de la VM grâce à PowerShell Direct :
+
+```powershell
+$s = New-PSSession -VMName PC01 -Credential PC01\admin
+Copy-Item -FromSession $s C:\Images\reponses-pc02.iso -Destination D:\ISO\reponses-pc02.iso
+Remove-PSSession $s
+```
+
+(Si l'ADK est aussi installé sur l'hôte, on peut tout faire directement sur l'hôte avec les mêmes commandes.)
 
 Sur un poste physique : copier les deux fichiers à la **racine d'une clé USB**, à côté (ou en plus) de la clé d'installation Windows.
 
@@ -335,7 +348,9 @@ Changer de poste (ou réinstaller) sans perdre les documents, le fond d'écran, 
 
 > [!WARNING] Testé sur le lab : les XML fournis ratissent large
 > Pour **deux** fichiers de test dans le profil de `stagiaire`, `scanstate` a produit un magasin de **6,9 Go** avec `MigDocs.xml`, **5,8 Go** avec `MigUser.xml`. `/listfiles` a montré pourquoi : `MigDocs.xml` embarque les « documents » de tout le disque (dont `C:\WinPE_amd64`, une ISO de 567 Mo…), et USMT capture aussi par défaut des éléments système — sons de `C:\Windows\Media`, définitions Defender, et **le cache de l'Optimisation de la distribution** (plusieurs Go de mises à jour, dans le profil `NetworkService`).
-> Avant une vraie migration : lancer `scanstate` avec `/listfiles`, vider le cache de distribution (`Delete-DeliveryOptimizationCache -Force`), et exclure ce qui ne doit pas partir (`/genconfig` + `/config`, ou un XML personnalisé).
+> Avant une vraie migration : **vider d'abord** le cache de distribution (`Delete-DeliveryOptimizationCache -Force`), puis lancer `scanstate` avec `/listfiles`, et exclure ce qui ne doit pas partir (`/genconfig` + `/config`, ou un XML personnalisé). Retesté le 18/11/2026 : magasin de **7 Go** avant le nettoyage du cache, **0,9 Go** après.
+>
+> **Attention à l'espace disque** : un magasin de test enregistré **sur le poste lui-même** (`C:\Temp\usmt-test`) peut le remplir. Sur le lab, `PC01` (qui contient aussi `install.wim`, 7,6 Go) est tombé à 2,4 Go libres. Supprimer le magasin de test aussitôt la liste vérifiée.
 
 ### USMT ou OneDrive ?
 
@@ -400,7 +415,7 @@ En pratique, beaucoup d'organisations sont **hybrides** : jonction AD + Entra (*
 > - Setup lit `autounattend.xml` à la racine de **tout** support : 2e lecteur DVD, clé USB
 > - `windowsPE` (disque, édition) · `specialize` (nom, `PreventDeviceEncryption`, jonction au domaine) · `oobeSystem` (OOBE masquée, compte local, `AutoLogon` + `FirstLogonCommands`)
 > - `postinstall.ps1` : applications avec WinGet, journal dans `C:\Windows\Temp\postinstall.log`, puis nettoyage (`AutoAdminLogon = 0`, suppression de `Panther\unattend-original.xml` qui contient les mots de passe) et redémarrage
-> - Mesuré sur le lab : **9 minutes** de bout en bout
+> - Mesuré sur le lab : **9 à 11 minutes** de bout en bout
 > - Seul geste : une touche au « Press any key to boot from CD or DVD »
 > - Pièges : OU de `MachineObjectOU` existante · `<Domain>PC02</Domain>` dans `AutoLogon` · mémoire fixe, TPM, 2 vCPU
 >

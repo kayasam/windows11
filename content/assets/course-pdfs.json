@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "96a5ec553a2038627778aa3faf8a41a66e8a8c613e7af71259bf7d3510bc0426",
+  "pdfSha256": "77a9bcc192a42098444eed5f5256f4be017c620c8536262c0c4100527417838c",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
@@ -135,7 +135,7 @@
       "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/",
       "download": "telechargements/windows11/cours/16-deploiement.md",
-      "sourceSha256": "57f2ec85bf0ee4d2653033fec222db45a3b81e06100b0008a7b2073493141f01",
+      "sourceSha256": "24736594408502ee1b06d36360565c323aa4b85411605418b37f238d7f95febd",
       "startPage": 247
     },
     {

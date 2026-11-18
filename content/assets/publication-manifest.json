@@ -202,7 +202,7 @@
       "correctionKey": "windows11/10-active-directory/tp/standard-corrigev2",
       "downloadStem": "10-active-directory",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/10-active-directory/tp/guide",
@@ -304,6 +304,7 @@
     "windows11/05-peripheriques-applications/tp",
     "windows11/06-administration-diagnostic/tp",
     "windows11/07-powershell/tp",
+    "windows11/10-active-directory/tp/standard",
     "windows11/10-active-directory/tp/guide",
     "windows11/11-gpo/tp/guide"
   ],
