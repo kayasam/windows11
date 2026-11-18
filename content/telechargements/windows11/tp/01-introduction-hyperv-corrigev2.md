@@ -310,4 +310,4 @@
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp/standard)

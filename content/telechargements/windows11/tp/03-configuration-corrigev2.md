@@ -305,4 +305,4 @@
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/standard)

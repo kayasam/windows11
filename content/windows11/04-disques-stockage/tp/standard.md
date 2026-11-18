@@ -1,0 +1,93 @@
+---
+title: "TP 04. Disques, volumes et systèmes de fichiers"
+---
+
+<nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/04-disques-stockage"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="quiz" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/quiz/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="6" fill="#7652ad"/><path d="M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="1.6" fill="#fff"/></svg>
+</span><span class="resource-label">Quiz</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/04-disques-stockage.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard-corrigev2">Afficher les corrections</a></nav>
+
+> [!abstract] Parcours TSSR
+> Socle : A, B et D ; le volume G: est conservé pour la suite. Le miroir et sa panne simulée sont (bonus).
+
+> Chapitres associés : [04. Disques, volumes et systèmes de fichiers](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/)
+
+---
+
+## Objectifs
+
+- Ajouter des disques à une VM et les préparer (GPT, partition, NTFS)
+- Utiliser `diskmgmt.msc`, `diskpart` et le module PowerShell `Storage`
+- Monter un volume dans un dossier
+- Créer un espace de stockage en miroir et **simuler la panne d'un disque** (bonus)
+
+---
+
+## Prérequis
+
+- `PC01` opérationnel (TP 03)
+- Sur l'**hôte**, créer et attacher trois disques de 10 Go à `PC01` (VM allumée, ajout à chaud) :
+
+```powershell
+1..3 | ForEach-Object {
+    New-VHD -Path "D:\HyperV\PC01\Data$_.vhdx" -SizeBytes 10GB -Dynamic | Out-Null
+    Add-VMHardDiskDrive -VMName PC01 -Path "D:\HyperV\PC01\Data$_.vhdx"
+}
+```
+
+---
+
+## Partie A — Observer
+
+**A1.** Dans `PC01`, liste les disques en PowerShell. Quel est le style de partition des nouveaux disques ?
+
+**A2.** Lance `diskpart` et affiche les disques et les volumes. Quelles lettres sont déjà occupées, et par quoi ?
+
+---
+
+## Partie B — Préparer un disque de données
+
+**B1.** Initialise le disque 1 en **GPT** (dans `diskmgmt.msc` ou en PowerShell). Les disques 2 et 3 doivent rester **non initialisés** pour la partie C.
+
+**B2.** Crée une partition de **5 Go** avec la lettre `G:`, formatée en NTFS, nommée `Data` (assistant *Nouveau volume simple* ou PowerShell).
+
+**B3.** Un collègue a tapé `New-Partition -DiskNumber 1 -Size 1GB -DriveLetter D` et obtenu *« The requested access path is already in use »*. Explique. La partition a-t-elle été créée ?
+
+**B4.** Étends `G:` à tout l'espace disponible du disque, puis vérifie sa taille.
+
+**B5.** Monte aussi ce volume dans le dossier `C:\Donnees`. Vérifie les deux chemins d'accès.
+
+---
+
+## Partie C — Espace de stockage en miroir (bonus)
+
+**C1.** Liste les disques qui peuvent rejoindre un pool. Le disque 1 y figure-t-il ? Que faire si oui ?
+
+**C2.** Crée le pool `Pool-Fournil` avec les disques 2 et 3, puis l'espace `Donnees-Miroir` en **miroir 2 voies**, formaté en NTFS avec la lettre `F:`.
+
+**C3.** Quelle est la taille utilisable de `F:` ? Pourquoi pas 10 Go ?
+
+**C4.** Écris un fichier `F:\recette.txt`.
+
+**C5.** **Simule une panne** : sur l'hôte, détache `Data3.vhdx` de `PC01`. Dans `PC01`, relève l'état du pool, de l'espace et des disques physiques. Le fichier est-il encore lisible ?
+
+**C6.** Rattache le disque. Que se passe-t-il ?
+
+---
+
+## Partie D — Systèmes de fichiers
+
+**D1.** Un formateur doit copier une ISO de 8 Go sur une clé USB lisible sur Mac et Linux. Quel système de fichiers ?
+
+**D2.** Pourquoi ne formate-t-on pas un disque de données Windows en exFAT ?
+
+---
+
+## Partie E — Exercices complémentaires (bonus)
+
+**E1.** Sur l'hôte, ajoute à `PC01` un quatrième disque `Data4.vhdx` de 5 Go. Écris un script DiskPart (`diskpart /s`) qui nettoie **ce disque**, le convertit en GPT et crée une partition NTFS unique `Archives` en `H:`. Quelle commande du script est irréversible ? (Ne touche pas au disque 1 : `G:` sert encore aux TP 06 et 09.)
+
+---
+
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard-corrigev2)

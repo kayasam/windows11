@@ -17,7 +17,11 @@ def title(text):
 def published(text):
     front = re.match(r'^---\s*\n(.*?)\n---(?:\n|$)', text, re.S)
     return bool(front and re.search(r'^publier:\s*true\s*$', front[1], re.M | re.I))
-def page(label, text): return '---\ntitle: ' + json.dumps(label, ensure_ascii=False) + '\n---\n\n' + text
+def page(label, text, aliases=()):
+    frontmatter = '---\ntitle: ' + json.dumps(label, ensure_ascii=False) + '\n'
+    if aliases:
+        frontmatter += 'aliases: ' + json.dumps(aliases) + '\n'
+    return frontmatter + '---\n\n' + text
 def clean(path):
     assert path.resolve().parent == ROOT.resolve(), 'Suppression hors du projet interdite'
     if path.exists(): shutil.rmtree(path)
@@ -76,6 +80,8 @@ def prepare():
     for track in site['tracks']:
         for chapter in track['chapters']:
             document_paths.extend(source(chapter[k]) for k in ('course','tp','correction') if k in chapter)
+            for exercise in chapter.get('tps', []):
+                document_paths.extend(source(exercise[k]) for k in ('file', 'correction') if exercise.get(k))
         document_paths.extend(source(a['file']) for a in track.get('annexe', []))
     media_root = (source_root/site.get('mediaRoot','Ressources/images')).resolve()
     media_paths = {}
@@ -236,7 +242,8 @@ def prepare():
                     files['tp/'+download_stem+'-corrigev2.md']=offline(correction_text,corrected)
                     raw+='\n\n[Afficher les corrections]('+slug+'-corrigev2.md)\n'
                     correction_nav='<nav class="exercise-resources" aria-label="Ressources du TP"><a href="'+tp_url+'">Énoncé</a><a class="exercise-correction" href="'+correction_url+'" aria-current="page">Corrigé</a></nav>'
-                    write(stage/(exercise['correctionKey']+'.md'),page(title(correction_text),bar(download_button(base+'/'+corrected_download,'Télécharger le corrigé'))+'\n'+correction_nav+'\n\n'+without_heading(correction_public)))
+                    aliases = [key+'/tp-corrigev2'] if exercise['key'] == key+'/tp/standard' else []
+                    write(stage/(exercise['correctionKey']+'.md'),page(title(correction_text),bar(download_button(base+'/'+corrected_download,'Télécharger le corrigé'))+'\n'+correction_nav+'\n\n'+without_heading(correction_public),aliases=aliases))
                     manifest['corrections'].append(exercise['key'])
                 files['tp/'+download_stem+'.md']=offline(body(read_doc(tp)),tp)+ ('\n\n[Afficher les corrections]('+download_stem+'-corrigev2.md)\n' if visible else '')
                 tp_download='telechargements/'+tid+'/tp/'+download_stem+'.md'

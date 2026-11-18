@@ -242,4 +242,4 @@
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp/standard)

@@ -52,13 +52,13 @@
       "key": "windows11/08-mises-a-jour",
       "title": "08. Windows Update et gestion des mises à jour",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/09-securite",
       "title": "09. Sécuriser un poste Windows 11",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/10-active-directory",
@@ -76,126 +76,189 @@
       "key": "windows11/12-acces-distant",
       "title": "12. Administration et assistance à distance",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/13-adk-winpe",
       "title": "13. ADK, Windows PE et fichier de réponse",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/14-sysprep-audit",
       "title": "14. Poste de référence : mode audit et Sysprep (bonus)",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/15-wim-dism",
       "title": "15. Images WIM et DISM",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/16-deploiement",
       "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/17-wds-pxe",
       "title": "17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/17-environnement-utilisateur",
       "title": "18. Environnement utilisateur et Microsoft 365",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/18-demarrage-recuperation",
       "title": "19. Démarrage et récupération",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/19-depannage",
       "title": "20. Diagnostic et dépannage",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/20-mco",
       "title": "21. Maintien en condition opérationnelle",
       "tp": true,
-      "correction": false
+      "correction": true
     }
   ],
   "exercises": [
     {
-      "key": "windows11/01-introduction-hyperv/tp",
-      "correctionKey": "windows11/01-introduction-hyperv/tp-corrigev2",
+      "key": "windows11/01-introduction-hyperv/tp/standard",
+      "correctionKey": "windows11/01-introduction-hyperv/tp/standard-corrigev2",
       "downloadStem": "01-introduction-hyperv",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/02-installation/tp",
-      "correctionKey": "windows11/02-installation/tp-corrigev2",
+      "key": "windows11/01-introduction-hyperv/tp/guide",
+      "correctionKey": "windows11/01-introduction-hyperv/tp/guide-corrigev2",
+      "downloadStem": "01-introduction-hyperv-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/02-installation/tp/standard",
+      "correctionKey": "windows11/02-installation/tp/standard-corrigev2",
       "downloadStem": "02-installation",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/03-configuration/tp",
-      "correctionKey": "windows11/03-configuration/tp-corrigev2",
+      "key": "windows11/02-installation/tp/guide",
+      "correctionKey": "windows11/02-installation/tp/guide-corrigev2",
+      "downloadStem": "02-installation-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/03-configuration/tp/standard",
+      "correctionKey": "windows11/03-configuration/tp/standard-corrigev2",
       "downloadStem": "03-configuration",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/04-disques-stockage/tp",
-      "correctionKey": "windows11/04-disques-stockage/tp-corrigev2",
+      "key": "windows11/03-configuration/tp/guide",
+      "correctionKey": "windows11/03-configuration/tp/guide-corrigev2",
+      "downloadStem": "03-configuration-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/04-disques-stockage/tp/standard",
+      "correctionKey": "windows11/04-disques-stockage/tp/standard-corrigev2",
       "downloadStem": "04-disques-stockage",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/05-peripheriques-applications/tp",
-      "correctionKey": "windows11/05-peripheriques-applications/tp-corrigev2",
+      "key": "windows11/04-disques-stockage/tp/guide",
+      "correctionKey": "windows11/04-disques-stockage/tp/guide-corrigev2",
+      "downloadStem": "04-disques-stockage-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/05-peripheriques-applications/tp/standard",
+      "correctionKey": "windows11/05-peripheriques-applications/tp/standard-corrigev2",
       "downloadStem": "05-peripheriques-applications",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/06-administration-diagnostic/tp",
-      "correctionKey": "windows11/06-administration-diagnostic/tp-corrigev2",
+      "key": "windows11/05-peripheriques-applications/tp/guide",
+      "correctionKey": "windows11/05-peripheriques-applications/tp/guide-corrigev2",
+      "downloadStem": "05-peripheriques-applications-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/06-administration-diagnostic/tp/standard",
+      "correctionKey": "windows11/06-administration-diagnostic/tp/standard-corrigev2",
       "downloadStem": "06-administration-diagnostic",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/07-powershell/tp",
-      "correctionKey": "windows11/07-powershell/tp-corrigev2",
+      "key": "windows11/06-administration-diagnostic/tp/guide",
+      "correctionKey": "windows11/06-administration-diagnostic/tp/guide-corrigev2",
+      "downloadStem": "06-administration-diagnostic-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/07-powershell/tp/standard",
+      "correctionKey": "windows11/07-powershell/tp/standard-corrigev2",
       "downloadStem": "07-powershell",
       "track": "windows11",
       "correction": true
     },
     {
-      "key": "windows11/08-mises-a-jour/tp",
-      "correctionKey": "windows11/08-mises-a-jour/tp-corrigev2",
+      "key": "windows11/07-powershell/tp/guide",
+      "correctionKey": "windows11/07-powershell/tp/guide-corrigev2",
+      "downloadStem": "07-powershell-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/08-mises-a-jour/tp/standard",
+      "correctionKey": "windows11/08-mises-a-jour/tp/standard-corrigev2",
       "downloadStem": "08-mises-a-jour",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/09-securite/tp",
-      "correctionKey": "windows11/09-securite/tp-corrigev2",
+      "key": "windows11/08-mises-a-jour/tp/guide",
+      "correctionKey": "windows11/08-mises-a-jour/tp/guide-corrigev2",
+      "downloadStem": "08-mises-a-jour-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/09-securite/tp/standard",
+      "correctionKey": "windows11/09-securite/tp/standard-corrigev2",
       "downloadStem": "09-securite",
       "track": "windows11",
       "correction": false
+    },
+    {
+      "key": "windows11/09-securite/tp/guide",
+      "correctionKey": "windows11/09-securite/tp/guide-corrigev2",
+      "downloadStem": "09-securite-guide",
+      "track": "windows11",
+      "correction": true
     },
     {
       "key": "windows11/10-active-directory/tp/standard",
@@ -226,87 +289,176 @@
       "correction": true
     },
     {
-      "key": "windows11/12-acces-distant/tp",
-      "correctionKey": "windows11/12-acces-distant/tp-corrigev2",
+      "key": "windows11/12-acces-distant/tp/standard",
+      "correctionKey": "windows11/12-acces-distant/tp/standard-corrigev2",
       "downloadStem": "12-acces-distant",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/13-adk-winpe/tp",
-      "correctionKey": "windows11/13-adk-winpe/tp-corrigev2",
+      "key": "windows11/12-acces-distant/tp/guide",
+      "correctionKey": "windows11/12-acces-distant/tp/guide-corrigev2",
+      "downloadStem": "12-acces-distant-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/13-adk-winpe/tp/standard",
+      "correctionKey": "windows11/13-adk-winpe/tp/standard-corrigev2",
       "downloadStem": "13-adk-winpe",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/14-sysprep-audit/tp",
-      "correctionKey": "windows11/14-sysprep-audit/tp-corrigev2",
+      "key": "windows11/13-adk-winpe/tp/guide",
+      "correctionKey": "windows11/13-adk-winpe/tp/guide-corrigev2",
+      "downloadStem": "13-adk-winpe-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/14-sysprep-audit/tp/standard",
+      "correctionKey": "windows11/14-sysprep-audit/tp/standard-corrigev2",
       "downloadStem": "14-sysprep-audit",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/15-wim-dism/tp",
-      "correctionKey": "windows11/15-wim-dism/tp-corrigev2",
+      "key": "windows11/14-sysprep-audit/tp/guide",
+      "correctionKey": "windows11/14-sysprep-audit/tp/guide-corrigev2",
+      "downloadStem": "14-sysprep-audit-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/15-wim-dism/tp/standard",
+      "correctionKey": "windows11/15-wim-dism/tp/standard-corrigev2",
       "downloadStem": "15-wim-dism",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/16-deploiement/tp",
-      "correctionKey": "windows11/16-deploiement/tp-corrigev2",
+      "key": "windows11/15-wim-dism/tp/guide",
+      "correctionKey": "windows11/15-wim-dism/tp/guide-corrigev2",
+      "downloadStem": "15-wim-dism-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/16-deploiement/tp/standard",
+      "correctionKey": "windows11/16-deploiement/tp/standard-corrigev2",
       "downloadStem": "16-deploiement",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/17-wds-pxe/tp",
-      "correctionKey": "windows11/17-wds-pxe/tp-corrigev2",
+      "key": "windows11/16-deploiement/tp/guide",
+      "correctionKey": "windows11/16-deploiement/tp/guide-corrigev2",
+      "downloadStem": "16-deploiement-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/17-wds-pxe/tp/standard",
+      "correctionKey": "windows11/17-wds-pxe/tp/standard-corrigev2",
       "downloadStem": "17-wds-pxe",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/17-environnement-utilisateur/tp",
-      "correctionKey": "windows11/17-environnement-utilisateur/tp-corrigev2",
+      "key": "windows11/17-wds-pxe/tp/guide",
+      "correctionKey": "windows11/17-wds-pxe/tp/guide-corrigev2",
+      "downloadStem": "17-wds-pxe-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/17-environnement-utilisateur/tp/standard",
+      "correctionKey": "windows11/17-environnement-utilisateur/tp/standard-corrigev2",
       "downloadStem": "17-environnement-utilisateur",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/18-demarrage-recuperation/tp",
-      "correctionKey": "windows11/18-demarrage-recuperation/tp-corrigev2",
+      "key": "windows11/17-environnement-utilisateur/tp/guide",
+      "correctionKey": "windows11/17-environnement-utilisateur/tp/guide-corrigev2",
+      "downloadStem": "17-environnement-utilisateur-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/18-demarrage-recuperation/tp/standard",
+      "correctionKey": "windows11/18-demarrage-recuperation/tp/standard-corrigev2",
       "downloadStem": "18-demarrage-recuperation",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/19-depannage/tp",
-      "correctionKey": "windows11/19-depannage/tp-corrigev2",
+      "key": "windows11/18-demarrage-recuperation/tp/guide",
+      "correctionKey": "windows11/18-demarrage-recuperation/tp/guide-corrigev2",
+      "downloadStem": "18-demarrage-recuperation-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/19-depannage/tp/standard",
+      "correctionKey": "windows11/19-depannage/tp/standard-corrigev2",
       "downloadStem": "19-depannage",
       "track": "windows11",
       "correction": false
     },
     {
-      "key": "windows11/20-mco/tp",
-      "correctionKey": "windows11/20-mco/tp-corrigev2",
+      "key": "windows11/19-depannage/tp/guide",
+      "correctionKey": "windows11/19-depannage/tp/guide-corrigev2",
+      "downloadStem": "19-depannage-guide",
+      "track": "windows11",
+      "correction": true
+    },
+    {
+      "key": "windows11/20-mco/tp/standard",
+      "correctionKey": "windows11/20-mco/tp/standard-corrigev2",
       "downloadStem": "20-mco",
       "track": "windows11",
       "correction": false
+    },
+    {
+      "key": "windows11/20-mco/tp/guide",
+      "correctionKey": "windows11/20-mco/tp/guide-corrigev2",
+      "downloadStem": "20-mco-guide",
+      "track": "windows11",
+      "correction": true
     }
   ],
   "corrections": [
-    "windows11/01-introduction-hyperv/tp",
-    "windows11/02-installation/tp",
-    "windows11/03-configuration/tp",
-    "windows11/04-disques-stockage/tp",
-    "windows11/05-peripheriques-applications/tp",
-    "windows11/06-administration-diagnostic/tp",
-    "windows11/07-powershell/tp",
+    "windows11/01-introduction-hyperv/tp/standard",
+    "windows11/01-introduction-hyperv/tp/guide",
+    "windows11/02-installation/tp/standard",
+    "windows11/02-installation/tp/guide",
+    "windows11/03-configuration/tp/standard",
+    "windows11/03-configuration/tp/guide",
+    "windows11/04-disques-stockage/tp/standard",
+    "windows11/04-disques-stockage/tp/guide",
+    "windows11/05-peripheriques-applications/tp/standard",
+    "windows11/05-peripheriques-applications/tp/guide",
+    "windows11/06-administration-diagnostic/tp/standard",
+    "windows11/06-administration-diagnostic/tp/guide",
+    "windows11/07-powershell/tp/standard",
+    "windows11/07-powershell/tp/guide",
+    "windows11/08-mises-a-jour/tp/guide",
+    "windows11/09-securite/tp/guide",
     "windows11/10-active-directory/tp/standard",
     "windows11/10-active-directory/tp/guide",
-    "windows11/11-gpo/tp/guide"
+    "windows11/11-gpo/tp/guide",
+    "windows11/12-acces-distant/tp/guide",
+    "windows11/13-adk-winpe/tp/guide",
+    "windows11/14-sysprep-audit/tp/guide",
+    "windows11/15-wim-dism/tp/guide",
+    "windows11/16-deploiement/tp/guide",
+    "windows11/17-wds-pxe/tp/guide",
+    "windows11/17-environnement-utilisateur/tp/guide",
+    "windows11/18-demarrage-recuperation/tp/guide",
+    "windows11/19-depannage/tp/guide",
+    "windows11/20-mco/tp/guide"
   ],
   "tracks": [
     {

@@ -19,64 +19,163 @@
         {
           "slug": "01-introduction-hyperv",
           "course": "cours/01-introduction-hyperv/01-introduction-hyperv.md",
-          "tp": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv.md",
-          "correction": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv.md",
+              "correction": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv-correction.md",
+              "downloadStem": "01-introduction-hyperv"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv-guide.md",
+              "correction": "cours/01-introduction-hyperv/tp/01-tp-introduction-hyperv-guide-correction.md"
+            }
+          ],
           "quiz": "cours/01-introduction-hyperv/01-introduction-hyperv-quiz.html"
         },
         {
           "slug": "02-installation",
           "course": "cours/02-installation/02-installation.md",
-          "tp": "cours/02-installation/tp/02-tp-installation.md",
-          "correction": "cours/02-installation/tp/02-tp-installation-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/02-installation/tp/02-tp-installation.md",
+              "correction": "cours/02-installation/tp/02-tp-installation-correction.md",
+              "downloadStem": "02-installation"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/02-installation/tp/02-tp-installation-guide.md",
+              "correction": "cours/02-installation/tp/02-tp-installation-guide-correction.md"
+            }
+          ],
           "quiz": "cours/02-installation/02-installation-quiz.html"
         },
         {
           "slug": "03-configuration",
           "course": "cours/03-configuration/03-configuration.md",
-          "tp": "cours/03-configuration/tp/03-tp-configuration.md",
-          "correction": "cours/03-configuration/tp/03-tp-configuration-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/03-configuration/tp/03-tp-configuration.md",
+              "correction": "cours/03-configuration/tp/03-tp-configuration-correction.md",
+              "downloadStem": "03-configuration"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/03-configuration/tp/03-tp-configuration-guide.md",
+              "correction": "cours/03-configuration/tp/03-tp-configuration-guide-correction.md"
+            }
+          ],
           "quiz": "cours/03-configuration/03-configuration-quiz.html"
         },
         {
           "slug": "04-disques-stockage",
           "course": "cours/04-disques-stockage/04-disques-stockage.md",
-          "tp": "cours/04-disques-stockage/tp/04-tp-disques-stockage.md",
-          "correction": "cours/04-disques-stockage/tp/04-tp-disques-stockage-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/04-disques-stockage/tp/04-tp-disques-stockage.md",
+              "correction": "cours/04-disques-stockage/tp/04-tp-disques-stockage-correction.md",
+              "downloadStem": "04-disques-stockage"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/04-disques-stockage/tp/04-tp-disques-stockage-guide.md",
+              "correction": "cours/04-disques-stockage/tp/04-tp-disques-stockage-guide-correction.md"
+            }
+          ],
           "quiz": "cours/04-disques-stockage/04-disques-stockage-quiz.html"
         },
         {
           "slug": "05-peripheriques-applications",
           "course": "cours/05-peripheriques-applications/05-peripheriques-applications.md",
-          "tp": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications.md",
-          "correction": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications.md",
+              "correction": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications-correction.md",
+              "downloadStem": "05-peripheriques-applications"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications-guide.md",
+              "correction": "cours/05-peripheriques-applications/tp/05-tp-peripheriques-applications-guide-correction.md"
+            }
+          ],
           "quiz": "cours/05-peripheriques-applications/05-peripheriques-applications-quiz.html"
         },
         {
           "slug": "06-administration-diagnostic",
           "course": "cours/06-administration-diagnostic/06-administration-diagnostic.md",
-          "tp": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic.md",
-          "correction": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic.md",
+              "correction": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic-correction.md",
+              "downloadStem": "06-administration-diagnostic"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic-guide.md",
+              "correction": "cours/06-administration-diagnostic/tp/06-tp-administration-diagnostic-guide-correction.md"
+            }
+          ],
           "quiz": "cours/06-administration-diagnostic/06-administration-diagnostic-quiz.html"
         },
         {
           "slug": "07-powershell",
           "course": "cours/07-powershell/07-powershell.md",
-          "tp": "cours/07-powershell/tp/07-tp-powershell.md",
-          "correction": "cours/07-powershell/tp/07-tp-powershell-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/07-powershell/tp/07-tp-powershell.md",
+              "correction": "cours/07-powershell/tp/07-tp-powershell-correction.md",
+              "downloadStem": "07-powershell"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/07-powershell/tp/07-tp-powershell-guide.md",
+              "correction": "cours/07-powershell/tp/07-tp-powershell-guide-correction.md"
+            }
+          ],
           "quiz": "cours/07-powershell/07-powershell-quiz.html"
         },
         {
           "slug": "08-mises-a-jour",
           "course": "cours/08-mises-a-jour/08-mises-a-jour.md",
-          "tp": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour.md",
-          "correction": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour.md",
+              "correction": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour-correction.md",
+              "downloadStem": "08-mises-a-jour"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour-guide.md",
+              "correction": "cours/08-mises-a-jour/tp/08-tp-mises-a-jour-guide-correction.md"
+            }
+          ],
           "quiz": "cours/08-mises-a-jour/08-mises-a-jour-quiz.html"
         },
         {
           "slug": "09-securite",
           "course": "cours/09-securite/09-securite.md",
-          "tp": "cours/09-securite/tp/09-tp-securite.md",
-          "correction": "cours/09-securite/tp/09-tp-securite-correction.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/09-securite/tp/09-tp-securite.md",
+              "correction": "cours/09-securite/tp/09-tp-securite-correction.md",
+              "downloadStem": "09-securite"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/09-securite/tp/09-tp-securite-guide.md",
+              "correction": "cours/09-securite/tp/09-tp-securite-guide-correction.md"
+            }
+          ],
           "quiz": "cours/09-securite/09-securite-quiz.html"
         },
         {
@@ -117,62 +216,172 @@
         {
           "slug": "12-acces-distant",
           "course": "cours/12-acces-distant/12-acces-distant.md",
-          "tp": "cours/12-acces-distant/tp/12-tp-acces-distant.md",
-          "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/12-acces-distant/tp/12-tp-acces-distant.md",
+              "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-correction.md",
+              "downloadStem": "12-acces-distant"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/12-acces-distant/tp/12-tp-acces-distant-guide.md",
+              "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "13-adk-winpe",
           "course": "cours/13-adk-winpe/13-adk-winpe.md",
-          "tp": "cours/13-adk-winpe/tp/13-tp-adk-winpe.md",
-          "correction": "cours/13-adk-winpe/tp/13-tp-adk-winpe-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/13-adk-winpe/tp/13-tp-adk-winpe.md",
+              "correction": "cours/13-adk-winpe/tp/13-tp-adk-winpe-correction.md",
+              "downloadStem": "13-adk-winpe"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/13-adk-winpe/tp/13-tp-adk-winpe-guide.md",
+              "correction": "cours/13-adk-winpe/tp/13-tp-adk-winpe-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "14-sysprep-audit",
           "course": "cours/14-sysprep-audit/14-sysprep-audit.md",
-          "tp": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit.md",
-          "correction": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit.md",
+              "correction": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit-correction.md",
+              "downloadStem": "14-sysprep-audit"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit-guide.md",
+              "correction": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "15-wim-dism",
           "course": "cours/15-wim-dism/15-wim-dism.md",
-          "tp": "cours/15-wim-dism/tp/15-tp-wim-dism.md",
-          "correction": "cours/15-wim-dism/tp/15-tp-wim-dism-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/15-wim-dism/tp/15-tp-wim-dism.md",
+              "correction": "cours/15-wim-dism/tp/15-tp-wim-dism-correction.md",
+              "downloadStem": "15-wim-dism"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/15-wim-dism/tp/15-tp-wim-dism-guide.md",
+              "correction": "cours/15-wim-dism/tp/15-tp-wim-dism-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "16-deploiement",
           "course": "cours/16-deploiement/16-deploiement.md",
-          "tp": "cours/16-deploiement/tp/16-tp-deploiement.md",
-          "correction": "cours/16-deploiement/tp/16-tp-deploiement-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/16-deploiement/tp/16-tp-deploiement.md",
+              "correction": "cours/16-deploiement/tp/16-tp-deploiement-correction.md",
+              "downloadStem": "16-deploiement"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/16-deploiement/tp/16-tp-deploiement-guide.md",
+              "correction": "cours/16-deploiement/tp/16-tp-deploiement-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "17-wds-pxe",
           "course": "cours/17-wds-pxe/17-wds-pxe.md",
-          "tp": "cours/17-wds-pxe/tp/17-tp-wds-pxe.md",
-          "correction": "cours/17-wds-pxe/tp/17-tp-wds-pxe-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/17-wds-pxe/tp/17-tp-wds-pxe.md",
+              "correction": "cours/17-wds-pxe/tp/17-tp-wds-pxe-correction.md",
+              "downloadStem": "17-wds-pxe"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/17-wds-pxe/tp/17-tp-wds-pxe-guide.md",
+              "correction": "cours/17-wds-pxe/tp/17-tp-wds-pxe-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "17-environnement-utilisateur",
           "course": "cours/18-environnement-utilisateur/18-environnement-utilisateur.md",
-          "tp": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur.md",
-          "correction": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur.md",
+              "correction": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-correction.md",
+              "downloadStem": "17-environnement-utilisateur"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-guide.md",
+              "correction": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "18-demarrage-recuperation",
           "course": "cours/19-demarrage-recuperation/19-demarrage-recuperation.md",
-          "tp": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation.md",
-          "correction": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation.md",
+              "correction": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-correction.md",
+              "downloadStem": "18-demarrage-recuperation"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-guide.md",
+              "correction": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "19-depannage",
           "course": "cours/20-depannage/20-depannage.md",
-          "tp": "cours/20-depannage/tp/20-tp-depannage.md",
-          "correction": "cours/20-depannage/tp/20-tp-depannage-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/20-depannage/tp/20-tp-depannage.md",
+              "correction": "cours/20-depannage/tp/20-tp-depannage-correction.md",
+              "downloadStem": "19-depannage"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/20-depannage/tp/20-tp-depannage-guide.md",
+              "correction": "cours/20-depannage/tp/20-tp-depannage-guide-correction.md"
+            }
+          ]
         },
         {
           "slug": "20-mco",
           "course": "cours/21-mco/21-mco.md",
-          "tp": "cours/21-mco/tp/21-tp-mco.md",
-          "correction": "cours/21-mco/tp/21-tp-mco-correction.md"
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/21-mco/tp/21-tp-mco.md",
+              "correction": "cours/21-mco/tp/21-tp-mco-correction.md",
+              "downloadStem": "20-mco"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/21-mco/tp/21-tp-mco-guide.md",
+              "correction": "cours/21-mco/tp/21-tp-mco-guide-correction.md"
+            }
+          ]
         }
       ],
       "logo": "assets/brands/windows11.svg"

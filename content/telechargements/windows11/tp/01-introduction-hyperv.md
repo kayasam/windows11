@@ -97,7 +97,7 @@
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp-corrigev2)
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp/standard-corrigev2)
 
 
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp-corrigev2)
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp/standard-corrigev2)

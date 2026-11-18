@@ -321,4 +321,4 @@
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp/standard)

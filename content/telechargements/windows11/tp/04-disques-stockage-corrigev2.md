@@ -251,4 +251,4 @@
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard)

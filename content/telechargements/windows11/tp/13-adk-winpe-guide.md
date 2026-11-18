@@ -1,0 +1,52 @@
+# TP 13. ADK, Windows PE et fichier de réponse, version guidée
+
+**Ta mission.** Travaille sur `PC01` avec l’ISO Windows 11 et les fichiers fournis. Tu vas produire une ISO WinPE qui démarre une VM de test et valider un fichier de réponse avant de l’utiliser.
+
+[Revoir le cours](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/standard)
+
+## Préparer les outils
+
+### A1 — Installer deux composants compatibles
+
+Sur `PC01`, installe l’ADK du lab avec **Outils de déploiement** et **USMT**. Puis installe le module WinPE associé à la même version, d’après les installateurs du cours. Vérifie les entrées dans **Applications installées**.
+
+### A2 — Ouvrir l’invite de déploiement
+
+Dans le menu Démarrer de `PC01`, cherche **Environnement de déploiement et d’outils de création d’images** et lance-le en administrateur. Tape `where copype`.
+
+## Créer et démarrer WinPE
+
+### B1 — Créer l’espace de travail
+
+Dans l’invite ADK, lance `copype amd64 C:\WinPE_amd64`. Vérifie que `C:\WinPE_amd64\media\sources\boot.wim` existe.
+
+### B2 — Produire une ISO
+
+Crée `C:\Temp`, puis lance `MakeWinPEMedia /ISO C:\WinPE_amd64 C:\Temp\WinPE-Fournil.iso` dans l’invite ADK. Copie ensuite l’ISO sur l’hôte Hyper-V.
+
+### B3 — Vérifier le démarrage dans une VM de test
+
+Sur l’hôte Hyper-V, attache l’ISO à une VM vierge et démarre dessus. Dans l’invite WinPE, utilise `diskpart`, `list disk`, `list volume` puis `exit`.
+
+## Valider un fichier de réponse
+
+### C1 — Choisir l’image dans WSIM
+
+Sur `PC01`, copie `install.wim` depuis le dossier `sources` de l’ISO vers `C:\Images`, ou utilise la copie du formateur. Ouvre **Assistant Gestion d’installation**, sélectionne le WIM et choisis **Windows 11 Professionnel**.
+
+### C2 — Lire la passe windowsPE
+
+Ouvre le fichier de réponse fourni dans WSIM. Dans **windowsPE**, repère la langue `fr-FR`, la sélection de l’image et la configuration du disque 0 de la VM de test.
+
+### C3 — Vérifier les réglages de personnalisation
+
+Dans **specialize**, repère Fournil et `Romance Standard Time`. Dans **oobeSystem**, repère les options OOBE et le compte local. Utilise les valeurs du fichier de lab.
+
+### C4 — Valider et enregistrer
+
+Dans WSIM, lance **Outils → Valider le fichier de réponses**. Corrige les erreurs signalées puis enregistre une copie `autounattend.xml`.
+
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/guide-corrigev2)
+
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/guide-corrigev2)

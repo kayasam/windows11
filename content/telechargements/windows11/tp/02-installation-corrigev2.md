@@ -294,4 +294,4 @@
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/02-installation/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/02-installation/tp/standard)

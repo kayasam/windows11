@@ -297,4 +297,4 @@ Get-WinEvent -LogName System -FilterHashtable @{ Level = 2 }
 
 ---
 
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp)
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp/standard)
