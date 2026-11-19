@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Déploiement rapide · Windows 11</title>
+<style>
+:root{color-scheme:light;--page:#eef2ed;--paper:#fff;--ink:#14271f;--muted:#4c6358;--line:#d5dfd7;--green:#155743;--pale:#eaf5ed;--lime:#dff886;--night:#112820;--on:#eef9ec;--warn:#744f0f;--warnbg:#fff3d8;--mono:Consolas,"Courier New",monospace}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;color:var(--ink);background:var(--page);font:16px/1.55 "Segoe UI",system-ui,sans-serif}
+h1,h2,h3,p,figure,pre{margin:0}
+h1,h2,h3{line-height:1.13;letter-spacing:-.035em}
+a{color:var(--green);text-underline-offset:.2em}
+button,select,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #138758;outline-offset:4px}
+code,pre{font-family:var(--mono);overflow-wrap:anywhere}
+code{font-size:.91em}
+.wrap{width:min(1152px,calc(100% - 56px));margin-inline:auto}
+.hero{background:var(--night);color:var(--on);position:relative;isolation:isolate;overflow:hidden;border-bottom:4px solid var(--lime)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 78% 5%,#22543d 0,transparent 53%),radial-gradient(#bdf0b825 1px,transparent 1px) 0 0/23px 23px;mask-image:linear-gradient(90deg,transparent 26%,#000)}
+.hero-inner{min-height:255px;display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(18px,5vw,65px);align-items:center;padding-block:30px}
+.kicker{font:700 .74rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#c5efbf}
+h1{font-size:clamp(2.55rem,5.7vw,4.65rem);line-height:.96;letter-spacing:-.073em;margin:9px 0 13px}
+h1 span{color:var(--lime)}
+.hero p:last-child{max-width:43ch;color:#d1e7d9}
+.pipeline{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;min-width:0}
+.node{text-align:center;border:1px solid #719984;background:#172f27;border-radius:13px;padding:14px 7px 10px;min-width:0}
+.node strong{display:block;font-size:.83rem;line-height:1.25;overflow-wrap:anywhere}
+.node small{display:block;color:#b8d8c5;font-size:.68rem;margin-top:4px}
+.node.out{background:var(--lime);color:#172b1d;border-color:var(--lime)}
+.node.out small{color:#344f36}
+.media-icon{display:inline-grid;place-items:center;width:33px;height:33px;border:1px solid #8cad9a;border-radius:9px;background:#1e4032;font:700 .75rem var(--mono);color:#ecfae9;margin-bottom:8px}
+.node.out .media-icon{background:#c6e568;color:#243720;border-color:#608847}
+.arrow{color:var(--lime);font-size:1.2rem}
+.layout{display:grid;grid-template-columns:218px minmax(0,1fr);gap:27px;align-items:start;padding-block:24px}
+.rail{position:sticky;top:15px}
+.route{margin:0 0 15px;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;min-inline-size:0}
+.route legend{font-size:.77rem;font-weight:750;padding:0 6px;color:var(--muted)}
+.route label{display:flex;align-items:center;gap:7px;padding:6px 3px;font-size:.84rem;font-weight:700;cursor:pointer}
+input[type=radio],input[type=checkbox]{accent-color:var(--green);flex:none}
+.route input{margin:0 2px 0 0;width:16px;height:16px}
+.stages{display:grid;gap:6px}
+.stages button{display:flex;align-items:center;gap:10px;text-align:left;padding:8px 9px;background:transparent;border:1px solid transparent;border-radius:11px;min-height:48px;color:var(--ink);font-weight:700;font-size:.88rem}
+.stages button:hover{background:var(--paper)}
+.stages button[aria-pressed=true]{border-color:var(--line);background:var(--paper)}
+.stages button span{display:grid;place-items:center;inline-size:27px;block-size:27px;background:#dfeae1;color:#285643;border-radius:7px;flex:none;font:.76rem var(--mono)}
+.stages button[aria-pressed=true] span{background:var(--green);color:#fff}
+.stage{border-radius:22px;overflow:clip;background:var(--paper);border:1px solid var(--line);box-shadow:0 10px 32px #223b2510}
+.stage-head{display:flex;justify-content:space-between;gap:14px;align-items:start;padding:20px clamp(14px,3vw,27px) 17px;border-bottom:1px solid var(--line)}
+.place{color:var(--green);font:750 .72rem var(--mono);letter-spacing:.09em;text-transform:uppercase;margin-bottom:6px}
+.stage h2{font-size:clamp(1.6rem,3.3vw,2.3rem)}
+.stage h3{font-size:1.12rem;margin-bottom:7px}
+.step-count{flex:none;background:var(--pale);border:1px solid var(--line);color:var(--green);padding:5px 9px;border-radius:8px;font:700 .75rem var(--mono)}
+.content{padding:18px clamp(14px,3vw,27px) 20px}
+.grid{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:14px}
+.box{min-width:0;padding:14px;border:1px solid var(--line);border-radius:13px;background:#f6f9f5}
+.box p,.unit,.summary{font-size:.9rem}
+.box p+p{margin-top:8px}
+.download{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 11px;margin-top:8px;border:1px solid #b8cdbd;background:#fff;border-radius:9px;font-weight:700;font-size:.79rem;line-height:1.4;text-decoration:none;overflow-wrap:anywhere}
+.download:hover{background:var(--pale);border-color:var(--green)}
+.download span{flex:none}
+.unit{margin-top:12px}
+.unit:first-child{margin-top:0}
+.unit .lead{display:block;margin-bottom:3px;color:var(--green)}
+.selects{display:flex;flex-wrap:wrap;gap:7px 16px;padding:11px 0;font-size:.83rem}
+.selects label{display:flex;gap:7px;align-items:center;font-weight:650}
+select{background:var(--paper);border:1px solid #94ae9d;border-radius:7px;padding:4px 7px;color:var(--ink)}
+.command{margin-top:10px;background:#152b23;color:#f4fbf1;border-radius:11px;overflow:hidden}
+.command-top{display:flex;justify-content:space-between;align-items:center;gap:7px;padding:7px 10px;background:#233c31;font:.72rem var(--mono)}
+.copy{border:1px solid #87ab92;border-radius:6px;background:#dff0dc;padding:4px 8px;color:#14271f;font-weight:800;font-size:.73rem;min-height:31px}
+.copy:hover{background:var(--lime)}
+pre{white-space:pre-wrap;word-break:break-word;padding:9px 11px;font-size:.78rem;line-height:1.65}
+.tree{background:var(--pale);padding:6px 9px;border:1px solid var(--line);border-radius:10px;margin:9px 0}
+.tree pre{padding:0;font-size:.76rem;color:#234f3c}
+.notice{border-left:3px solid #bc8a33;background:var(--warnbg);padding:8px 10px;border-radius:0 8px 8px 0;color:var(--warn);font-size:.81rem;margin-top:10px}
+.good{border-left-color:#31926b;background:var(--pale);color:#164b38}
+.actions{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;padding:13px clamp(14px,3vw,27px);border-top:1px solid var(--line);background:#fcfdfb}
+.actions a{font-size:.82rem}
+.btn{border:1px solid #a8c3b2;background:#fff;color:var(--green);padding:8px 12px;border-radius:9px;font-size:.84rem;font-weight:750;min-height:42px}
+.btn:hover{background:var(--pale)}
+.btn.primary{color:#fff;background:var(--green);border-color:var(--green)}
+.btn.primary:hover{background:#103b2e}
+.compact-list{margin:6px 0 0;padding-inline-start:20px;font-size:.86rem}
+.compact-list li+li{margin-top:6px}
+details{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.83rem;margin-top:9px}
+details summary{cursor:pointer;font-weight:750;color:var(--green)}
+details p{margin-top:6px}
+.checks{display:grid;gap:7px;margin-top:7px}
+.checks label{display:flex;align-items:start;gap:7px;cursor:pointer;font-size:.85rem}
+.checks input{width:16px;height:16px;margin:4px 0 0}
+#complete{margin-top:10px;color:var(--green);font-size:.84rem;font-weight:750}
+#copy-status{position:fixed;bottom:16px;right:16px;z-index:3;background:#10291f;color:#fff;padding:8px 12px;border-radius:9px;font-size:.83rem;pointer-events:none}
+#copy-status:empty{display:none}
+footer{display:flex;gap:7px 16px;flex-wrap:wrap;padding-bottom:20px;color:var(--muted);font-size:.77rem}
+footer strong{font-size:.8rem}
+@media(max-width:820px){.layout{grid-template-columns:1fr;gap:12px}.rail{position:static;display:grid;gap:9px}.route{display:flex;gap:8px 15px;flex-wrap:wrap;margin:0;padding:4px 8px}.stages{grid-template-columns:repeat(3,1fr)}.stages button{padding:6px;font-size:.78rem}.stages button span{inline-size:23px}}
+@media(max-width:620px){.wrap{width:calc(100% - 26px)}.hero-inner,.grid{grid-template-columns:1fr}.hero-inner{min-height:0;padding-block:22px;gap:14px}.pipeline{gap:5px}.node{padding:7px 4px}.media-icon{width:25px;height:25px;margin-bottom:4px}.layout{padding-block:15px}.actions{gap:7px}.actions .btn{padding-inline:9px}.stage h2{font-size:1.6rem}.node small,.node strong{font-size:.68rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+<body>
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="kicker">Windows 11 / Hyper-V</p>
+      <h1>Déploiement<br><span>rapide.</span></h1>
+      <p>Pars de l’ISO Microsoft. Ajoute les réponses de Windows, reconstruis le média, puis démarre ta VM avec un seul DVD.</p>
+    </div>
+    <div class="pipeline" aria-label="ISO Microsoft, dossier de préparation, puis VM">
+      <div class="node"><span class="media-icon" aria-hidden="true">ISO</span><strong>ISO officielle</strong><small>Démarrage + Windows</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node"><span class="media-icon" aria-hidden="true">&lt;/&gt;</span><strong>Dossier source</strong><small id="diagram-files">XML + script</small></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="node out"><span class="media-icon" aria-hidden="true">VM</span><strong id="diagram-vm">PC02</strong><small>Une ISO montée</small></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap layout">
+  <aside class="rail">
+    <fieldset class="route">
+      <legend>Choisis ta démo</legend>
+      <label><input type="radio" name="route" value="local"> Installation locale</label>
+      <label><input type="radio" name="route" value="domain" checked> Domaine + applications</label>
+    </fieldset>
+    <nav class="stages" aria-label="Étapes">
+      <button type="button" data-step="0" aria-pressed="true" aria-controls="step-1"><span aria-hidden="true">01</span> Télécharger</button>
+      <button type="button" data-step="1" aria-pressed="false" aria-controls="step-2"><span aria-hidden="true">02</span> Fabriquer l’ISO</button>
+      <button type="button" data-step="2" aria-pressed="false" aria-controls="step-3"><span aria-hidden="true">03</span> Installer</button>
+    </nav>
+  </aside>
+
+  <div>
+    <noscript><p class="notice">Active JavaScript pour adapter et copier les commandes.</p></noscript>
+    <section class="stage" id="step-1" aria-labelledby="title-1">
+      <header class="stage-head">
+        <div><p class="place">Sur l’hôte Hyper-V</p><h2 id="title-1" tabindex="-1">Télécharger les outils</h2></div>
+        <span class="step-count" aria-label="Étape 1 sur 3">01 / 03</span>
+      </header>
+      <div class="content">
+        <div class="grid">
+          <article class="box">
+            <h3>À télécharger chez Microsoft</h3>
+            <a class="download" href="https://learn.microsoft.com/fr-fr/windows-hardware/get-started/adk-install#download-the-adk-101261009457-september-2026" target="_blank" rel="noopener">Windows ADK pour le lab <span aria-hidden="true">↗</span></a>
+            <a class="download" href="https://www.microsoft.com/fr-fr/software-download/windows11" target="_blank" rel="noopener">ISO officielle Windows 11 x64 <span aria-hidden="true">↗</span></a>
+            <p class="unit">Sur la page Windows 11, prends l’<strong>image disque ISO x64 en français</strong>.</p>
+          </article>
+          <article class="box">
+            <h3>Avant de commencer</h3>
+            <ul class="compact-list">
+              <li>Hyper-V actif et un compte administrateur sur l’hôte.</li>
+              <li>Au moins <strong>30 Go libres</strong> pour l’ISO, son dossier de travail et la copie reconstruite. Prévois aussi l’espace du disque de la VM.</li>
+              <li data-only="domain"><code>SRV01</code> démarré, <code>vSwitch-Rennes</code>, nom <code>PC02</code> disponible dans le lab et compte de jonction autorisé. Les applications demandent Internet dans la VM.</li>
+            </ul>
+          </article>
+        </div>
+        <p class="unit"><strong class="lead">Installer l’ADK</strong> Dans <code>adksetup.exe</code>, sélectionne <b>Outils de déploiement</b>. Le module complémentaire WinPE devient utile si tu fabriques un WinPE personnalisé. Pour cette fiche, tu réutilises le programme d’installation de l’ISO officielle.</p>
+        <p class="unit">Dans Démarrer, ouvre <b>Environnement de déploiement et d’outils de création d’images</b>, puis vérifie que la commande affiche un chemin.</p>
+        <div class="command"><div class="command-top">Invite ADK <button class="copy" type="button" data-copy="check-adk" aria-label="Copier la vérification d’Oscdimg">Copier</button></div><pre id="check-adk">where oscdimg</pre></div>
+      </div>
+      <div class="actions"><span class="summary">À la fin · une ISO officielle et <code>oscdimg</code> disponible</span><button class="btn primary" type="button" data-go="1">Préparer l’ISO →</button></div>
+    </section>
+
+    <section class="stage" id="step-2" aria-labelledby="title-2" hidden>
+      <header class="stage-head">
+        <div><p class="place">Sur l’hôte Hyper-V</p><h2 id="title-2" tabindex="-1">Fabriquer une seule ISO</h2></div>
+        <span class="step-count" aria-label="Étape 2 sur 3">02 / 03</span>
+      </header>
+      <div class="content">
+        <p class="unit"><strong class="lead">1. Copier les fichiers de Windows</strong> Double-clique sur l’ISO officielle. Repère la lettre du DVD dans <b>Ce PC</b>, puis choisis-la ci-dessous. Utilise un dossier de travail neuf ou vide pour ce parcours.</p>
+        <div class="selects">
+          <label>DVD monté <select id="dvd" aria-label="Lettre du DVD monté"></select></label>
+          <label>Disque de travail <select id="work" aria-label="Lettre du disque de travail"><option>C:</option><option selected>D:</option><option>E:</option><option>F:</option></select></label>
+        </div>
+        <p id="drive-conflict" class="notice" hidden>Choisis un disque de travail différent de la lettre du DVD.</p>
+        <div class="command"><div class="command-top">Invite ADK <button class="copy" type="button" data-copy="extract" aria-label="Copier les commandes de préparation du dossier">Copier</button></div><pre id="extract"></pre></div>
+
+        <p class="unit"><strong class="lead">2. Ajouter le fichier de réponse<span data-only="domain"> et le script</span></strong> Enregistre les téléchargements dans le dossier <code data-path="files"></code>.</p>
+        <div class="grid">
+          <article class="box">
+            <h3>Fichiers du parcours</h3>
+            <a class="download" data-only="local" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-local.xml" download>autounattend-local.xml <span aria-hidden="true">↓</span></a>
+            <a class="download" data-only="domain" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-iso-officielle.xml" download>autounattend-iso-officielle.xml <span aria-hidden="true">↓</span></a>
+            <a class="download" data-only="domain" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/postinstall.ps1" download>postinstall.ps1 <span aria-hidden="true">↓</span></a>
+            <p class="unit">Copie le modèle dans <code data-path="source"></code> sous le nom <code>autounattend.xml</code>. Ouvre cette copie dans le Bloc-notes.</p>
+            <p data-only="local">Remplace <code>A_RENSEIGNER_MOT_DE_PASSE_LOCAL</code> par le mot de passe du compte local <code>admin</code>.</p>
+            <p data-only="domain">Remplace les deux marqueurs <code>A_RENSEIGNER_MOT_DE_PASSE_LOCAL</code> par le même mot de passe local. Dans <code>Credentials</code>, remplace le marqueur de jonction et renseigne le nom du compte autorisé dans <code>Username</code>. Copie aussi <code>postinstall.ps1</code> dans le dossier source.</p>
+            <details>
+              <summary>Mon mot de passe contient &amp; ou &lt;</summary>
+              <p>Dans le XML, écris <code>&amp;amp;</code> pour <code>&amp;</code> et <code>&amp;lt;</code> pour <code>&lt;</code>. Enregistre la copie avec l’extension <code>.xml</code>.</p>
+            </details>
+            <details data-only="domain">
+              <summary>Saisir les identifiants avec PowerShell</summary>
+              <a class="download" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download>Preparer-Fichier-Reponse.ps1 <span aria-hidden="true">↓</span></a>
+              <p>Télécharge l’assistant dans le même dossier que le modèle. Utilise ce bloc à la place de la modification manuelle. L’assistant refuse d’écraser un <code>autounattend.xml</code> déjà présent.</p>
+              <div class="command"><div class="command-top">Windows PowerShell <button class="copy" type="button" data-copy="prepare-xml" aria-label="Copier les commandes de préparation du XML">Copier</button></div><pre id="prepare-xml"></pre></div>
+            </details>
+          </article>
+          <article class="box">
+            <h3>Vérifie ton dossier</h3>
+            <figure class="tree" aria-label="Arborescence du dossier source"><pre id="tree"></pre></figure>
+            <p id="route-note"></p>
+            <details data-only="domain">
+              <summary>Que fait postinstall.ps1 ?</summary>
+              <p><code>FirstLogonCommands</code> lance le script à la première session. WinGet tente d’installer <b>Obsidian</b> et <b>VS Code</b>. Le script écrit un journal, coupe l’ouverture automatique et retire la copie d’origine du XML si Setup l’a conservée. Le script prévoit un redémarrage quand il termine normalement.</p>
+            </details>
+          </article>
+        </div>
+        <p class="notice">Le XML personnalisé et l’ISO reconstruite contiennent les mots de passe du lab. Garde-les sur l’hôte de travail.</p>
+        <p class="unit"><strong class="lead">3. Reconstruire l’ISO amorçable</strong> La partie <code>-b…\efisys.bin</code> réintègre le démarrage UEFI pour une VM Génération 2.</p>
+        <div class="command"><div class="command-top">Invite ADK <button class="copy" type="button" data-copy="build-iso" aria-label="Copier la commande de création ISO">Copier</button></div><pre id="build-iso"></pre></div>
+        <p class="notice good">Résultat attendu · <code data-path="iso"></code></p>
+      </div>
+      <div class="actions"><button class="btn" type="button" data-go="0">← Télécharger</button><button class="btn primary" type="button" data-go="2">Installer dans la VM →</button></div>
+    </section>
+
+    <section class="stage" id="step-3" aria-labelledby="title-3" hidden>
+      <header class="stage-head">
+        <div><p class="place">Dans Hyper-V puis dans la VM</p><h2 id="title-3" tabindex="-1">Installer et vérifier</h2></div>
+        <span class="step-count" aria-label="Étape 3 sur 3">03 / 03</span>
+      </header>
+      <div class="content">
+        <div class="grid">
+          <article class="box">
+            <h3>Dans Hyper-V</h3>
+            <ol class="compact-list">
+              <li>Crée une VM <b>Génération 2</b> avec 2 vCPU, 4 Go de RAM, TPM et un VHDX vierge d’au moins 64 Go. <span data-only="domain">Connecte-la à <code>vSwitch-Rennes</code>.</span></li>
+              <li>Monte seulement <code data-path="iso"></code> dans le lecteur DVD de la VM.</li>
+              <li>Connecte-toi à la console, démarre et appuie <b>une seule fois</b> sur une touche à l’invitation du DVD. Aux redémarrages, laisse la VM démarrer sur son disque.</li>
+              <li data-only="domain">Garde l’ISO montée jusqu’à la fin de la première session. Le script y récupère <code>postinstall.ps1</code>.</li>
+            </ol>
+            <p class="notice">Le fichier de réponse efface le disque 0 de la VM. Utilise le VHDX vierge de la démo.</p>
+          </article>
+          <article class="box">
+            <h3>Contrôles dans Windows</h3>
+            <p>Connecte-toi en <code>.\admin</code> avec le mot de passe du lab, une fois la préparation terminée.</p>
+            <div class="command"><div class="command-top">PowerShell dans la VM <button class="copy" type="button" data-copy="verify" aria-label="Copier les commandes de vérification">Copier</button></div><pre id="verify"></pre></div>
+            <div class="checks">
+              <label><input type="checkbox" data-check="name"> <span><code>hostname</code> affiche <strong id="check-name">PC02</strong>.</span></label>
+              <label data-only="local"><input type="checkbox" data-check="group"> <span><code>PartOfDomain</code> affiche <b>False</b>.</span></label>
+              <label data-only="domain"><input type="checkbox" data-check="domain"> <span><code>PartOfDomain</code> affiche <b>True</b> et <code>Domain</code> affiche <b>ad.fournil.lab</b>.</span></label>
+              <label data-only="domain"><input type="checkbox" data-check="apps"> <span>Obsidian et VS Code apparaissent dans les applications installées.</span></label>
+            </div>
+            <p id="complete" role="status"></p>
+          </article>
+        </div>
+        <details><summary>La VM ne démarre pas sur le DVD</summary><p>Vérifie dans <b>Microprogramme</b> de la VM que le DVD de la nouvelle ISO passe avant le disque. Vérifie aussi que ta commande de reconstruction contient <code>-pEF</code> et <code>-b…\efisys.bin</code>.</p></details>
+        <details><summary>Windows Setup demande de choisir un disque</summary><p>Ouvre l’ISO reconstruite sur l’hôte. Vérifie que <code>autounattend.xml</code> est à côté de <code>setup.exe</code> et que le nom se termine par <code>.xml</code>. Vérifie aussi la syntaxe XML après la saisie du mot de passe.</p></details>
+        <details data-only="domain"><summary>La jonction échoue ou les applications manquent</summary><p>Pour la jonction, contrôle le DNS vers <code>SRV01</code> et lis <code>C:\Windows\debug\NetSetup.log</code>. Pour les applications, ouvre <code>C:\Windows\Temp\postinstall.log</code> et vérifie l’accès Internet de la VM. Si le journal est absent, vérifie que le script figure à la racine de l’ISO montée.</p></details>
+      </div>
+      <div class="actions"><button class="btn" type="button" data-go="1">← Fabriquer l’ISO</button><button class="btn" type="button" data-go="0">Revenir au début</button></div>
+    </section>
+  </div>
+</main>
+
+<footer class="wrap">
+  <strong>Documentation Microsoft</strong>
+  <a href="https://learn.microsoft.com/fr-fr/windows-hardware/manufacture/desktop/oscdimg-command-line-options?view=windows-11" target="_blank" rel="noopener">Options Oscdimg</a>
+  <a href="https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/windows-setup-automation-overview?view=windows-11" target="_blank" rel="noopener">Fichier de réponse</a>
+</footer>
+<p id="copy-status" role="status"></p>
+<script>
+(() => {
+  const byId = id => document.getElementById(id);
+  const inputs = [...document.querySelectorAll('input[name=route]')];
+  const stepButtons = [...document.querySelectorAll('[data-step]')];
+  const copyButtons = [...document.querySelectorAll('[data-copy]')];
+  const checks = [...document.querySelectorAll('[data-check]')];
+  const dvd = byId('dvd');
+  const work = byId('work');
+  const notice = byId('copy-status');
+  const routeState = {domain: new Set(), local: new Set()};
+  let route = 'domain';
+  let timer;
+  const setText = (id, text) => { byId(id).textContent = text; };
+  const diskQuery = 'Get-CimInstance Win32_ComputerSystem | Select-Object Name, Domain, PartOfDomain';
+
+  for (const letter of 'CDEFGHIJKLMNOPQRSTUVWXYZ') {
+    dvd.add(new Option(letter + ':', letter + ':', letter === 'G', letter === 'G'));
+  }
+
+  function showStep(index) {
+    stepButtons.forEach((button, position) => {
+      const selected = position === index;
+      button.setAttribute('aria-pressed', String(selected));
+      byId(button.getAttribute('aria-controls')).hidden = !selected;
+    });
+    const heading = byId('title-' + (index + 1));
+    heading.focus({preventScroll: true});
+    heading.scrollIntoView({block: 'nearest'});
+  }
+
+  function updateChecks() {
+    const visibleChecks = checks.filter(check => !check.closest('label').hidden);
+    for (const check of checks) check.checked = routeState[route].has(check.dataset.check);
+    const done = visibleChecks.filter(check => check.checked).length;
+    setText('complete', done === visibleChecks.length ? 'Déploiement vérifié.' : done + ' / ' + visibleChecks.length + ' contrôles validés');
+  }
+
+  function updateCommands() {
+    const domain = route === 'domain';
+    const workFolder = work.value + '\\Win11-Lab';
+    const paths = {
+      source: workFolder + (domain ? '\\source-domaine' : '\\source-local'),
+      files: workFolder + '\\fichiers',
+      iso: workFolder + (domain ? '\\Win11-Fournil-Domaine.iso' : '\\Win11-Fournil-Local.iso')
+    };
+    for (const item of document.querySelectorAll('[data-path]')) item.textContent = paths[item.dataset.path];
+
+    const sameDrive = dvd.value === work.value;
+    byId('drive-conflict').hidden = !sameDrive;
+    copyButtons.find(button => button.dataset.copy === 'extract').disabled = sameDrive;
+    setText('extract', sameDrive ? 'Change la lettre du disque de travail pour afficher les commandes.' : [
+      'mkdir ' + paths.files,
+      'robocopy ' + dvd.value + '\\ ' + paths.source + ' /E'
+    ].join('\n'));
+    setText('prepare-xml', [
+      'Set-Location ' + paths.files,
+      'Unblock-File -LiteralPath .\\Preparer-Fichier-Reponse.ps1',
+      '.\\Preparer-Fichier-Reponse.ps1 -Sortie ' + paths.source + '\\autounattend.xml',
+      'Copy-Item -LiteralPath .\\postinstall.ps1 -Destination ' + paths.source
+    ].join('\n'));
+    setText('tree', [
+      paths.source + '\\',
+      '├─ setup.exe',
+      '├─ sources\\',
+      '├─ efi\\',
+      domain ? '├─ autounattend.xml' : '└─ autounattend.xml',
+      domain ? '└─ postinstall.ps1' : ''
+    ].filter(Boolean).join('\n'));
+    setText('build-iso', [
+      'oscdimg -m -o -u2 -udfver102 -pEF -e',
+      '-b' + paths.source + '\\efi\\microsoft\\boot\\efisys.bin',
+      paths.source,
+      paths.iso
+    ].join(' '));
+    setText('verify', 'hostname\n' + diskQuery + (domain ? '\nGet-Content C:\\Windows\\Temp\\postinstall.log -Tail 20' : ''));
+  }
+
+  function updateRoute() {
+    route = inputs.find(input => input.checked).value;
+    const domain = route === 'domain';
+    for (const item of document.querySelectorAll('[data-only]')) item.hidden = item.dataset.only !== route;
+    setText('diagram-vm', domain ? 'PC02' : 'PC02-LOCAL');
+    setText('diagram-files', domain ? 'XML + script' : 'XML seul');
+    setText('check-name', domain ? 'PC02' : 'PC02-LOCAL');
+    setText('route-note', domain
+      ? 'Le XML installe Windows, nomme PC02 et le joint à Fournil. Le script prend le relais après la première connexion.'
+      : 'Le XML installe Windows et crée le compte local admin. La VM reste en groupe de travail et arrive à l’écran de connexion.');
+    updateCommands();
+    updateChecks();
+  }
+
+  async function copyCommand(button) {
+    const source = byId(button.dataset.copy);
+    const command = source.textContent;
+    try {
+      await navigator.clipboard.writeText(command);
+      notice.textContent = 'Commande copiée.';
+    } catch {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(source);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      notice.textContent = 'Commande sélectionnée. Appuie sur Ctrl+C pour la copier.';
+    }
+    clearTimeout(timer);
+    timer = setTimeout(() => { notice.textContent = ''; }, 3600);
+  }
+
+  for (const input of inputs) input.addEventListener('change', updateRoute);
+  for (const input of [dvd, work]) input.addEventListener('change', updateCommands);
+  for (const button of stepButtons) button.addEventListener('click', () => showStep(Number(button.dataset.step)));
+  for (const button of document.querySelectorAll('[data-go]')) button.addEventListener('click', () => showStep(Number(button.dataset.go)));
+  for (const button of copyButtons) button.addEventListener('click', () => copyCommand(button));
+  for (const check of checks) check.addEventListener('change', () => {
+    if (check.checked) routeState[route].add(check.dataset.check);
+    else routeState[route].delete(check.dataset.check);
+    updateChecks();
+  });
+  updateRoute();
+})();
+</script>
+</body>
+</html>

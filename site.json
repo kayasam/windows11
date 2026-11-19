@@ -267,6 +267,7 @@
         {
           "slug": "16-deploiement",
           "course": "cours/16-deploiement/16-deploiement.md",
+          "html": "cours/16-deploiement/16-deploiement-rapide.html",
           "tps": [
             {
               "slug": "standard",
@@ -388,6 +389,7 @@
         "Ressources/TP-stagiaires/autounattend-fournil-26h2.xml",
         "Ressources/TP-stagiaires/autounattend-installation-master.xml",
         "Ressources/TP-stagiaires/autounattend-iso-officielle.xml",
+        "Ressources/TP-stagiaires/autounattend-local.xml",
         "Ressources/TP-stagiaires/postinstall.ps1",
         "Ressources/TP-stagiaires/Get-Inventaire.ps1",
         "Ressources/TP-stagiaires/Test-Poste.ps1",

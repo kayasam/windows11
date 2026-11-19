@@ -489,6 +489,12 @@
     },
     {
       "track": "windows11",
+      "file": "fichiers/autounattend-local.xml",
+      "download": "telechargements/windows11/fichiers/autounattend-local.xml",
+      "sha256": "63f0a55c905b35de1b41693998ad81fef8a49d5fe3bdc43f16036b9ac0104b90"
+    },
+    {
+      "track": "windows11",
       "file": "fichiers/postinstall.ps1",
       "download": "telechargements/windows11/fichiers/postinstall.ps1",
       "sha256": "7af4b447818805aaa0b7e3d45058b642859827c3988b9d70ffd7f49d81a2f9c2"

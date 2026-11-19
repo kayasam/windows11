@@ -237,8 +237,16 @@ def prepare():
                 if kind not in item: continue
                 support='cours/'+key+('-interactif.html' if kind=='html' else '-quiz.html')
                 if kind=='html':
-                    raw=item['htmlPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
-                    offline_html=raw.replace(base+'/assets/','../assets/'); files['cours/'+slug+'.html']=offline_html
+                    source_html=item['htmlPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
+                    raw=source_html
+                    offline_html=source_html.replace(base+'/assets/','../assets/')
+                    for attachment, (track_id, relative_attachment) in attachments.items():
+                        if track_id != tid: continue
+                        source_href=Path(os.path.relpath(attachment,item['htmlPath'].parent)).as_posix()
+                        marker='href="'+source_href+'"'
+                        raw=raw.replace(marker,'href="'+routes[attachment]+'"')
+                        offline_html=offline_html.replace(marker,'href="../'+relative_attachment+'"')
+                    files['cours/'+slug+'.html']=offline_html
                 elif item['quizPath'].suffix.lower()=='.html':
                     raw=item['quizPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
                     files['cours/'+slug+'-quiz.html']=raw.replace(base+'/assets/','../assets/')
