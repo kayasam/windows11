@@ -5,7 +5,7 @@
 - **Sur SRV01**, ouvre une session `FOURNIL\Administrateur` pour créer les GPO.
 - **Sur PC01**, utilise `PC01\admin` et PowerShell en administrateur pour les tests ordinateur. Pour les tests utilisateur, ouvre la session demandée à chaque étape.
 
-**Avant de commencer.** `PC01` est joint au domaine et placé dans `Fournil → Ordinateurs`. Les comptes et groupes du TP 10 existent. Le volume `C:` a un protecteur de récupération BitLocker issu du TP 09.
+**Avant de commencer.** `PC01` est joint au domaine et placé dans `Fournil → Ordinateurs`. Les comptes et groupes du TP 10 existent. Tu peux faire les parties A à D directement après le TP 10.
 
 [Revoir le chapitre GPO](https://cours.kaya.ovh/windows11/windows11/11-gpo/) · [Reprendre le TP AD guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide)
 
@@ -46,17 +46,11 @@ Dans l’éditeur de la GPO, ouvre **Configuration ordinateur → Stratégies �
 1. Active **Configurer le répertoire de sauvegarde des mots de passe** et sélectionne **Active Directory**.
 2. Active **Paramètres du mot de passe**. Saisis **14 caractères**, **30 jours** et la complexité avec majuscules, minuscules, chiffres et caractères spéciaux.
 
-### B4 — Configurer la récupération BitLocker
-
-Dans la même GPO, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d’exploitation**.
-
-Active **Sélectionner la méthode de récupération des lecteurs du système d’exploitation protégés par BitLocker**. Coche **Enregistrer les informations de récupération dans AD DS** et choisis **mots de passe et packages de clés**. Coche aussi **Ne pas activer BitLocker tant que les informations de récupération ne sont pas stockées dans AD DS**.
-
-### B5 — Reporter les mises à jour qualité
+### B4 — Reporter les mises à jour qualité
 
 Dans la même GPO, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Windows Update → Gérer les mises à jour proposées de Windows Update**. Active **Choisir quand recevoir les mises à jour qualité** et saisis **7 jours**.
 
-### B6 — Appliquer et vérifier la GPO
+### B5 — Appliquer et vérifier la GPO
 
 Sur **`PC01`**, lance dans PowerShell en administrateur.
 
@@ -70,31 +64,9 @@ Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate |
 
 Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\GG-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
 
-Sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance. Termine par BitLocker en B7.
+Sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
 
-### B7 — Sauvegarder le protecteur BitLocker existant
-
-Sur **`PC01`**, dans PowerShell en administrateur, lance les commandes.
-
-```powershell
-$protecteurs = (Get-BitLockerVolume -MountPoint 'C:').KeyProtector |
-    Where-Object KeyProtectorType -eq RecoveryPassword
-$protecteurs | ForEach-Object {
-    Backup-BitLockerKeyProtector -MountPoint 'C:' -KeyProtectorId $_.KeyProtectorId
-}
-```
-
-Sur **`SRV01`**, cherche l’enregistrement de récupération sous le compte ordinateur.
-
-```powershell
-$pc = Get-ADComputer PC01
-Get-ADObject -SearchBase $pc.DistinguishedName -SearchScope OneLevel -Filter "objectClass -eq 'msFVE-RecoveryInformation'" |
-    Select-Object Name
-```
-
-**À vérifier.** La seconde commande liste au moins une entrée. Si elle manque, vérifie que `$protecteurs` contient un protecteur sur `PC01` et relis les messages de sauvegarde.
-
-### B8 — Vérifier l’état du compte géré par LAPS
+### B6 — Vérifier l’état du compte géré par LAPS
 
 Sur **`PC01`**, relève le nom et l’état du compte administrateur intégré.
 
@@ -103,7 +75,7 @@ Get-LocalUser | Where-Object { $_.SID.Value -like '*-500' } |
     Select-Object Name, Enabled
 ```
 
-Compare `Name` avec le compte affiché en B6. Si `Enabled` vaut `False`, que se passe-t-il si quelqu’un tente d’ouvrir une session avec ce compte ?
+Compare `Name` avec le compte affiché en B5. Si `Enabled` vaut `False`, que se passe-t-il si quelqu’un tente d’ouvrir une session avec ce compte ?
 
 ## C. Configurer la session des utilisateurs de la boulangerie
 
@@ -188,6 +160,38 @@ Sur **`SRV01`**, crée `C:\Sauvegarde\GPO` et sauvegarde toutes les GPO dans ce 
 ### E2 — Comprendre à quoi sert Group Policy Analytics
 
 Dans le chapitre GPO, retrouve **Group Policy Analytics**. Si le Fournil passait à Intune, quelle information l’outil donnerait-il sur les réglages à reprendre ?
+
+## F. Atelier facultatif — Sauvegarder la récupération BitLocker dans AD
+
+Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
+
+### F1 — Configurer la récupération BitLocker
+
+Dans la même GPO, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d’exploitation**.
+
+Active **Sélectionner la méthode de récupération des lecteurs du système d’exploitation protégés par BitLocker**. Coche **Enregistrer les informations de récupération dans AD DS** et choisis **mots de passe et packages de clés**. Coche aussi **Ne pas activer BitLocker tant que les informations de récupération ne sont pas stockées dans AD DS**.
+
+### F2 — Sauvegarder le protecteur BitLocker existant
+
+Sur **`PC01`**, dans PowerShell en administrateur, lance les commandes.
+
+```powershell
+$protecteurs = (Get-BitLockerVolume -MountPoint 'C:').KeyProtector |
+    Where-Object KeyProtectorType -eq RecoveryPassword
+$protecteurs | ForEach-Object {
+    Backup-BitLockerKeyProtector -MountPoint 'C:' -KeyProtectorId $_.KeyProtectorId
+}
+```
+
+Sur **`SRV01`**, cherche l’enregistrement de récupération sous le compte ordinateur.
+
+```powershell
+$pc = Get-ADComputer PC01
+Get-ADObject -SearchBase $pc.DistinguishedName -SearchScope OneLevel -Filter "objectClass -eq 'msFVE-RecoveryInformation'" |
+    Select-Object Name
+```
+
+**À vérifier.** La seconde commande liste au moins une entrée. Si elle manque, vérifie que `$protecteurs` contient un protecteur sur `PC01` et relis les messages de sauvegarde.
 
 [Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide-corrigev2)
 

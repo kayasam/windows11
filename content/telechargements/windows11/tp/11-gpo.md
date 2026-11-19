@@ -10,7 +10,7 @@
 ## Objectifs
 
 - Administrer les GPO depuis `PC01` (RSAT)
-- Créer une GPO **ordinateur** de sécurité : admins locaux, Windows LAPS, BitLocker → AD, anneau Windows Update
+- Créer une GPO **ordinateur** de sécurité : admins locaux, Windows LAPS et anneau Windows Update
 - Créer une GPO **utilisateur** filtrée sur un groupe : lecteur réseau et restriction
 - Diagnostiquer avec `gpresult`
 
@@ -19,10 +19,11 @@
 ## Prérequis
 
 - `SRV01` contrôleur de domaine, `PC01` joint dans `OU=Ordinateurs,OU=Fournil` (TP 10)
-- BitLocker actif sur `PC01` avec une clé de récupération (TP 09)
 - Session `FOURNIL\Administrateur` sur `SRV01` pour créer les GPO ; sur `PC01`, une session `FOURNIL\Administrateur` (ou `PC01\admin`) pour les vérifications, puis `FOURNIL\stagiaire` pour la partie C
 
 ---
+
+Tu peux faire les parties A à D directement après le TP 10.
 
 ## Partie A — Outils
 
@@ -42,15 +43,11 @@
 
 **B3.** Prépare le domaine pour **Windows LAPS**, puis configure la GPO : sauvegarde dans AD, 14 caractères, 30 jours.
 
-**B4.** Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
+**B4.** Ajoute un report de **7 jours** des mises à jour qualité (anneau « large »).
 
-**B5.** Ajoute un report de **7 jours** des mises à jour qualité (anneau « large »).
+**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux, Windows LAPS et le report des mises à jour qualité.
 
-**B6.** Applique sur `PC01` et vérifie **chacun** des quatre réglages.
-
-**B7.** La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
-
-**B8.** Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
+**B6.** Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
 
 ---
 
@@ -96,6 +93,16 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 **E1.** Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
 
 **E2.** Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
+
+---
+
+## Partie F — Atelier facultatif BitLocker
+
+Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
+
+**F1.** Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
+
+**F2.** La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
 
 ---
 

@@ -1,7 +1,7 @@
 # TP 21. TP final : maintien en condition opérationnelle
 
 > [!abstract] Parcours TSSR
-> Évaluation du socle : A, B (hors B4), C (hors C4) et F. Utiliser les scripts fournis et une trame de plan MCO. L’incident répété, la procédure complète de sortie du parc et la maintenance avancée sont (bonus). Les principes de sortie du parc sont expliqués dans le cours.
+> Évaluation du socle : A, B (hors B4 et hors B2 si BitLocker a été reporté), C (hors C4) et F. Utiliser les scripts fournis et une trame de plan MCO. L’incident répété, la procédure complète de sortie du parc et la maintenance avancée sont (bonus). Les principes de sortie du parc sont expliqués dans le cours.
 
 > Chapitres associés : [21. Maintien en condition opérationnelle](https://cours.kaya.ovh/windows11/windows11/20-mco/) — et tout le reste de la formation
 
@@ -38,7 +38,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **B1.** Mets à jour les signatures Defender sur les deux postes. Si la mise à jour échoue, trouve une source alternative.
 
-**B2.** Active BitLocker sur `PC02` avec le TPM, en sauvegardant le mot de passe de récupération dans AD **avant** le chiffrement. Vérifie sur `SRV01` que la clé est bien enregistrée.
+**B2.** Si tu as passé le chapitre 09 ou l’atelier BitLocker du TP GPO, relève l’état de protection de `PC02` dans le CSV, note l’écart éventuel dans le plan de MCO et passe à B3. Sinon, active BitLocker sur `PC02` avec le TPM, en sauvegardant le mot de passe de récupération dans AD **avant** le chiffrement. Vérifie sur `SRV01` que la clé est bien enregistrée.
 
 **B3.** Vérifie l'état de Windows Update sur `PC02` : dernière mise à jour, stratégie appliquée (report), redémarrage en attente. Lance une recherche de mises à jour.
 

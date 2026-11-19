@@ -1,6 +1,6 @@
 # TP 21. TP final : maintien en condition opérationnelle, version guidée
 
-**Ta mission.** Depuis `PC01`, inventorie `PC01` et `PC02`, traite les écarts puis inscris les contrôles dans un plan de MCO. Utilise les scripts remis par le formateur, les postes du domaine et la stratégie BitLocker du TP GPO.
+**Ta mission.** Depuis `PC01`, inventorie `PC01` et `PC02`, traite les écarts puis inscris les contrôles dans un plan de MCO. Utilise les scripts remis par le formateur et les postes du domaine.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/20-mco/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/20-mco/tp/standard)
 
@@ -20,9 +20,11 @@ Compare les lignes du CSV aux seuils du chapitre pour la version, les mises à j
 
 Sur chacun des deux postes, dans PowerShell administrateur, lance `Update-MpSignature`. Relève ensuite `AntivirusSignatureVersion` et `AntivirusSignatureAge` avec `Get-MpComputerStatus`.
 
-### B2 — Sauvegarder la récupération avant de chiffrer PC02
+### B2 — Atelier facultatif : sauvegarder la récupération avant de chiffrer PC02
 
-Sur `PC02`, applique la stratégie BitLocker du TP 11. Dans PowerShell administrateur, lance `Get-BitLockerVolume -MountPoint C:`. Si aucun protecteur de récupération n’existe, ajoute-le avec `Add-BitLockerKeyProtector -MountPoint C: -RecoveryPasswordProtector | Out-Null`. Lance le bloc suivant.
+Si tu as passé le chapitre 09 ou l’atelier BitLocker du TP GPO, relève l’état de protection de `PC02` dans le CSV, note l’écart éventuel dans le plan de MCO et passe à B3.
+
+Sinon, sur `PC02`, applique la stratégie BitLocker de l’atelier du TP GPO. Dans PowerShell administrateur, lance `Get-BitLockerVolume -MountPoint C:`. Si aucun protecteur de récupération n’existe, ajoute-le avec `Add-BitLockerKeyProtector -MountPoint C: -RecoveryPasswordProtector | Out-Null`. Lance le bloc suivant.
 
 ```powershell
 $recovery = (Get-BitLockerVolume -MountPoint C:).KeyProtector |
@@ -33,7 +35,7 @@ Backup-BitLockerKeyProtector -MountPoint C: -KeyProtectorId $recovery.KeyProtect
 ```
 
 
-Sur `SRV01`, vérifie l’enregistrement sous `PC02` avec le contrôle B7 du TP GPO. Une fois l’enregistrement confirmé, active BitLocker avec le TPM depuis le Panneau de configuration de `PC02` si le volume n’est pas encore protégé.
+Sur `SRV01`, vérifie l’enregistrement sous `PC02` avec le contrôle F2 du TP GPO en ciblant `PC02`. Une fois l’enregistrement confirmé, active BitLocker avec le TPM depuis le Panneau de configuration de `PC02` si le volume n’est pas encore protégé.
 
 ### B3 — Vérifier Windows Update et relancer un inventaire
 
