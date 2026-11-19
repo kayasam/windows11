@@ -60,7 +60,7 @@ Update-LapsADSchema
 Set-LapsADComputerSelfPermission -Identity 'OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab'
 ```
 
-Dans l’éditeur de la GPO, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Système → LAPS**.
+Sur `SRV01`, ouvre `gpmc.msc` et retrouve `GPO-Postes-Securite` sous `Fournil → Ordinateurs`. C’est la GPO créée en B1. Fais un clic droit dessus → **Modifier**, puis ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Système → LAPS**.
 
 1. Active **Configurer le répertoire de sauvegarde des mots de passe** et sélectionne **Active Directory**.
 2. Active **Paramètres du mot de passe**. Saisis **14 caractères**, **30 jours** et la complexité avec majuscules, minuscules, chiffres et caractères spéciaux.

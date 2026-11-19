@@ -41,7 +41,7 @@ Tu peux faire les parties A à D directement après le TP 10.
 
 **B2.** Fais en sorte que `FOURNIL\GG-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
 
-**B3.** Prépare le domaine pour **Windows LAPS**, puis configure la GPO : sauvegarde dans AD, 14 caractères, 30 jours.
+**B3.** Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
 
 **B4.** Ajoute un report de **7 jours** des mises à jour qualité (anneau « large »).
 
@@ -106,4 +106,7 @@ Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà 
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)

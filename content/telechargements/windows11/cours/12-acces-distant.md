@@ -1,355 +1,328 @@
 # 12. Administration et assistance à distance
 
 > [!abstract] Parcours TSSR
-> À réaliser en J4, APRÈS le TP 16 : PC02 existe alors et est joint au domaine. Activer WinRM depuis la console Hyper-V de PC02 en B2 AVANT A2, puis reprendre A et B. OpenSSH est (bonus).
-> Les sections marquées (bonus) sont facultatives.
+> À réaliser en J4, APRÈS le TP 16 : `PC02` existe alors et il est joint au domaine. On travaille depuis `PC01` vers `PC02`, avec le compte `FOURNIL\adm.stagiaire` (administrateur des postes, chapitre 10).
+> Les sections marquées (bonus) sont facultatives : rien dans la suite n'en dépend.
 
 > [!NOTE] Objectif
-> Configurer et utiliser les différents moyens d'accès distant à un poste Windows 11 : Bureau à distance (RDP), PowerShell Remoting/WinRS, OpenSSH, Assistance rapide (et Remote Help), et les outils RSAT — maintenant que `PC01`, `PC02` et `SRV01` sont joints au domaine `ad.fournil.lab` (chapitres 10 et 16).
+> Savoir intervenir sur un poste **sans se déplacer** : prendre la main sur son écran (Bureau à distance), lui envoyer des commandes (PowerShell à distance), ou aider un utilisateur (Assistance rapide).
 >
-> **Outils :** `mstsc.exe`, `winrs.exe`, `ssh.exe`, Assistance rapide, RSAT, Windows App
-> **Commandes à connaître :** `Enable-PSRemoting`, `Enter-PSSession`, `Invoke-Command`, `ssh`, `Add-WindowsCapability`
+> **Outils :** Paramètres, `mstsc.exe`, `services.msc`, Assistance rapide
+> **Commandes à connaître :** `Test-NetConnection`, `Enable-PSRemoting`, `Invoke-Command`, `Enter-PSSession`
+
+---
+
+## Quel outil pour quel besoin ?
+
+| Besoin | Outil | Port | Configuration sur le poste cible |
+|--------|-------|------|-----------------------------------|
+| Voir et utiliser l'écran d'un poste | **Bureau à distance** (`mstsc`) | TCP 3389 | Désactivé par défaut → à activer |
+| Lancer des commandes sur un ou plusieurs postes | **PowerShell à distance** (WinRM) | TCP 5985 | Désactivé par défaut sur Windows 11 → `Enable-PSRemoting` |
+| Aider un utilisateur devant son écran | **Assistance rapide** | Aucun (passe par Internet) | Rien : l'utilisateur donne un code |
+| Se connecter comme sous Linux (bonus) | **OpenSSH** (`ssh`) | TCP 22 | Serveur SSH à installer sur un poste client |
 
 ---
 
 ## Bureau à distance (RDP)
 
-Le **Bureau à distance** (Remote Desktop Protocol, port TCP **3389**) permet de prendre le contrôle graphique complet d'un poste distant.
+Le **Bureau à distance** (Remote Desktop Protocol, port TCP **3389**) affiche l'écran du poste distant dans une fenêtre : on travaille comme si on était assis devant.
 
-> [!WARNING] RDP en tant que serveur nécessite Pro/Enterprise/Education
-> Windows 11 **Home** peut se connecter à un poste distant (client RDP `mstsc.exe`), mais ne peut pas **héberger** de session Bureau à distance entrante — cette fonctionnalité est réservée aux éditions Pro et supérieures.
+> [!WARNING] Il faut Windows 11 Pro (ou Entreprise/Éducation) sur le poste cible
+> Windows 11 **Famille** peut se connecter à un autre poste, mais ne peut **pas recevoir** de connexion Bureau à distance.
 
-### Activation
+### Activer le Bureau à distance (sur le poste cible)
 
-**Interface graphique :** Paramètres → Système → Bureau à distance → activer le bouton bascule
-![w11-10-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-10-acces-distant.png)
-Ou : `sysdm.cpl` → onglet **Accès à distance** → cocher **Autoriser les connexions d'assistance à distance à cet ordinateur** et **Autoriser les connexions distantes à cet ordinateur**.
+**En graphique :** Paramètres → **Système** → **Bureau à distance** → passer le bouton sur **Activé** → **Confirmer**.
+
+![w11-12-parametres-rdp-confirmation](https://cours.kaya.ovh/windows11/assets/captures/w11-12-parametres-rdp-confirmation.png)
+
+Une fois activé, la flèche à droite du bouton affiche le **port** (3389) et l'option **authentification au niveau du réseau** (NLA), cochée par défaut : on la laisse cochée.
+
+![w11-12-parametres-rdp-active](https://cours.kaya.ovh/windows11/assets/captures/w11-12-parametres-rdp-active.png)
+
+> [!TIP] Le pare-feu s'ouvre tout seul
+> En activant le bouton, Windows active aussi les règles de pare-feu **Bureau à distance** (port 3389). Rien d'autre à faire.
+
+Ancienne méthode, toujours valable : `sysdm.cpl` → onglet **Utilisation à distance** → **Autoriser les connexions à distance à cet ordinateur**.
+
 ![w11-10-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-10-acces-distant-1.png)
 
-```powershell
-# Vérifier l'état actuel (1 = désactivé, 0 = activé) — désactivé par défaut sur Windows 11
-Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name fDenyTSConnections
+**En PowerShell** (Terminal administrateur, sur le poste cible) :
 
-# Activer le Bureau à distance
+```powershell
+# 1 = Bureau à distance désactivé, 0 = activé (la valeur est « à l'envers » : fDeny = refuser)
 Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server" -Name fDenyTSConnections -Value 0
 
-# Activer la règle de pare-feu associée (voir chapitre 9)
+# Ouvrir le pare-feu (le bouton des Paramètres le fait tout seul, pas cette commande)
 Enable-NetFirewallRule -DisplayGroup "Bureau à distance"
 ```
 
-> [!NOTE] La valeur `fDenyTSConnections` est inversée
-> `1` signifie **désactivé** (deny), `0` signifie **activé**. C'est la valeur par défaut sur un Windows 11 fraîchement installé — RDP entrant est désactivé tant qu'on ne l'active pas explicitement, en GUI ou via cette clé.
+**Vérifier depuis un autre poste** que le port répond :
 
-### Se connecter
-
-```cmd
-:: Client RDP graphique
-mstsc /v:SRV01
+```powershell
+Test-NetConnection PC02 -Port 3389
+# TcpTestSucceeded : False  → Bureau à distance désactivé (ou pare-feu fermé)
+# TcpTestSucceeded : True   → prêt
 ```
+
+### Qui a le droit de se connecter ?
+
+Deux groupes **locaux** du poste cible :
+
+| Groupe local | Qui y met-on ? |
+|--------------|----------------|
+| **Administrateurs** | Déjà autorisés, rien à faire. Sur le lab : `GG-Admins-Postes`, donc `adm.stagiaire` (GPO du chapitre 11) |
+| **Utilisateurs du Bureau à distance** | Les comptes **non administrateurs** à autoriser |
+
+**En graphique :** Paramètres → Système → Bureau à distance → **Utilisateurs du Bureau à distance**. La fenêtre rappelle que les administrateurs ont **déjà** accès :
+
+![w11-12-utilisateurs-bureau-a-distance](https://cours.kaya.ovh/windows11/assets/captures/w11-12-utilisateurs-bureau-a-distance.png)
+
+**Ajouter…** → taper le nom du compte → **Vérifier les noms** (le nom est souligné s'il existe dans le domaine) → **OK**.
+
+![w11-12-rdp-ajouter-test-vendeur](https://cours.kaya.ovh/windows11/assets/captures/w11-12-rdp-ajouter-test-vendeur.png)
+
+![w11-12-utilisateurs-bureau-a-distance-ok](https://cours.kaya.ovh/windows11/assets/captures/w11-12-utilisateurs-bureau-a-distance-ok.png)
+
+**En PowerShell** (sur le poste cible) :
+
+```powershell
+Add-LocalGroupMember -Group "Utilisateurs du Bureau à distance" -Member "FOURNIL\test.vendeur"
+Get-LocalGroupMember -Group "Utilisateurs du Bureau à distance"
+```
+
+### Se connecter avec `mstsc`
+
+Sur le poste de l'administrateur : menu Démarrer → **Connexion Bureau à distance** (ou `Win + R` → `mstsc`). Taper le nom du poste → **Connexion**.
+
+![w11-12-mstsc-ordinateur-pc02](https://cours.kaya.ovh/windows11/assets/captures/w11-12-mstsc-ordinateur-pc02.png)
+
+Windows propose le compte de la session en cours. Pour en utiliser un autre : **Autres choix** → **Utiliser un autre compte**, puis saisir `FOURNIL\nom` et le mot de passe.
+
+![w11-12-mstsc-identifiants](https://cours.kaya.ovh/windows11/assets/captures/w11-12-mstsc-identifiants.png)
+
+> [!WARNING] Une seule session à la fois sur Windows 11
+> Si quelqu'un est déjà connecté sur le poste, `mstsc` prévient qu'il sera **déconnecté** :
+>
+> ![w11-12-mstsc-autre-utilisateur-connecte](https://cours.kaya.ovh/windows11/assets/captures/w11-12-mstsc-autre-utilisateur-connecte.png)
+>
+> Sur le poste cible, l'utilisateur voit cette demande. Sans réponse, **il est déconnecté au bout de 30 secondes** (ses programmes restent ouverts, il retrouve sa session en se reconnectant) :
+>
+> ![w11-12-pc02-autoriser-connexion](https://cours.kaya.ovh/windows11/assets/captures/w11-12-pc02-autoriser-connexion.png)
+>
+> Sur un poste en production, on **prévient toujours l'utilisateur** avant de se connecter. (Windows Server, lui, accepte deux sessions d'administration en même temps.)
+
+Une fois connecté, la barre en haut de l'écran rappelle le nom du poste distant. On vérifie où l'on est et sous quel compte :
+
+![w11-12-mstsc-session-pc02](https://cours.kaya.ovh/windows11/assets/captures/w11-12-mstsc-session-pc02.png)
+
+> [!TIP] Fermer proprement : se déconnecter, pas la croix
+> La **croix** de la barre bleue **déconnecte** seulement : la session reste ouverte sur le poste distant (et le bloque pour les autres). Pour la fermer : menu Démarrer → compte → **Se déconnecter**, ou taper `logoff` dans une invite de commandes.
 
 | Option `mstsc` | Rôle |
 |-----------------|------|
-| `/v:<ordinateur>` | Machine cible |
-| `/admin` | Se connecter à la session console (administration), pas une session utilisateur classique |
-| `/multimon` | Utilise plusieurs écrans côté client |
-| `/w:<largeur> /h:<hauteur>` | Résolution de la fenêtre |
-
----
-
-## WinRM, WinRS et PowerShell Remoting
-
-**WinRM** (Windows Remote Management) est le service Microsoft qui expose l'administration à distance via le protocole WS-Management (HTTP/HTTPS, ports **5985/5986**). Il sert de socle à deux outils :
-
-| | PowerShell Remoting | WinRS |
-|-|----------------------|-------|
-| **Shell distant** | PowerShell complet (objets) | CMD (texte brut) |
-| **Cmdlet/commande** | `Enter-PSSession`, `Invoke-Command` | `winrs.exe` |
-| **Usage typique** | Administration moderne, scripts | Compatibilité avec scripts CMD hérités |
-
-### Activation
-
-```powershell
-# Sur la machine à administrer à distance (SRV01 ou PC01) :
-# active le service WinRM, crée l'écouteur et la règle de pare-feu associée
-Enable-PSRemoting -Force
-
-# Vérifier que le service WinRM tourne
-Get-Service WinRM
-
-# Tester la disponibilité de WinRM sur une machine distante
-Test-WSMan -ComputerName SRV01
-```
-
-Constaté sur le lab :
-
-| Poste | WinRM par défaut |
-|-------|------------------|
-| Windows Server 2025 (`SRV01`) | **Actif** (PowerShell Remoting activé d'office) |
-| Windows 11 (`PC01`, `PC02`) | **Arrêté**, démarrage manuel — `Enable-PSRemoting` obligatoire |
-
-`Enable-PSRemoting` crée deux règles : `WINRM-HTTP-In-TCP-NoScope` (**Domaine, Privé** — activée) et `WINRM-HTTP-In-TCP` (**Public** — *désactivée*, et limitée au sous-réseau local). Sur un parc, on l'active par **GPO** (*Composants Windows → Gestion à distance de Windows → Service WinRM → Autoriser la gestion à distance du serveur via WinRM*, + règle de pare-feu + service en automatique).
-
-```powershell
-# Résultat réel depuis PC01 (Kerberos, aucun mot de passe demandé)
-Invoke-Command -ComputerName SRV01, PC02 -ScriptBlock { "$env:COMPUTERNAME : $((Get-CimInstance Win32_OperatingSystem).Caption)" }
-# SRV01 : Microsoft Windows Server 2025 Standard Evaluation
-# PC02 : Microsoft Windows 11 Professionnel
-```
-
-> [!TIP] Kerberos gère l'authentification automatiquement entre membres du domaine
-> `PC01` et `SRV01` étant désormais jointes au domaine `ad.fournil.lab` (chapitre 10), le Remoting utilise l'authentification **Kerberos** de façon transparente entre elles — inutile de configurer `TrustedHosts` ni de ressaisir des identifiants à chaque connexion, contrairement à un scénario en groupe de travail.
->
-> **Pour mémoire (hors domaine ou entre deux machines en groupe de travail) :** il faudrait déclarer la machine distante dans `TrustedHosts` côté client (`Set-Item WSMan:\localhost\Client\TrustedHosts -Value "NomMachine" -Force`) et fournir systématiquement `-Credential`, faute d'authentification Kerberos disponible.
-
-### PowerShell Remoting : les trois façons de faire
-
-| Cmdlet | Usage |
-|--------|-------|
-| `Enter-PSSession` | Session interactive **1 vers 1** — comme un SSH, on "entre" dans la console distante |
-| `Invoke-Command` | Exécute une commande ou un bloc de script **1 vers N machines**, retourne les résultats localement |
-| `New-PSSession` | Crée une session **persistante** réutilisable pour plusieurs commandes successives (évite de rouvrir une connexion à chaque fois) |
-
-```powershell
-# Session interactive (authentification Kerberos transparente, compte du domaine courant)
-Enter-PSSession -ComputerName SRV01
-# (dans la session distante) Get-Service | Where-Object Status -eq Running
-Exit-PSSession
-
-# Exécuter une commande à distance sur plusieurs machines sans session interactive
-Invoke-Command -ComputerName SRV01, PC02 -ScriptBlock {
-    Get-Service -Name "sshd"
-}
-
-# Session persistante réutilisable
-$session = New-PSSession -ComputerName SRV01
-Invoke-Command -Session $session -ScriptBlock { Get-Process }
-Invoke-Command -Session $session -ScriptBlock { Get-EventLog -LogName System -Newest 5 }
-Remove-PSSession $session
-```
-
-> [!TIP] Pourquoi une session persistante (`New-PSSession`) ?
-> `Invoke-Command` sans `-Session` ouvre et ferme une connexion à chaque appel. Si plusieurs commandes doivent partager un état (variables, modules importés), `New-PSSession` garde la connexion ouverte et le contexte en mémoire entre les appels.
-
-### WinRS — shell CMD distant (bonus)
-
-```cmd
-:: Exécuter une commande CMD unique sur une machine distante
-winrs -r:http://SRV01:5985 ipconfig /all
-
-:: Ouvrir un shell CMD interactif distant
-winrs -r:http://SRV01:5985 cmd
-```
-
----
-
-## OpenSSH — l'alternative ouverte et multiplateforme (bonus)
-
-**OpenSSH** est aujourd'hui intégré à Windows en tant que fonctionnalité optionnelle, et fonctionne **en parallèle** de WinRM plutôt qu'en remplacement — contrairement à WinRM (protocole Microsoft, principalement Windows-à-Windows), SSH est un standard ouvert, universel entre Windows, Linux et macOS.
-
-| | WinRM / PowerShell Remoting | OpenSSH |
-|-|-------------------------------|---------|
-| **Origine** | Protocole Microsoft (WS-Management) | Standard ouvert, multiplateforme |
-| **Port** | 5985 (HTTP) / 5986 (HTTPS) | 22 |
-| **Authentification typique** | Kerberos (domaine) ou NTLM+mot de passe | Mot de passe ou **clé publique/privée** |
-| **Client dispo nativement** | Windows uniquement | Windows, Linux, macOS |
-| **Cas d'usage typique** | Administration Windows pure, scripts PowerShell | Environnements hétérogènes, automatisation cross-platform, habitudes Linux |
-
-### Client OpenSSH (déjà présent)
-
-Le **client** SSH est installé par défaut sur Windows 11 depuis plusieurs versions déjà — rien à installer :
-
-```powershell
-Get-Command ssh.exe
-```
-
-```cmd
-:: Se connecter en SSH à une machine Linux ou Windows (avec serveur SSH actif)
-ssh administrateur@SRV01
-```
-
-### Serveur OpenSSH
-
-> [!NOTE] Déjà activé sur SRV01 depuis le chapitre 10
-> Sur `SRV01`, le serveur OpenSSH tourne déjà (chapitre 10) — rien à réinstaller ici. Le déroulé ci-dessous reste utile pour l'activer sur un poste **Windows 11 client**, où la capacité n'est **pas** installée par défaut (contrairement à Windows Server 2025, où elle est très souvent déjà présente).
-
-```powershell
-# Toujours vérifier l'état avant d'installer quoi que ce soit
-Get-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0 | Select-Object Name, State
-
-# Installer uniquement si l'état est "NotPresent" (Feature on Demand, comme RSAT)
-Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-
-# Démarrer le service et le passer en démarrage automatique
-Start-Service sshd
-Set-Service -Name sshd -StartupType Automatic
-```
-
-> [!WARNING] La règle de pare-feu OpenSSH ne couvre que le profil Privé
-> La règle `OpenSSH-Server-In-TCP` (créée avec la capacité) n'autorise le trafic que sur le profil réseau **Privé** — pas Public, pas Domaine. Or une carte connectée à un switch Hyper-V interne est souvent classée **Public** par défaut (voir chapitre 9), et bascule automatiquement en **Domaine** une fois `SRV01` promu contrôleur de domaine et `PC01` joint au domaine (chapitre 10). Dans les deux cas, la règle scopée Privé uniquement ne s'applique pas, et la connexion échoue en timeout (pas "connection refused").
-> ```powershell
-> Get-NetFirewallRule -Name "OpenSSH-Server-In-TCP" | Select-Object Direction, Action, Profile
-> Get-NetConnectionProfile
->
-> # Élargir la règle aux trois profils plutôt que de ne corriger qu'un seul cas :
-> Set-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -Profile Domain,Private,Public
-> ```
-> Si la règle elle-même est absente (rare), la créer avec `New-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -DisplayName "OpenSSH Server (sshd)" -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22 -Profile Domain,Private,Public`.
-
-> [!NOTE] Shell par défaut d'une session SSH sur Windows
-> Par défaut, une connexion SSH sur Windows ouvre une session **cmd.exe**. Pour que `ssh` ouvre PowerShell par défaut :
-> ```powershell
-> New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
-> ```
-
-### PowerShell Remoting par-dessus SSH (bonus)
-
-Depuis **PowerShell 7**, `Enter-PSSession` et `New-PSSession` peuvent utiliser le **transport SSH** au lieu de WinRM — utile pour administrer une machine Linux avec PowerShell 7, ou éviter WinRM dans un environnement où seul le port 22 est ouvert.
-
-> [!WARNING] Nécessite PowerShell 7 des deux côtés
-> Le paramètre `-HostName` (transport SSH) n'existe que dans **PowerShell 7+** — `Enter-PSSession -HostName` échoue en Windows PowerShell 5.1, qui ne connaît que le transport WinRM classique (`-ComputerName`). `PC01` a déjà PowerShell 7 (installé au chapitre 7 via winget) ; `SRV01`, en Server Core, ne l'a pas encore.
-
-#### Installer PowerShell 7 sur SRV01 (Server Core)
-
-> [!NOTE] Pas de winget sur Server Core
-> Contrairement à `PC01`, `winget` n'est **pas présent** sur Windows Server (App Installer n'est pas préinstallé sur les SKUs serveur) — `Get-Command winget.exe` retourne une erreur. Il faut passer par le programme d'installation MSI directement.
-
-**Méthode 1 — version fixe (téléchargement direct du MSI) :**
-
-```powershell
-New-Item -Path "C:\Temp" -ItemType Directory -Force
-Invoke-WebRequest -Uri "https://github.com/PowerShell/PowerShell/releases/download/v7.6.9/PowerShell-7.6.9-win-x64.msi" -OutFile "C:\Temp\pwsh7.msi"
-msiexec.exe /i C:\Temp\pwsh7.msi /quiet /norestart
-```
-
-> [!WARNING] Créer `C:\Temp` avant de télécharger
-> Sur une installation Server Core toute fraîche, `C:\Temp` n'existe pas encore. `Invoke-WebRequest` échoue avec "Impossible de trouver une partie du chemin d'accès" si le dossier de destination n'existe pas — le créer d'abord avec `New-Item`.
-
-**Méthode 2 — dernière version via l'API GitHub** (évite de coder un numéro de version en dur) :
-
-```powershell
-# Interroger l'API GitHub pour la dernière release stable
-$latest = Invoke-RestMethod -Uri "https://api.github.com/repos/PowerShell/PowerShell/releases/latest"
-
-# Filtrer l'asset correspondant au MSI Windows x64
-$msiAsset = $latest.assets | Where-Object { $_.name -like "*win-x64.msi" }
-
-# Télécharger et installer
-New-Item -Path "C:\Temp" -ItemType Directory -Force
-Invoke-WebRequest -Uri $msiAsset.browser_download_url -OutFile "C:\Temp\pwsh7.msi"
-msiexec.exe /i C:\Temp\pwsh7.msi /quiet /norestart
-```
-
-> [!TIP] Script d'installation officiel Microsoft
-> Microsoft documente aussi un script bootstrap qui fait l'équivalent de la Méthode 2 en une ligne :
-> ```powershell
-> & ([scriptblock]::Create((irm https://aka.ms/install-powershell.ps1))) -UseMSI -Quiet
-> ```
-
-Vérifier l'installation :
-
-```powershell
-Get-Command "C:\Program Files\PowerShell\7\pwsh.exe"
-```
-
-#### Configurer le sous-système SSH pour PowerShell 7
-
-> [!WARNING] Installer pwsh ne suffit pas
-> Le serveur SSH ne sait pas encore, à ce stade, quoi lancer quand un client demande une session PowerShell — il faut déclarer explicitement un **sous-système** dans la configuration OpenSSH. Sans cette étape, `Enter-PSSession -HostName` échoue même avec PowerShell 7 correctement installé.
-
-```powershell
-Add-Content -Path "C:\ProgramData\ssh\sshd_config" -Value 'Subsystem powershell "C:\Program Files\PowerShell\7\pwsh.exe" -sshs -NoLogo -NoProfile'
-Restart-Service sshd
-```
-
-#### Tester la connexion
-
-Depuis `PC01` (dans `pwsh`, PowerShell 7) :
-
-```powershell
-Enter-PSSession -HostName SRV01 -UserName Administrateur
-```
-
-### Authentification par clé publique (bonus)
-
-```powershell
-# Générer une paire de clés sur le poste client
-ssh-keygen -t ed25519
-
-# Copier la clé publique sur le serveur cible (ajout manuel dans authorized_keys, ou outil dédié sous Linux)
-```
-
-> [!TIP] Pourquoi préférer une clé à un mot de passe
-> L'authentification par clé évite de transmettre un mot de passe à chaque connexion et permet des connexions non-interactives (scripts, automatisation) sans stocker d'identifiants en clair — c'est la pratique standard en environnement Linux/DevOps, de plus en plus reprise côté Windows.
-
----
-
-## Assistance rapide (Quick Assist)
-![w11-11-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant.png)
-
-**Quick Assist** est une application pré-installée sur Windows 11 (`MicrosoftCorporationII.QuickAssist`, lancée depuis le menu Démarrer — ce n'est pas un exécutable `.exe` classique dans `System32`, mais une application empaquetée). Elle permet de **partager l'écran** ou de **prendre le contrôle** d'un poste distant, typiquement pour du support utilisateur ponctuel.
-
-### Principe
-
-![Une session d’Assistance rapide — L’assistant génère un code à six chiffres. La personne aidée le saisit pour ouvrir une session via le relais Microsoft.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-12-assistance-rapide.svg)
-
-> [!WARNING] Compte Microsoft côté technicien
-> La personne qui **donne** l'assistance doit se connecter avec un **compte Microsoft** (personnel ou professionnel). Celle qui **reçoit** l'aide saisit seulement le code. Ce n'est pas un outil d'entreprise : aucune journalisation centrale, aucun contrôle de qui peut aider qui — et un vecteur d'arnaque connu (faux supports techniques qui demandent un code Quick Assist).
-
-### Remote Help : la version entreprise (bonus)
-
-**Remote Help** (module payant d'Intune, inclus dans certaines offres) reprend le principe d'Assistance rapide avec : authentification par le tenant de l'entreprise, rôles (qui peut aider qui), **journal** des sessions, affichage du nom et de la conformité du poste avant de se connecter, élévation UAC possible côté technicien.
-
-### Windows App et le client Bureau à distance
+| `/v:<ordinateur>` | Poste à joindre : `mstsc /v:PC02` |
+| `/w:<largeur> /h:<hauteur>` | Taille de la fenêtre |
+| `/admin` | (Serveurs) se connecter à la session d'administration |
+
+### Windows App et les autres clients
 
 | Client | Usage | Statut |
 |--------|-------|--------|
 | `mstsc.exe` (Connexion Bureau à distance) | Se connecter à un PC ou un serveur | ✅ Intégré et supporté |
 | Application « Bureau à distance » (Store) | AVD, Windows 365 | ❌ Retirée (mai 2025) |
 | Client MSRDC (MSI) | AVD, Windows 365 | ❌ Fin de support (mars 2026) |
-| **Windows App** | Windows 365, Azure Virtual Desktop, Dev Box, PC (connexion directe en préversion) | ✅ Remplaçant officiel |
-
-Contrairement à RDP, Quick Assist ne nécessite **aucune configuration réseau préalable** (pas de port à ouvrir, pas de règle de pare-feu) : la connexion transite par un relais Microsoft dans le cloud, ce qui la rend utilisable même entre deux réseaux différents sans VPN.
+| **Windows App** | PC cloud Windows 365, Azure Virtual Desktop | ✅ Remplaçant officiel |
 
 ---
 
-## RSAT — Remote Server Administration Tools
+## PowerShell à distance (WinRM)
 
-**RSAT** regroupe les consoles d'administration Windows Server (AD DS, DNS, DHCP, GPMC...), utilisables **depuis un poste Windows 11 client** pour administrer `SRV01` sans s'y connecter directement.
+**WinRM** (*Windows Remote Management*, port **5985**) est le service qui permet d'envoyer des commandes PowerShell à un autre poste, **sans ouvrir son écran**. Avantage : une seule commande peut interroger **plusieurs** postes.
 
-> [!TIP] Le bon moment pour installer RSAT
-> Les rôles AD DS, DNS et DHCP ont déjà été installés et configurés sur `SRV01` au chapitre 10 — les consoles RSAT installées ici seront donc **immédiatement utilisables**, contrairement à une installation anticipée avant que les rôles n'existent côté serveur.
+| Poste | WinRM par défaut (constaté sur le lab) |
+|-------|-----------------------------------------|
+| Windows Server 2025 (`SRV01`) | **Actif** |
+| Windows 11 (`PC01`, `PC02`) | **Arrêté**, démarrage manuel → à activer |
 
-### Installation
+### Voir l'état du service
 
-**Interface graphique :** Paramètres → Applications → Fonctionnalités facultatives → Ajouter une fonctionnalité → rechercher "RSAT"
+**En graphique :** `services.msc` → tout en bas de la liste : **Windows Remote Management (Gestion WSM)**. La colonne *État* est vide (= arrêté), démarrage *Manuel*.
+
+![w11-12-services-winrm-arrete](https://cours.kaya.ovh/windows11/assets/captures/w11-12-services-winrm-arrete.png)
+
+> [!NOTE] Nom non traduit
+> Sur la version testée (26300), le service garde son nom **anglais** : il faut le chercher à la lettre **W**, pas à « Gestion à distance ».
+
+**En PowerShell :**
+
+```powershell
+Get-Service WinRM          # sur le poste lui-même
+Test-WSMan PC02            # depuis un autre poste : erreur rouge = WinRM ne répond pas
+Test-WSMan SRV01           # réponse avec « wsmid » et « ProductVendor : Microsoft Corporation » = OK
+```
+
+### Activer PowerShell à distance (sur le poste cible)
+
+Il n'y a **pas de case à cocher** dans les Paramètres : on utilise **une** commande, dans un **Terminal (administrateur)** (`Win + X` → Terminal (administrateur)) :
+
+```powershell
+Enable-PSRemoting -Force
+```
+
+![w11-12-enable-psremoting](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enable-psremoting.png)
+
+En une commande : le service WinRM démarre et passe en **automatique**, l'**écouteur** HTTP (port 5985) est créé et la **règle de pare-feu** est ouverte (profils Domaine et Privé).
+
+> [!TIP] Sur tout un parc : une GPO (bonus)
+> *Configuration ordinateur → Stratégies → Modèles d'administration → Composants Windows → Gestion à distance de Windows (WinRM) → Service WinRM → **Autoriser la gestion à distance du serveur via WinRM*** + service *Gestion à distance de Windows* en **Automatique** + règle de pare-feu prédéfinie **Gestion à distance de Windows**.
+
+### Envoyer des commandes
+
+Deux commandes suffisent :
+
+| Commande | Quand l'utiliser |
+|----------|------------------|
+| `Invoke-Command` | Lancer **une** commande, sur **un ou plusieurs** postes, et récupérer le résultat |
+| `Enter-PSSession` | « Entrer » dans le poste distant pour taper plusieurs commandes, puis `Exit-PSSession` |
+
+```powershell
+# Depuis PC01, connecté en FOURNIL\adm.stagiaire
+Invoke-Command -ComputerName PC02 -ScriptBlock { hostname; whoami }
+# PC02
+# fournil\adm.stagiaire
+```
+
+Aucun mot de passe n'est demandé : dans un domaine, Windows présente le **ticket Kerberos** de la session ouverte. Il suffit que le compte soit **administrateur** du poste visé (c'est le cas d'`adm.stagiaire` sur les postes).
+
+> [!WARNING] « Accès refusé » : le compte n'est pas administrateur de la cible
+> `adm.stagiaire` administre les **postes**, pas le **serveur** : vers `SRV01`, la connexion est refusée.
+>
+> ![w11-12-enter-pssession-acces-refuse](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enter-pssession-acces-refuse.png)
+>
+> On ajoute alors `-Credential` avec un compte qui a les droits. Une fenêtre demande le mot de passe :
+>
+> ![w11-12-enter-pssession-credential](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enter-pssession-credential.png)
+
+Dans la session distante, l'invite commence par **`[SRV01]:`** : chaque commande s'exécute sur le serveur. `Exit-PSSession` ramène sur le poste local.
+
+![w11-12-enter-pssession-srv01](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enter-pssession-srv01.png)
+
+```powershell
+Enter-PSSession SRV01 -Credential FOURNIL\Administrateur
+[SRV01]: PS> Get-Service DHCPServer, DNS
+[SRV01]: PS> Exit-PSSession
+```
+
+> [!NOTE] Hors domaine (pour mémoire)
+> Entre deux postes en groupe de travail, Kerberos n'est pas disponible : il faut déclarer le poste distant dans `TrustedHosts` côté client et toujours donner `-Credential`. Dans ce cours, tout est dans le domaine : on n'en a pas besoin.
+
+### WinRS — invite de commandes à distance (bonus)
+
+`winrs` passe aussi par WinRM, mais lance des commandes **CMD** (texte) au lieu de PowerShell :
+
+```cmd
+winrs -r:PC02 ipconfig
+winrs -r:SRV01 -u:FOURNIL\Administrateur -p:MotDePasse hostname
+```
+
+Sans `-u`/`-p` vers `SRV01`, on obtient le même « Accès refusé » qu'avec `Enter-PSSession`.
+
+---
+
+## OpenSSH (bonus)
+
+**SSH** (port **22**) est le standard d'administration à distance des serveurs Linux. Windows l'intègre aussi : le **client** `ssh` est installé par défaut sur Windows 11, et le **serveur** tourne déjà sur `SRV01` (chapitre 10).
+
+```powershell
+ssh administrateur@SRV01
+```
+
+À la **première** connexion, SSH affiche l'empreinte du serveur et demande s'il faut lui faire confiance : taper **`yes`** en entier (pas seulement `y`), puis le mot de passe. Par défaut, on arrive dans une invite **cmd** ; `exit` pour revenir.
+
+![w11-12-ssh-srv01](https://cours.kaya.ovh/windows11/assets/captures/w11-12-ssh-srv01.png)
+
+**Avoir PowerShell au lieu de cmd** (sur `SRV01`, une seule fois) :
+
+```powershell
+New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -PropertyType String -Force
+```
+
+**Installer le serveur SSH sur un poste Windows 11** (il n'y est pas par défaut) : Paramètres → Système → **Fonctionnalités facultatives** → Afficher les fonctionnalités → *Serveur OpenSSH*, ou :
+
+```powershell
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service sshd -StartupType Automatic
+Set-NetFirewallRule -Name "OpenSSH-Server-In-TCP" -Profile Domain,Private,Public
+```
+
+> [!WARNING] La règle de pare-feu SSH n'est ouverte que pour le profil Privé
+> Un poste du domaine est en profil **Domaine** : sans la dernière commande, la connexion échoue en **délai d'attente dépassé**.
+
+> [!NOTE] Pour aller plus loin (hors programme)
+> Connexion par **clé** au lieu du mot de passe (`ssh-keygen`, puis fichier `C:\ProgramData\ssh\administrators_authorized_keys` pour un compte administrateur), et PowerShell 7 à distance par SSH (`Enter-PSSession -HostName`, PowerShell 7 des deux côtés et ligne `Subsystem powershell` dans `sshd_config`). Pratique courante en environnement mixte Windows/Linux.
+
+---
+
+## Assistance rapide (Quick Assist)
+
+L'**Assistance rapide** est installée sur Windows 11. Elle sert à **aider un utilisateur** : voir son écran, et si il l'accepte, en prendre le contrôle. Ouverture : menu Démarrer → taper **Assistance rapide**, ou `Win + Ctrl + Q`.
+
+![w11-11-acces-distant](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant.png)
+
+| Zone | Qui l'utilise | Ce qu'il fait |
+|------|---------------|---------------|
+| **Aide** | L'utilisateur qui a un problème | Saisit le **code à 6 caractères** donné par le technicien, puis accepte le partage |
+| **Aider quelqu'un** | Le technicien | Se connecte avec un **compte Microsoft** et obtient un code à transmettre |
+
+![Une session d’Assistance rapide — L’assistant génère un code à six chiffres. La personne aidée le saisit pour ouvrir une session via le relais Microsoft.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-12-assistance-rapide.svg)
+
+En cliquant sur **Aider quelqu'un**, Windows demande un compte Microsoft :
+
+![w11-12-assistance-rapide-compte-microsoft](https://cours.kaya.ovh/windows11/assets/captures/w11-12-assistance-rapide-compte-microsoft.png)
+
+> [!NOTE] Message « énumérer vos clés d'accès ? »
+> Au premier clic sur *Aider quelqu'un*, Windows peut demander s'il faut laisser l'Assistance rapide « énumérer vos clés d'accès ». Répondre **Non** suffit.
+
+Aucun port à ouvrir : la connexion passe par un **relais Microsoft** sur Internet. Ça marche donc entre deux réseaux différents, sans VPN.
+
+> [!WARNING] Arnaques au faux support technique
+> Les escrocs (« Microsoft a détecté un virus sur votre PC, donnez-moi le code ») utilisent **exactement** cet outil. Message à faire passer aux utilisateurs : *on ne donne un code d'Assistance rapide qu'à une personne du support qu'on a soi-même appelée.*
+
+### Remote Help : la version entreprise (bonus)
+
+**Remote Help** (module payant d'Intune) reprend le même principe avec ce qui manque à l'Assistance rapide :
+
+| | Assistance rapide | Remote Help (Intune) |
+|-|-------------------|----------------------|
+| Coût | Gratuit, intégré | Licence |
+| Technicien | N'importe quel compte Microsoft | Compte de l'entreprise, avec des **rôles** |
+| Qui peut aider qui | Aucun contrôle | Contrôlé (groupes) |
+| Journal des sessions | Non | Oui |
+| Fenêtres UAC côté technicien | Non | Oui |
+
+---
+
+## RSAT — les consoles du serveur sur un poste
+
+Les **RSAT** (*Remote Server Administration Tools*) installent sur un poste Windows 11 les consoles du serveur (Utilisateurs et ordinateurs AD, DNS, DHCP, Gestion des stratégies de groupe). On administre ainsi `SRV01` **sans ouvrir de session dessus**, ce qui est la bonne pratique en entreprise.
+
+Dans ce cours, leur installation est **facultative** et présentée au chapitre 11 (≈ 10 minutes de téléchargement par Windows Update). Rappel :
+
+**En graphique :** Paramètres → Système → **Fonctionnalités facultatives** → **Afficher les fonctionnalités** → rechercher `RSAT`.
 
 ![w11-11-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
 
 ```powershell
-# Lister les fonctionnalités RSAT disponibles (terminal administrateur)
-Get-WindowsCapability -Online | Where-Object Name -like "Rsat*" | Select-Object Name, State
-
-# Installer les outils AD DS
 Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
-
-# Installer les outils DNS et DHCP
 Add-WindowsCapability -Online -Name "Rsat.Dns.Tools~~~~0.0.1.0"
 Add-WindowsCapability -Online -Name "Rsat.DHCP.Tools~~~~0.0.1.0"
-
-# Installer la console de gestion des stratégies de groupe (GPMC : déjà installée au chapitre 11, inutile de la réinstaller)
 Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
 ```
 
-| Capacité RSAT | Console installée |
-|----------------|--------------------|
-| `Rsat.ActiveDirectory.DS-LDS.Tools` | Utilisateurs et ordinateurs AD, Domaines et approbations, Sites et services |
-| `Rsat.Dns.Tools` | Gestionnaire DNS |
-| `Rsat.DHCP.Tools` | Console DHCP |
-| `Rsat.GroupPolicy.Management.Tools` | GPMC (Gestion des stratégies de groupe) |
-| `Rsat.ServerManager.Tools` | Gestionnaire de serveur |
-
-> [!NOTE] RSAT nécessite un accès à Windows Update (ou une source WSUS/hors ligne)
-> Ces fonctionnalités sont livrées en tant que "Features on Demand" — le poste doit pouvoir joindre Windows Update pour les télécharger, sauf si une source hors ligne (partage réseau avec les fichiers de capacité) est configurée.
+> [!NOTE] Internet obligatoire
+> Les RSAT sont téléchargées depuis Windows Update. Ne pas redémarrer pendant l'installation.
 
 ---
 
@@ -357,33 +330,19 @@ Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.
 
 > [!summary] L'essentiel du chapitre
 > **Bureau à distance (RDP, port 3389)**
-> - Désactivé par défaut (fDenyTSConnections=1) · Pro/Enterprise/Education pour héberger
-> - `mstsc /v:machine` · Activer via Paramètres ou registre + règle de pare-feu
+> - Désactivé par défaut · Paramètres → Système → Bureau à distance → **Activé** (le pare-feu suit)
+> - Autorisés : **Administrateurs** + groupe local **Utilisateurs du Bureau à distance**
+> - `mstsc` → nom du poste · *Autres choix* pour changer de compte
+> - Windows 11 : **une seule session** → l'utilisateur présent est déconnecté (prévenir avant !)
+> - Fermer avec **Se déconnecter** / `logoff`, pas la croix
 >
-> **WinRM / PowerShell Remoting / WinRS**
-> - **Domaine** : Kerberos automatique, pas de TrustedHosts nécessaire (contrairement au hors-domaine)
-> - `Enter-PSSession` (1-to-1) · `Invoke-Command` (1-to-N) · `New-PSSession` (persistante)
-> - `winrs -r:http://machine:5985 commande` — *shell CMD distant*
+> **PowerShell à distance (WinRM, port 5985)**
+> - Actif sur Windows Server, **arrêté** sur Windows 11 → `Enable-PSRemoting -Force` (Terminal administrateur)
+> - `Invoke-Command -ComputerName PC02 -ScriptBlock { ... }` · `Enter-PSSession` / `Exit-PSSession`
+> - Domaine = Kerberos, pas de mot de passe **si** le compte est admin de la cible ; sinon **Accès refusé** → `-Credential`
 >
-> **OpenSSH — alternative ouverte, en parallèle de WinRM**
-> - Client pré-installé · Serveur : déjà actif sur SRV01 (ch.10) — vérifier avant d'installer sur un client
-> - `ssh user@machine` · `Enter-PSSession -HostName` (PowerShell 7 uniquement, des DEUX côtés)
-> - Authentification par clé (`ssh-keygen`) plutôt que mot de passe
+> **Assistance rapide**
+> - **Aide** (l'utilisateur saisit le code) · **Aider quelqu'un** (le technicien, compte Microsoft)
+> - Aucun port à ouvrir · attention aux arnaques au faux support
 >
-> **PS Remoting sur SSH — installer PS7 sur SRV01 (pas de `winget` sur Server Core)**
-> - MSI direct (version fixe) OU API GitHub releases/latest (version toujours à jour)
-> - PUIS déclarer le sous-système "powershell" dans sshd_config → `Restart-Service sshd`
->   - (sans cette dernière étape, `Enter-PSSession -HostName` échoue même avec `pwsh` installé)
->
-> **Assistance rapide (Quick Assist)**
-> - App pré-installée · code à 6 chiffres · compte Microsoft côté technicien
-> - Aucune config réseau (relais cloud) — contrairement à RDP/WinRM/SSH
-> - **Entreprise** : Remote Help (Intune, journalisé, RBAC)
->
-> **Clients Bureau à distance**
-> - `mstsc.exe` : supporté · appli Bureau à distance/MSRDC : retirées → Windows App (AVD, Windows 365)
-> - **WinRM** : actif sur Server, ARRÊTÉ sur Windows 11 → `Enable-PSRemoting` ou GPO
->
-> **RSAT**
-> - Installé APRÈS que les rôles existent sur SRV01 (chapitre 10) → immédiatement utilisable
-> - `Add-WindowsCapability -Online -Name "Rsat.XXX.Tools~~~~0.0.1.0"`
+> **Bonus** : OpenSSH (`ssh administrateur@SRV01`, taper `yes`), WinRS, Remote Help, RSAT (chapitre 11)

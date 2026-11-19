@@ -279,7 +279,7 @@
       "correctionKey": "windows11/11-gpo/tp/standard-corrigev2",
       "downloadStem": "11-gpo",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/11-gpo/tp/guide",
@@ -448,6 +448,7 @@
     "windows11/09-securite/tp/guide",
     "windows11/10-active-directory/tp/standard",
     "windows11/10-active-directory/tp/guide",
+    "windows11/11-gpo/tp/standard",
     "windows11/11-gpo/tp/guide",
     "windows11/12-acces-distant/tp/guide",
     "windows11/13-adk-winpe/tp/guide",
