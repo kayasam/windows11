@@ -314,7 +314,7 @@ Get-BitLockerVolume C: | Select-Object VolumeStatus, ProtectionStatus, KeyProtec
 
 > [!WARNING] Deux pièges rencontrés sur le lab
 > - **`0x80310030`** — *« BitLocker a détecté la présence d'un média de démarrage amovible (CD ou DVD) »* : le protecteur TPM est refusé tant qu'une ISO est montée dans la VM (ou une clé USB de démarrage branchée). Éjecter, puis recommencer.
-> - Sur une **machine de référence** (master) : ce chiffrement automatique fait échouer Sysprep (`0x80310039`). Il faut l'**empêcher dès l'installation** (`PreventDeviceEncryption`, chapitre 13).
+> - Sur une **machine de référence** (master) : ce chiffrement automatique fait échouer Sysprep (`0x80310039`). Il faut l'**empêcher dès l'installation** (`PreventDeviceEncryption`, chapitre 12).
 
 Empêcher le chiffrement automatique (master, ou parc où BitLocker est géré par GPO) :
 

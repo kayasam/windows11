@@ -1,9 +1,9 @@
-# TP 13. ADK, Windows PE et fichier de réponse
+# TP 12. ADK, Windows PE et fichier de réponse
 
 > [!abstract] Parcours TSSR
 > ADK, WinPE et catalogue WSIM sont préchargés ou mis en cache par le formateur. Socle : vérifier les outils, créer un WinPE standard, puis compléter et valider un fichier de réponse fourni. PowerShell dans WinPE et la préparation de MASTER sont (bonus).
 
-> Chapitres associés : [13. ADK, Windows PE et fichier de réponse](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/)
+> Chapitres associés : [12. ADK, Windows PE et fichier de réponse](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/)
 
 ---
 

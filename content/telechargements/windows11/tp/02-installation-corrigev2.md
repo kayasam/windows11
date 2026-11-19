@@ -82,7 +82,7 @@
 > > [!WARNING] Clavier AZERTY dans l'invite de l'OOBE
 > > À ce stade le clavier est déjà en AZERTY : le `\` s'obtient avec `AltGr + 8`.
 >
-> Ce script a été retiré de certaines builds Insider : s'il est absent, on tape directement la ligne `reg add` puis `shutdown /r /t 0`. Et si Microsoft supprime aussi la prise en compte de la clé, il reste le fichier de réponse (chapitre 13).
+> Ce script a été retiré de certaines builds Insider : s'il est absent, on tape directement la ligne `reg add` puis `shutdown /r /t 0`. Et si Microsoft supprime aussi la prise en compte de la clé, il reste le fichier de réponse (chapitre 12).
 
 **A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 

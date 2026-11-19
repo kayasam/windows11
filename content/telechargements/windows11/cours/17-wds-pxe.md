@@ -1,11 +1,11 @@
 # 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)
 
 > [!abstract] Parcours TSSR — (bonus)
-> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 16. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
+> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 15. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
 > Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
-> Faire de `SRV01` un **serveur de déploiement** : le poste démarre sur sa **carte réseau** (PXE), reçoit un WinPE servi par **WDS**, puis installe Windows 11 **sans clic** depuis un partage, avec le **même `autounattend.xml`** qu'au chapitre 16. Savoir ce que WDS fait encore en 2026, ce qu'il ne fait plus, et dépanner un démarrage PXE.
+> Faire de `SRV01` un **serveur de déploiement** : le poste démarre sur sa **carte réseau** (PXE), reçoit un WinPE servi par **WDS**, puis installe Windows 11 **sans clic** depuis un partage, avec le **même `autounattend.xml`** qu'au chapitre 15. Savoir ce que WDS fait encore en 2026, ce qu'il ne fait plus, et dépanner un démarrage PXE.
 >
 > **Outils :** rôle WDS (`wdsutil`, module PowerShell `WDS`), `Mount-WindowsImage`, `New-SmbShare`, console `WdsMgmt.msc`
 > **Fichiers à connaître :** `boot.wim` (index 2), `winpeshl.ini`, `deploiement.cmd`, `autounattend.xml`, `sources\$OEM$`, `wdsmgfw.efi`
@@ -14,7 +14,7 @@
 > Le Fournil reçoit plusieurs postes neufs. Plutôt que de graver une clé par poste, `SRV01` devient serveur de déploiement : `PC03` démarre sur le réseau, s'installe, rejoint le domaine et reçoit ses applications.
 
 > [!TIP] Prérequis
-> Chapitre 16 fait : `autounattend-iso-officielle.xml` et `postinstall.ps1` fonctionnent avec l'ISO officielle. Ce chapitre ne change **que le transport** : réseau au lieu d'un DVD.
+> Chapitre 15 fait : `autounattend-iso-officielle.xml` et `postinstall.ps1` fonctionnent avec l'ISO officielle. Ce chapitre ne change **que le transport** : réseau au lieu d'un DVD.
 
 ---
 
@@ -68,7 +68,7 @@ La console l'annonce dès l'ouverture : « *La fonctionnalité client des Servic
 ![Setup de Windows 11 démarré en mode WDS : « La fonctionnalité du client des Services de déploiement Windows est partiellement déconseillée » — après OK, le poste redémarre](https://cours.kaya.ovh/windows11/assets/captures/w11-wds-pxe-avertissement-setup.png)
 
 > [!IMPORTANT] La méthode du cours
-> On n'utilise WDS que pour ce qu'il fait encore bien : **PXE + TFTP**, pour livrer un WinPE. Ce WinPE lance un script qui ouvre le partage `Deploy$` et exécute `setup.exe /unattend` : c'est une installation **normale** de Windows, pilotée par le fichier de réponse du chapitre 16. WDS n'installe rien lui-même : aucune image d'installation, aucun fichier de réponse WDS.
+> On n'utilise WDS que pour ce qu'il fait encore bien : **PXE + TFTP**, pour livrer un WinPE. Ce WinPE lance un script qui ouvre le partage `Deploy$` et exécute `setup.exe /unattend` : c'est une installation **normale** de Windows, pilotée par le fichier de réponse du chapitre 15. WDS n'installe rien lui-même : aucune image d'installation, aucun fichier de réponse WDS.
 
 C'est aussi la logique des outils qui remplacent WDS (Configuration Manager, FOG, WAPT…) : un démarrage réseau, puis un environnement qui applique Windows.
 
@@ -82,7 +82,7 @@ C'est aussi la logique des outils qui remplacent WDS (Configuration Manager, FOG
 | Dossier WDS | `E:\RemoteInstall` | Chargeurs, BCD, images de démarrage — géré par WDS, **on n'y touche pas à la main** |
 | Partage `Deploy$` | `E:\Deploy` | Sources d'installation + fichier de réponse |
 | ↳ `E:\Deploy\Windows11\` | contenu de l'ISO officielle | `setup.exe`, `sources\install.wim` |
-| ↳ `E:\Deploy\autounattend.xml` | fichier de réponse | copie de celui du chapitre 16, nom `PC03` |
+| ↳ `E:\Deploy\autounattend.xml` | fichier de réponse | copie de celui du chapitre 15, nom `PC03` |
 | ↳ `E:\Deploy\Windows11\sources\$OEM$\$$\Setup\Scripts\postinstall.ps1` | post-installation | copié par Setup dans `C:\Windows\Setup\Scripts` |
 | Atelier WinPE | `E:\WinPE` | `boot.wim` en cours de personnalisation |
 | Compte `svc.deploiement` | domaine | lecture seule sur `Deploy$` — son mot de passe est **dans** l'image de démarrage |
@@ -254,7 +254,7 @@ Get-WdsBootImage | Select-Object Name, Architecture, FileName
 > Remplacer un `.wim` directement dans `E:\RemoteInstall\Boot\x64\Images` provoque une erreur de démarrage (`0xc0000098`, BCD incohérent). On modifie le `boot.wim` **avant** l'import. Pour changer une image déjà importée : `Remove-WdsBootImage`, puis nouvel import.
 
 > [!TIP] Variante : WinPE de l'ADK (bonus)
-> Le WinPE construit au chapitre 13 (`copype`) convient aussi, et c'est la voie que Microsoft documente pour WDS. On n'a pas besoin de `winpeshl.ini` : on ajoute les lignes de `deploiement.cmd` à la fin de `Windows\System32\startnet.cmd`, puis on importe `C:\WinPE_amd64\media\sources\boot.wim`.
+> Le WinPE construit au chapitre 12 (`copype`) convient aussi, et c'est la voie que Microsoft documente pour WDS. On n'a pas besoin de `winpeshl.ini` : on ajoute les lignes de `deploiement.cmd` à la fin de `Windows\System32\startnet.cmd`, puis on importe `C:\WinPE_amd64\media\sources\boot.wim`.
 
 ---
 
@@ -269,7 +269,7 @@ New-ADUser svc.deploiement -Path 'OU=Fournil,DC=ad,DC=fournil,DC=lab' -Enabled $
 # Sources : contenu complet de l'ISO
 robocopy D:\ E:\Deploy\Windows11 /E /NFL /NDL
 
-# Fichier de réponse du chapitre 16, pour PC03
+# Fichier de réponse du chapitre 15, pour PC03
 $xml = (Get-Content .\autounattend-iso-officielle.xml -Raw) -replace 'PC02', 'PC03'
 Set-Content E:\Deploy\autounattend.xml $xml -Encoding UTF8
 
@@ -282,7 +282,7 @@ New-SmbShare -Name 'Deploy$' -Path E:\Deploy -ReadAccess 'FOURNIL\svc.deploiemen
 
 | Point | Explication |
 |-------|-------------|
-| `-replace 'PC02','PC03'` | Le nom apparaît **deux** fois : `ComputerName` et `AutoLogon\Domain` (compte local, chapitre 16) |
+| `-replace 'PC02','PC03'` | Le nom apparaît **deux** fois : `ComputerName` et `AutoLogon\Domain` (compte local, chapitre 15) |
 | `$OEM$\$$` | Dossier spécial de Setup : son contenu est copié dans `%WINDIR%` du poste. `postinstall.ps1` arrive donc dans `C:\Windows\Setup\Scripts`, là où les `FirstLogonCommands` le cherchent (il n'y a plus de clé ni de DVD à la racine) |
 | `'Deploy$'` | Entre apostrophes simples, sinon PowerShell prend `$` pour une variable. Le `$` final masque le partage dans le voisinage réseau |
 | NTFS | Les droits NTFS par défaut de `E:\` donnent la lecture aux Utilisateurs authentifiés : `svc.deploiement` lit sans réglage de plus |
@@ -314,7 +314,7 @@ Ce qu'on voit à l'écran :
 
 ![Installation de Windows 11 depuis le partage, sans aucune question](https://cours.kaya.ovh/windows11/assets/captures/w11-wds-installation-en-cours.png)
 
-La suite est identique au chapitre 16 : redémarrages, jonction au domaine, ouverture de session automatique `admin`, `postinstall.ps1` (Obsidian, VS Code), redémarrage final sur l'écran de connexion.
+La suite est identique au chapitre 15 : redémarrages, jonction au domaine, ouverture de session automatique `admin`, `postinstall.ps1` (Obsidian, VS Code), redémarrage final sur l'écran de connexion.
 
 ```powershell
 # Vérifications (sur SRV01)
@@ -368,5 +368,5 @@ Get-Content '\\PC03\C$\Windows\Temp\postinstall.log'
 > - Modifier **avant** `Import-WdsBootImage`, jamais dans `RemoteInstall`
 >
 > **Le partage `Deploy$`**
-> - Contenu de l'ISO + `autounattend.xml` du chapitre 16 (`PC02` → `PC03`) + `sources\$OEM$\$$\Setup\Scripts\postinstall.ps1`
+> - Contenu de l'ISO + `autounattend.xml` du chapitre 15 (`PC02` → `PC03`) + `sources\$OEM$\$$\Setup\Scripts\postinstall.ps1`
 > - Compte `svc.deploiement` en lecture seule : son mot de passe est dans l'image

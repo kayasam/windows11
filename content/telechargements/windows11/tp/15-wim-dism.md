@@ -1,9 +1,9 @@
-# TP 15. Images WIM et DISM
+# TP 14. Images WIM et DISM
 
 > [!abstract] Parcours TSSR
-> Socle : partie B uniquement, sur install.wim de l’ISO officielle. MASTER et les parties A, C, D, E sont (bonus) ; aucune capture n’est nécessaire pour suivre le TP 16.
+> Socle : partie B uniquement, sur install.wim de l’ISO officielle. MASTER et les parties A, C, D, E sont (bonus) ; aucune capture n’est nécessaire pour suivre le TP 15.
 
-> Chapitres associés : [15. Images WIM et DISM](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/)
+> Chapitres associés : [14. Images WIM et DISM](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/)
 
 ---
 
@@ -19,8 +19,8 @@
 
 ## Prérequis
 
-- Socle : ISO officielle montée et fichier `install.wim` accessible (copie préparée au TP 13), DISM disponible.
-- (bonus) Pour A, C, D et E : `MASTER` généralisée et éteinte (TP 14), `MASTER.wim` après capture, WinPE et 40 Go libres sur l’hôte.
+- Socle : ISO officielle montée et fichier `install.wim` accessible (copie préparée au TP 12), DISM disponible.
+- (bonus) Pour A, C, D et E : `MASTER` généralisée et éteinte (TP 13), `MASTER.wim` après capture, WinPE et 40 Go libres sur l’hôte.
 
 ---
 
@@ -38,7 +38,7 @@
 
 ## Partie B — Inspecter
 
-**B1.** Dans un Terminal administrateur sur `PC01`, affiche les informations de l’`install.wim` officiel copié au TP 13 (`C:\Images\install.wim`), repère l’index de Windows 11 Professionnel, puis affiche son détail. Combien d’index ? Quelle édition ? Quelle taille décompressée ?
+**B1.** Dans un Terminal administrateur sur `PC01`, affiche les informations de l’`install.wim` officiel copié au TP 12 (`C:\Images\install.wim`), repère l’index de Windows 11 Professionnel, puis affiche son détail. Combien d’index ? Quelle édition ? Quelle taille décompressée ?
 
 **B2.** Explique à quoi sert l’index lors d’une installation automatisée. Pourquoi faut-il le vérifier pour chaque nouvelle ISO ? La comparaison avec `MASTER.wim` est (bonus).
 
@@ -64,7 +64,7 @@
 
 ## Partie E — Appliquer depuis WinPE (bonus)
 
-**E1.** Prépare un disque contenant `MASTER.wim` et le script `partition-uefi.txt`. Démarre une VM vierge sur le WinPE du TP 13, avec ce disque attaché.
+**E1.** Prépare un disque contenant `MASTER.wim` et le script `partition-uefi.txt`. Démarre une VM vierge sur le WinPE du TP 12, avec ce disque attaché.
 
 **E2.** Identifie le disque cible et la lettre du disque d'images. Pourquoi cette étape est-elle vitale ?
 

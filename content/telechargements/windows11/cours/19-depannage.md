@@ -142,7 +142,7 @@ ipconfig /flushdns; ipconfig /registerdns  # cache DNS et enregistrement dynamiq
 
 ## 6. Interroger un poste à distance : CIM et WMI
 
-Tout ce qu'on lirait dans les consoles se lit aussi en PowerShell, à distance (WinRM, chapitre 12) :
+Tout ce qu'on lirait dans les consoles se lit aussi en PowerShell, à distance (WinRM, chapitre 16) :
 
 ```powershell
 $s = New-CimSession -ComputerName PC02
@@ -179,7 +179,7 @@ L'**Enregistreur d'actions** (*Steps Recorder*, `psr.exe`) est **déprécié** :
 | Montrer ce que fait l'utilisateur | **Outil Capture d'écran** (`Win + Maj + R` : enregistrement vidéo de l'écran) |
 | Une capture annotée | Outil Capture d'écran (`Win + Maj + S`) |
 | Dépannage guidé | Application **Obtenir de l'aide** |
-| Prise en main | Assistance rapide, Remote Help (chapitre 12) |
+| Prise en main | Assistance rapide, Remote Help (chapitre 16) |
 | Garder la trace | **Ticket** dans l'outil de support (GLPI…) : symptôme, diagnostic, actions, résultat, temps passé |
 | Prouver l'état d'un poste | Rapports : `gpresult /h`, `msinfo32 /report`, `Get-ComputerInfo`, rapport de batterie `powercfg /batteryreport` |
 

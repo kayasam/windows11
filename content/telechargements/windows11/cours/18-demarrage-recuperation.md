@@ -21,7 +21,7 @@
 | Une mise à jour casse le poste | **Désinstaller la mise à jour** (Paramètres ou WinRE) → **point-in-time restore** |
 | Fichiers système corrompus | `sfc /scannow` → `DISM /Online /Cleanup-Image /RestoreHealth` → **Réinstaller maintenant** (via Windows Update, garde tout) |
 | Windows ne démarre plus | WinRE : Réparation du démarrage → `bcdboot` → mode sans échec |
-| Le poste est « pourri » | **Réinitialiser ce PC** (conserver ou non les fichiers) → redéploiement (chapitre 16) |
+| Le poste est « pourri » | **Réinitialiser ce PC** (conserver ou non les fichiers) → redéploiement (chapitre 15) |
 | Incident massif (mise à jour défectueuse sur tout le parc) | **Quick Machine Recovery** (WinRE + Windows Update, piloté par Microsoft / Intune) |
 
 ---
@@ -184,7 +184,7 @@ DISM /Image:C:\ /Cleanup-Image /RestoreHealth /Source:D:\sources\install.wim:6 /
 ```
 
 > [!WARNING] `bootrec` sur un disque GPT/UEFI
-> `bootrec /fixmbr` et `/fixboot` concernent le **MBR/BIOS**. Sur un Windows 11 (GPT/UEFI), `bootrec /fixboot` répond souvent « *Accès refusé* » : c'est normal, il ne sait pas écrire dans la partition EFI. La commande qui répare réellement le démarrage UEFI est **`bcdboot`** (c'est aussi elle qui rend démarrable une image appliquée à la main, chapitre 15, bonus). `bootrec /rebuildbcd` reste utile pour rechercher des installations.
+> `bootrec /fixmbr` et `/fixboot` concernent le **MBR/BIOS**. Sur un Windows 11 (GPT/UEFI), `bootrec /fixboot` répond souvent « *Accès refusé* » : c'est normal, il ne sait pas écrire dans la partition EFI. La commande qui répare réellement le démarrage UEFI est **`bcdboot`** (c'est aussi elle qui rend démarrable une image appliquée à la main, chapitre 14, bonus). `bootrec /rebuildbcd` reste utile pour rechercher des installations.
 
 > [!WARNING] `/Online` n'a pas de sens dans WinRE
 > `sfc /scannow` et `DISM /Online` sans options vérifient… WinRE lui-même. Depuis WinRE, toujours cibler l'installation hors ligne (`/offwindir`, `/Image:`). La v1 de ce cours contenait l'erreur.

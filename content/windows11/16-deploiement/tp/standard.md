@@ -1,5 +1,5 @@
 ---
-title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
+title: "TP 15. Déployer Windows 11 : ISO, réseau, migration, moderne"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/16-deploiement"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -10,7 +10,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 > [!abstract] Parcours TSSR
 > Socle : déployer PC02 avec l’ISO officielle et les fichiers fournis, migrer un profil de test avec USMT et choisir une méthode selon le contexte. Un petit jeu de documents est préparé avant la capture. L’image maître et l’ISO personnalisée sont (bonus).
 
-> Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
+> Chapitres associés : [15. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
 
 ---
 
@@ -30,7 +30,7 @@ title: "TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 - `autounattend-iso-officielle.xml` et `postinstall.ps1` (dossier `Ressources/Fichier-reponse/`)
 - Domaine `ad.fournil.lab` avec DHCP actif et l'OU `OU=Ordinateurs,OU=Fournil` (TP 10)
 - ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$` créé par l’élève avec la préparation ci-dessous ; compte de lab autorisé à lire les outils et à écrire le magasin et les journaux
-- Partie F seulement : `MASTER.wim` (TP 15) et **40 Go libres** sur l'hôte
+- Partie F seulement : `MASTER.wim` (TP 14) et **40 Go libres** sur l'hôte
 
 ---
 

@@ -8,7 +8,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)"
 
 
 > [!abstract] Parcours TSSR — (bonus)
-> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 16. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
+> Chapitre et TP entièrement (bonus). Le principe PXE/TFTP/SMB et le statut de WDS sont expliqués au chapitre 15. Construire le serveur WDS et PC03 ne conditionne aucun TP du socle.
 
 > Chapitres associés : [17. Déployer Windows 11 par le réseau : PXE et WDS](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/)
 
@@ -18,14 +18,14 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)"
 
 - Installer et configurer WDS sur `SRV01`, qui porte déjà le DHCP
 - Préparer une image de démarrage qui lance l'installation depuis un partage
-- Déployer `PC03` **sans clic** en démarrant sur la carte réseau, avec le fichier de réponse du chapitre 16
+- Déployer `PC03` **sans clic** en démarrant sur la carte réseau, avec le fichier de réponse du chapitre 15
 - Diagnostiquer un démarrage PXE qui échoue
 
 ---
 
 ## Prérequis
 
-- TP 16 réussi : `autounattend-iso-officielle.xml` et `postinstall.ps1` fonctionnent (dossier `Ressources/Fichier-reponse/`)
+- TP 15 réussi : `autounattend-iso-officielle.xml` et `postinstall.ps1` fonctionnent (dossier `Ressources/Fichier-reponse/`)
 - `deploiement.cmd` et `winpeshl.ini` (dossier `Ressources/deploiement-wds/`)
 - `SRV01` : contrôleur de domaine `ad.fournil.lab` avec DHCP actif (TP 10), OU `OU=Ordinateurs,OU=Fournil`
 - ISO officielle Windows 11 26H2 dans `D:\ISO` sur l'hôte

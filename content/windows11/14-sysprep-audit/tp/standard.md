@@ -1,5 +1,5 @@
 ---
-title: "TP 14. Poste de référence : mode audit et Sysprep (bonus)"
+title: "TP 13. Poste de référence : mode audit et Sysprep (bonus)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/14-sysprep-audit"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -10,7 +10,7 @@ title: "TP 14. Poste de référence : mode audit et Sysprep (bonus)"
 > [!abstract] Parcours TSSR — (bonus)
 > Chapitre et TP entièrement (bonus). Les principes du mode audit et de Sysprep sont expliqués avec les notions sur les images ; aucune VM MASTER n’est requise pour le socle.
 
-> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
+> Chapitres associés : [13. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
 
 ---
 
@@ -25,7 +25,7 @@ title: "TP 14. Poste de référence : mode audit et Sysprep (bonus)"
 
 ## Prérequis
 
-- `autounattend-installation-master.xml` et `autounattend-fournil-26h2.xml` (TP 13)
+- `autounattend-installation-master.xml` et `autounattend-fournil-26h2.xml` (TP 12)
 - Au moins **40 Go libres** sur le disque de l'hôte
 
 ---

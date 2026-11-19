@@ -1,9 +1,9 @@
-# TP 12. Administration et assistance à distance
+# TP 16. Administration et assistance à distance
 
 > [!abstract] Parcours TSSR
-> À réaliser en J4, APRÈS le TP 16 : `PC02` existe alors et il est joint au domaine. Les questions marquées (bonus) sont facultatives : rien dans la suite n'en dépend.
+> À réaliser en J4, APRÈS le TP 15 : `PC02` existe alors et il est joint au domaine. Les questions marquées (bonus) sont facultatives : rien dans la suite n'en dépend.
 
-> Chapitres associés : [12. Administration et assistance à distance](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
+> Chapitres associés : [16. Administration et assistance à distance](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
 ---
 
@@ -18,7 +18,7 @@
 
 ## Prérequis
 
-- `SRV01`, `PC01` et `PC02` allumées, `PC02` joint au domaine (TP 16)
+- `SRV01`, `PC01` et `PC02` allumées, `PC02` joint au domaine (TP 15)
 - Compte `FOURNIL\test.vendeur` disponible pour le test RDP (TP 11, C6)
 - Sur `PC01` **et** sur `PC02` : session ouverte avec **`FOURNIL\adm.stagiaire`** (administrateur des postes, TP 10–11)
 - Le compte `test.vendeur` existe (TP 11, C6). Sinon, crée-le sur `SRV01` dans `dsa.msc` → *Fournil → Utilisateurs*, mot de passe `Fournil2026!`

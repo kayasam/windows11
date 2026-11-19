@@ -1,6 +1,6 @@
-# TP 15. Images WIM et DISM, corrigé guidé
+# TP 14. Images WIM et DISM, corrigé guidé
 
-**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 13. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
+**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 12. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/standard)
 
@@ -27,7 +27,7 @@ Crée un dossier vide `C:\Mount`. Monte l’index relevé avec `dism /Mount-Imag
 Sur l’hôte, vérifie que `MASTER` est arrêtée. Lance `Get-VMHardDiskDrive -VMName MASTER` et relève le chemin du disque système.
 
 > [!success]- Afficher la correction — B1
-> En présence d’un point de contrôle, le disque actif peut être un `.avhdx`. Son parent seul ne représente pas l’état préparé au TP 14.
+> En présence d’un point de contrôle, le disque actif peut être un `.avhdx`. Son parent seul ne représente pas l’état préparé au TP 13.
 
 ### B2 — Monter le disque sans le modifier
 

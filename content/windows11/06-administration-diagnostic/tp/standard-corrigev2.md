@@ -200,7 +200,7 @@ Le Fournil veut un **relevé quotidien de l'espace disque** de chaque poste, pou
 > Statut:                      Prêt
 > Mode d'ouverture de session: Interactif /Arrière-plan
 > ```
-> À distance : `schtasks /run /tn "\Fournil\Inventaire-Disques" /s PC02` (pare-feu et droits admin requis — chapitre 12).
+> À distance : `schtasks /run /tn "\Fournil\Inventaire-Disques" /s PC02` (pare-feu et droits admin requis — chapitre 16).
 
 **C6.** (bonus) Une autre tâche affiche `LastTaskResult = 2147942402`. Diagnostique.
 

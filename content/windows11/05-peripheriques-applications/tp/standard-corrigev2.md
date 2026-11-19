@@ -64,7 +64,7 @@ aliases: ["windows11/05-peripheriques-applications/tp-corrigev2"]
 > ```powershell
 > Get-NetAdapter | Select-Object Name, InterfaceDescription, DriverFileName, DriverVersion, DriverProvider
 > ```
-> C'est un pilote **en boîte** : livré avec Windows, c'est pourquoi une VM Hyper-V a du réseau dès l'installation. Sur un PC physique récent, la carte Wi-Fi ou Ethernet peut au contraire exiger un pilote constructeur (à injecter dans l'image, chapitre 15).
+> C'est un pilote **en boîte** : livré avec Windows, c'est pourquoi une VM Hyper-V a du réseau dès l'installation. Sur un PC physique récent, la carte Wi-Fi ou Ethernet peut au contraire exiger un pilote constructeur (à injecter dans l'image, chapitre 14).
 
 ---
 
@@ -97,7 +97,7 @@ aliases: ["windows11/05-peripheriques-applications/tp-corrigev2"]
 > mkdir C:\Sauvegarde\Pilotes
 > pnputil /export-driver * C:\Sauvegarde\Pilotes
 > ```
-> Sur le lab : `Packages de pilotes exportés : 1` → dossier `prnms009.inf_amd64_8cdc889b3f73e3da`. Chaque pilote est exporté dans son propre sous-dossier. Précieux **avant de réinstaller** un poste dont le constructeur ne propose plus les pilotes en téléchargement (vieux scanner, carte d'acquisition…) : on les réinjecte après l'installation, ou directement dans l'image (`Dism /Add-Driver`, chapitre 15).
+> Sur le lab : `Packages de pilotes exportés : 1` → dossier `prnms009.inf_amd64_8cdc889b3f73e3da`. Chaque pilote est exporté dans son propre sous-dossier. Précieux **avant de réinstaller** un poste dont le constructeur ne propose plus les pilotes en téléchargement (vieux scanner, carte d'acquisition…) : on les réinjecte après l'installation, ou directement dans l'image (`Dism /Add-Driver`, chapitre 14).
 > Équivalent PowerShell : `Export-WindowsDriver -Online -Destination C:\Sauvegarde\Pilotes`.
 
 **B3.** (bonus) Réinjecte l'un des pilotes exportés dans le magasin avec `pnputil /add-driver`. Que répond l'outil, et pourquoi ?
@@ -152,7 +152,7 @@ aliases: ["windows11/05-peripheriques-applications/tp-corrigev2"]
 > ```powershell
 > Get-AppxPackage -AllUsers Microsoft.BingNews | Remove-AppxPackage -AllUsers
 > ```
-> D'où l'intérêt de faire ce ménage **dans l'image**, avant tout profil (mode audit, chapitre 14).
+> D'où l'intérêt de faire ce ménage **dans l'image**, avant tout profil (mode audit, chapitre 13).
 
 **C3.** Vérifie si `wmic` existe encore sur le poste. Un vieux script du Fournil contient `wmic bios get serialnumber` : réécris-le.
 
@@ -177,7 +177,7 @@ aliases: ["windows11/05-peripheriques-applications/tp-corrigev2"]
 > OpenSSH.Client~~~~0.0.1.0   Installed
 > OpenSSH.Server~~~~0.0.1.0   NotPresent
 > ```
-> Le **client** est installé par défaut sur Windows 11 ; le **serveur** non (il sera ajouté au chapitre 12).
+> Le **client** est installé par défaut sur Windows 11 ; le **serveur** non (il sera ajouté au chapitre 16).
 > **En graphique** : **Paramètres → Système → Fonctionnalités facultatives → Afficher les fonctionnalités** (invite UAC) : *Client OpenSSH* figure parmi les fonctionnalités ajoutées.
 >
 > ![w11-05-parametres-fonctionnalites-ajoutees](https://cours.kaya.ovh/windows11/assets/captures/w11-05-parametres-fonctionnalites-ajoutees.png) Sur Windows Server 2025, c'est l'inverse : le serveur est déjà installé (mais arrêté).
@@ -282,7 +282,7 @@ aliases: ["windows11/05-peripheriques-applications/tp-corrigev2"]
 > }
 > ```
 > Le fichier contient les **identifiants** des paquets (et la source) — **ni les installeurs, ni les versions** (sauf `--include-versions`), **ni les paramètres** des logiciels. Les logiciels inconnus des sources (« *Installed package is not available from any source* ») ne sont pas exportés.
-> Au déploiement (chapitre 16), `postinstall.ps1` installe ce socle sur chaque nouveau poste. Variante : `winget import -i socle-fournil.json --accept-package-agreements`.
+> Au déploiement (chapitre 15), `postinstall.ps1` installe ce socle sur chaque nouveau poste. Variante : `winget import -i socle-fournil.json --accept-package-agreements`.
 
 ---
 

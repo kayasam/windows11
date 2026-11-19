@@ -1,9 +1,9 @@
-# TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne
+# TP 15. Déployer Windows 11 : ISO, réseau, migration, moderne
 
 > [!abstract] Parcours TSSR
 > Socle : déployer PC02 avec l’ISO officielle et les fichiers fournis, migrer un profil de test avec USMT et choisir une méthode selon le contexte. Un petit jeu de documents est préparé avant la capture. L’image maître et l’ISO personnalisée sont (bonus).
 
-> Chapitres associés : [16. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
+> Chapitres associés : [15. Déployer Windows 11 : ISO, réseau, migration, moderne](https://cours.kaya.ovh/windows11/windows11/16-deploiement/)
 
 ---
 
@@ -23,7 +23,7 @@
 - `autounattend-iso-officielle.xml` et `postinstall.ps1` (dossier `Ressources/Fichier-reponse/`)
 - Domaine `ad.fournil.lab` avec DHCP actif et l'OU `OU=Ordinateurs,OU=Fournil` (TP 10)
 - ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$` créé par l’élève avec la préparation ci-dessous ; compte de lab autorisé à lire les outils et à écrire le magasin et les journaux
-- Partie F seulement : `MASTER.wim` (TP 15) et **40 Go libres** sur l'hôte
+- Partie F seulement : `MASTER.wim` (TP 14) et **40 Go libres** sur l'hôte
 
 ---
 

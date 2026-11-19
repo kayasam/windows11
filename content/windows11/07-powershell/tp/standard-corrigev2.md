@@ -228,7 +228,7 @@ aliases: ["windows11/07-powershell/tp-corrigev2"]
 **E2.** Pourquoi, pour un poste d'administration, préférer l'installeur MSI ? Installe-le.
 
 > [!success]- Afficher la correction — E2
-> Le paquet MSIX est **par utilisateur** dans son fonctionnement (alias dans le profil) et son chemin change à chaque version. Or beaucoup d'usages d'admin supposent `C:\Program Files\PowerShell\7\pwsh.exe` : sous-système SSH (`sshd_config`, chapitre 12), tâches planifiées en SYSTEM, raccourcis, GPO.
+> Le paquet MSIX est **par utilisateur** dans son fonctionnement (alias dans le profil) et son chemin change à chaque version. Or beaucoup d'usages d'admin supposent `C:\Program Files\PowerShell\7\pwsh.exe` : sous-système SSH (`sshd_config`, chapitre 16), tâches planifiées en SYSTEM, raccourcis, GPO.
 > ```powershell
 > winget install --id Microsoft.PowerShell -e --installer-type wix
 > Test-Path 'C:\Program Files\PowerShell\7\pwsh.exe'     # True

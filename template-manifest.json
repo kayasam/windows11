@@ -7,7 +7,7 @@
   "visualFiles": {
     "quartz/components/Head.tsx": "d2144879f78068f3ff9c28adff77e65d680d235c357ab3ef0bbab07c9b9a844c",
     "quartz/components/scripts/course-navigation.inline.ts": "db465d9971ec444de758a39e6469d692cdb99c27ac4ccafd988bf51590d4d9b6",
-    "quartz/components/scripts/course-resources.inline.ts": "d98c1a8a94d480d6671957f71283c17acb2073c77ea65779c957d4f8bc7c12cd",
+    "quartz/components/scripts/course-resources.inline.ts": "fca9eaecadb76eb66956f3d417da3c9c972384f78cb0901ea7f92a94394fa337",
     "quartz/components/scripts/site-experience.inline.ts": "281e99367d4ea3bf60e66c950483362f7c195b8678d2f7678bd3a5005f777b6a",
     "quartz/components/scripts/support-viewer.inline.ts": "0b9870b2e4e5a25eb5342192eee7f778b5f042335a5e08d76458802fbe3bbaa6",
     "quartz/styles/base.scss": "0dbbe20680bb5fc4a009d92cbcb9b017b947d1760feabf0e5721cc2926c9adfa",

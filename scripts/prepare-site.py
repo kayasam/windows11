@@ -254,7 +254,8 @@ def prepare():
             if len(item['exercises'])>1:
                 listing='\n\n'.join('- ['+title(read_doc(e['path']))+']('+base+'/'+e['key']+')' for e in item['exercises'])
                 write(stage/key/'tp/index.md',page('Travaux pratiques — '+label,bar()+'\n\n'+listing))
-            links.append('<a class="home-chapter" href="'+item['href']+'"><span class="home-chapter__number">'+slug[:2]+'</span><strong>'+html.escape(label)+'</strong><span aria-hidden="true">→</span></a>')
+            number = re.match(r'^(\d{2})\.', label)
+            links.append('<a class="home-chapter" href="'+item['href']+'"><span class="home-chapter__number">'+(number[1] if number else slug[:2])+'</span><strong>'+html.escape(label)+'</strong><span aria-hidden="true">→</span></a>')
             manifest['chapters'].append(dict(key=key,title=label,tp='tp' in item,correction=any(e['visible'] for e in item['exercises'])))
         annex_links=[]
         for item in [a for a in annexes if a['track']==tid]:

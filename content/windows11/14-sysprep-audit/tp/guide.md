@@ -1,5 +1,5 @@
 ---
-title: "TP 14. Poste de référence : mode audit et Sysprep, version guidée (bonus)"
+title: "TP 13. Poste de référence : mode audit et Sysprep, version guidée (bonus)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/14-sysprep-audit"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -7,7 +7,7 @@ title: "TP 14. Poste de référence : mode audit et Sysprep, version guidée (bo
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/14-sysprep-audit-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/guide" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/guide-corrigev2">Afficher les corrections</a></nav>
 
-**Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 15. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
+**Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 14. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/standard)
 

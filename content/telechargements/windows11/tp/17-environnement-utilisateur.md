@@ -18,9 +18,9 @@
 
 ## Prérequis
 
-- `SRV01` et `PC02` allumées, `PC02` joint au domaine (TP 16)
+- `SRV01` et `PC02` allumées, `PC02` joint au domaine (TP 15)
 - Sur `PC02` : session `FOURNIL\adm.stagiaire` ; sur `SRV01` : session `FOURNIL\Administrateur`
-- `test.vendeur` s'est déjà connecté à `PC02` (TP 12, Bureau à distance). Sinon, ouvre une fois une session `FOURNIL\test.vendeur` sur `PC02`, puis déconnecte-la.
+- `test.vendeur` s'est déjà connecté à `PC02` (TP 16, Bureau à distance). Sinon, ouvre une fois une session `FOURNIL\test.vendeur` sur `PC02`, puis déconnecte-la.
 
 ---
 

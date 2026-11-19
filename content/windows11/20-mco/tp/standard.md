@@ -25,7 +25,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 ## Prérequis
 
 - `SRV01`, `PC01`, `PC02` démarrés, `PC01` et `PC02` joints au domaine
-- WinRM actif sur `PC02` (TP 12)
+- WinRM actif sur `PC02` (TP 16)
 - Scripts `Get-Inventaire.ps1`, `Test-Poste.ps1`, `Casse-Poste.ps1` (dossier `Ressources/scripts`) copiés sur `PC01` dans `C:\MCO`
 - Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP21"`
 

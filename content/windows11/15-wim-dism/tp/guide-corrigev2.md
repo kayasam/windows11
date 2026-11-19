@@ -1,5 +1,5 @@
 ---
-title: "TP 15. Images WIM et DISM, corrigé guidé"
+title: "TP 14. Images WIM et DISM, corrigé guidé"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/15-wim-dism"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -7,7 +7,7 @@ title: "TP 15. Images WIM et DISM, corrigé guidé"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/15-wim-dism-guide-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/guide">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/guide-corrigev2" aria-current="page">Corrigé</a></nav>
 
-**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 13. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
+**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 12. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/standard)
 
@@ -34,7 +34,7 @@ Crée un dossier vide `C:\Mount`. Monte l’index relevé avec `dism /Mount-Imag
 Sur l’hôte, vérifie que `MASTER` est arrêtée. Lance `Get-VMHardDiskDrive -VMName MASTER` et relève le chemin du disque système.
 
 > [!success]- Afficher la correction — B1
-> En présence d’un point de contrôle, le disque actif peut être un `.avhdx`. Son parent seul ne représente pas l’état préparé au TP 14.
+> En présence d’un point de contrôle, le disque actif peut être un `.avhdx`. Son parent seul ne représente pas l’état préparé au TP 13.
 
 ### B2 — Monter le disque sans le modifier
 

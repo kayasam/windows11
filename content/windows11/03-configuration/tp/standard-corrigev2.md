@@ -126,7 +126,7 @@ aliases: ["windows11/03-configuration/tp-corrigev2"]
 > - `S-1-5-21-2996719152-1343562269-1905685070` : identifiant de la **machine** (commun à tous ses comptes locaux).
 > - `1002` : le **RID** du compte (500 = Administrateur intégré, 501 = Invité, 1000+ = comptes créés).
 >
-> Deux machines clonées sans Sysprep auraient la même partie machine — d'où la généralisation (chapitre 14).
+> Deux machines clonées sans Sysprep auraient la même partie machine — d'où la généralisation (chapitre 13).
 
 **C3.** Affiche les membres du groupe **Utilisateurs**, dans `lusrmgr.msc` → **Groupes** → **Utilisateurs**, **ou** en PowerShell. Pourquoi y trouve-t-on aussi `admin` et des entrées `AUTORITE NT\…` ?
 

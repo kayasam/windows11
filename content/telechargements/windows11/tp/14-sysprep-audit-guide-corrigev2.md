@@ -1,6 +1,6 @@
-# TP 14. Poste de référence : mode audit et Sysprep, corrigé guidé (bonus)
+# TP 13. Poste de référence : mode audit et Sysprep, corrigé guidé (bonus)
 
-**Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 15. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
+**Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 14. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/standard)
 

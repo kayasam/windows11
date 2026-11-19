@@ -17,7 +17,7 @@ title: "18. Environnement utilisateur et Microsoft 365"
 > **Commandes à connaître :** `Get-CimInstance Win32_UserProfile`, `New-SmbShare`, `Get-SmbShareAccess`, `icacls`, `winget install Microsoft.Office`
 
 > [!INFO] Fil rouge — Fournil
-> `stagiaire` reçoit `PC02` : profil propre, lecteur `P:` (chapitre 11), données migrées (chapitre 16), OneDrive et Teams prêts, fiche de remise signée.
+> `stagiaire` reçoit `PC02` : profil propre, lecteur `P:` (chapitre 11), données migrées (chapitre 15), OneDrive et Teams prêts, fiche de remise signée.
 
 > [!NOTE] Lab sans tenant Microsoft 365
 > Le lab n'a pas de tenant Microsoft 365. Tout ce qui est **côté poste** (installation, stratégies, fichiers de configuration) est pratiqué ; ce qui exige un compte professionnel (synchronisation réelle, réunions Teams) est présenté.
@@ -169,7 +169,7 @@ Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\OneDrive
 ```
 
 > [!TIP] OneDrive, le « nouvel USMT »
-> Avec KFM, les données de l'utilisateur sont **déjà** dans le cloud : un poste neuf ou réinstallé les retrouve à la première connexion. C'est ce qui rend USMT inutile dans un environnement Microsoft 365 (chapitre 16).
+> Avec KFM, les données de l'utilisateur sont **déjà** dans le cloud : un poste neuf ou réinstallé les retrouve à la première connexion. C'est ce qui rend USMT inutile dans un environnement Microsoft 365 (chapitre 15).
 
 ---
 
@@ -229,7 +229,7 @@ Côté administrateur : stratégies de partage du tenant (SharePoint admin cente
 
 - Première connexion **avec** l'utilisateur : changement de mot de passe, **Windows Hello** (code PIN, empreinte), MFA ;
 - Montrer où sont ses fichiers (OneDrive, `P:`), comment imprimer, comment joindre le support ;
-- Présenter **Obtenir de l'aide** (*Get Help*, qui remplace les anciens dépanneurs) et **Assistance rapide** (le support prend la main à distance, chapitre 12) ;
+- Présenter **Obtenir de l'aide** (*Get Help*, qui remplace les anciens dépanneurs) et **Assistance rapide** (le support prend la main à distance, chapitre 16) ;
 - Faire signer la **fiche de remise** (matériel, numéro de série, accessoires, charte informatique).
 
 ### Bonnes pratiques de sécurité à transmettre

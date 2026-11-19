@@ -74,31 +74,31 @@
     },
     {
       "key": "windows11/13-adk-winpe",
-      "title": "13. ADK, Windows PE et fichier de réponse",
+      "title": "12. ADK, Windows PE et fichier de réponse",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/14-sysprep-audit",
-      "title": "14. Poste de référence : mode audit et Sysprep (bonus)",
+      "title": "13. Poste de référence : mode audit et Sysprep (bonus)",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/15-wim-dism",
-      "title": "15. Images WIM et DISM",
+      "title": "14. Images WIM et DISM",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/16-deploiement",
-      "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
+      "title": "15. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "tp": true,
       "correction": true
     },
     {
       "key": "windows11/12-acces-distant",
-      "title": "12. Administration et assistance à distance",
+      "title": "16. Administration et assistance à distance",
       "tp": true,
       "correction": true
     },

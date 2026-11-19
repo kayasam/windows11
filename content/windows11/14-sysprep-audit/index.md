@@ -1,5 +1,5 @@
 ---
-title: "14. Poste de référence : mode audit et Sysprep (bonus)"
+title: "13. Poste de référence : mode audit et Sysprep (bonus)"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/14-sysprep-audit"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -11,7 +11,7 @@ title: "14. Poste de référence : mode audit et Sysprep (bonus)"
 > Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
-> Créer la VM de référence `MASTER`, la personnaliser en **mode audit**, puis la généraliser avec Sysprep en appliquant le fichier de réponse construit au chapitre 13. `MASTER` est pensée pour être **réutilisée** dans le temps (mises à jour périodiques de l'image) grâce à un simple point de contrôle Hyper-V. Savoir **diagnostiquer un échec de Sysprep** — trois pièges modernes ont été rencontrés en construisant le lab.
+> Créer la VM de référence `MASTER`, la personnaliser en **mode audit**, puis la généraliser avec Sysprep en appliquant le fichier de réponse construit au chapitre 12. `MASTER` est pensée pour être **réutilisée** dans le temps (mises à jour périodiques de l'image) grâce à un simple point de contrôle Hyper-V. Savoir **diagnostiquer un échec de Sysprep** — trois pièges modernes ont été rencontrés en construisant le lab.
 >
 > **Outils :** `sysprep.exe`, `Copy-VMFile`, `Checkpoint-VM`
 > **Fichiers à connaître :** `C:\Windows\System32\Sysprep\Panther\setupact.log` / `setuperr.log`, `autounattend-installation-master.xml`, `autounattend-fournil-26h2.xml`
@@ -37,7 +37,7 @@ Set-VMFirmware -VMName "MASTER" -FirstBootDevice $dvd
 ```
 
 > [!DANGER] Installer MASTER **avec** `PreventDeviceEncryption`
-> Sans précaution, Windows 11 26H2 chiffre automatiquement le disque de `MASTER` (BitLocker) dès l'installation, et **Sysprep refuse ensuite de généraliser** (`0x80310039`) — sans retour en arrière possible en mode audit (voir *Dépanner Sysprep* plus bas). On installe donc `MASTER` avec `Ressources/Fichier-reponse/autounattend-installation-master.xml` (chapitre 13), placé à la racine d'une petite ISO :
+> Sans précaution, Windows 11 26H2 chiffre automatiquement le disque de `MASTER` (BitLocker) dès l'installation, et **Sysprep refuse ensuite de généraliser** (`0x80310039`) — sans retour en arrière possible en mode audit (voir *Dépanner Sysprep* plus bas). On installe donc `MASTER` avec `Ressources/Fichier-reponse/autounattend-installation-master.xml` (chapitre 12), placé à la racine d'une petite ISO :
 > ```powershell
 > New-Item D:\Images\unattend-master -ItemType Directory -Force
 > Copy-Item ...\autounattend-installation-master.xml D:\Images\unattend-master\autounattend.xml
@@ -88,7 +88,7 @@ C'est dans cet état qu'on personnalise `MASTER` : mises à jour Windows, applic
 
 ## Transférer le fichier de réponse vers MASTER
 
-Le fichier `autounattend.xml` construit au chapitre 13 existe sur l'hôte — il faut le faire parvenir dans `MASTER`. `Copy-VMFile` copie un fichier depuis l'hôte directement vers une VM en cours d'exécution, sans passer par le réseau ni par un disque de transfert :
+Le fichier `autounattend.xml` construit au chapitre 12 existe sur l'hôte — il faut le faire parvenir dans `MASTER`. `Copy-VMFile` copie un fichier depuis l'hôte directement vers une VM en cours d'exécution, sans passer par le réseau ni par un disque de transfert :
 
 ```powershell
 Get-VMIntegrationService -VMName "MASTER" | Where-Object { $_.Id -match "6C09BB55-D683-4DA0-8931-C9BF705F6480" } | Enable-VMIntegrationService
@@ -129,14 +129,14 @@ C:\Windows\System32\Sysprep\sysprep.exe /generalize /oobe /shutdown /unattend:C:
 | `/generalize` | Supprime les informations propres à la machine (SID, pilotes spécifiques, identité) |
 | `/oobe` | Prochain démarrage → écran d'accueil OOBE (au lieu du bureau) |
 | `/shutdown` | Éteint la VM une fois l'opération terminée |
-| `/unattend:` | Applique le fichier de réponse (passes `specialize` et `oobeSystem`, chapitre 13) au prochain démarrage |
+| `/unattend:` | Applique le fichier de réponse (passes `specialize` et `oobeSystem`, chapitre 12) au prochain démarrage |
 
 Équivalent graphique : dans la fenêtre "Outil de préparation du système", sélectionner "Passer en mode OOBE", cocher **Généraliser**, choisir **Arrêter**, puis **OK** — le fichier de réponse n'est en revanche appliqué que via la ligne de commande `/unattend:`.
 
 Sysprep affiche une progression puis éteint la VM automatiquement. Compter généralement 2 à 5 minutes.
 
 > [!WARNING] Ne pas redémarrer MASTER après Sysprep
-> Un redémarrage normal déclencherait l'OOBE et rendrait la généralisation inutile. Le chapitre 15 capture l'image directement depuis le fichier VHDX de la VM éteinte.
+> Un redémarrage normal déclencherait l'OOBE et rendrait la généralisation inutile. Le chapitre 14 capture l'image directement depuis le fichier VHDX de la VM éteinte.
 
 ---
 
@@ -157,7 +157,7 @@ SYSPRP BitLocker-Sysprep: BitLocker is on for the OS volume. Turn BitLocker off 
 
 **Cause** : le chiffrement automatique de l'appareil (24H2+) a chiffré `MASTER`.
 **Piège dans le piège** : en mode audit, `manage-bde -off C:` et `Disable-BitLocker` échouent avec `0x8007007A` (« La zone de données passée à un appel système est insuffisante »), même après ajout d'un protecteur. Il a fallu **réinstaller `MASTER`**.
-**Prévention** : installer `MASTER` avec `PreventDeviceEncryption` (composant `Microsoft-Windows-SecureStartup-FilterDriver`, chapitre 13). Vérification en mode audit : `Get-BitLockerVolume C:` → `FullyDecrypted`.
+**Prévention** : installer `MASTER` avec `PreventDeviceEncryption` (composant `Microsoft-Windows-SecureStartup-FilterDriver`, chapitre 12). Vérification en mode audit : `Get-BitLockerVolume C:` → `FullyDecrypted`.
 **Revers** : la valeur `PreventDeviceEncryption = 1` est **capturée dans l'image** : constaté sur `PC02` déployé depuis `MASTER.wim` (`FullyDecrypted / Off`, valeur toujours à 1). Les postes déployés ne s'auto-chiffrent donc jamais. Deux options : retirer la valeur en **toute dernière commande** avant `sysprep /generalize /shutdown` (non testé dans le lab : le chiffrement pourrait démarrer s'il s'écoule du temps ou un redémarrage entre les deux), ou — mieux en entreprise — activer BitLocker par GPO/Intune avec sauvegarde de la clé dans AD (chapitres 09 et 11).
 ```powershell
 Remove-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\BitLocker -Name PreventDeviceEncryption
@@ -201,7 +201,7 @@ Checkpoint-VM -Name MASTER -SnapshotName "Avant-Sysprep"
 
 ### 4. Le piège qui n'apparaît qu'au déploiement : `unattend-original.xml` (bonus)
 
-Sysprep réussit, la capture aussi… et c'est le **déploiement** qui échoue (« *Échec de l'installation de Windows 11* », chapitre 16). Cause trouvée dans `$WINDOWS.~BT\Sources\Panther\setupact.log` du poste cible :
+Sysprep réussit, la capture aussi… et c'est le **déploiement** qui échoue (« *Échec de l'installation de Windows 11* », chapitre 15). Cause trouvée dans `$WINDOWS.~BT\Sources\Panther\setupact.log` du poste cible :
 
 ```
 CAddUnattend::DoExecute: Failed to save copy of answer file to
@@ -216,7 +216,7 @@ ExecuteOperations: Operations cannot be sorted. This is a fatal failure.
 ```powershell
 # Juste avant Sysprep, sur MASTER
 Remove-Item C:\Windows\Panther\unattend-original.xml -ErrorAction SilentlyContinue
-# … ou après capture, dans l'image montée (chapitre 15)
+# … ou après capture, dans l'image montée (chapitre 14)
 Dism /Mount-Image /ImageFile:D:\Images\MASTER.wim /Index:1 /MountDir:C:\Mount
 del C:\Mount\Windows\Panther\unattend-original.xml C:\Mount\Windows\Panther\unattend.xml
 Dism /Unmount-Image /MountDir:C:\Mount /Commit
@@ -280,12 +280,12 @@ Start-VM -Name "MASTER"
 >   - (PreventDeviceEncryption, sinon BitLocker bloque Sysprep) → installation jusqu'à l'OOBE
 > - Ctrl+Shift+F3 → mode audit (Administrateur intégré, sans mot de passe, "inactif")
 >   - → mises à jour, logiciels (WinGet), retrait des apps provisionnées
-> - `Copy-VMFile` (Guest Service Interface) → `autounattend.xml` (chapitre 13) dans `C:\Sysprep`
+> - `Copy-VMFile` (Guest Service Interface) → `autounattend.xml` (chapitre 12) dans `C:\Sysprep`
 >
 > - **Avant Sysprep** : retirer les paquets "utilisateur" (Microsoft.Winget.Source, NotepadPlusPlus…)
 > - `Checkpoint-VM "Avant-Sysprep"`
 >   - → `sysprep /generalize /oobe /shutdown /unattend:...`
->   - → capture (chapitre 15)
+>   - → capture (chapitre 14)
 >
 > **Échec ? `setuperr.log` / `setupact.log` (Panther)**
 > - 0x80310039 BitLocker · 0x80073cf2 paquet "not provisioned" → `Remove-AppxPackage` → re-checkpoint

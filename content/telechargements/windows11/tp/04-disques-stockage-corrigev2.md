@@ -247,7 +247,7 @@
 > ```cmd
 > diskpart /s C:\Temp\archives.txt
 > ```
-> `clean` efface la table de partitions : **irréversible**. Avec un mauvais `select disk` (par exemple 1), on détruirait `G:` et son point de montage `C:\Donnees`. C'est exactement le genre de script qu'on retrouvera dans un fichier de réponse ou une séquence de déploiement (partitionnement automatisé, chapitre 16) — d'où l'importance du `select disk` correct.
+> `clean` efface la table de partitions : **irréversible**. Avec un mauvais `select disk` (par exemple 1), on détruirait `G:` et son point de montage `C:\Donnees`. C'est exactement le genre de script qu'on retrouvera dans un fichier de réponse ou une séquence de déploiement (partitionnement automatisé, chapitre 15) — d'où l'importance du `select disk` correct.
 
 ---
 

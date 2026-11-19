@@ -1,7 +1,7 @@
-# 12. Administration et assistance à distance
+# 16. Administration et assistance à distance
 
 > [!abstract] Parcours TSSR
-> À réaliser en J4, APRÈS le TP 16 : `PC02` existe alors et il est joint au domaine. On travaille depuis `PC01` vers `PC02`, avec le compte `FOURNIL\adm.stagiaire` (administrateur des postes, chapitre 10).
+> À réaliser en J4, APRÈS le TP 15 : `PC02` existe alors et il est joint au domaine. On travaille depuis `PC01` vers `PC02`, avec le compte `FOURNIL\adm.stagiaire` (administrateur des postes, chapitre 10).
 > Les sections marquées (bonus) sont facultatives : rien dans la suite n'en dépend.
 
 > [!NOTE] Objectif

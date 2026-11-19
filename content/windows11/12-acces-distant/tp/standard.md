@@ -1,5 +1,5 @@
 ---
-title: "TP 12. Administration et assistance à distance"
+title: "TP 16. Administration et assistance à distance"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/12-acces-distant"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -8,9 +8,9 @@ title: "TP 12. Administration et assistance à distance"
 
 
 > [!abstract] Parcours TSSR
-> À réaliser en J4, APRÈS le TP 16 : `PC02` existe alors et il est joint au domaine. Les questions marquées (bonus) sont facultatives : rien dans la suite n'en dépend.
+> À réaliser en J4, APRÈS le TP 15 : `PC02` existe alors et il est joint au domaine. Les questions marquées (bonus) sont facultatives : rien dans la suite n'en dépend.
 
-> Chapitres associés : [12. Administration et assistance à distance](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
+> Chapitres associés : [16. Administration et assistance à distance](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
 ---
 
@@ -25,7 +25,7 @@ title: "TP 12. Administration et assistance à distance"
 
 ## Prérequis
 
-- `SRV01`, `PC01` et `PC02` allumées, `PC02` joint au domaine (TP 16)
+- `SRV01`, `PC01` et `PC02` allumées, `PC02` joint au domaine (TP 15)
 - Compte `FOURNIL\test.vendeur` disponible pour le test RDP (TP 11, C6)
 - Sur `PC01` **et** sur `PC02` : session ouverte avec **`FOURNIL\adm.stagiaire`** (administrateur des postes, TP 10–11)
 - Le compte `test.vendeur` existe (TP 11, C6). Sinon, crée-le sur `SRV01` dans `dsa.msc` → *Fournil → Utilisateurs*, mot de passe `Fournil2026!`

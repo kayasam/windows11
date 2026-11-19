@@ -1,9 +1,9 @@
-# TP 14. Poste de référence : mode audit et Sysprep (bonus)
+# TP 13. Poste de référence : mode audit et Sysprep (bonus)
 
 > [!abstract] Parcours TSSR — (bonus)
 > Chapitre et TP entièrement (bonus). Les principes du mode audit et de Sysprep sont expliqués avec les notions sur les images ; aucune VM MASTER n’est requise pour le socle.
 
-> Chapitres associés : [14. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
+> Chapitres associés : [13. Poste de référence : mode audit et Sysprep](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/)
 
 ---
 
@@ -18,7 +18,7 @@
 
 ## Prérequis
 
-- `autounattend-installation-master.xml` et `autounattend-fournil-26h2.xml` (TP 13)
+- `autounattend-installation-master.xml` et `autounattend-fournil-26h2.xml` (TP 12)
 - Au moins **40 Go libres** sur le disque de l'hôte
 
 ---

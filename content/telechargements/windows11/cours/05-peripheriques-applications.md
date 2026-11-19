@@ -11,7 +11,7 @@
 > **Commandes à connaître :** `Get-PnpDevice`, `pnputil /enum-drivers`, `winget search/install/upgrade/export/import`, `Get-AppxProvisionedPackage`, `Get-WindowsCapability`
 
 > [!INFO] Fil rouge — Fournil
-> Sur `PC01`, on prépare le **socle logiciel standard** du Fournil (7-Zip, Notepad++…) et on l'exporte dans un fichier qui servira à installer les applications des nouveaux postes au déploiement (chapitre 16).
+> Sur `PC01`, on prépare le **socle logiciel standard** du Fournil (7-Zip, Notepad++…) et on l'exporte dans un fichier qui servira à installer les applications des nouveaux postes au déploiement (chapitre 15).
 
 ---
 
@@ -30,7 +30,7 @@ Windows n'installe un pilote **que depuis le magasin**. Ajouter un pilote = le *
 | **En boîte** (fourni avec Windows) | Clavier, stockage standard, réseau Hyper-V |
 | **Windows Update** | Pilotes publiés par les constructeurs (catégorie « Mises à jour facultatives ») |
 | **Constructeur** (package `.inf` + `.sys` + `.cat`, ou `.exe` d'installation) | Carte graphique, imprimante, station d'accueil |
-| **Injecté dans l'image** (DISM, chapitre 15) | Pilote réseau/stockage indispensable au premier démarrage |
+| **Injecté dans l'image** (DISM, chapitre 14) | Pilote réseau/stockage indispensable au premier démarrage |
 
 > [!WARNING] Signature obligatoire
 > Les pilotes 64 bits doivent être **signés** par Microsoft (programme WHCP). Depuis **26H2**, Windows ne fait plus confiance par défaut aux anciens pilotes « *cross-signed* » (signés par l'éditeur avec un certificat tiers). Un vieux pilote d'imprimante ou de dongle peut donc refuser de se charger après la mise à niveau : c'est à vérifier avant de migrer un parc.
@@ -135,7 +135,7 @@ Get-AppxProvisionedPackage -Online | Where-Object DisplayName -eq "Microsoft.Bin
 Sur `PC01` (26H2), on trouve une quarantaine d'applications provisionnées, dont `Clipchamp.Clipchamp`, `Microsoft.BingNews`, `Microsoft.OutlookForWindows`, `Microsoft.Windows.DevHome`, `MSTeams`, `MicrosoftCorporationII.QuickAssist`…
 
 > [!TIP] Nouveauté 26H2 (Enterprise/Education)
-> Une stratégie de groupe permet désormais de **supprimer des applications préinstallées** sans script : *Configuration ordinateur → Modèles d'administration → Composants Windows → Déploiement de package Appx → « Supprimez du système les packages par défaut du Microsoft Store »*. Une liste à cocher propose les applications courantes, et une liste dynamique accepte d'autres noms de famille de packages (ex. `Microsoft.BingNews_8wekyb3d8bbwe`). La stratégie est visible dans le `gpedit.msc` d'un Pro, mais elle n'est **effective que sur Enterprise/Education**. Sur Pro, on reste sur `Remove-AppxProvisionedPackage` (dans l'image, chapitre 15, ou en mode audit, chapitre 14).
+> Une stratégie de groupe permet désormais de **supprimer des applications préinstallées** sans script : *Configuration ordinateur → Modèles d'administration → Composants Windows → Déploiement de package Appx → « Supprimez du système les packages par défaut du Microsoft Store »*. Une liste à cocher propose les applications courantes, et une liste dynamique accepte d'autres noms de famille de packages (ex. `Microsoft.BingNews_8wekyb3d8bbwe`). La stratégie est visible dans le `gpedit.msc` d'un Pro, mais elle n'est **effective que sur Enterprise/Education**. Sur Pro, on reste sur `Remove-AppxProvisionedPackage` (dans l'image, chapitre 14, ou en mode audit, chapitre 13).
 
 ### Applications installées en graphique
 
@@ -225,7 +225,7 @@ winget install --id 7zip.7zip -e `
 
 ![w11-05-winget-upgrade](https://cours.kaya.ovh/windows11/assets/captures/w11-05-winget-upgrade.png)
 
-Un poste tout juste installé depuis l'ISO a déjà **5 à 8 logiciels à mettre à jour** (5 sur le lab le 12/11/2026, le nombre varie avec la date) — y compris WinGet lui-même (App Installer 1.26 → 1.29). C'est tout l'intérêt d'un `winget upgrade --all` dans la préparation d'un master (chapitre 14) et dans la maintenance (chapitre 21).
+Un poste tout juste installé depuis l'ISO a déjà **5 à 8 logiciels à mettre à jour** (5 sur le lab le 12/11/2026, le nombre varie avec la date) — y compris WinGet lui-même (App Installer 1.26 → 1.29). C'est tout l'intérêt d'un `winget upgrade --all` dans la préparation d'un master (chapitre 13) et dans la maintenance (chapitre 21).
 
 ### Export / import : le socle logiciel standard
 

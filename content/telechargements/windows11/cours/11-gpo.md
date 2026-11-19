@@ -270,7 +270,7 @@ Journal : *Applications et services → Microsoft → Windows → GroupPolicy �
 | Prérequis | Poste joint à AD, **en ligne de vue** d'un DC (ou VPN) | Poste joint à Entra (ou hybride), simple accès Internet |
 | Contenu | Modèles d'administration, sécurité, préférences | Profils de configuration (*Settings catalog*, CSP), conformité, applications, **ADMX importables** |
 | Postes nomades | Mal servis (pas de DC joignable) | Conçu pour |
-| Déploiement de Windows | Image + GPO | **Autopilot** (chapitre 16) |
+| Déploiement de Windows | Image + GPO | **Autopilot** (chapitre 15) |
 | Rapports | `gpresult` poste par poste | Console de conformité centralisée |
 
 **Jonction hybride** (*Microsoft Entra hybrid join*) : le poste est joint à AD **et** enregistré dans Entra ID grâce à **Entra Connect** ; on peut alors basculer progressivement des GPO vers Intune (*co-management*). Outil d'aide : **Group Policy Analytics** dans Intune (importe une sauvegarde de GPO et indique quels paramètres ont un équivalent cloud).

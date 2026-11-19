@@ -29,7 +29,7 @@ Sur `SRV01`, dans les propriétés WDS, règle la coexistence avec le DHCP local
 
 ### B1 — Importer une image de démarrage
 
-Sur `SRV01`, importe une **image de démarrage personnalisée** préparée pour le lab dans **WDS → Images de démarrage → Ajouter une image de démarrage**. Donne-lui un nom qui la distingue clairement de l’ISO officielle. Si tu réutilises le WinPE standard du TP 13, prévois de lancer Setup manuellement après son démarrage.
+Sur `SRV01`, importe une **image de démarrage personnalisée** préparée pour le lab dans **WDS → Images de démarrage → Ajouter une image de démarrage**. Donne-lui un nom qui la distingue clairement de l’ISO officielle. Si tu réutilises le WinPE standard du TP 12, prévois de lancer Setup manuellement après son démarrage.
 
 ### B2 — Préparer et vérifier le partage SMB
 

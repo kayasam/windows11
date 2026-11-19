@@ -5,7 +5,7 @@ function setupChapterResources() {
   const payload = document.getElementById("course-resource-data")
   const explorer = document.querySelector<HTMLElement>(".explorer-content")
   if (!payload || !explorer) return
-  let registry: Record<string, { kind: string; href: string }[]>
+  let registry: Record<string, { kind: string; href: string; chapterTitle?: string }[]>
   try { registry = JSON.parse(payload.textContent ?? "{}") } catch { return }
   const bar = document.querySelector<HTMLElement>(".chapter-resources")
   const currentKey = bar?.dataset.courseKey
@@ -46,12 +46,12 @@ function setupChapterResources() {
     })
     explorer!.querySelectorAll<HTMLElement>(".folder-container[data-folderpath]").forEach((folder) => {
       const key = (folder.dataset.folderpath ?? "").replace(/\/index$/, "")
-      const chapter = Boolean(registry[key])
+      const chapter = registry[key]?.[0]
       folder.classList.toggle("is-track-root", Object.keys(registry).some((chapterKey) => chapterKey.split("/")[0] === key))
-      folder.classList.toggle("is-course-chapter", chapter)
+      folder.classList.toggle("is-course-chapter", Boolean(chapter))
       folder.classList.toggle("support-current-chapter", key === currentKey)
       if (chapter) {
-        folder.dataset.chapterNumber = key.split("/").pop()!.slice(0, 2)
+        folder.dataset.chapterNumber = chapter.chapterTitle?.match(/^(\d{2})\./)?.[1] ?? key.split("/").pop()!.slice(0, 2)
         const children = folder.nextElementSibling as HTMLElement | null
         if (children?.classList.contains("folder-outer")) children.hidden = true
         const link = folder.querySelector<HTMLAnchorElement>("a.folder-button")
