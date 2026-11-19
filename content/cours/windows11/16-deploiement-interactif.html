@@ -207,7 +207,7 @@ footer strong{font-size:.8rem}
           </article>
         </div>
         <p class="notice">Le XML personnalisé et l’ISO reconstruite contiennent les mots de passe du lab. Garde-les sur l’hôte de travail.</p>
-        <p class="unit"><strong class="lead">3. Reconstruire l’ISO amorçable</strong> La partie <code>-b…\efisys.bin</code> réintègre le démarrage UEFI pour une VM Génération 2.</p>
+        <p class="unit"><strong class="lead">3. Reconstruire l’ISO amorçable</strong> L’option <code>-bootdata:1#pEF,e,b…</code> utilise <code>efisys.bin</code> pour recréer le démarrage UEFI d’une VM Génération 2.</p>
         <div class="command"><div class="command-top">Invite ADK <button class="copy" type="button" data-copy="build-iso" aria-label="Copier la commande de création ISO">Copier</button></div><pre id="build-iso"></pre></div>
         <p class="notice good">Résultat attendu · <code data-path="iso"></code></p>
       </div>
@@ -244,7 +244,7 @@ footer strong{font-size:.8rem}
             <p id="complete" role="status"></p>
           </article>
         </div>
-        <details><summary>La VM ne démarre pas sur le DVD</summary><p>Vérifie dans <b>Microprogramme</b> de la VM que le DVD de la nouvelle ISO passe avant le disque. Vérifie aussi que ta commande de reconstruction contient <code>-pEF</code> et <code>-b…\efisys.bin</code>.</p></details>
+        <details><summary>La VM ne démarre pas sur le DVD</summary><p>Vérifie dans <b>Microprogramme</b> de la VM que le DVD de la nouvelle ISO passe avant le disque. Vérifie aussi que ta commande contient <code>-bootdata:1#pEF,e,b…\efisys.bin</code>.</p></details>
         <details><summary>Windows Setup demande de choisir un disque</summary><p>Ouvre l’ISO reconstruite sur l’hôte. Vérifie que <code>autounattend.xml</code> est à côté de <code>setup.exe</code> et que le nom se termine par <code>.xml</code>. Vérifie aussi la syntaxe XML après la saisie du mot de passe.</p></details>
         <details data-only="domain"><summary>La jonction échoue ou les applications manquent</summary><p>Pour la jonction, contrôle le DNS vers <code>SRV01</code> et lis <code>C:\Windows\debug\NetSetup.log</code>. Pour les applications, ouvre <code>C:\Windows\Temp\postinstall.log</code> et vérifie l’accès Internet de la VM. Si le journal est absent, vérifie que le script figure à la racine de l’ISO montée.</p></details>
       </div>
@@ -329,8 +329,8 @@ footer strong{font-size:.8rem}
       domain ? '└─ postinstall.ps1' : ''
     ].filter(Boolean).join('\n'));
     setText('build-iso', [
-      'oscdimg -m -o -u2 -udfver102 -pEF -e',
-      '-b' + paths.source + '\\efi\\microsoft\\boot\\efisys.bin',
+      'oscdimg -m -o -u2 -udfver102',
+      '-bootdata:1#pEF,e,b' + paths.source + '\\efi\\microsoft\\boot\\efisys.bin',
       paths.source,
       paths.iso
     ].join(' '));
