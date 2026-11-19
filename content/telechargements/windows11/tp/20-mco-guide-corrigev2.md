@@ -1,6 +1,13 @@
 # TP 21. TP final : maintien en condition opérationnelle, corrigé guidé
 
-**Ta mission.** Depuis `PC01`, inventorie `PC01` et `PC02`, traite les écarts puis inscris les contrôles dans un plan de MCO. Utilise les scripts remis par le formateur et les postes du domaine.
+**Ta mission.** Depuis `PC01`, inventorie `PC01` et `PC02`, traite les écarts puis inscris les contrôles dans un plan de MCO. Utilise les fichiers ci-dessous sur tes postes du domaine.
+
+## Fichiers et vérifications de départ
+
+- Sur `PC01`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Get-Inventaire.ps1" download data-router-ignore>Get-Inventaire.ps1</a> dedans.
+- Sur `PC02`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Test-Poste.ps1" download data-router-ignore>Test-Poste.ps1</a> dedans.
+- Ouvre Windows PowerShell en administrateur sur chaque poste avec le compte d’administration du lab. Sur chaque copie téléchargée, utilise `Unblock-File -LiteralPath` avec son chemin complet.
+- Depuis `PC01`, lance `Test-WSMan PC02`. Si la commande échoue, termine la partie B du [TP 16 sur l’accès distant](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide), puis recommence.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/20-mco/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/20-mco/tp/standard)
 
@@ -8,7 +15,7 @@
 
 ### A1 — Produire le CSV des deux postes
 
-Sur `PC01`, dans la session d’administration du domaine, ouvre PowerShell et lance `C:\MCO\Get-Inventaire.ps1 -ComputerName PC01,PC02 -Csv C:\MCO\inventaire.csv`. Ouvre le CSV et vérifie que les deux postes sont présents.
+Sur `PC01`, dans la session d’administration du domaine, ouvre PowerShell et lance `C:\MCO\Get-Inventaire.ps1 -ComputerName PC01,PC02 -Csv C:\MCO\inventaire.csv`. Ouvre `C:\MCO\inventaire.csv`. Vérifie que `PC01` et `PC02` ont chacun une ligne. Si `PC02` manque et que PowerShell affiche **Injoignable**, reprends le test `Test-WSMan PC02`.
 
 > [!success]- Afficher la correction — A1
 > Il faut une ligne exploitable par poste avant de comparer les écarts. Si `PC02` manque, vérifie sa résolution DNS et la réponse de `Test-WSMan PC02`.

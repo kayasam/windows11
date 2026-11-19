@@ -1,6 +1,6 @@
 # TP 04. Disques, volumes et systèmes de fichiers, corrigé guidé
 
-**Ta mission.** Prépare un disque de données dans `PC01` et, en atelier complémentaire, observe un miroir à deux disques. Sur l’hôte Hyper-V, attache à la VM les trois disques de données du TP d’origine ou fais confirmer qu’ils sont déjà présents. Identifie les VHDX du lab avant toute action sur un disque.
+**Ta mission.** Prépare un disque de données dans `PC01` et, en atelier complémentaire, observe un miroir à deux disques. Sur l’hôte Hyper-V, dans **Paramètres de PC01 → Contrôleur SCSI → Disque dur**, ajoute un disque dynamique de **10 Go** nommé `Data1.vhdx`. Si ce disque est déjà attaché, passe à A1. Identifie le nouveau VHDX avant de formater quoi que ce soit.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard)
 
@@ -38,7 +38,7 @@ Crée un dossier NTFS vide `C:\Donnees`. Dans **Gestion des disques → G: → M
 
 ### B1 — Créer un pool et un espace en miroir
 
-Dans les **Espaces de stockage** de `PC01`, crée `Pool-Fournil` avec les deux VHDX vierges dédiés. Crée l’espace `Donnees-Miroir` en **miroir bidirectionnel**, NTFS, lettre `F:`. Crée `F:\recette.txt`.
+Sur l’hôte, ajoute deux VHDX vierges de **10 Go** nommés `Data2.vhdx` et `Data3.vhdx`. Dans les **Espaces de stockage** de `PC01`, crée `Pool-Fournil` avec ces deux disques. Crée l’espace `Donnees-Miroir` en **miroir bidirectionnel**, NTFS, lettre `F:`. Crée `F:\recette.txt`.
 
 > [!success]- Afficher la correction — B1
 > La capacité utilisable d’un miroir sur deux disques identiques est proche de celle d’un seul disque avant déduction des métadonnées. Les données sont écrites en deux exemplaires.

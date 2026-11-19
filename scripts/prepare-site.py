@@ -106,9 +106,16 @@ def prepare():
             return ('!' if embedded else '')+'['+(caption or Path(name).stem)+']('+quote(relative)+('#'+anchor if anchor else '')+')'
         return re.sub(r'(!?)\[\[([^\]]+)\]\]', wiki, text)
     chapters = []; annexes = []; routes = {}; keys = set(); tracks = set()
+    attachments = {}
     for track in site['tracks']:
         tid = track['id']; assert re.fullmatch('[a-z0-9]+(?:-[a-z0-9]+)*',tid) and tid not in tracks
         tracks.add(tid); assert track['chapters'], 'Chaque parcours doit contenir un chapitre'
+        for filename in track.get('attachments', []):
+            attachment = source(filename)
+            assert re.fullmatch(r'[A-Za-z0-9_-]+\.(?:xml|ps1|cmd|ini|txt)', attachment.name), filename
+            relative = f'fichiers/{attachment.name}'
+            assert attachment not in attachments and (tid, relative) not in attachments.values(), filename
+            attachments[attachment] = (tid, relative)
         for chapter in track['chapters']:
             slug = chapter['slug']; assert re.fullmatch(r'\d{2}-[a-z0-9-]+',slug)
             key = tid+'/'+slug; assert key not in keys; keys.add(key)
@@ -153,7 +160,10 @@ def prepare():
     for media, relative in media_paths.items():
         write(ROOT/relative, media.read_bytes())
         routes[media] = base+'/'+relative
-    offline_names={}
+    for attachment, (tid, relative) in attachments.items():
+        assert attachment not in routes
+        routes[attachment] = f'{base}/telechargements/{tid}/{relative}'
+    offline_names=dict(attachments)
     for item in chapters:
         offline_names[item['path']]=(item['track'],'cours/'+item['slug']+'.md')
         for exercise in item['exercises']:
@@ -183,6 +193,9 @@ def prepare():
             if parsed.scheme or parsed.netloc or not parsed.path: return m[0]
             target=(origin.parent/unquote(parsed.path)).resolve()
             if target in private_corrections: return ''
+            if target in attachments:
+                label = m[1][1:-2]
+                return '<a href="'+html.escape(routes[target],quote=True)+'" download data-router-ignore>'+html.escape(label)+'</a>'
             if target in routes: return m[1]+routes[target]+('#'+parsed.fragment if parsed.fragment else '')+m[3]
             raise ValueError(f'Lien local non déclaré : {origin.name} → {m[2]}')
         return re.sub(r'(!?\[[^\]]*\]\()([^\s)]+)(\))',link,text)
@@ -191,12 +204,19 @@ def prepare():
     stage=ROOT/'.template-stage'; clean(stage); stage.mkdir()
     shutil.copytree(ROOT/'assets',stage/'assets')
     write(stage/'assets/workshops.json','[]\n'); write(stage/'assets/site.json',json.dumps({'title':site['title'],'shortTitle':site.get('shortTitle',site['title'])}))
-    registry={}; quizzes={}; manifest={'chapters':[],'exercises':[],'corrections':[],'tracks':[],'templateVersion':1}
+    registry={}; quizzes={}; manifest={'chapters':[],'exercises':[],'corrections':[],'tracks':[],'attachments':[],'templateVersion':1}
     downloads=[]; pdf_entries=[]
     def without_heading(text): return re.sub(r'^# .+\n*','',body(text),count=1,flags=re.M)
-    def download_button(href,label): return '<a class="resource-download" download href="'+html.escape(href,quote=True)+'">↓ '+label+' (.md)</a>'
+    def download_button(href,label): return '<a class="resource-download" download data-router-ignore href="'+html.escape(href,quote=True)+'">↓ '+label+' (.md)</a>'
     for track in site['tracks']:
         files={}; links=[]; tid=track['id']
+        for attachment, (track_id, relative) in attachments.items():
+            if track_id == tid:
+                data=attachment.read_bytes()
+                download=f'telechargements/{tid}/{relative}'
+                write(stage/download,data)
+                files[relative]=data
+                manifest['attachments'].append(dict(track=tid,file=relative,download=download,sha256=digest(data)))
         for item in [c for c in chapters if c['track']==tid]:
             key=item['key']; label=item['title']; slug=item['slug']; entries=[]
             for kind in ('markdown','html','quiz','tp'):

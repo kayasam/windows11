@@ -20,7 +20,7 @@
 
 - `PC02` joint au domaine, l'utilisateur de test voit son lecteur `P:` et peut imprimer sur l'imprimante PDF
 - **Point de contrôle Hyper-V** : `Checkpoint-VM -Name PC02 -SnapshotName "Avant-pannes"`
-- Le formateur (ou ton binôme) exécute `Ressources/scripts/Casse-Poste.ps1` en administrateur sur `PC02` **sans te dire ce qu'il fait**, puis redémarre le poste
+- Le formateur prépare l’incident sur `PC02`. Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Test-Poste.ps1" download data-router-ignore>Test-Poste.ps1</a> dans `C:\MCO` sur `PC02` pour l’étape E1.
 
 > Ne lis pas le script avant la fin du TP : c'est l'intérêt de l'exercice.
 
@@ -74,11 +74,11 @@ Un utilisateur trouve son poste « lent depuis hier » et voit parfois un proces
 
 ## Partie E — Vérifier et clore
 
-**E1.** Copie le script fourni `Ressources/scripts/Test-Poste.ps1`, adapte-le au poste et explique chaque contrôle. Vérifie en une passe : DNS = contrôleur de domaine, `srv01` résolu vers la bonne adresse, port 445 ouvert vers `srv01`, Spooler démarré et automatique, aucune règle de pare-feu sortante de blocage personnalisée, aucune tâche planifiée à la racine lançant `powershell.exe`.
+**E1.** Ouvre le script `C:\MCO\Test-Poste.ps1` téléchargé dans les prérequis, adapte-le au poste et explique chaque contrôle. Vérifie en une passe : DNS = contrôleur de domaine, `srv01` résolu vers la bonne adresse, port 445 ouvert vers `srv01`, Spooler démarré et automatique, aucune règle de pare-feu sortante de blocage personnalisée, aucune tâche planifiée à la racine lançant `powershell.exe`.
 
 **E2.** Complète la fiche d'intervention : causes, corrections, vérifications, recommandations pour éviter la récidive.
 
-**E3.** Combien de pannes as-tu trouvé ? Compare avec le script `Casse-Poste.ps1`.
+**E3.** Combien de pannes as-tu trouvé ? Compare avec la liste des symptômes révélée par le formateur lors de la correction.
 
 ---
 

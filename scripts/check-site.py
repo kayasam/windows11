@@ -43,6 +43,12 @@ for entry in manifest['exercises']:
 for track in manifest['tracks']:
     with zipfile.ZipFile(content/(track['id']+'-obsidian.zip')) as z:
         names=z.namelist()
+        attachments = [a for a in manifest.get('attachments', []) if a['track']==track['id']]
+        assert {name for name in names if name.startswith('fichiers/')} == {a['file'] for a in attachments}
+        for attachment in attachments:
+            data=z.read(attachment['file'])
+            assert data==(public/attachment['download']).read_bytes(),attachment['file']
+            assert hashlib.sha256(data).hexdigest()==attachment['sha256'],attachment['file']
         for entry in [e for e in manifest['exercises'] if e['track']==track['id']]:
             slug=entry['downloadStem']
             assert ('tp/'+slug+'-corrigev2.md' in names)==entry['correction']

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Déploiement « léger » : ISO OFFICIELLE de Windows 11 + ce fichier, sans image maître ni Sysprep.
+  À placer à la racine d'un support lu par Setup (racine de l'ISO, clé USB, ou 2e lecteur DVD),
+  avec postinstall.ps1 à côté.
+    windowsPE  : partitions UEFI/GPT, édition Pro (clé générique), langue
+    specialize : nom PC02, fuseau, PAS de chiffrement automatique, jonction au domaine ad.fournil.lab
+    oobeSystem : OOBE masquée, compte local admin, 1 ouverture de session automatique -> postinstall.ps1
+  Mot de passe de lab partout : [mot de passe du lab]
+-->
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+  <settings pass="windowsPE">
+    <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <SetupUILanguage>
+        <UILanguage>fr-FR</UILanguage>
+      </SetupUILanguage>
+      <InputLocale>fr-FR</InputLocale>
+      <SystemLocale>fr-FR</SystemLocale>
+      <UILanguage>fr-FR</UILanguage>
+      <UserLocale>fr-FR</UserLocale>
+    </component>
+    <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <DiskConfiguration>
+        <Disk wcm:action="add">
+          <DiskID>0</DiskID>
+          <WillWipeDisk>true</WillWipeDisk>
+          <CreatePartitions>
+            <CreatePartition wcm:action="add">
+              <Order>1</Order>
+              <Type>EFI</Type>
+              <Size>200</Size>
+            </CreatePartition>
+            <CreatePartition wcm:action="add">
+              <Order>2</Order>
+              <Type>MSR</Type>
+              <Size>16</Size>
+            </CreatePartition>
+            <CreatePartition wcm:action="add">
+              <Order>3</Order>
+              <Type>Primary</Type>
+              <Extend>true</Extend>
+            </CreatePartition>
+          </CreatePartitions>
+          <ModifyPartitions>
+            <ModifyPartition wcm:action="add">
+              <Order>1</Order>
+              <PartitionID>1</PartitionID>
+              <Format>FAT32</Format>
+              <Label>System</Label>
+            </ModifyPartition>
+            <ModifyPartition wcm:action="add">
+              <Order>2</Order>
+              <PartitionID>3</PartitionID>
+              <Format>NTFS</Format>
+              <Label>Windows</Label>
+              <Letter>C</Letter>
+            </ModifyPartition>
+          </ModifyPartitions>
+        </Disk>
+      </DiskConfiguration>
+      <ImageInstall>
+        <OSImage>
+          <InstallTo>
+            <DiskID>0</DiskID>
+            <PartitionID>3</PartitionID>
+          </InstallTo>
+        </OSImage>
+      </ImageInstall>
+      <UserData>
+        <AcceptEula>true</AcceptEula>
+        <ProductKey>
+          <!-- Clé générique Windows 11 Pro : sélectionne l'édition dans l'ISO multi-éditions, n'active pas -->
+          <Key>VK7JG-NPHTM-C97JM-9MPGT-3V66T</Key>
+        </ProductKey>
+      </UserData>
+    </component>
+  </settings>
+  <settings pass="specialize">
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <ComputerName>PC02</ComputerName>
+      <RegisteredOrganization>Fournil</RegisteredOrganization>
+      <RegisteredOwner>Fournil</RegisteredOwner>
+      <TimeZone>Romance Standard Time</TimeZone>
+    </component>
+    <!-- Pas de chiffrement automatique : BitLocker sera activé proprement par GPO (clé dans l'AD, chapitre 11) -->
+    <component name="Microsoft-Windows-SecureStartup-FilterDriver" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+      <PreventDeviceEncryption>true</PreventDeviceEncryption>
+    </component>
+    <!-- Jonction au domaine pendant l'installation (le poste reçoit le DNS de SRV01 par DHCP) -->
+    <component name="Microsoft-Windows-UnattendedJoin" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <Identification>
+        <Credentials>
+          <Domain>ad.fournil.lab</Domain>
+          <Username>Administrateur</Username>
+          <Password>A_RENSEIGNER_MOT_DE_PASSE_JONCTION</Password>
+        </Credentials>
+        <JoinDomain>ad.fournil.lab</JoinDomain>
+        <MachineObjectOU>OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab</MachineObjectOU>
+      </Identification>
+    </component>
+  </settings>
+  <settings pass="oobeSystem">
+    <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <InputLocale>fr-FR</InputLocale>
+      <SystemLocale>fr-FR</SystemLocale>
+      <UILanguage>fr-FR</UILanguage>
+      <UILanguageFallback>en-US</UILanguageFallback>
+      <UserLocale>fr-FR</UserLocale>
+    </component>
+    <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <OOBE>
+        <HideEULAPage>true</HideEULAPage>
+        <HideLocalAccountScreen>true</HideLocalAccountScreen>
+        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+        <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+        <ProtectYourPC>3</ProtectYourPC>
+      </OOBE>
+      <UserAccounts>
+        <LocalAccounts>
+          <LocalAccount wcm:action="add">
+            <Name>admin</Name>
+            <DisplayName>admin</DisplayName>
+            <Description>Administrateur local du poste</Description>
+            <Group>Administrators</Group>
+            <Password>
+              <Value>A_RENSEIGNER_MOT_DE_PASSE_LOCAL</Value>
+              <PlainText>true</PlainText>
+            </Password>
+          </LocalAccount>
+        </LocalAccounts>
+      </UserAccounts>
+      <!-- Une seule ouverture de session automatique, pour lancer la post-installation -->
+      <AutoLogon>
+        <Enabled>true</Enabled>
+        <LogonCount>1</LogonCount>
+        <!-- Compte LOCAL : sans Domain, le poste joint au domaine chercherait FOURNIL\admin -->
+        <Domain>PC02</Domain>
+        <Username>admin</Username>
+        <Password>
+          <Value>A_RENSEIGNER_MOT_DE_PASSE_LOCAL</Value>
+          <PlainText>true</PlainText>
+        </Password>
+      </AutoLogon>
+      <FirstLogonCommands>
+        <!-- postinstall.ps1 : à la racine d'un support (clé, mini-ISO) ou dans C:\Windows\Setup\Scripts (installation par le réseau, via sources\$OEM$) -->
+        <SynchronousCommand wcm:action="add">
+          <Order>1</Order>
+          <Description>Post-installation (applications, réglages)</Description>
+          <CommandLine>powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$s = @(Get-PSDrive -PSProvider FileSystem | ForEach-Object { Join-Path $_.Root 'postinstall.ps1' }) + 'C:\Windows\Setup\Scripts\postinstall.ps1' | Where-Object { Test-Path $_ } | Select-Object -First 1; if ($s) { &amp; $s }"</CommandLine>
+        </SynchronousCommand>
+      </FirstLogonCommands>
+    </component>
+  </settings>
+</unattend>

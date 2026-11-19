@@ -16,6 +16,10 @@
 
 ---
 
+## Fichier du TP
+
+Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-fournil-26h2.xml" download data-router-ignore>autounattend-fournil-26h2.xml</a> dans `C:\Images` sur `PC01`. Ouvre cette copie dans WSIM. Garde le marqueur de mot de passe tant que tu vérifies seulement la structure.
+
 ## Prérequis
 
 - `PC01` (poste d'administration) avec accès Internet, ~10 Go libres

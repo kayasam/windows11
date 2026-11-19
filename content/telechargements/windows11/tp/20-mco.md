@@ -15,11 +15,18 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 ---
 
+## Fichiers et vérifications de départ
+
+- Sur `PC01`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Get-Inventaire.ps1" download data-router-ignore>Get-Inventaire.ps1</a> dedans.
+- Sur `PC02`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Test-Poste.ps1" download data-router-ignore>Test-Poste.ps1</a> dedans.
+- Ouvre Windows PowerShell en administrateur sur chaque poste avec le compte d’administration du lab. Sur chaque copie téléchargée, utilise `Unblock-File -LiteralPath` avec son chemin complet.
+- Depuis `PC01`, lance `Test-WSMan PC02`. Si la commande échoue, termine la partie B du [TP 16 sur l’accès distant](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide), puis recommence.
+
 ## Prérequis
 
 - `SRV01`, `PC01`, `PC02` démarrés, `PC01` et `PC02` joints au domaine
 - WinRM actif sur `PC02` (TP 16)
-- Scripts `Get-Inventaire.ps1`, `Test-Poste.ps1`, `Casse-Poste.ps1` (dossier `Ressources/scripts`) copiés sur `PC01` dans `C:\MCO`
+- Les deux scripts téléchargés sur les postes indiqués ci-dessus
 - Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP21"`
 
 ---
@@ -62,7 +69,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 ## Partie D — Incident complémentaire (bonus)
 
-Ton binôme exécute `Casse-Poste.ps1` sur **ton** `PC02` (pendant ce temps tu exécutes le sien), puis redémarre le poste.
+Le formateur prépare un incident sur la VM `PC02`. Passe à la partie suivante si cet atelier bonus n’est pas prévu.
 
 **D1.** Détecte toutes les pannes avec tes outils automatisés, puis explique les résultats obtenus.
 

@@ -4,10 +4,12 @@ title: "TP 16. Administration et assistance à distance, corrigé guidé"
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/12-acces-distant"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/12-acces-distant-guide-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/12-acces-distant-guide-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide-corrigev2" aria-current="page">Corrigé</a></nav>
 
 **Ta mission.** Tu es technicien sur `PC01`. Tu vas intervenir sur `PC02` sans te déplacer : d'abord en prenant son écran (Bureau à distance), puis en lui envoyant des commandes (PowerShell à distance). Ouvre une session `FOURNIL\adm.stagiaire` sur `PC01` **et** sur `PC02`. Réalise ce TP **après le TP 15**, une fois `PC02` déployé et joint au domaine. Pour le test RDP, utilise aussi `FOURNIL\test.vendeur`, créé en C6 du TP 11.
+
+**Avant A1, contrôle les deux postes.** Sur chaque console, tape `hostname` puis `whoami`. Tu dois avoir `PC01` ou `PC02`, et `fournil\adm.stagiaire`. Si le poste `PC02` manque, reprends le TP 15. Si tu ne peux pas ouvrir une console d’administration sur `PC02`, actualise les stratégies avec `gpupdate /force` depuis un compte administrateur autorisé sur ce poste, puis ferme et rouvre la session. Vérifie que `PC02` est dans l’UO **Fournil → Ordinateurs** et reçoit la GPO de la partie A du TP 11.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/) · [Ouvrir le TP d'origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)
 
@@ -40,9 +42,9 @@ Sur `PC02`, dans la même page, clique **Utilisateurs du Bureau à distance**. L
 
 ### A4 — Se connecter avec mstsc
 
-Sur `PC01`, menu Démarrer → **Connexion Bureau à distance**. Tape `PC02`, clique **Connexion**. Choisis **Autres choix → Utiliser un autre compte** et saisis `FOURNIL\test.vendeur` et son mot de passe. Lis le message, réponds **Oui**, puis regarde l'écran de `PC02` et clique **OK**.
+Sur `PC01`, menu Démarrer → **Connexion Bureau à distance**. Tape `PC02`, clique **Connexion**. Choisis **Autres choix → Utiliser un autre compte** et saisis `FOURNIL\test.vendeur` et son mot de passe. Si une confirmation de certificat s’affiche, vérifie que tu as bien saisi `PC02` avant de l’accepter dans le lab. Si Windows affiche un message d’accueil, clique **OK**. Si la connexion est refusée, vérifie l’ajout de `test.vendeur` en A3.
 
-Dans la session distante, ouvre une invite de commandes, tape `hostname` puis `whoami`. Ferme la session en tapant `logoff`. Reconnecte ensuite `adm.stagiaire` sur la console de `PC02`.
+Dans la session distante, ouvre une invite de commandes, tape `hostname` puis `whoami`. Tu dois voir `PC02` et `fournil\test.vendeur`. Ferme la session en tapant `logoff`. Reconnecte ensuite `adm.stagiaire` sur la console de `PC02`.
 
 > [!success]- Afficher la correction — A4
 > `PC01` prévient qu'un autre utilisateur est connecté et sera déconnecté ; `PC02` demande à `adm.stagiaire` s'il autorise la connexion (sinon, déconnexion au bout de 30 secondes). **Windows 11 n'accepte qu'une session à la fois.**

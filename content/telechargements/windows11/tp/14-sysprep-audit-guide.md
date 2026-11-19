@@ -2,6 +2,11 @@
 
 **Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 14. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
 
+## Fichiers de l’atelier (bonus)
+
+- <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-installation-master.xml" download data-router-ignore>autounattend-installation-master.xml</a> sert à installer `MASTER`. Utilise une copie nommée `autounattend.xml` à la racine de la mini-ISO.
+- <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-fournil-26h2.xml" download data-router-ignore>autounattend-fournil-26h2.xml</a> et <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download data-router-ignore>Preparer-Fichier-Reponse.ps1</a> servent à préparer le fichier de Sysprep. Télécharge les deux fichiers dans le même dossier. Sous Windows PowerShell, lance `.\Preparer-Fichier-Reponse.ps1 -Mode Reference` depuis ce dossier, puis saisis le mot de passe local du lab. Copie le fichier généré `autounattend.xml` vers `C:\Sysprep\autounattend.xml` dans `MASTER`. Utilise deux dossiers distincts pour les deux fichiers portant ce nom.
+
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/standard)
 
 ## Préparer MASTER
@@ -30,7 +35,7 @@ Sur `MASTER`, installe 7-Zip et Notepad++ depuis la source `winget` avec la port
 
 ### B1 — Copier le fichier de réponse final
 
-Depuis l’hôte, copie le fichier `autounattend-fournil-26h2.xml` dans `C:\Sysprep\autounattend.xml` sur `MASTER` avec PowerShell Direct. Crée le dossier dans la VM si nécessaire. Vérifie la présence du fichier depuis `MASTER`.
+Depuis l’hôte, copie le fichier de référence personnalisé ci-dessus dans `C:\Sysprep\autounattend.xml` sur `MASTER` avec PowerShell Direct. Crée le dossier dans la VM si nécessaire. Vérifie la présence du fichier depuis `MASTER`.
 
 ### B2 — Créer un point de retour
 

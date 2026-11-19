@@ -384,6 +384,18 @@
           ]
         }
       ],
+      "attachments": [
+        "Ressources/TP-stagiaires/autounattend-fournil-26h2.xml",
+        "Ressources/TP-stagiaires/autounattend-installation-master.xml",
+        "Ressources/TP-stagiaires/autounattend-iso-officielle.xml",
+        "Ressources/TP-stagiaires/postinstall.ps1",
+        "Ressources/TP-stagiaires/Get-Inventaire.ps1",
+        "Ressources/TP-stagiaires/Test-Poste.ps1",
+        "Ressources/TP-stagiaires/MigFournil.xml",
+        "Ressources/TP-stagiaires/winpeshl.ini",
+        "Ressources/TP-stagiaires/deploiement.cmd",
+        "Ressources/TP-stagiaires/Preparer-Fichier-Reponse.ps1"
+      ],
       "logo": "assets/brands/windows11.svg"
     }
   ]

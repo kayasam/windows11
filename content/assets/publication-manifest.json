@@ -468,5 +468,67 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/"
     }
   ],
+  "attachments": [
+    {
+      "track": "windows11",
+      "file": "fichiers/autounattend-fournil-26h2.xml",
+      "download": "telechargements/windows11/fichiers/autounattend-fournil-26h2.xml",
+      "sha256": "5e69cfd2fe9221a53333ce005ff0efb8a56baaffdf396c14bb57667f59cdff38"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/autounattend-installation-master.xml",
+      "download": "telechargements/windows11/fichiers/autounattend-installation-master.xml",
+      "sha256": "4225af033639a54650bfcd6fc1653c04fbce9a711b0a96bb4c36a0cd5b39eb1a"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/autounattend-iso-officielle.xml",
+      "download": "telechargements/windows11/fichiers/autounattend-iso-officielle.xml",
+      "sha256": "b72fd640b6bf844783d473e24ec0e53243f4bd1152c65d0231070220d4c8036c"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/postinstall.ps1",
+      "download": "telechargements/windows11/fichiers/postinstall.ps1",
+      "sha256": "7af4b447818805aaa0b7e3d45058b642859827c3988b9d70ffd7f49d81a2f9c2"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/Get-Inventaire.ps1",
+      "download": "telechargements/windows11/fichiers/Get-Inventaire.ps1",
+      "sha256": "9f7d46e288cee274d86cced273dd809db8380b3bf6755b1caaafdacd1f1919e8"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/Test-Poste.ps1",
+      "download": "telechargements/windows11/fichiers/Test-Poste.ps1",
+      "sha256": "5328ea6ce4e4dad35eaa89bf8a4d4eebd1a6f88ba748d2ae17609de8cc8c8239"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/MigFournil.xml",
+      "download": "telechargements/windows11/fichiers/MigFournil.xml",
+      "sha256": "d756842f945b30cea103a1386f8889073ab9a72081402c628d9da00a542a6fb9"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/winpeshl.ini",
+      "download": "telechargements/windows11/fichiers/winpeshl.ini",
+      "sha256": "0fa55b53b9dfbef439eef6763b6c3147496d9d872cc3eeed233bb631099f4811"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/deploiement.cmd",
+      "download": "telechargements/windows11/fichiers/deploiement.cmd",
+      "sha256": "7e7ce94c49f0e1363b13d6bf433a5bab7cae1de6d10b7c727c737e0fb23962c8"
+    },
+    {
+      "track": "windows11",
+      "file": "fichiers/Preparer-Fichier-Reponse.ps1",
+      "download": "telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1",
+      "sha256": "1a52084b8fe4daa7d8265a63cd42c215173b4fec33282f9fe5bd4b158a0ef430"
+    }
+  ],
   "templateVersion": 1
 }

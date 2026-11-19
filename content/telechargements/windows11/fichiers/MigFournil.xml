@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MigFournil.xml — règle USMT personnalisée du cours (chapitre 15)
+  Ne migre que les dossiers de travail de l'utilisateur, au lieu de MigDocs.xml / MigUser.xml
+  qui ratissent tout le poste (testé sur le lab : 6 à 8 Go de magasin pour deux fichiers utiles).
+  Usage : scanstate <magasin> /i:MigFournil.xml /ue:*\* /ui:FOURNIL\stagiaire /o /c
+-->
+<migration urlid="http://www.microsoft.com/migration/1.0/migxmlext/fournil">
+  <component type="Documents" context="User">
+    <displayName>Dossiers de travail Fournil</displayName>
+    <role role="Data">
+      <rules>
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_PERSONAL%\* [*]</pattern>
+            <pattern type="File">%CSIDL_DESKTOPDIRECTORY%\* [*]</pattern>
+            <pattern type="File">%CSIDL_MYPICTURES%\* [*]</pattern>
+            <pattern type="File">%CSIDL_FAVORITES%\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%CSIDL_PERSONAL%\* [*.iso]</pattern>
+            <pattern type="File">%CSIDL_PERSONAL%\* [*.vhdx]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </role>
+  </component>
+  <component type="System" context="User">
+    <displayName>Fond d'écran et lecteurs réseau</displayName>
+    <role role="Settings">
+      <rules>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [Wallpaper]</pattern>
+            <pattern type="Registry">HKCU\Network\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+</migration>

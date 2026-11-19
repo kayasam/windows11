@@ -2,6 +2,8 @@
 
 **Ta mission.** Travaille sur `PC01` avec l’ISO Windows 11 et les fichiers fournis. Tu vas produire une ISO WinPE qui démarre une VM de test et valider un fichier de réponse avant de l’utiliser.
 
+**À récupérer sur `PC01`.** Télécharge le modèle <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-fournil-26h2.xml" download data-router-ignore>autounattend-fournil-26h2.xml</a> et enregistre-le dans `C:\Images`. Garde son nom pour l’ouvrir dans WSIM. Prépare l’ISO Windows 11 du lab et les deux installateurs du même numéro de version sur la [page Microsoft ADK et WinPE](https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install). Choisis la version `10.1.26100.9457` pour ce lab.
+
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/standard)
 
 ## Préparer les outils
@@ -54,7 +56,7 @@ Sur `PC01`, copie `install.wim` depuis le dossier `sources` de l’ISO vers `C:\
 
 ### C2 — Lire la passe windowsPE
 
-Ouvre le fichier de réponse fourni dans WSIM. Dans **windowsPE**, repère la langue `fr-FR`, la sélection de l’image et la configuration du disque 0 de la VM de test.
+Dans WSIM, ouvre **Fichier → Ouvrir un fichier de réponses** et sélectionne `C:\Images\autounattend-fournil-26h2.xml`. Le modèle contient un marqueur à la place du mot de passe, que tu peux laisser pour vérifier la structure dans WSIM. Dans **windowsPE**, repère la langue `fr-FR`, la sélection de l’image et la configuration du disque 0 de la VM de test.
 
 > [!success]- Afficher la correction — C2
 > La passe agit pendant Setup. EFI et MSR précèdent la partition Windows dans le scénario. Une configuration qui efface le disque 0 doit être testée uniquement sur le disque virtuel prévu.

@@ -2,6 +2,8 @@
 
 **Ta mission.** Le formateur a préparé un incident sur une VM du domaine. Sur le poste indiqué, relève les symptômes, fais une correction à la fois et rejoue le test qui échouait. Termine par un ticket avec des preuves.
 
+**À récupérer sur le poste indiqué par le formateur (normalement `PC02`).** Crée `C:\MCO` et enregistre <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Test-Poste.ps1" download data-router-ignore>Test-Poste.ps1</a> dans ce dossier. Le formateur te donne une VM où l’incident est déjà présent. Commence par A1 et utilise le script en C5 pour les contrôles de fin.
+
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/19-depannage/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp/standard)
 
 ## Commencer le ticket
@@ -44,7 +46,7 @@ Après validation par le formateur, exporte la tâche pour la fiche puis désact
 
 ### C5 — Rejouer les contrôles avant de clôturer
 
-Exécute le script `Test-Poste.ps1` remis par le formateur après avoir relu ses paramètres. Rejoue aussi l’ouverture du partage avec le compte prévu et l’impression de test.
+Dans Windows PowerShell en administrateur sur le poste en panne, exécute `Unblock-File -LiteralPath C:\MCO\Test-Poste.ps1` sur la copie téléchargée, puis `C:\MCO\Test-Poste.ps1`. Lis les lignes `OK` et `KO`. Pour chaque `KO` restant, indique le contrôle à reprendre dans le ticket. Rejoue aussi l’ouverture du partage avec le compte prévu et l’impression de test.
 
 [Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp/guide-corrigev2)
 

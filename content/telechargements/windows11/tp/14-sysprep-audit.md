@@ -16,6 +16,11 @@
 
 ---
 
+## Fichiers de l’atelier (bonus)
+
+- <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-installation-master.xml" download data-router-ignore>autounattend-installation-master.xml</a> sert à installer `MASTER`. Utilise une copie nommée `autounattend.xml` à la racine de la mini-ISO.
+- <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-fournil-26h2.xml" download data-router-ignore>autounattend-fournil-26h2.xml</a> et <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download data-router-ignore>Preparer-Fichier-Reponse.ps1</a> servent à préparer le fichier de Sysprep. Télécharge les deux fichiers dans le même dossier. Sous Windows PowerShell, lance `.\Preparer-Fichier-Reponse.ps1 -Mode Reference` depuis ce dossier, puis saisis le mot de passe local du lab. Copie le fichier généré `autounattend.xml` vers `C:\Sysprep\autounattend.xml` dans `MASTER`. Utilise deux dossiers distincts pour les deux fichiers portant ce nom.
+
 ## Prérequis
 
 - `autounattend-installation-master.xml` et `autounattend-fournil-26h2.xml` (TP 12)

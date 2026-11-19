@@ -4,7 +4,7 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)"
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/17-wds-pxe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/17-wds-pxe.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/17-wds-pxe.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
 > [!abstract] Parcours TSSR — (bonus)
@@ -23,10 +23,15 @@ title: "TP 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)"
 
 ---
 
+## Fichiers de l’atelier (bonus)
+
+- Sur `SRV01`, télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-iso-officielle.xml" download data-router-ignore>autounattend-iso-officielle.xml</a>, <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download data-router-ignore>Preparer-Fichier-Reponse.ps1</a> et <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/postinstall.ps1" download data-router-ignore>postinstall.ps1</a> dans un même dossier. En PowerShell, débloque le script avec `Unblock-File -LiteralPath .\Preparer-Fichier-Reponse.ps1`, puis lance `.\Preparer-Fichier-Reponse.ps1 -NomPoste PC03 -Sortie E:\Deploy\autounattend.xml` une fois le dossier `E:\Deploy` créé. Le XML préparé contient les identifiants du lab. Garde-le dans le partage du lab prévu pour cet atelier et retire-le du partage à la fin.
+- Pour personnaliser le démarrage de WinPE, télécharge aussi <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/winpeshl.ini" download data-router-ignore>winpeshl.ini</a> et <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/deploiement.cmd" download data-router-ignore>deploiement.cmd</a>. Le script demande le mot de passe au démarrage de WinPE.
+
 ## Prérequis
 
 - TP 15 réussi : `autounattend-iso-officielle.xml` et `postinstall.ps1` fonctionnent (dossier `Ressources/Fichier-reponse/`)
-- `deploiement.cmd` et `winpeshl.ini` (dossier `Ressources/deploiement-wds/`)
+- Les fichiers WinPE téléchargés ci-dessus
 - `SRV01` : contrôleur de domaine `ad.fournil.lab` avec DHCP actif (TP 10), OU `OU=Ordinateurs,OU=Fournil`
 - ISO officielle Windows 11 26H2 dans `D:\ISO` sur l'hôte
 - **70 Go libres** sur l'hôte (disque de données de `SRV01` + `PC03`)

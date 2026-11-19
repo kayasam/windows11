@@ -17,10 +17,23 @@
 
 ---
 
+## Fichiers à récupérer sur `PC01`
+
+Crée le dossier `C:\Images\TP15` et enregistre les quatre fichiers ci-dessous dedans. Prépare aussi l’ISO Windows 11 du lab sur l’hôte Hyper-V.
+
+| Fichier | À quoi il sert |
+| --- | --- |
+| <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-iso-officielle.xml" download data-router-ignore>autounattend-iso-officielle.xml</a> | Modèle d’installation de `PC02` |
+| <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download data-router-ignore>Preparer-Fichier-Reponse.ps1</a> | Crée `autounattend.xml` en demandant les identifiants du lab |
+| <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/postinstall.ps1" download data-router-ignore>postinstall.ps1</a> | Installe les applications après le premier démarrage |
+| <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/MigFournil.xml" download data-router-ignore>MigFournil.xml</a> | Sélectionne les dossiers à migrer avec USMT |
+
+Dans l’ADK du TP 12, vérifie que **Outils de déploiement** et **User State Migration Tool (USMT)** sont installés sur `PC01`. Demande au formateur le mot de passe local du lab et les identifiants du compte autorisé à joindre les VM au domaine..
+
 ## Prérequis
 
 - ISO officielle Windows 11 26H2
-- `autounattend-iso-officielle.xml` et `postinstall.ps1` (dossier `Ressources/Fichier-reponse/`)
+- Les quatre fichiers téléchargés sur `PC01`. Suis la préparation A2 du [TP guidé](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/guide) pour créer `autounattend.xml`.
 - Domaine `ad.fournil.lab` avec DHCP actif et l'OU `OU=Ordinateurs,OU=Fournil` (TP 10)
 - ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$` créé par l’élève avec la préparation ci-dessous ; compte de lab autorisé à lire les outils et à écrire le magasin et les journaux
 - Partie F seulement : `MASTER.wim` (TP 14) et **40 Go libres** sur l'hôte

@@ -21,14 +21,8 @@
 ## Prérequis
 
 - `PC01` opérationnel (TP 03)
-- Sur l'**hôte**, créer et attacher trois disques de 10 Go à `PC01` (VM allumée, ajout à chaud) :
-
-```powershell
-1..3 | ForEach-Object {
-    New-VHD -Path "D:\HyperV\PC01\Data$_.vhdx" -SizeBytes 10GB -Dynamic | Out-Null
-    Add-VMHardDiskDrive -VMName PC01 -Path "D:\HyperV\PC01\Data$_.vhdx"
-}
-```
+- Sur l’hôte, ajoute `Data1.vhdx` de 10 Go à `PC01` via **Paramètres → Contrôleur SCSI → Disque dur**. Si le disque est déjà attaché, passe à la partie A.
+- **(bonus)** Pour le miroir de la partie C, ajoute aussi `Data2.vhdx` et `Data3.vhdx`, de 10 Go chacun. Garde-les non initialisés jusqu’à cette partie.
 
 ---
 

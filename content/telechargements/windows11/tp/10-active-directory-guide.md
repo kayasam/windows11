@@ -2,7 +2,7 @@
 
 **Ta mission.** Préparer le serveur du Fournil, créer le domaine `ad.fournil.lab`, puis y joindre le poste `PC01`. À la fin, le compte `FOURNIL\stagiaire` doit pouvoir ouvrir une session sur `PC01`, et le poste doit apparaître dans l’UO `Fournil → Ordinateurs` sur le serveur.
 
-**Avant de commencer.** Il te faut l’ISO Windows Server 2025, un accès au Gestionnaire Hyper-V et la VM `PC01` utilisée dans les TP précédents. Elle est raccordée à `vSwitch-Rennes` et utilise l’adresse `192.168.3.10`.
+**Avant de commencer.** Il te faut l’[ISO Windows Server 2025 d’évaluation](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2025) sur l’hôte, un accès au Gestionnaire Hyper-V et la VM `PC01` utilisée dans les TP précédents. Elle est raccordée à `vSwitch-Rennes` et utilise l’adresse `192.168.3.10`.
 
 | Machine | Ce que tu y fais |
 | --- | --- |

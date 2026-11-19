@@ -2,6 +2,8 @@
 
 **Ta mission.** Sur l’hôte Hyper-V, prépare un réseau de lab et une VM vide. Le TP est terminé quand `PC01` peut démarrer sur l’ISO et possède le point de contrôle `Avant-installation`.
 
+**À récupérer sur l’hôte Hyper-V.** Utilise l’ISO française du lab. Si le formateur ne l’a pas déjà mise à disposition, prends l’[ISO Windows 11 x64 de Microsoft](https://www.microsoft.com/fr-fr/software-download/windows11) et vérifie avec lui la version retenue pour la séance. Range l’ISO dans `D:\ISO` ou note son chemin.
+
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp/standard)
 
 ## Préparer l’hôte Hyper-V

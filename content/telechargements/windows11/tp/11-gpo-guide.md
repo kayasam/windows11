@@ -81,7 +81,7 @@ Fais cette étape si tu as configuré LAPS en B3 et vérifié son résultat en B
 
 ### C1 — Préparer le partage puis créer la GPO utilisateur
 
-Sur **`SRV01`**, vérifie si le partage existe avec `Get-SmbShare -Name Commun -ErrorAction SilentlyContinue`. S’il manque, crée-le dans PowerShell en administrateur.
+**1. Sur `SRV01`, prépare le partage.** Vérifie s’il existe avec `Get-SmbShare -Name Commun -ErrorAction SilentlyContinue`. S’il manque, crée-le dans PowerShell en administrateur.
 
 ```powershell
 New-Item C:\Partages\Commun -ItemType Directory -Force
@@ -90,7 +90,9 @@ icacls C:\Partages\Commun /grant 'SYSTEM:(OI)(CI)F' 'BUILTIN\Administrateurs:(OI
 New-SmbShare -Name Commun -Path C:\Partages\Commun -ChangeAccess 'FOURNIL\G-Boulangerie' -FullAccess 'FOURNIL\Admins du domaine'
 ```
 
-Sur **`PC01`**, dans la session `FOURNIL\stagiaire`, ouvre `\\SRV01\Commun` dans l’Explorateur. Crée un fichier de test puis supprime-le. Sur **`SRV01`**, dans `gpmc.msc`, crée et lie `GPO-Boulangerie-Utilisateurs` à **Fournil → Utilisateurs**.
+**2. Sur `PC01`, teste le partage.** Dans la session `FOURNIL\stagiaire`, ouvre `\\SRV01\Commun` dans l’Explorateur. Crée un fichier de test puis supprime-le. Si Windows refuse, vérifie que `stagiaire` est membre de `G-Boulangerie` et que les droits du partage et du dossier autorisent la modification. Reconnecte-toi après une modification du groupe.
+
+**3. Sur `SRV01`, crée la GPO utilisateur.** Dans `gpmc.msc`, fais un clic droit sur **Fournil → Utilisateurs** → **Créer un objet GPO dans ce domaine, et le lier ici…**. Saisis `GPO-Boulangerie-Utilisateurs` et vérifie que le lien apparaît sous cette UO.
 
 ### C2 — Monter Commun en P:
 
@@ -119,7 +121,10 @@ Get-GPPermission -Name 'GPO-Boulangerie-Utilisateurs' -All |
     Select-Object @{Name='Groupe'; Expression={$_.Trustee.Name}}, Permission
 ```
 
-**À lire.** `G-Boulangerie` a `GpoApply`. `Utilisateurs authentifiés` a `GpoRead`.
+**Résultat attendu.**
+
+- `G-Boulangerie` → `GpoApply` (**Lire et appliquer**). Les membres reçoivent le lecteur et la restriction.
+- `Utilisateurs authentifiés` → `GpoRead` (**Lire**). Le poste peut lire la GPO. L’application des réglages utilisateur est réservée au groupe `G-Boulangerie`.
 
 ### C5 — Tester avec stagiaire
 

@@ -4,7 +4,7 @@ title: "TP 11. Stratégies de groupe et gestion centralisée, corrigé guidé"
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/11-gpo"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/11-gpo/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/11-gpo-guide-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/11-gpo-guide-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide-corrigev2" aria-current="page">Corrigé</a></nav>
 
 **Ta mission.** Appliquer une GPO aux postes du Fournil et une autre aux utilisateurs de la boulangerie. À la fin, tu dois pouvoir expliquer pourquoi deux utilisateurs sur le même poste ne reçoivent pas les mêmes réglages.
@@ -112,7 +112,7 @@ Fais cette étape si tu as configuré LAPS en B3 et vérifié son résultat en B
 
 ### C1 — Préparer le partage puis créer la GPO utilisateur
 
-Sur **`SRV01`**, vérifie si le partage existe avec `Get-SmbShare -Name Commun -ErrorAction SilentlyContinue`. S’il manque, crée-le dans PowerShell en administrateur.
+**1. Sur `SRV01`, prépare le partage.** Vérifie s’il existe avec `Get-SmbShare -Name Commun -ErrorAction SilentlyContinue`. S’il manque, crée-le dans PowerShell en administrateur.
 
 ```powershell
 New-Item C:\Partages\Commun -ItemType Directory -Force
@@ -121,7 +121,9 @@ icacls C:\Partages\Commun /grant 'SYSTEM:(OI)(CI)F' 'BUILTIN\Administrateurs:(OI
 New-SmbShare -Name Commun -Path C:\Partages\Commun -ChangeAccess 'FOURNIL\G-Boulangerie' -FullAccess 'FOURNIL\Admins du domaine'
 ```
 
-Sur **`PC01`**, dans la session `FOURNIL\stagiaire`, ouvre `\\SRV01\Commun` dans l’Explorateur. Crée un fichier de test puis supprime-le. Sur **`SRV01`**, dans `gpmc.msc`, crée et lie `GPO-Boulangerie-Utilisateurs` à **Fournil → Utilisateurs**.
+**2. Sur `PC01`, teste le partage.** Dans la session `FOURNIL\stagiaire`, ouvre `\\SRV01\Commun` dans l’Explorateur. Crée un fichier de test puis supprime-le. Si Windows refuse, vérifie que `stagiaire` est membre de `G-Boulangerie` et que les droits du partage et du dossier autorisent la modification. Reconnecte-toi après une modification du groupe.
+
+**3. Sur `SRV01`, crée la GPO utilisateur.** Dans `gpmc.msc`, fais un clic droit sur **Fournil → Utilisateurs** → **Créer un objet GPO dans ce domaine, et le lier ici…**. Saisis `GPO-Boulangerie-Utilisateurs` et vérifie que le lien apparaît sous cette UO.
 
 > [!success]- Afficher la correction — C1
 > La création et la suppression du fichier valident les droits de partage et du dossier. Le lien de `GPO-Boulangerie-Utilisateurs` doit apparaître dans l’UO `Utilisateurs`.
@@ -159,7 +161,10 @@ Get-GPPermission -Name 'GPO-Boulangerie-Utilisateurs' -All |
     Select-Object @{Name='Groupe'; Expression={$_.Trustee.Name}}, Permission
 ```
 
-**À lire.** `G-Boulangerie` a `GpoApply`. `Utilisateurs authentifiés` a `GpoRead`.
+**Résultat attendu.**
+
+- `G-Boulangerie` → `GpoApply` (**Lire et appliquer**). Les membres reçoivent le lecteur et la restriction.
+- `Utilisateurs authentifiés` → `GpoRead` (**Lire**). Le poste peut lire la GPO. L’application des réglages utilisateur est réservée au groupe `G-Boulangerie`.
 
 > [!success]- Afficher la correction — C4
 > `G-Boulangerie` peut lire et appliquer la GPO. `Utilisateurs authentifiés` conserve la lecture pour que `PC01` puisse lire la GPO utilisateur avec son compte ordinateur. [Droits de lecture des GPO utilisateur](https://learn.microsoft.com/en-us/troubleshoot/windows-server/group-policy/cannot-apply-user-gpo-when-computer-objects-dont-have-read-permissions)

@@ -4,10 +4,17 @@ title: "TP 21. TP final : maintien en condition opérationnelle, version guidée
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/20-mco"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/20-mco/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/20-mco/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/20-mco-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
+</span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/20-mco-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/20-mco/tp/guide" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/20-mco/tp/guide-corrigev2">Afficher les corrections</a></nav>
 
-**Ta mission.** Depuis `PC01`, inventorie `PC01` et `PC02`, traite les écarts puis inscris les contrôles dans un plan de MCO. Utilise les scripts remis par le formateur et les postes du domaine.
+**Ta mission.** Depuis `PC01`, inventorie `PC01` et `PC02`, traite les écarts puis inscris les contrôles dans un plan de MCO. Utilise les fichiers ci-dessous sur tes postes du domaine.
+
+## Fichiers et vérifications de départ
+
+- Sur `PC01`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Get-Inventaire.ps1" download data-router-ignore>Get-Inventaire.ps1</a> dedans.
+- Sur `PC02`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Test-Poste.ps1" download data-router-ignore>Test-Poste.ps1</a> dedans.
+- Ouvre Windows PowerShell en administrateur sur chaque poste avec le compte d’administration du lab. Sur chaque copie téléchargée, utilise `Unblock-File -LiteralPath` avec son chemin complet.
+- Depuis `PC01`, lance `Test-WSMan PC02`. Si la commande échoue, termine la partie B du [TP 16 sur l’accès distant](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide), puis recommence.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/20-mco/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/20-mco/tp/standard)
 
@@ -15,7 +22,7 @@ title: "TP 21. TP final : maintien en condition opérationnelle, version guidée
 
 ### A1 — Produire le CSV des deux postes
 
-Sur `PC01`, dans la session d’administration du domaine, ouvre PowerShell et lance `C:\MCO\Get-Inventaire.ps1 -ComputerName PC01,PC02 -Csv C:\MCO\inventaire.csv`. Ouvre le CSV et vérifie que les deux postes sont présents.
+Sur `PC01`, dans la session d’administration du domaine, ouvre PowerShell et lance `C:\MCO\Get-Inventaire.ps1 -ComputerName PC01,PC02 -Csv C:\MCO\inventaire.csv`. Ouvre `C:\MCO\inventaire.csv`. Vérifie que `PC01` et `PC02` ont chacun une ligne. Si `PC02` manque et que PowerShell affiche **Injoignable**, reprends le test `Test-WSMan PC02`.
 
 ### A2 — Transformer les mesures en actions
 
