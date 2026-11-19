@@ -50,7 +50,7 @@ Dans PowerShell administrateur, lance `reagentc /info` puis `dsregcmd /status`. 
 
 Sur `PC01`, lance `Get-Tpm` puis `Confirm-SecureBootUEFI` en administrateur. Dans `tpm.msc`, relève aussi la version de spécification.
 
-### C2 — Faire un contrôle de compatibilité seul
+### C2 — Faire un contrôle de compatibilité seul (bonus)
 
 Sous Windows, avec l’ISO montée, repère la lettre du DVD dans **Ce PC**. Depuis PowerShell administrateur, adapte le chemin et lance le scan suivant.
 

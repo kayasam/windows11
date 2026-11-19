@@ -12,7 +12,7 @@ title: "TP 11. Stratégies de groupe et gestion centralisée, corrigé guidé"
 - **Sur SRV01**, ouvre une session `FOURNIL\Administrateur` pour créer les GPO.
 - **Sur PC01**, utilise `PC01\admin` et PowerShell en administrateur pour les tests ordinateur. Pour les tests utilisateur, ouvre la session demandée à chaque étape.
 
-**Avant de commencer.** `PC01` est joint au domaine et placé dans `Fournil → Ordinateurs`. Les comptes et groupes du TP 10 existent. Tu peux faire les parties A à D directement après le TP 10.
+**Avant de commencer.** `PC01` est joint au domaine et placé dans `Fournil → Ordinateurs`. Les comptes et groupes du TP 10 existent. Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Saute les étapes marquées **(bonus)** si le temps est compté.
 
 [Revoir le chapitre GPO](https://cours.kaya.ovh/windows11/windows11/11-gpo/) · [Reprendre le TP AD guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide)
 
@@ -51,7 +51,7 @@ Dans la console, fais un clic droit sur la GPO → **Modifier**. Suis **Configur
 > [!success]- Afficher la correction — B2
 > La fiche indique que `GG-Admins-Postes` est membre de `Administrateurs`. Ce réglage ajoute le groupe du domaine aux administrateurs locaux de `PC01` et conserve les membres déjà présents.
 
-### B3 — Configurer Windows LAPS
+### B3 — Configurer Windows LAPS (bonus)
 
 Sur **`SRV01`**, lance ces commandes dans PowerShell en administrateur pour préparer l’annuaire.
 
@@ -89,12 +89,12 @@ Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate |
 
 Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\GG-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
 
-Sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
+**(bonus) Si tu as fait B3**, sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
 
 > [!success]- Afficher la correction — B5
-> Les trois résultats sur `PC01` confirment la portée de la GPO, l’ajout du groupe et le report. Une échéance LAPS renseignée montre que le serveur possède les informations pour le poste. Si la sortie est vide, vérifie B3 puis le journal **Microsoft → Windows → LAPS → Operational** de `PC01`. L’événement **10018** indique une sauvegarde réussie dans AD.
+> Les trois résultats sur `PC01` confirment la portée de la GPO, l’ajout du groupe et le report. Si tu as fait le bonus LAPS, une échéance renseignée montre que le serveur possède les informations pour le poste. Si la sortie est vide, vérifie B3 puis le journal **Microsoft → Windows → LAPS → Operational** de `PC01`. L’événement **10018** indique une sauvegarde réussie dans AD.
 
-### B6 — Vérifier l’état du compte géré par LAPS
+### B6 — Vérifier l’état du compte géré par LAPS (bonus)
 
 Sur **`PC01`**, relève le nom et l’état du compte administrateur intégré.
 
@@ -103,7 +103,7 @@ Get-LocalUser | Where-Object { $_.SID.Value -like '*-500' } |
     Select-Object Name, Enabled
 ```
 
-Compare `Name` avec le compte affiché en B5. Si `Enabled` vaut `False`, que se passe-t-il si quelqu’un tente d’ouvrir une session avec ce compte ?
+Fais cette étape si tu as configuré LAPS en B3 et vérifié son résultat en B5. Compare `Name` avec le compte affiché en B5. Si `Enabled` vaut `False`, que se passe-t-il si quelqu’un tente d’ouvrir une session avec ce compte ?
 
 > [!success]- Afficher la correction — B6
 > Par défaut, LAPS gère l’administrateur intégré, dont le SID se termine par `-500`. Le mot de passe peut être sauvegardé alors que le compte reste désactivé. Dans ce cas, l’ouverture de session est refusée. [Compte administrateur géré par Windows LAPS](https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-management-policy-settings#administratoraccountname)
@@ -182,18 +182,18 @@ Sur **`SRV01`**, dans `dsa.msc`, crée `test.vendeur` dans **Fournil → Utilisa
 
 ### D1 — Lire les stratégies appliquées
 
-Sur **`PC01`**, lance `gpresult /scope user /r` dans la session `FOURNIL\stagiaire`. Puis ouvre une session `PC01\admin`, lance PowerShell en administrateur et génère le rapport.
+Sur **`PC01`**, lance `gpresult /scope user /r` dans la session `FOURNIL\stagiaire`. Puis ouvre une session `PC01\admin` et lance `gpresult /scope computer /r` dans PowerShell en administrateur. Repère `GPO-Postes-Securite` côté ordinateur et `GPO-Boulangerie-Utilisateurs` dans le résultat côté utilisateur.
+
+**(bonus) Rapport HTML.** Depuis la session administrateur, lance le bloc suivant.
 
 ```powershell
-gpresult /scope computer /r
 gpresult /user 'FOURNIL\stagiaire' /h "$env:TEMP\rsop-pc01.html" /f
 Start-Process "$env:TEMP\rsop-pc01.html"
 ```
 
-Repère `GPO-Postes-Securite` côté ordinateur et `GPO-Boulangerie-Utilisateurs` côté utilisateur.
 
 > [!success]- Afficher la correction — D1
-> Le rapport HTML montre les GPO appliquées ou refusées et permet de retrouver la **GPO gagnante** pour un paramètre. Si les données utilisateur manquent, vérifie que `stagiaire` a ouvert une session sur ce poste.
+> `gpresult /r` suffit pour vérifier les GPO appliquées dans le socle. Si tu fais le bonus, le rapport HTML montre les GPO appliquées ou refusées et permet de retrouver la **GPO gagnante** pour un paramètre. Si les données utilisateur manquent, vérifie que `stagiaire` a ouvert une session sur ce poste.
 
 ### D2 — Vérifier qu’un poste est dans la portée du lien
 
@@ -202,16 +202,16 @@ Cas de dépannage. Le rapport d’un collègue n’affiche plus `GPO-Postes-Secu
 > [!success]- Afficher la correction — D2
 > Dans le lab, le lien et `PC01` sont dans **Fournil → Ordinateurs**. Le poste du collègue est en dehors de la portée du lien. Il faut remettre son objet dans la bonne UO, actualiser la stratégie et vérifier de nouveau `gpresult`.
 
-### D3 — Trouver le journal de diagnostic
+### D3 — Trouver le journal de diagnostic (bonus)
 
 Sur **`PC01`**, ouvre `eventvwr.msc`. Déplie **Journaux des applications et des services → Microsoft → Windows → GroupPolicy → Operational**. Ouvre un événement récent et compare son heure à celle de ton dernier `gpupdate`.
 
 > [!success]- Afficher la correction — D3
 > Le journal suit le traitement des stratégies et indique les erreurs. Si une erreur concerne le domaine ou SYSVOL, vérifie le DNS du poste et essaie d’ouvrir `\\ad.fournil.lab\SYSVOL`.
 
-## E. Exercices complémentaires
+## E. Exercices complémentaires (bonus)
 
-### E1 — Sauvegarder les GPO
+### E1 — Sauvegarder les GPO (bonus)
 
 Sur **`SRV01`**, crée `C:\Sauvegarde\GPO` et sauvegarde toutes les GPO dans ce dossier. Si tu bloques, utilise `Get-Help Backup-GPO -Examples`.
 
@@ -221,18 +221,18 @@ Sur **`SRV01`**, crée `C:\Sauvegarde\GPO` et sauvegarde toutes les GPO dans ce 
 > Backup-GPO -All -Path C:\Sauvegarde\GPO
 > ```
 
-### E2 — Comprendre à quoi sert Group Policy Analytics
+### E2 — Comprendre à quoi sert Group Policy Analytics (bonus)
 
 Dans le chapitre GPO, retrouve **Group Policy Analytics**. Si le Fournil passait à Intune, quelle information l’outil donnerait-il sur les réglages à reprendre ?
 
 > [!success]- Afficher la correction — E2
 > Après import du rapport XML d’une GPO, l’outil indique quels paramètres ont un équivalent dans Intune. Cela aide à préparer la migration des réglages.
 
-## F. Atelier facultatif — Sauvegarder la récupération BitLocker dans AD
+## F. Atelier facultatif — Sauvegarder la récupération BitLocker dans AD (bonus)
 
 Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
 
-### F1 — Configurer la récupération BitLocker
+### F1 — Configurer la récupération BitLocker (bonus)
 
 Dans la même GPO, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d’exploitation**.
 
@@ -241,7 +241,7 @@ Active **Sélectionner la méthode de récupération des lecteurs du système d�
 > [!success]- Afficher la correction — F1
 > Le paramètre doit apparaître activé pour les lecteurs du système, dont `C:`. Le protecteur déjà créé au TP 09 sera sauvegardé explicitement en F2.
 
-### F2 — Sauvegarder le protecteur BitLocker existant
+### F2 — Sauvegarder le protecteur BitLocker existant (bonus)
 
 Sur **`PC01`**, dans PowerShell en administrateur, lance les commandes.
 

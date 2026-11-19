@@ -45,7 +45,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 
 **B1.** Mets à jour les signatures Defender sur les deux postes. Si la mise à jour échoue, trouve une source alternative.
 
-**B2.** Si tu as passé le chapitre 09 ou l’atelier BitLocker du TP GPO, relève l’état de protection de `PC02` dans le CSV, note l’écart éventuel dans le plan de MCO et passe à B3. Sinon, active BitLocker sur `PC02` avec le TPM, en sauvegardant le mot de passe de récupération dans AD **avant** le chiffrement. Vérifie sur `SRV01` que la clé est bien enregistrée.
+**B2.** (bonus) Si tu as passé le chapitre 09 ou l’atelier BitLocker du TP GPO, relève l’état de protection de `PC02` dans le CSV, note l’écart éventuel dans le plan de MCO et passe à B3. Sinon, active BitLocker sur `PC02` avec le TPM, en sauvegardant le mot de passe de récupération dans AD **avant** le chiffrement. Vérifie sur `SRV01` que la clé est bien enregistrée.
 
 **B3.** Vérifie l'état de Windows Update sur `PC02` : dernière mise à jour, stratégie appliquée (report), redémarrage en attente. Lance une recherche de mises à jour.
 

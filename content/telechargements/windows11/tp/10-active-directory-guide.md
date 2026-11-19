@@ -39,7 +39,7 @@
 
 **Résultat attendu.** Le nom est `SRV01` et la carte Ethernet affiche `192.168.3.1`. Le DNS provisoire sert à résoudre les noms Internet pendant la préparation du serveur.
 
-### A3 — Tester l’accès SSH depuis `PC01`
+### A3 — Tester l’accès SSH depuis `PC01` (bonus)
 
 1. Sur **`SRV01`**, ouvre PowerShell **en administrateur**. Lance les commandes ci-dessous. La règle du pare-feu autorise la connexion sur le profil Public pendant la préparation et sur le profil Domaine après la promotion.
 

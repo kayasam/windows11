@@ -1,7 +1,7 @@
 # TP 18. Environnement utilisateur et Microsoft 365
 
 > [!abstract] Parcours TSSR
-> Socle : profils, permissions, usages de Microsoft 365/OneDrive/Teams et remise du poste. Sans tenant, lire les principes du cours et vérifier le client Teams ; ODT et GPO OneDrive sont (bonus). Pour Direction, adapter le modèle de partage du cours.
+> Socle : profils, dossier partagé, rôle de OneDrive/Teams et remise du poste. Le lab n'a pas de tenant Microsoft 365 : l'installation d'Office et les GPO OneDrive sont (bonus).
 
 > Chapitres associés : [18. Environnement utilisateur et Microsoft 365](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/)
 
@@ -9,65 +9,69 @@
 
 ## Objectifs
 
-- Inspecter et dépanner les profils utilisateurs
-- Publier un dossier partagé avec les bonnes permissions
-- Préparer l'installation de Microsoft 365 Apps et la configuration de OneDrive par stratégie
-- Remettre `PC02` à `stagiaire` avec une check-list et des conseils de sécurité
+- Voir les profils d'un poste, en supprimer un proprement, réparer un profil temporaire
+- Créer un dossier partagé réservé à un groupe
+- Savoir à quoi servent OneDrive et Teams
+- Remettre `PC02` à un utilisateur avec une check-list et des conseils de sécurité
 
 ---
 
 ## Prérequis
 
-- `PC02` déployé et joint au domaine (TP 16), `PC01` avec RSAT
-- Partage `\\SRV01\Commun` et GPO `GPO-Boulangerie-Utilisateurs` (TP 11)
+- `SRV01` et `PC02` allumées, `PC02` joint au domaine (TP 16)
+- Sur `PC02` : session `FOURNIL\adm.stagiaire` ; sur `SRV01` : session `FOURNIL\Administrateur`
+- `test.vendeur` s'est déjà connecté à `PC02` (TP 12, Bureau à distance). Sinon, ouvre une fois une session `FOURNIL\test.vendeur` sur `PC02`, puis déconnecte-la.
 
 ---
 
 ## Partie A — Profils
 
-**A1.** Sur `PC01`, liste les profils (hors profils système) avec leur SID et leur date de dernière utilisation. Comment distingue-t-on un compte local d'un compte du domaine ?
+**A1.** Sur `PC02`, ouvre la liste des profils en graphique (`sysdm.cpl`). Quels comptes ont un profil ? Comment reconnais-tu un compte du domaine d'un compte local ?
 
-**A2.** Où Windows enregistre-t-il l'association SID ↔ dossier de profil ?
+**A2.** Supprime **proprement** le profil de `test.vendeur`. Pourquoi le bouton *Supprimer* est-il grisé quand tu sélectionnes `adm.stagiaire` ?
 
-**A3.** Un collègue a supprimé `C:\Users\employe1` dans l'Explorateur pour faire de la place. Qu'arrivera-t-il à `employe1` ? Comment supprimer proprement un profil ?
+**A3.** Prépare une panne réaliste :
+1. Ouvre une session `FOURNIL\test.vendeur` sur `PC02` (*Changer d'utilisateur* avec `Ctrl + Alt + Suppr`), puis **déconnecte-la**.
+2. Reviens en `adm.stagiaire`. Dans l'Explorateur, renomme `C:\Users\test.vendeur` en `test.vendeur.old` (accepte la demande d'autorisation administrateur). C'est ce que fait un collègue qui « fait de la place ».
+3. Reconnecte `test.vendeur`. Que se passe-t-il ? Où est enregistré son bureau dans cette session ?
 
-**A4.** Un utilisateur obtient « *Connexion avec un profil temporaire* ». Quelles sont les causes possibles et la procédure de réparation ?
-
----
-
-## Partie B — Dossiers partagés
-
-**B1.** Sur `SRV01`, crée `\\SRV01\Direction` : seuls les membres d'un nouveau groupe `G-Direction` peuvent y écrire, les autres utilisateurs du domaine ne doivent même pas le voir.
-
-**B2.** Vérifie les permissions de partage et les permissions NTFS. Laquelle s'applique quand elles diffèrent ?
-
-**B3.** (bonus) Depuis `PC01`, monte `\\SRV01\Commun` en `Q:` manuellement, de façon persistante, en PowerShell. Pourquoi ce n'est pas la bonne méthode à l'échelle du Fournil ?
+**A4.** Répare le profil de `test.vendeur` pour qu'il retrouve un profil normal. Comment récupérerais-tu ses anciens documents ?
 
 ---
 
-## Partie C — Usages Microsoft 365, OneDrive, Teams
+## Partie B — Dossier partagé
 
-**C1.** (bonus) Écris le fichier `configuration-fournil.xml` de l'Office Deployment Tool : Microsoft 365 Apps pour les entreprises, 64 bits, français, canal Entreprise mensuel, sans Skype ni OneDrive Groove, installation silencieuse, suppression des anciens Office MSI.
+**B1.** Sur `SRV01`, dans `dsa.msc`, crée le groupe de sécurité global `G-Direction` dans *Fournil → Groupes* et ajoutes-y `test.vendeur`.
 
-**C2.** Quelle commande installe Office avec ce fichier ? Pourquoi Teams n'apparaîtra-t-il pas ?
+**B2.** Toujours sur `SRV01`, avec le **Gestionnaire de serveur**, crée le partage `\\SRV01\Direction` (dossier `C:\Partages\Direction`) : seuls les membres de `G-Direction` peuvent lire et écrire, les autres utilisateurs du domaine n'ont aucun accès. Active l'énumération basée sur l'accès.
 
-**C3.** (bonus) Où trouver les modèles ADMX de OneDrive sur `PC01` ? Copie-les dans le magasin central du domaine.
+**B3.** Sur `PC02` (en `adm.stagiaire`), tape `\\SRV01` dans `Win + R`. Le partage `Direction` apparaît-il ? Ouvre-le : que se passe-t-il ?
 
-**C4.** (bonus) Crée une GPO `GPO-OneDrive` (ordinateurs) : connexion silencieuse, Fichiers à la demande, et **déplacement silencieux des dossiers connus** vers OneDrive. Quelle information manque pour la dernière stratégie dans le lab ?
+**B4.** Le partage donne *Contrôle total* à *Tout le monde*. Pourquoi `adm.stagiaire` ne peut-il quand même pas entrer ?
 
-Dans le socle, explique oralement la différence entre synchronisation OneDrive, partage et sauvegarde, puis identifie l’outil adapté à une collaboration Teams. Aucun tenant ni installation Office n’est requis.
+**B5.** (bonus) Sur `PC02`, connecte `\\SRV01\Commun` en lecteur `Q:` à la main. Pourquoi ce n'est pas la bonne méthode pour les 35 postes du Fournil ?
 
-**C5.** Le nouveau Teams est-il présent sur `PC02` sans rien faire ? Comment le vérifier ?
+---
+
+## Partie C — Microsoft 365, OneDrive, Teams
+
+**C1.** Le nouveau Teams est-il installé sur `PC02` sans rien faire ? Vérifie en graphique.
+
+**C2.** Explique avec tes mots, et un exemple au Fournil, la différence entre **synchroniser**, **partager** et **sauvegarder** avec OneDrive.
+
+**C3.** (bonus) Écris le fichier `configuration-fournil.xml` de l'Office Deployment Tool : Microsoft 365 Apps pour les entreprises, 64 bits, français, canal Entreprise mensuel, sans Skype ni Groove, installation silencieuse, suppression des anciens Office. Quelle commande l'utilise ?
+
+**C4.** (bonus) Quelle stratégie OneDrive sauvegarderait automatiquement Bureau, Documents et Images ? Quelle information manque dans le lab pour l'activer ?
 
 ---
 
 ## Partie D — Remise du poste
 
-**D1.** Exécute la check-list technique de remise sur `PC02` (domaine, mises à jour, BitLocker, Defender, LAPS, lecteurs, numéro de série).
+**D1.** Passe la check-list technique sur `PC02` (domaine, GPO, mises à jour, BitLocker, Defender, numéro de série). Un point bloque-t-il la remise ? (bonus) Vérifie LAPS si la stratégie a été configurée au TP 11.
 
 **D2.** Rédige les 5 conseils de sécurité que tu donnes oralement à `stagiaire` le jour de la remise.
 
-**D3.** `stagiaire` appelle le support : il ne retrouve pas son fichier. Quels outils proposes-tu pour que le technicien voie son écran ?
+**D3.** `stagiaire` appelle le support : il ne retrouve pas un fichier. Quels outils proposes-tu ?
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "58514142f3cc6e208dd04150994ca9da362655a54a59540dd5dfbba2c0ad9e43",
+  "pdfSha256": "6cc0712d8269eff1ed409dee2f29b9532e8599a918805fccc19722f753c1992f",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
@@ -99,20 +99,12 @@
       "startPage": 179
     },
     {
-      "key": "windows11/12-acces-distant",
-      "title": "12. Administration et assistance à distance",
-      "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/",
-      "download": "telechargements/windows11/cours/12-acces-distant.md",
-      "sourceSha256": "0a673f110488cee2be7dcc36fd20d5f17a7756f5c737258665ed4cb1adc96d79",
-      "startPage": 195
-    },
-    {
       "key": "windows11/13-adk-winpe",
       "title": "13. ADK, Windows PE et fichier de réponse",
       "href": "https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/",
       "download": "telechargements/windows11/cours/13-adk-winpe.md",
       "sourceSha256": "92cf243f00ee53904513450778de4f272a15f7d43883f0e6f9dae6588112ad5d",
-      "startPage": 215
+      "startPage": 195
     },
     {
       "key": "windows11/14-sysprep-audit",
@@ -120,7 +112,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/",
       "download": "telechargements/windows11/cours/14-sysprep-audit.md",
       "sourceSha256": "7c29fa0aebbea9f6b050656d1baec97a74e351a696bb441ed57756bf2b78d771",
-      "startPage": 237
+      "startPage": 217
     },
     {
       "key": "windows11/15-wim-dism",
@@ -128,7 +120,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/15-wim-dism/",
       "download": "telechargements/windows11/cours/15-wim-dism.md",
       "sourceSha256": "bad4c0299ea921a122413e7dcf34409c942cdcc1c37dec8e34f0d9543df35c2f",
-      "startPage": 247
+      "startPage": 227
     },
     {
       "key": "windows11/16-deploiement",
@@ -136,7 +128,15 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/",
       "download": "telechargements/windows11/cours/16-deploiement.md",
       "sourceSha256": "24736594408502ee1b06d36360565c323aa4b85411605418b37f238d7f95febd",
-      "startPage": 254
+      "startPage": 234
+    },
+    {
+      "key": "windows11/12-acces-distant",
+      "title": "12. Administration et assistance à distance",
+      "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/",
+      "download": "telechargements/windows11/cours/12-acces-distant.md",
+      "sourceSha256": "0a673f110488cee2be7dcc36fd20d5f17a7756f5c737258665ed4cb1adc96d79",
+      "startPage": 251
     },
     {
       "key": "windows11/17-wds-pxe",

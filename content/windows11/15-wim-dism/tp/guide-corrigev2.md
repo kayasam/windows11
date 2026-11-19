@@ -20,14 +20,14 @@ Sur `PC01`, dans PowerShell administrateur, lance `dism /Get-WimInfo /WimFile:C:
 > [!success]- Afficher la correction — A1
 > La seconde sortie confirme l’édition et l’architecture. L’index dépend du contenu du WIM. Relève-le sur l’ISO utilisée au lieu de réutiliser celui d’un autre support.
 
-### A2 — Monter en lecture seule puis libérer le dossier
+### A2 — Monter en lecture seule puis libérer le dossier (bonus)
 
 Crée un dossier vide `C:\Mount`. Monte l’index relevé avec `dism /Mount-Image /ImageFile:C:\Images\install.wim /Index:N /MountDir:C:\Mount /ReadOnly`. Vérifie `C:\Mount\Windows\System32`, ferme l’Explorateur sur ce dossier, puis lance `dism /Unmount-Image /MountDir:C:\Mount /Discard`.
 
 > [!success]- Afficher la correction — A2
 > Le dossier Windows est lisible sans démarrer l’image. `dism /Get-MountedImageInfo` ne doit plus lister `C:\Mount` après démontage.
 
-## Atelier complémentaire. Capturer la référence
+## Atelier complémentaire. Capturer la référence (bonus)
 
 ### B1 — Identifier le disque actif de MASTER
 

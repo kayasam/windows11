@@ -6,7 +6,7 @@
 
 ## Comprendre le démarrage et accéder à WinRE
 
-### A1 — Lire la configuration actuelle
+### A1 — Lire la configuration actuelle (bonus)
 
 Sur `PC01`, dans PowerShell administrateur, lance `bcdedit /enum '{bootmgr}'` puis `bcdedit /enum '{current}'`. Repère `timeout` et le chemin du chargeur.
 
@@ -50,7 +50,7 @@ Dans la VM, crée un document de test et installe une application de test prévu
 > [!success]- Afficher la correction — B2
 > La restauration peut retirer les changements système et le logiciel ajouté après le point. Le fichier personnel n’est normalement pas restauré à un état antérieur. Vérifie le résultat réel pour les deux objets.
 
-## Atelier complémentaire. Identifier les volumes de réparation
+## Atelier complémentaire. Identifier les volumes de réparation (bonus)
 
 ### C1 — Identifier Windows et l’EFI dans WinRE
 

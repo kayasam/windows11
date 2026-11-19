@@ -66,7 +66,7 @@ Sur `PC01`, lance `Get-Tpm` puis `Confirm-SecureBootUEFI` en administrateur. Dan
 > [!success]- Afficher la correction — C1
 > TPM présent et prêt, spécification 2.0 et Secure Boot `True` correspondent au paramétrage attendu de la VM.
 
-### C2 — Faire un contrôle de compatibilité seul
+### C2 — Faire un contrôle de compatibilité seul (bonus)
 
 Sous Windows, avec l’ISO montée, repère la lettre du DVD dans **Ce PC**. Depuis PowerShell administrateur, adapte le chemin et lance le scan suivant.
 

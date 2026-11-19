@@ -17,11 +17,11 @@ title: "TP 15. Images WIM et DISM, version guidée"
 
 Sur `PC01`, dans PowerShell administrateur, lance `dism /Get-WimInfo /WimFile:C:\Images\install.wim`. Note l’index dont le nom correspond à Windows 11 Professionnel et relance avec `/Index:N` en remplaçant `N`.
 
-### A2 — Monter en lecture seule puis libérer le dossier
+### A2 — Monter en lecture seule puis libérer le dossier (bonus)
 
 Crée un dossier vide `C:\Mount`. Monte l’index relevé avec `dism /Mount-Image /ImageFile:C:\Images\install.wim /Index:N /MountDir:C:\Mount /ReadOnly`. Vérifie `C:\Mount\Windows\System32`, ferme l’Explorateur sur ce dossier, puis lance `dism /Unmount-Image /MountDir:C:\Mount /Discard`.
 
-## Atelier complémentaire. Capturer la référence
+## Atelier complémentaire. Capturer la référence (bonus)
 
 ### B1 — Identifier le disque actif de MASTER
 

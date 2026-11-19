@@ -13,7 +13,7 @@ title: "TP 19. Démarrage et récupération, version guidée"
 
 ## Comprendre le démarrage et accéder à WinRE
 
-### A1 — Lire la configuration actuelle
+### A1 — Lire la configuration actuelle (bonus)
 
 Sur `PC01`, dans PowerShell administrateur, lance `bcdedit /enum '{bootmgr}'` puis `bcdedit /enum '{current}'`. Repère `timeout` et le chemin du chargeur.
 
@@ -39,7 +39,7 @@ Sur `PC01`, ouvre `SystemPropertiesProtection.exe`. Active la protection du volu
 
 Dans la VM, crée un document de test et installe une application de test prévue par le formateur. Lance `rstrui.exe`, sélectionne `Avant-TP19` et utilise **Rechercher les programmes concernés** avant de restaurer. Après redémarrage, vérifie l’application et le document.
 
-## Atelier complémentaire. Identifier les volumes de réparation
+## Atelier complémentaire. Identifier les volumes de réparation (bonus)
 
 ### C1 — Identifier Windows et l’EFI dans WinRE
 

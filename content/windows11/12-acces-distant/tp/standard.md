@@ -26,6 +26,7 @@ title: "TP 12. Administration et assistance à distance"
 ## Prérequis
 
 - `SRV01`, `PC01` et `PC02` allumées, `PC02` joint au domaine (TP 16)
+- Compte `FOURNIL\test.vendeur` disponible pour le test RDP (TP 11, C6)
 - Sur `PC01` **et** sur `PC02` : session ouverte avec **`FOURNIL\adm.stagiaire`** (administrateur des postes, TP 10–11)
 - Le compte `test.vendeur` existe (TP 11, C6). Sinon, crée-le sur `SRV01` dans `dsa.msc` → *Fournil → Utilisateurs*, mot de passe `Fournil2026!`
 
@@ -85,7 +86,7 @@ Invoke-Command -ComputerName PC02 -ScriptBlock { hostname; whoami }
 
 Un mot de passe t'a-t-il été demandé ? Pourquoi ?
 
-**B4.** Sur `PC01`, entre dans une session à distance sur le serveur :
+**B4.** (bonus) Sur `PC01`, entre dans une session à distance sur le serveur :
 
 ```powershell
 Enter-PSSession SRV01

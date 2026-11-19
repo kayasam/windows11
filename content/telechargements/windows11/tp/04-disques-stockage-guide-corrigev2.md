@@ -34,7 +34,7 @@ Crée un dossier NTFS vide `C:\Donnees`. Dans **Gestion des disques → G: → M
 > [!success]- Afficher la correction — A4
 > Le fichier de test est visible depuis `G:\` et depuis `C:\Donnees`. Les chemins pointent vers le même volume.
 
-## Atelier complémentaire. Observer un miroir
+## Atelier complémentaire. Observer un miroir (bonus)
 
 ### B1 — Créer un pool et un espace en miroir
 

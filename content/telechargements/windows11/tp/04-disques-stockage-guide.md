@@ -22,7 +22,7 @@ Crée un **Nouveau volume simple** de 5 Go en `G:`, NTFS, nommé `Data`. Ouvre-l
 
 Crée un dossier NTFS vide `C:\Donnees`. Dans **Gestion des disques → G: → Modifier la lettre de lecteur et les chemins d’accès → Ajouter**, sélectionne ce dossier et garde `G:`.
 
-## Atelier complémentaire. Observer un miroir
+## Atelier complémentaire. Observer un miroir (bonus)
 
 ### B1 — Créer un pool et un espace en miroir
 

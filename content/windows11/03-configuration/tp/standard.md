@@ -60,7 +60,7 @@ title: "TP 03. Configuration et personnalisation"
 
 **C1.** Crée l’utilisateur standard `employe1` (mot de passe `Fournil2026!`, nom complet « Employé 1 ») dans `lusrmgr.msc` **ou** en PowerShell. Vérifie qu’il appartient au groupe **Utilisateurs** et ajoute-le si nécessaire.
 
-**C2.** Observe le SID de `employe1`, fourni par le formateur **ou** relevé avec `Get-LocalUser -Name employe1 | Select-Object Name, SID`. Quelle partie du SID identifie la machine, et laquelle identifie le compte ? Il n’est pas nécessaire d’utiliser PowerShell si tu travailles à partir du relevé fourni.
+**C2.** (bonus) Observe le SID de `employe1`, fourni par le formateur **ou** relevé avec `Get-LocalUser -Name employe1 | Select-Object Name, SID`. Quelle partie du SID identifie la machine, et laquelle identifie le compte ? Il n’est pas nécessaire d’utiliser PowerShell si tu travailles à partir du relevé fourni.
 
 **C3.** Affiche les membres du groupe **Utilisateurs**, dans `lusrmgr.msc` → **Groupes** → **Utilisateurs**, **ou** en PowerShell. Pourquoi y trouve-t-on aussi `admin` et des entrées `AUTORITE NT\…` ?
 

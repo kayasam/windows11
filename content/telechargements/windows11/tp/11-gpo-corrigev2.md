@@ -12,7 +12,7 @@
 ## Objectifs
 
 - Administrer les GPO depuis `PC01` (RSAT)
-- Créer une GPO **ordinateur** de sécurité : admins locaux, Windows LAPS et anneau Windows Update
+- Créer une GPO **ordinateur** de sécurité : admins locaux et anneau Windows Update. Windows LAPS est proposé en (bonus)
 - Créer une GPO **utilisateur** filtrée sur un groupe : lecteur réseau et restriction
 - Diagnostiquer avec `gpresult`
 
@@ -25,7 +25,7 @@
 
 ---
 
-Tu peux faire les parties A à D directement après le TP 10.
+Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Saute les étapes marquées **(bonus)** si le temps est compté.
 
 ## Partie A — Outils
 
@@ -77,7 +77,7 @@ Tu peux faire les parties A à D directement après le TP 10.
 >
 > ![w11-11-gpo-groupes-restreints](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-groupes-restreints.png)
 
-**B3.** Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
+**B3.** (bonus) Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
 
 > [!success]- Afficher la correction — B3
 > Sur un DC (module `LAPS` intégré à Windows Server 2025) :
@@ -101,7 +101,7 @@ Tu peux faire les parties A à D directement après le TP 10.
 > [!success]- Afficher la correction — B4
 > *Composants Windows → Windows Update → Gérer les mises à jour proposées de Windows Update → **Choisir quand recevoir les mises à jour qualité*** → Activé, **7** jours.
 
-**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux, Windows LAPS et le report des mises à jour qualité.
+**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux et le report des mises à jour qualité. (bonus) Si tu as fait B3, vérifie aussi Windows LAPS.
 
 > [!success]- Afficher la correction — B5
 > ```powershell
@@ -118,7 +118,7 @@ Tu peux faire les parties A à D directement après le TP 10.
 > PC01\admin                Local
 > PC01\Administrateur       Local
 > ```
-> 2. **LAPS** — journal *Microsoft-Windows-LAPS/Operational* : 10018 « LAPS a mis à jour Active Directory avec le nouveau mot de passe », 10020, et 10067 « Le compte local configuré est actuellement désactivé » (voir B6). Lecture du mot de passe : sur SRV01, `dsa.msc` → propriétés de `PC01` → onglet **LAPS** → *Afficher le mot de passe* ;
+> 2. **LAPS (bonus, seulement si B3 a été réalisé)** — journal *Microsoft-Windows-LAPS/Operational* : 10018 « LAPS a mis à jour Active Directory avec le nouveau mot de passe », 10020, et 10067 « Le compte local configuré est actuellement désactivé » (voir B6). Lecture du mot de passe : sur SRV01, `dsa.msc` → propriétés de `PC01` → onglet **LAPS** → *Afficher le mot de passe* ;
 >
 > ![w11-11-aduc-onglet-laps](https://cours.kaya.ovh/windows11/assets/captures/w11-11-aduc-onglet-laps.png)
 >
@@ -138,7 +138,7 @@ Tu peux faire les parties A à D directement après le TP 10.
 > # DeferQualityUpdates : 1 / DeferQualityUpdatesPeriodInDays : 7
 > ```
 
-**B6.** Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
+**B6.** (bonus) Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
 
 > [!success]- Afficher la correction — B6
 > LAPS gère par défaut le compte **RID 500** (`Administrateur`), qui est **désactivé** sur Windows 11. Le mot de passe change bien, mais le compte reste inutilisable. Solutions :
@@ -234,7 +234,7 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 
 ## Partie D — Diagnostic
 
-**D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. Produis aussi un rapport HTML.
+**D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. (bonus) Produis aussi un rapport HTML.
 
 > [!success]- Afficher la correction — D1
 > ```powershell
@@ -250,7 +250,7 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 > [!success]- Afficher la correction — D2
 > `gpresult /scope computer /r` n'affiche plus que la **Default Domain Policy** : `GPO-Postes-Securite` est liée à l'UO `Ordinateurs`, que le poste a quittée. `CN=Computers` est un conteneur, pas une UO : on ne peut rien y lier. Les réglages déjà appliqués restent en partie (tatouage des préférences, groupes restreints) mais ne sont plus maintenus. D'où `redircmp` (TP 10).
 
-**D3.** Où chercher si une GPO ne s'applique pas du tout (aucune trace) ?
+**D3.** (bonus) Où chercher si une GPO ne s'applique pas du tout (aucune trace) ?
 
 > [!success]- Afficher la correction — D3
 > Journal **Applications et services → Microsoft → Windows → GroupPolicy → Operational** (début/fin de traitement, DC contacté, durée, erreurs SYSVOL), et le journal **Système** (source *GroupPolicy*, ID 1058/1030 : SYSVOL ou DNS inaccessible). Vérifier ensuite DNS du poste, `nltest /dsgetdc:ad.fournil.lab`, accès à `\\ad.fournil.lab\SYSVOL`.
@@ -259,7 +259,7 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 
 ## Partie E — Exercices complémentaires (bonus)
 
-**E1.** Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
+**E1.** (bonus) Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
 
 > [!success]- Afficher la correction — E1
 > ```powershell
@@ -268,25 +268,25 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 > ```
 > Chaque GPO est sauvegardée dans un dossier `{GUID}` avec un rapport. Restauration : `Restore-GPO -Name … -Path …` ; copie vers un autre domaine : `Import-GPO`.
 
-**E2.** Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
+**E2.** (bonus) Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
 
 > [!success]- Afficher la correction — E2
 > Dans Intune (*Appareils → Gérer les appareils → Configuration → Importer des ADMX / Analyse de la stratégie de groupe*) : on importe le **rapport XML** d'une GPO (`Get-GPOReport -ReportType Xml`). L'outil indique, paramètre par paramètre, s'il existe un équivalent dans Intune (CSP / *Settings catalog*) et peut créer directement le profil de configuration. C'est le point de départ d'une migration GPO → Intune.
 
 ---
 
-## Partie F — Atelier facultatif BitLocker
+## Partie F — Atelier facultatif BitLocker (bonus)
 
 Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
 
-**F1.** Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
+**F1.** (bonus) Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
 
 > [!success]- Afficher la correction — F1
 > *Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d'exploitation → **Sélectionner la méthode de récupération des lecteurs du système d'exploitation protégés par BitLocker*** → Activé :
 > - *Enregistrer les informations de récupération dans AD DS* : mots de passe et packages de clés
 > - *Ne pas activer BitLocker tant que les informations de récupération ne sont pas stockées dans AD DS* : coché
 
-**F2.** La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
+**F2.** (bonus) La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
 
 > [!success]- Afficher la correction — F2
 > La GPO ne concerne que les protecteurs **créés après** son application. Le protecteur de `PC01` date du TP 09. On l'envoie à la main :

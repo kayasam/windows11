@@ -10,7 +10,7 @@
 ## Objectifs
 
 - Administrer les GPO depuis `PC01` (RSAT)
-- Créer une GPO **ordinateur** de sécurité : admins locaux, Windows LAPS et anneau Windows Update
+- Créer une GPO **ordinateur** de sécurité : admins locaux et anneau Windows Update. Windows LAPS est proposé en (bonus)
 - Créer une GPO **utilisateur** filtrée sur un groupe : lecteur réseau et restriction
 - Diagnostiquer avec `gpresult`
 
@@ -23,7 +23,7 @@
 
 ---
 
-Tu peux faire les parties A à D directement après le TP 10.
+Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Saute les étapes marquées **(bonus)** si le temps est compté.
 
 ## Partie A — Outils
 
@@ -41,13 +41,13 @@ Tu peux faire les parties A à D directement après le TP 10.
 
 **B2.** Fais en sorte que `FOURNIL\GG-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
 
-**B3.** Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
+**B3.** (bonus) Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
 
 **B4.** Ajoute un report de **7 jours** des mises à jour qualité (anneau « large »).
 
-**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux, Windows LAPS et le report des mises à jour qualité.
+**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux et le report des mises à jour qualité. (bonus) Si tu as fait B3, vérifie aussi Windows LAPS.
 
-**B6.** Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
+**B6.** (bonus) Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
 
 ---
 
@@ -80,29 +80,29 @@ Vérifie l’accès avec `stagiaire` avant de créer le mappage.
 
 ## Partie D — Diagnostic
 
-**D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. Produis aussi un rapport HTML.
+**D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. (bonus) Produis aussi un rapport HTML.
 
 **D2.** Un collègue a déplacé `PC01` dans `CN=Computers` par erreur. Que montre `gpresult` ? Pourquoi ?
 
-**D3.** Où chercher si une GPO ne s'applique pas du tout (aucune trace) ?
+**D3.** (bonus) Où chercher si une GPO ne s'applique pas du tout (aucune trace) ?
 
 ---
 
 ## Partie E — Exercices complémentaires (bonus)
 
-**E1.** Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
+**E1.** (bonus) Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
 
-**E2.** Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
+**E2.** (bonus) Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
 
 ---
 
-## Partie F — Atelier facultatif BitLocker
+## Partie F — Atelier facultatif BitLocker (bonus)
 
 Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
 
-**F1.** Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
+**F1.** (bonus) Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
 
-**F2.** La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
+**F2.** (bonus) La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
 
 ---
 

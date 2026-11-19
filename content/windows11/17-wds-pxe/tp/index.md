@@ -8,4 +8,4 @@ title: "Travaux pratiques — 17. Déployer Windows 11 par le réseau : PXE et W
 
 - [TP 17. Déployer Windows 11 par le réseau : PXE et WDS (bonus)](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp/standard)
 
-- [TP 17. Déployer Windows 11 par le réseau : PXE et WDS, version guidée](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp/guide)
+- [TP 17. Déployer Windows 11 par le réseau : PXE et WDS, version guidée (bonus)](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp/guide)

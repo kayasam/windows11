@@ -1,4 +1,4 @@
-# TP 17. Déployer Windows 11 par le réseau : PXE et WDS, corrigé guidé
+# TP 17. Déployer Windows 11 par le réseau : PXE et WDS, corrigé guidé (bonus)
 
 **Ta mission.** Atelier complémentaire, sur `vSwitch-Rennes` avec `SRV01`, son DHCP et une VM vierge `PC03`. WDS sert au démarrage de WinPE. Windows Setup est lancé ensuite depuis un partage préparé pour le lab.
 

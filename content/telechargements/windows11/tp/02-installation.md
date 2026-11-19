@@ -57,9 +57,9 @@
 
 **C1.** Vérifie en PowerShell les trois prérequis clés de Windows 11 : TPM 2.0, Secure Boot, processeur.
 
-**C2.** L'ISO est montée dans `PC01`. Lance un **contrôle de compatibilité seul**, sans rien installer, avec `setup.exe`. Récupère le code de sortie. Où trouver le rapport détaillé ?
+**C2.** (bonus) L'ISO est montée dans `PC01`. Lance un **contrôle de compatibilité seul**, sans rien installer, avec `setup.exe`. Récupère le code de sortie. Où trouver le rapport détaillé ?
 
-**C3.** Interprète le rapport : quels critères sont contrôlés ? Sont-ils bloquants ?
+**C3.** (bonus) Interprète le rapport : quels critères sont contrôlés ? Sont-ils bloquants ?
 
 **C4.** Un poste Windows 10 22H2 du Fournil a un TPM 1.2. Que te répondra le contrôle de compatibilité ? Que proposes-tu ?
 

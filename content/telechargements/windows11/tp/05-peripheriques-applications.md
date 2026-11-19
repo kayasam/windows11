@@ -47,7 +47,7 @@
 
 ## Partie C — Applications et fonctionnalités
 
-**C1.** Liste les applications **provisionnées** de l'image. Quelle est la différence avec `Get-AppxPackage` ?
+**C1.** (bonus) Liste les applications **provisionnées** de l'image. Quelle est la différence avec `Get-AppxPackage` ?
 
 **C2.** (bonus) Le Fournil ne veut pas de `Microsoft.BingNews` pour les **futurs** utilisateurs du poste. Retire-le de l'image. Les utilisateurs qui ont déjà un profil le perdent-ils ?
 

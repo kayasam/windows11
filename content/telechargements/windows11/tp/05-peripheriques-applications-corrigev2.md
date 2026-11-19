@@ -122,7 +122,7 @@
 
 ## Partie C — Applications et fonctionnalités
 
-**C1.** Liste les applications **provisionnées** de l'image. Quelle est la différence avec `Get-AppxPackage` ?
+**C1.** (bonus) Liste les applications **provisionnées** de l'image. Quelle est la différence avec `Get-AppxPackage` ?
 
 > [!success]- Afficher la correction — C1
 > ```powershell

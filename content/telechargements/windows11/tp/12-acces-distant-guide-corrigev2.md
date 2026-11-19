@@ -1,6 +1,6 @@
 # TP 12. Administration et assistance à distance, corrigé guidé
 
-**Ta mission.** Tu es technicien sur `PC01`. Tu vas intervenir sur `PC02` sans te déplacer : d'abord en prenant son écran (Bureau à distance), puis en lui envoyant des commandes (PowerShell à distance). Ouvre une session `FOURNIL\adm.stagiaire` sur `PC01` **et** sur `PC02`. Si `PC02` n'existe pas encore, réalise d'abord le TP 16.
+**Ta mission.** Tu es technicien sur `PC01`. Tu vas intervenir sur `PC02` sans te déplacer : d'abord en prenant son écran (Bureau à distance), puis en lui envoyant des commandes (PowerShell à distance). Ouvre une session `FOURNIL\adm.stagiaire` sur `PC01` **et** sur `PC02`. Réalise ce TP **après le TP 16**, une fois `PC02` déployé et joint au domaine. Pour le test RDP, utilise aussi `FOURNIL\test.vendeur`, créé en C6 du TP 11.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/) · [Ouvrir le TP d'origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)
 
@@ -59,7 +59,7 @@ Sur `PC02`, ouvre `services.msc` et descends tout en bas jusqu'à **Windows Remo
 
 ### B2 — Activer PowerShell à distance sur PC02
 
-Sur `PC02`, fais `Win + X` → **Terminal (administrateur)** → **Oui**. Tape `Enable-PSRemoting -Force`. Sur `PC01`, relance `Test-WSMan PC02`.
+Sur `PC02`, ouvre **Windows PowerShell** en administrateur depuis Démarrer, puis lance `Enable-PSRemoting -Force`. Sur `PC01`, relance `Test-WSMan PC02`.
 
 > [!success]- Afficher la correction — B2
 > ![w11-12-enable-psremoting](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enable-psremoting.png)
@@ -79,7 +79,7 @@ Note si un mot de passe t'est demandé.
 > [!success]- Afficher la correction — B3
 > Résultat : `PC02` puis `fournil\adm.stagiaire`. **Pas de mot de passe** : dans un domaine, Windows utilise le ticket Kerberos de ta session, et `adm.stagiaire` est administrateur de `PC02`.
 
-### B4 — Entrer sur le serveur
+### B4 — Entrer sur le serveur (bonus)
 
 Sur `PC01`, tape `Enter-PSSession SRV01` et lis le message. Recommence avec `Enter-PSSession SRV01 -Credential FOURNIL\Administrateur`. Dans la session, tape `hostname` puis `Get-Service DHCPServer, DNS`. Termine avec `Exit-PSSession`.
 

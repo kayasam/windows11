@@ -16,7 +16,7 @@ title: "TP 10. Intégration Active Directory"
 
 Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01`. Le TP est terminé quand `PC01` apparaît dans l’UO `Fournil → Ordinateurs` et que `FOURNIL\stagiaire` peut y ouvrir une session.
 
-- Installer `SRV01` (Windows Server 2025 avec expérience de bureau) et le préparer (IP, nom, SSH)
+- Installer `SRV01` (Windows Server 2025 avec expérience de bureau) et le préparer (IP et nom), puis tester l’accès SSH en (bonus)
 - Créer la forêt `ad.fournil.lab` (AD DS + DNS) et le DHCP
 - Créer la structure d'UO, les utilisateurs et les groupes du Fournil
 - Joindre `PC01` au domaine **dans la bonne UO** et vérifier la jonction
@@ -36,7 +36,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 
 **A2.** Sur `SRV01`, configure l’adresse `192.168.3.1/24`, la passerelle `192.168.3.254` et le DNS provisoire `1.1.1.1`. Renomme le serveur en `SRV01`, puis redémarre-le. Tu peux utiliser **Gestionnaire de serveur → Serveur local** ou PowerShell.
 
-**A3.** Sur `SRV01`, démarre le service OpenSSH Server et vérifie que sa règle de pare-feu autorise le profil réseau actif. Depuis `PC01`, ouvre ensuite une session SSH vers `192.168.3.1`.
+**A3.** (bonus) Sur `SRV01`, démarre le service OpenSSH Server et vérifie que sa règle de pare-feu autorise le profil réseau actif. Depuis `PC01`, ouvre ensuite une session SSH vers `192.168.3.1`.
 
 ---
 

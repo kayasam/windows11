@@ -10,7 +10,7 @@
 
 Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01`. Le TP est terminé quand `PC01` apparaît dans l’UO `Fournil → Ordinateurs` et que `FOURNIL\stagiaire` peut y ouvrir une session.
 
-- Installer `SRV01` (Windows Server 2025 avec expérience de bureau) et le préparer (IP, nom, SSH)
+- Installer `SRV01` (Windows Server 2025 avec expérience de bureau) et le préparer (IP et nom), puis tester l’accès SSH en (bonus)
 - Créer la forêt `ad.fournil.lab` (AD DS + DNS) et le DHCP
 - Créer la structure d'UO, les utilisateurs et les groupes du Fournil
 - Joindre `PC01` au domaine **dans la bonne UO** et vérifier la jonction
@@ -66,7 +66,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 > ```
 > Aucun DNS n'existe encore sur le réseau : sans DNS provisoire, impossible de télécharger les mises à jour ou un module. Il sera remplacé automatiquement par `127.0.0.1` à la promotion.
 
-**A3.** Sur `SRV01`, démarre le service OpenSSH Server et vérifie que sa règle de pare-feu autorise le profil réseau actif. Depuis `PC01`, ouvre ensuite une session SSH vers `192.168.3.1`.
+**A3.** (bonus) Sur `SRV01`, démarre le service OpenSSH Server et vérifie que sa règle de pare-feu autorise le profil réseau actif. Depuis `PC01`, ouvre ensuite une session SSH vers `192.168.3.1`.
 
 > [!success]- Afficher la correction — A3
 > Constat sur `SRV01` fraîchement installé :

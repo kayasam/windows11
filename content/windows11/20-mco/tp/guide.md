@@ -27,7 +27,7 @@ Compare les lignes du CSV aux seuils du chapitre pour la version, les mises à j
 
 Sur chacun des deux postes, dans PowerShell administrateur, lance `Update-MpSignature`. Relève ensuite `AntivirusSignatureVersion` et `AntivirusSignatureAge` avec `Get-MpComputerStatus`.
 
-### B2 — Atelier facultatif : sauvegarder la récupération avant de chiffrer PC02
+### B2 — Sauvegarder la récupération avant de chiffrer PC02 (bonus)
 
 Si tu as passé le chapitre 09 ou l’atelier BitLocker du TP GPO, relève l’état de protection de `PC02` dans le CSV, note l’écart éventuel dans le plan de MCO et passe à B3.
 

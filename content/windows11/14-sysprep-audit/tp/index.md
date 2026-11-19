@@ -8,4 +8,4 @@ title: "Travaux pratiques — 14. Poste de référence : mode audit et Sysprep (
 
 - [TP 14. Poste de référence : mode audit et Sysprep (bonus)](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/standard)
 
-- [TP 14. Poste de référence : mode audit et Sysprep, version guidée](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/guide)
+- [TP 14. Poste de référence : mode audit et Sysprep, version guidée (bonus)](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/guide)

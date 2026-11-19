@@ -22,7 +22,7 @@ Dans Windows PowerShell, lance `Get-HotFix | Sort-Object InstalledOn -Descending
 
 Ouvre **Paramètres → Windows Update → Historique des mises à jour**. Compare les mises à jour qualité avec tes lignes PowerShell. Si un échec apparaît, relève son code.
 
-### A3 — Chercher les mises à jour disponibles
+### A3 — Chercher les mises à jour disponibles (bonus)
 
 Sans lancer d’installation, démarre une recherche dans Windows PowerShell sur `PC01`.
 
@@ -42,7 +42,7 @@ Dans `gpedit.msc` sur `PC01`, ouvre **Configuration ordinateur → Modèles d’
 
 ### B2 — Contrôler les valeurs appliquées
 
-Dans PowerShell administrateur, lance `gpupdate /target:computer /force` puis `Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate`. Repère le report, le produit, la version ciblée et l’échéance qualité. Ouvre aussi les options avancées de Windows Update.
+Dans PowerShell administrateur, lance `gpupdate /target:computer /force`. Ouvre **Paramètres → Windows Update → Options avancées** et vérifie que le poste indique des réglages gérés. Dans `gpedit.msc`, relis les réglages activés en B1. **(bonus)** Contrôle aussi les valeurs avec `Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate`.
 
 ## Vérifier les applications
 

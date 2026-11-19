@@ -45,7 +45,7 @@ Sur `PC01`, après reconnexion, ouvre `\\SRV01\Direction` avec le compte membre 
 
 ## Préparer et remettre le poste
 
-### C1 — Préparer les réglages Microsoft 365 sans déployer
+### C1 — Préparer les réglages Microsoft 365 sans déployer (bonus)
 
 Dans le scénario de la remise, relève les valeurs **64 bits**, **français** et **Canal Entreprise mensuel**. Pour chaque valeur, retrouve le champ correspondant dans la documentation ODT. Sur ta fiche, écris la commande qui utiliserait `configuration-fournil.xml`, sans lancer le déploiement.
 
@@ -61,7 +61,7 @@ Sur `PC02`, vérifie **Paramètres → Applications installées** ou utilise `wi
 
 ### C3 — Faire la recette technique
 
-Sur `PC02`, vérifie la jonction, Windows Update, `Get-MpComputerStatus` et `manage-bde -status C:`. Sur `SRV01`, vérifie la présence des informations LAPS de `PC02` sans afficher le secret. Dans la session `FOURNIL\stagiaire`, ouvre le lecteur `P:` si la GPO s’applique.
+Sur `PC02`, vérifie la jonction, Windows Update, `Get-MpComputerStatus` et `manage-bde -status C:`. **(bonus) Si LAPS a été configuré au TP 11**, vérifie sur `SRV01` la présence des informations LAPS de `PC02` sans afficher le secret. Dans la session `FOURNIL\stagiaire`, ouvre le lecteur `P:` si la GPO s’applique.
 
 > [!success]- Afficher la correction — C3
 > Une fiche de remise distingue les résultats ordinateur des résultats propres à la session. Pour chaque écart, note la preuve et le responsable de sa correction.

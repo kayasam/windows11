@@ -37,7 +37,7 @@ Ouvre `lusrmgr.msc` → **Utilisateurs → Nouvel utilisateur**. Crée `employe1
 > [!success]- Afficher la correction — B1
 > `employe1` appartient au groupe **Utilisateurs**. Sa session sert aux essais de moindre privilège du TP 09.
 
-### B2 — Lire l’identifiant du compte
+### B2 — Lire l’identifiant du compte (bonus)
 
 Dans PowerShell, lance `Get-LocalUser -Name employe1 | Select-Object Name,SID`. Entoure la dernière partie du SID dans ta fiche.
 

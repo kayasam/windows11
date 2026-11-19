@@ -214,23 +214,6 @@
           ]
         },
         {
-          "slug": "12-acces-distant",
-          "course": "cours/12-acces-distant/12-acces-distant.md",
-          "tps": [
-            {
-              "slug": "standard",
-              "file": "cours/12-acces-distant/tp/12-tp-acces-distant.md",
-              "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-correction.md",
-              "downloadStem": "12-acces-distant"
-            },
-            {
-              "slug": "guide",
-              "file": "cours/12-acces-distant/tp/12-tp-acces-distant-guide.md",
-              "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-guide-correction.md"
-            }
-          ]
-        },
-        {
           "slug": "13-adk-winpe",
           "course": "cours/13-adk-winpe/13-adk-winpe.md",
           "tps": [
@@ -295,6 +278,23 @@
               "slug": "guide",
               "file": "cours/16-deploiement/tp/16-tp-deploiement-guide.md",
               "correction": "cours/16-deploiement/tp/16-tp-deploiement-guide-correction.md"
+            }
+          ]
+        },
+        {
+          "slug": "12-acces-distant",
+          "course": "cours/12-acces-distant/12-acces-distant.md",
+          "tps": [
+            {
+              "slug": "standard",
+              "file": "cours/12-acces-distant/tp/12-tp-acces-distant.md",
+              "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-correction.md",
+              "downloadStem": "12-acces-distant"
+            },
+            {
+              "slug": "guide",
+              "file": "cours/12-acces-distant/tp/12-tp-acces-distant-guide.md",
+              "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-guide-correction.md"
             }
           ]
         },

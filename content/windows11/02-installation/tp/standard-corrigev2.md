@@ -207,7 +207,7 @@ aliases: ["windows11/02-installation/tp-corrigev2"]
 > ```
 > Pour la version du TPM : `Get-CimInstance -Namespace root\cimv2\security\microsofttpm -ClassName Win32_Tpm | Select-Object SpecVersion` (doit commencer par **2.0**).
 
-**C2.** L'ISO est montée dans `PC01`. Lance un **contrôle de compatibilité seul**, sans rien installer, avec `setup.exe`. Récupère le code de sortie. Où trouver le rapport détaillé ?
+**C2.** (bonus) L'ISO est montée dans `PC01`. Lance un **contrôle de compatibilité seul**, sans rien installer, avec `setup.exe`. Récupère le code de sortie. Où trouver le rapport détaillé ?
 
 > [!success]- Afficher la correction — C2
 > ```powershell
@@ -226,7 +226,7 @@ aliases: ["windows11/02-installation/tp-corrigev2"]
 > - `CompatData_<date>.xml` — résultat critère par critère
 > - `setupact.log` / `setuperr.log` — journaux détaillés de Setup
 
-**C3.** Interprète le rapport : quels critères sont contrôlés ? Sont-ils bloquants ?
+**C3.** (bonus) Interprète le rapport : quels critères sont contrôlés ? Sont-ils bloquants ?
 
 > [!success]- Afficher la correction — C3
 > Extrait du `CompatData_….xml` de `PC01` :

@@ -28,7 +28,7 @@ Ouvre trois fenêtres. Sur la première, lance `Win + Z` et choisis le modèle �
 
 Ouvre `lusrmgr.msc` → **Utilisateurs → Nouvel utilisateur**. Crée `employe1` avec le mot de passe du lab. Ouvre ses propriétés et vérifie l’onglet **Membre de**.
 
-### B2 — Lire l’identifiant du compte
+### B2 — Lire l’identifiant du compte (bonus)
 
 Dans PowerShell, lance `Get-LocalUser -Name employe1 | Select-Object Name,SID`. Entoure la dernière partie du SID dans ta fiche.
 

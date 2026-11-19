@@ -50,9 +50,9 @@ Lance `Get-CimInstance Win32_BIOS | Select-Object SerialNumber` et relève le ch
 
 Lance `Get-CimInstance Win32_ComputerSystem | Select-Object Manufacturer,Model` puis `Get-CimInstance Win32_OperatingSystem | Select-Object Caption,Version,LastBootUpTime`.
 
-## Atelier complémentaire. Produire un CSV
+## Atelier complémentaire. Produire un CSV (bonus)
 
-### D1 — Exporter un inventaire de services
+### D1 — Exporter un inventaire de services (bonus)
 
 Crée `C:\Temp` puis lance `Get-Service | Select-Object Name,DisplayName,Status,StartType | Export-Csv C:\Temp\services.csv -Delimiter ';' -NoTypeInformation -Encoding UTF8`. Vérifie avec `Import-Csv C:\Temp\services.csv -Delimiter ';' | Select-Object -First 3`.
 

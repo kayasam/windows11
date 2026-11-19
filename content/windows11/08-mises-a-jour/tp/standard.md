@@ -45,7 +45,7 @@ title: "TP 08. Windows Update et gestion des mises à jour"
 
 **B1.** Pourquoi ne faut-il plus compter sur `usoclient StartScan` ?
 
-**B2.** Avec l'API COM `Microsoft.Update.Session`, liste les mises à jour **non installées**. Combien y en a-t-il ? De quels types ?
+**B2.** (bonus) Avec l'API COM `Microsoft.Update.Session`, liste les mises à jour **non installées**. Combien y en a-t-il ? De quels types ?
 
 **B3.** (bonus) Installe le module `PSWindowsUpdate` et liste les mêmes mises à jour. Un collègue écrit `Get-WindowsUpdate | Select-Object KB, Title` et obtient un tableau vide. Pourquoi ?
 
@@ -61,7 +61,7 @@ Le Fournil veut que les postes de production reçoivent les correctifs **7 jours
 
 **C2.** Configure : report qualité 7 jours, version cible `Windows 11` / `26H2`, échéance qualité 3 jours.
 
-**C3.** Vérifie dans le registre et dans les Paramètres que la stratégie est bien appliquée.
+**C3.** Vérifie dans les Paramètres que la stratégie est bien appliquée. (bonus) Confirme les valeurs dans le registre.
 
 **C4.** Que devra faire la DSI le jour où la version 27H2 sera validée ?
 

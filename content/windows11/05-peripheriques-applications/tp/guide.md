@@ -32,7 +32,7 @@ Crée `C:\Sauvegarde\Pilotes`, puis lance `pnputil /export-driver * C:\Sauvegard
 
 ## Inventorier et équiper le poste
 
-### B1 — Distinguer image et session
+### B1 — Distinguer image et session (bonus)
 
 Compare `Get-AppxProvisionedPackage -Online | Select-Object DisplayName` en administrateur et `Get-AppxPackage | Select-Object Name` dans ta session.
 

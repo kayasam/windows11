@@ -5,7 +5,7 @@
 - **Sur SRV01**, ouvre une session `FOURNIL\Administrateur` pour créer les GPO.
 - **Sur PC01**, utilise `PC01\admin` et PowerShell en administrateur pour les tests ordinateur. Pour les tests utilisateur, ouvre la session demandée à chaque étape.
 
-**Avant de commencer.** `PC01` est joint au domaine et placé dans `Fournil → Ordinateurs`. Les comptes et groupes du TP 10 existent. Tu peux faire les parties A à D directement après le TP 10.
+**Avant de commencer.** `PC01` est joint au domaine et placé dans `Fournil → Ordinateurs`. Les comptes et groupes du TP 10 existent. Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Saute les étapes marquées **(bonus)** si le temps est compté.
 
 [Revoir le chapitre GPO](https://cours.kaya.ovh/windows11/windows11/11-gpo/) · [Reprendre le TP AD guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide)
 
@@ -32,7 +32,7 @@ Dans la console, fais un clic droit sur la GPO → **Modifier**. Suis **Configur
 1. Fais un clic droit → **Ajouter un groupe…**. Sélectionne `FOURNIL\GG-Admins-Postes`.
 2. Dans la zone du bas **Ce groupe est membre de**, ajoute `Administrateurs`. Laisse la zone du haut **Membres de ce groupe** vide.
 
-### B3 — Configurer Windows LAPS
+### B3 — Configurer Windows LAPS (bonus)
 
 Sur **`SRV01`**, lance ces commandes dans PowerShell en administrateur pour préparer l’annuaire.
 
@@ -64,9 +64,9 @@ Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate |
 
 Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\GG-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
 
-Sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
+**(bonus) Si tu as fait B3**, sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
 
-### B6 — Vérifier l’état du compte géré par LAPS
+### B6 — Vérifier l’état du compte géré par LAPS (bonus)
 
 Sur **`PC01`**, relève le nom et l’état du compte administrateur intégré.
 
@@ -75,7 +75,7 @@ Get-LocalUser | Where-Object { $_.SID.Value -like '*-500' } |
     Select-Object Name, Enabled
 ```
 
-Compare `Name` avec le compte affiché en B5. Si `Enabled` vaut `False`, que se passe-t-il si quelqu’un tente d’ouvrir une session avec ce compte ?
+Fais cette étape si tu as configuré LAPS en B3 et vérifié son résultat en B5. Compare `Name` avec le compte affiché en B5. Si `Enabled` vaut `False`, que se passe-t-il si quelqu’un tente d’ouvrir une session avec ce compte ?
 
 ## C. Configurer la session des utilisateurs de la boulangerie
 
@@ -133,45 +133,45 @@ Sur **`SRV01`**, dans `dsa.msc`, crée `test.vendeur` dans **Fournil → Utilisa
 
 ### D1 — Lire les stratégies appliquées
 
-Sur **`PC01`**, lance `gpresult /scope user /r` dans la session `FOURNIL\stagiaire`. Puis ouvre une session `PC01\admin`, lance PowerShell en administrateur et génère le rapport.
+Sur **`PC01`**, lance `gpresult /scope user /r` dans la session `FOURNIL\stagiaire`. Puis ouvre une session `PC01\admin` et lance `gpresult /scope computer /r` dans PowerShell en administrateur. Repère `GPO-Postes-Securite` côté ordinateur et `GPO-Boulangerie-Utilisateurs` dans le résultat côté utilisateur.
+
+**(bonus) Rapport HTML.** Depuis la session administrateur, lance le bloc suivant.
 
 ```powershell
-gpresult /scope computer /r
 gpresult /user 'FOURNIL\stagiaire' /h "$env:TEMP\rsop-pc01.html" /f
 Start-Process "$env:TEMP\rsop-pc01.html"
 ```
 
-Repère `GPO-Postes-Securite` côté ordinateur et `GPO-Boulangerie-Utilisateurs` côté utilisateur.
 
 ### D2 — Vérifier qu’un poste est dans la portée du lien
 
 Cas de dépannage. Le rapport d’un collègue n’affiche plus `GPO-Postes-Securite`. Son poste apparaît sous **Computers** dans AD. Sur **`SRV01`**, compare avec le lab. Regarde où se trouvent le lien de la GPO dans `gpmc.msc` et l’objet `PC01` dans `dsa.msc`.
 
-### D3 — Trouver le journal de diagnostic
+### D3 — Trouver le journal de diagnostic (bonus)
 
 Sur **`PC01`**, ouvre `eventvwr.msc`. Déplie **Journaux des applications et des services → Microsoft → Windows → GroupPolicy → Operational**. Ouvre un événement récent et compare son heure à celle de ton dernier `gpupdate`.
 
-## E. Exercices complémentaires
+## E. Exercices complémentaires (bonus)
 
-### E1 — Sauvegarder les GPO
+### E1 — Sauvegarder les GPO (bonus)
 
 Sur **`SRV01`**, crée `C:\Sauvegarde\GPO` et sauvegarde toutes les GPO dans ce dossier. Si tu bloques, utilise `Get-Help Backup-GPO -Examples`.
 
-### E2 — Comprendre à quoi sert Group Policy Analytics
+### E2 — Comprendre à quoi sert Group Policy Analytics (bonus)
 
 Dans le chapitre GPO, retrouve **Group Policy Analytics**. Si le Fournil passait à Intune, quelle information l’outil donnerait-il sur les réglages à reprendre ?
 
-## F. Atelier facultatif — Sauvegarder la récupération BitLocker dans AD
+## F. Atelier facultatif — Sauvegarder la récupération BitLocker dans AD (bonus)
 
 Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
 
-### F1 — Configurer la récupération BitLocker
+### F1 — Configurer la récupération BitLocker (bonus)
 
 Dans la même GPO, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d’exploitation**.
 
 Active **Sélectionner la méthode de récupération des lecteurs du système d’exploitation protégés par BitLocker**. Coche **Enregistrer les informations de récupération dans AD DS** et choisis **mots de passe et packages de clés**. Coche aussi **Ne pas activer BitLocker tant que les informations de récupération ne sont pas stockées dans AD DS**.
 
-### F2 — Sauvegarder le protecteur BitLocker existant
+### F2 — Sauvegarder le protecteur BitLocker existant (bonus)
 
 Sur **`PC01`**, dans PowerShell en administrateur, lance les commandes.
 

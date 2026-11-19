@@ -45,7 +45,7 @@
 > [!success]- Afficher la correction — A2
 > `hostname` donne `SRV01`. Sur la carte connectée à `vSwitch-Rennes`, `ipconfig /all` donne `192.168.3.1`, le masque `255.255.255.0`, la passerelle `192.168.3.254` et le DNS provisoire `1.1.1.1`. Si le nom est encore celui de l’installation, vérifie que le redémarrage a été effectué après le renommage.
 
-### A3 — Tester l’accès SSH depuis `PC01`
+### A3 — Tester l’accès SSH depuis `PC01` (bonus)
 
 1. Sur **`SRV01`**, ouvre PowerShell **en administrateur**. Lance les commandes ci-dessous. La règle du pare-feu autorise la connexion sur le profil Public pendant la préparation et sur le profil Domaine après la promotion.
 

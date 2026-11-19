@@ -109,7 +109,7 @@ aliases: ["windows11/03-configuration/tp-corrigev2"]
 > ```
 > `New-LocalUser` **n'ajoute le compte à aucun groupe** : sans `Add-LocalGroupMember`, il ne pourrait même pas ouvrir de session interactive.
 
-**C2.** Observe le SID de `employe1`, fourni par le formateur **ou** relevé avec `Get-LocalUser -Name employe1 | Select-Object Name, SID`. Quelle partie du SID identifie la machine, et laquelle identifie le compte ? Il n’est pas nécessaire d’utiliser PowerShell si tu travailles à partir du relevé fourni.
+**C2.** (bonus) Observe le SID de `employe1`, fourni par le formateur **ou** relevé avec `Get-LocalUser -Name employe1 | Select-Object Name, SID`. Quelle partie du SID identifie la machine, et laquelle identifie le compte ? Il n’est pas nécessaire d’utiliser PowerShell si tu travailles à partir du relevé fourni.
 
 > [!success]- Afficher la correction — C2
 > **Sans PowerShell** : interpréter le relevé fourni ci-dessous. Les nombres propres à la machine et le RID du compte peuvent différer sur ton poste.
