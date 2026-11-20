@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "400e921ec1240ebe582cdf7f53a731a174ccbe571a9017b16a7ddfb58ee6377e",
+  "pdfSha256": "f347250a6376ee23d0f47c6ba8f5a51c24ddee4620dddc85788d57b6a38ad47a",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
@@ -135,7 +135,7 @@
       "title": "16. Administrer SRV01 depuis PC01",
       "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/",
       "download": "telechargements/windows11/cours/12-acces-distant.md",
-      "sourceSha256": "1ec723683248d69f6a201a4fb1ba3cb939ccdce8e96f671ea66d787e404c12d1",
+      "sourceSha256": "134baaeacaab854c4ee5e0451d522050343c712f384483750bcd1dedd38f2cca",
       "startPage": 251
     },
     {

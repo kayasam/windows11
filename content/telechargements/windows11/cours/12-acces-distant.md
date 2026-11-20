@@ -2,7 +2,11 @@
 
 Le but est de choisir le bon accès selon la tâche. Dans le TP, tu gardes le même scénario : depuis `PC01`, vérifier l’état de DNS et DHCP sur `SRV01`. Les autres accès sont présentés en démos courtes.
 
-**Prépare le lab.** `PC01` est joint à `ad.fournil.lab`, `SRV01` est démarré et les deux VM sont sur `vSwitch-Rennes`. Utilise le compte autorisé fourni pour le lab.
+**Prépare le lab.** `PC01` est joint à `ad.fournil.lab`, `SRV01` est démarré et les deux VM sont sur `vSwitch-Rennes`.
+
+> [!tip] Identifiants du lab
+> Dans la fenêtre d’identification de Windows, saisis `Administrateur@ad.fournil.lab` et le mot de passe fourni par le formateur.
+
 
 | Je veux… | J’utilise… | Port TCP à repérer |
 | --- | --- | --- |
@@ -32,24 +36,28 @@ Une ligne `Listen` indique qu’un service attend des connexions sur cette adres
 
 ## 1. WinRM · Vérifier DNS et DHCP
 
+WinRM permet d’exécuter des commandes PowerShell sur un poste ou un serveur Windows à distance. Ici, tu vérifies l’état de DNS et DHCP depuis PC01.
+
 Sur **SRV01**, en Windows PowerShell :
 
 ```powershell
 Get-NetTCPConnection -State Listen -LocalPort 5985 -ErrorAction SilentlyContinue
 ```
 
-Sur **PC01**, ouvre Windows PowerShell. `Test-WSMan` doit afficher une réponse contenant `ProductVendor`. Entre ensuite dans la session avec le compte autorisé du lab.
+Sur **PC01**, ouvre Windows PowerShell. `Test-WSMan` doit afficher une réponse contenant `ProductVendor`. La commande suivante ouvre la fenêtre d’identification.
 
 ```powershell
 Test-WSMan srv01.ad.fournil.lab
-Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential (Get-Credential)
+Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential 'Administrateur@ad.fournil.lab'
 ```
 
 L’invite affiche le nom de **SRV01** entre crochets. Exécute `hostname` et `Get-Service DNS, DHCPServer`, relève les états, puis tape `Exit-PSSession`. Relance `hostname` pour vérifier ton retour sur **PC01**.
 
-![Capture du lab. La première tentative est refusée. Avec un compte autorisé, la session s’ouvre et DNS et DHCP affichent Running.](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enter-pssession-srv01.png)
+![Extrait de la capture du lab. La session est ouverte sur SRV01. Les services DNS et DHCP affichent Running. La capture utilise la forme courte FOURNIL\Administrateur pour le même compte.](https://cours.kaya.ovh/windows11/assets/captures/w11-16-winrm-session-reussie.png)
 
 ## 2. RDP · Ouvrir le bureau du serveur
+
+RDP ouvre une session graphique sur un autre ordinateur. Tu peux y utiliser les menus et les consoles de SRV01 comme devant son écran.
 
 Sur **SRV01**, dans **Gestionnaire de serveur → Serveur local → Bureau à distance**, clique sur l’état affiché. Si le formateur a prévu la démo, sélectionne **Autoriser les connexions à distance à cet ordinateur** et laisse l’authentification au niveau du réseau activée. Contrôle l’écoute sur **SRV01** :
 
@@ -57,9 +65,11 @@ Sur **SRV01**, dans **Gestionnaire de serveur → Serveur local → Bureau à di
 Get-NetTCPConnection -State Listen -LocalPort 3389 -ErrorAction SilentlyContinue
 ```
 
-Sur **PC01**, tape `Test-NetConnection srv01.ad.fournil.lab -Port 3389`. Si `TcpTestSucceeded` vaut `True`, ouvre `mstsc`, saisis `srv01.ad.fournil.lab` et connecte-toi. Dans le bureau distant, `hostname` doit afficher `SRV01`. Déconnecte-toi après la démo.
+Sur **PC01**, tape `Test-NetConnection srv01.ad.fournil.lab -Port 3389`. Si `TcpTestSucceeded` vaut `True`, ouvre `mstsc`, saisis `srv01.ad.fournil.lab` et connecte-toi avec le compte de l’encadré. Dans le bureau distant, `hostname` doit afficher `SRV01`. Déconnecte-toi après la démo.
 
 ## 3. SSH · Ouvrir un terminal
+
+SSH ouvre un terminal distant chiffré. Il sert à administrer une machine en ligne de commande, sous Linux comme sous Windows avec OpenSSH.
 
 Sur **SRV01**, vérifie que le serveur OpenSSH écoute :
 
@@ -67,10 +77,10 @@ Sur **SRV01**, vérifie que le serveur OpenSSH écoute :
 Get-NetTCPConnection -State Listen -LocalPort 22 -ErrorAction SilentlyContinue
 ```
 
-Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 22`. Pour ouvrir la session, remplace `utilisateur` par le compte autorisé pour OpenSSH.
+Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 22`. Pour SSH, la commande utilise la forme courte `FOURNIL\Administrateur` du même compte.
 
 ```powershell
-ssh -l 'FOURNIL\utilisateur' srv01.ad.fournil.lab
+ssh -l 'FOURNIL\Administrateur' srv01.ad.fournil.lab
 ```
 
 À la première connexion, compare l’empreinte avec celle que fournit le formateur. Si SSH dit que la clé a changé, arrête-toi et fais confirmer l’identité du serveur. Dans le terminal distant, teste `hostname` puis tape `exit`.
@@ -78,6 +88,8 @@ ssh -l 'FOURNIL\utilisateur' srv01.ad.fournil.lab
 ![Capture du lab. La session SSH est ouverte et hostname renvoie SRV01.](https://cours.kaya.ovh/windows11/assets/captures/w11-12-ssh-srv01.png)
 
 ## 4. RPC · Consulter les événements à distance
+
+RPC permet à une application d’appeler un service sur une autre machine. Ici, l’Observateur d’événements de PC01 demande les journaux à SRV01.
 
 Sur **SRV01**, vérifie le port d’entrée RPC :
 
@@ -89,6 +101,8 @@ Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 135`. Ouvre `
 
 ## 5. SMB · Accéder au dossier Commun
 
+SMB permet d’ouvrir et de modifier des fichiers sur un partage réseau selon les droits du compte. Ici, tu accèdes au dossier Commun hébergé sur SRV01.
+
 Sur **SRV01**, vérifie l’écoute SMB :
 
 ```powershell
@@ -99,7 +113,9 @@ Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 445`, puis ou
 
 ## 6. RSAT · Administrer DNS depuis PC01
 
-RSAT fournit les **consoles d’administration** sur `PC01`. Chaque console s’appuie sur ses propres services. Pour la démo, installe seulement **RSAT : outils du serveur DNS** via **Paramètres → Fonctionnalités facultatives**. Si cette entrée est difficile à trouver, recherche **Fonctionnalités facultatives** depuis Démarrer. En Windows PowerShell administrateur sur **PC01**, tu peux aussi exécuter :
+RSAT fournit les consoles d’administration de Windows Server sur PC01. Tu peux par exemple consulter DNS, DHCP ou Active Directory dans une interface graphique.
+
+Chaque console s’appuie sur ses propres services. Pour la démo, installe seulement **RSAT : outils du serveur DNS** via **Paramètres → Fonctionnalités facultatives**. Si cette entrée est difficile à trouver, recherche **Fonctionnalités facultatives** depuis Démarrer. En Windows PowerShell administrateur sur **PC01**, tu peux aussi exécuter :
 
 ```powershell
 Add-WindowsCapability -Online -Name Rsat.Dns.Tools~~~~0.0.1.0
@@ -116,6 +132,8 @@ Sur **PC01**, lance `dnsmgmt.msc`, connecte la console DNS à `SRV01` et ouvre *
 ![Capture du lab. Dans les fonctionnalités facultatives, recherche RSAT et installe uniquement la console nécessaire.](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
 
 ## 7. Assistance rapide · Aider quelqu’un sur sa session
+
+Assistance rapide sert à dépanner une personne dans sa session Windows. Elle accepte de partager son écran, puis peut autoriser l’aidant à prendre la main.
 
 Sur **PC01**, ouvre **Assistance rapide**. Pour la démo, l’aidant se connecte, fournit un code et la personne aidée autorise le partage d’écran. Les deux postes ont besoin d’Internet.
 
