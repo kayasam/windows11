@@ -237,7 +237,7 @@
       "correctionKey": "windows11/08-mises-a-jour/tp/standard-corrigev2",
       "downloadStem": "08-mises-a-jour",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/08-mises-a-jour/tp/guide",
@@ -251,7 +251,7 @@
       "correctionKey": "windows11/09-securite/tp/standard-corrigev2",
       "downloadStem": "09-securite",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/09-securite/tp/guide",
@@ -293,7 +293,7 @@
       "correctionKey": "windows11/13-adk-winpe/tp/standard-corrigev2",
       "downloadStem": "13-adk-winpe",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/13-adk-winpe/tp/guide",
@@ -307,7 +307,7 @@
       "correctionKey": "windows11/14-sysprep-audit/tp/standard-corrigev2",
       "downloadStem": "14-sysprep-audit",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/14-sysprep-audit/tp/guide",
@@ -321,7 +321,7 @@
       "correctionKey": "windows11/15-wim-dism/tp/standard-corrigev2",
       "downloadStem": "15-wim-dism",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/15-wim-dism/tp/guide",
@@ -335,7 +335,7 @@
       "correctionKey": "windows11/16-deploiement/tp/standard-corrigev2",
       "downloadStem": "16-deploiement",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/16-deploiement/tp/guide",
@@ -349,7 +349,7 @@
       "correctionKey": "windows11/12-acces-distant/tp/standard-corrigev2",
       "downloadStem": "12-acces-distant",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/12-acces-distant/tp/guide",
@@ -363,7 +363,7 @@
       "correctionKey": "windows11/17-wds-pxe/tp/standard-corrigev2",
       "downloadStem": "17-wds-pxe",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/17-wds-pxe/tp/guide",
@@ -377,7 +377,7 @@
       "correctionKey": "windows11/17-environnement-utilisateur/tp/standard-corrigev2",
       "downloadStem": "17-environnement-utilisateur",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/17-environnement-utilisateur/tp/guide",
@@ -391,7 +391,7 @@
       "correctionKey": "windows11/18-demarrage-recuperation/tp/standard-corrigev2",
       "downloadStem": "18-demarrage-recuperation",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/18-demarrage-recuperation/tp/guide",
@@ -405,7 +405,7 @@
       "correctionKey": "windows11/19-depannage/tp/standard-corrigev2",
       "downloadStem": "19-depannage",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/19-depannage/tp/guide",
@@ -419,7 +419,7 @@
       "correctionKey": "windows11/20-mco/tp/standard-corrigev2",
       "downloadStem": "20-mco",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/20-mco/tp/guide",
@@ -444,21 +444,33 @@
     "windows11/06-administration-diagnostic/tp/guide",
     "windows11/07-powershell/tp/standard",
     "windows11/07-powershell/tp/guide",
+    "windows11/08-mises-a-jour/tp/standard",
     "windows11/08-mises-a-jour/tp/guide",
+    "windows11/09-securite/tp/standard",
     "windows11/09-securite/tp/guide",
     "windows11/10-active-directory/tp/standard",
     "windows11/10-active-directory/tp/guide",
     "windows11/11-gpo/tp/standard",
     "windows11/11-gpo/tp/guide",
+    "windows11/13-adk-winpe/tp/standard",
     "windows11/13-adk-winpe/tp/guide",
+    "windows11/14-sysprep-audit/tp/standard",
     "windows11/14-sysprep-audit/tp/guide",
+    "windows11/15-wim-dism/tp/standard",
     "windows11/15-wim-dism/tp/guide",
+    "windows11/16-deploiement/tp/standard",
     "windows11/16-deploiement/tp/guide",
+    "windows11/12-acces-distant/tp/standard",
     "windows11/12-acces-distant/tp/guide",
+    "windows11/17-wds-pxe/tp/standard",
     "windows11/17-wds-pxe/tp/guide",
+    "windows11/17-environnement-utilisateur/tp/standard",
     "windows11/17-environnement-utilisateur/tp/guide",
+    "windows11/18-demarrage-recuperation/tp/standard",
     "windows11/18-demarrage-recuperation/tp/guide",
+    "windows11/19-depannage/tp/standard",
     "windows11/19-depannage/tp/guide",
+    "windows11/20-mco/tp/standard",
     "windows11/20-mco/tp/guide"
   ],
   "tracks": [

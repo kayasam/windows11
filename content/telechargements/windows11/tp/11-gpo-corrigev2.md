@@ -300,7 +300,7 @@ Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà 
 > ```
 > ```
 > Name                   : 2026-11-16T09:44:08+01:00{C70A756F-74A8-48AD-A7F1-BCA5F7788131}
-> msFVE-RecoveryPassword : 647207-041041-218757-495198-503382-593978-662541-156409
+> msFVE-RecoveryPassword : [clé de récupération à relever dans le lab]
 > ```
 > En graphique : onglet **Récupération BitLocker** des propriétés de `PC01` dans `dsa.msc`, après installation sur SRV01 de la fonctionnalité *Visionneuse de mots de passe de récupération BitLocker* (`Install-WindowsFeature RSAT-Feature-Tools-BitLocker-BdeAducExt`, sans redémarrage).
 >

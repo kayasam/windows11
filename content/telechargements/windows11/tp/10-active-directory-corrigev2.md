@@ -1,5 +1,8 @@
 # TP 10. Intégration Active Directory — Correction
 
+> [!tip] Mot de passe du lab
+> Remplace `MOT_DE_PASSE_DU_LAB` par la valeur donnée par le formateur pour le compte concerné.
+
 > Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
 
 > Chapitres associés : [10. Intégration Active Directory](https://cours.kaya.ovh/windows11/windows11/10-active-directory/)
@@ -26,7 +29,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 
 ## Partie A — Installer et préparer SRV01
 
-**A1.** Depuis l’hôte Hyper-V, crée la VM `SRV01` (Gen 2, 4 Go **statiques**, 2 vCPU, 64 Go, `vSwitch-Rennes`). Installe **Windows Server 2025 Standard Evaluation (expérience utilisateur)** et définis le mot de passe Administrateur du lab `Fournil2026!`.
+**A1.** Depuis l’hôte Hyper-V, crée la VM `SRV01` (Gen 2, 4 Go **statiques**, 2 vCPU, 64 Go, `vSwitch-Rennes`). Installe **Windows Server 2025 Standard Evaluation (expérience utilisateur)** et définis le mot de passe Administrateur du lab `MOT_DE_PASSE_DU_LAB`.
 
 > [!success]- Afficher la correction — A1
 > ```powershell
@@ -105,7 +108,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 > ```powershell
 > Install-ADDSForest -DomainName "ad.fournil.lab" -DomainNetbiosName "FOURNIL" `
 >     -DomainMode "Win2025" -ForestMode "Win2025" -InstallDns:$true `
->     -SafeModeAdministratorPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Force
+>     -SafeModeAdministratorPassword (Read-Host 'Mot de passe de restauration DSRM' -AsSecureString) -Force
 > ```
 > **En graphique** : lien **Promouvoir ce serveur en contrôleur de domaine** (fin de l'installation ou drapeau de notification). À corriger dans l'assistant :
 > - *Configuration de déploiement* : **Ajouter une nouvelle forêt** (la valeur par défaut est « domaine existant ») → `ad.fournil.lab` ;
@@ -184,21 +187,21 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 >
 > ![w11-10-srv-aduc-arborescence](https://cours.kaya.ovh/windows11/assets/captures/w11-10-srv-aduc-arborescence.png)
 
-**C2.** Dans l’UO `Utilisateurs`, crée le compte `stagiaire` (nom complet *Stagiaire Boulangerie*). Dans l’UO `Admins`, crée le compte `adm.stagiaire`. Utilise le mot de passe du lab `Fournil2026!` pour les deux comptes et décoche le changement obligatoire à la première connexion.
+**C2.** Dans l’UO `Utilisateurs`, crée le compte `stagiaire` (nom complet *Stagiaire Boulangerie*). Dans l’UO `Admins`, crée le compte `adm.stagiaire`. Utilise le mot de passe du lab `MOT_DE_PASSE_DU_LAB` pour les deux comptes et décoche le changement obligatoire à la première connexion.
 
 > [!success]- Afficher la correction — C2
 > ```powershell
 > New-ADUser -Name "Stagiaire Boulangerie" -SamAccountName stagiaire -UserPrincipalName stagiaire@ad.fournil.lab `
 >     -Path "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
->     -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Enabled $true
+>     -AccountPassword (Read-Host 'Mot de passe du compte à créer' -AsSecureString) -Enabled $true
 > New-ADUser -Name "Admin Postes Stagiaire" -SamAccountName adm.stagiaire -UserPrincipalName adm.stagiaire@ad.fournil.lab `
 >     -Path "OU=Admins,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
->     -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Enabled $true
+>     -AccountPassword (Read-Host 'Mot de passe du compte à créer' -AsSecureString) -Enabled $true
 > ```
 > En graphique : UO `Utilisateurs` → **Nouvel utilisateur** → prénom, nom, `stagiaire` → mot de passe ×2, **décocher** *L'utilisateur doit changer le mot de passe…*
 >
 > > [!WARNING] Mot de passe refusé
-> > Un mot de passe qui **contient le nom du compte ou le nom complet** est refusé. Vécu sur le lab : avec le nom complet *Stagiaire Fournil*, `Fournil2026!` est refusé… et la console crée quand même le compte **désactivé**. Supprimer le compte et recommencer avec un autre nom complet (*Stagiaire Boulangerie*). PowerShell, lui, refuse proprement sans rien créer.
+> > Un mot de passe qui **contient le nom du compte ou le nom complet** est refusé. Vécu sur le lab : avec le nom complet *Stagiaire Fournil*, `MOT_DE_PASSE_DU_LAB` est refusé… et la console crée quand même le compte **désactivé**. Supprimer le compte et recommencer avec un autre nom complet (*Stagiaire Boulangerie*). PowerShell, lui, refuse proprement sans rien créer.
 
 **C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `GG-Admins-Postes`.
 
@@ -270,7 +273,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 >     -OUPath "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab" `
 >     -Credential (Get-Credential FOURNIL\Administrateur) -Restart
 > ```
-> **En graphique** : `sysdm.cpl` → **Modifier…** → *Domaine* : `ad.fournil.lab` → `FOURNIL\Administrateur` / `Fournil2026!` → *Bienvenue dans le domaine ad.fournil.lab.* → redémarrer. L'interface ne permet pas de choisir l'UO : c'est `redircmp` (C4) qui envoie le poste dans `OU=Ordinateurs`. Vérifié sur le lab : `CN=PC01,OU=Ordinateurs,OU=Fournil,…`.
+> **En graphique** : `sysdm.cpl` → **Modifier…** → *Domaine* : `ad.fournil.lab` → `FOURNIL\Administrateur` / `MOT_DE_PASSE_DU_LAB` → *Bienvenue dans le domaine ad.fournil.lab.* → redémarrer. L'interface ne permet pas de choisir l'UO : c'est `redircmp` (C4) qui envoie le poste dans `OU=Ordinateurs`. Vérifié sur le lab : `CN=PC01,OU=Ordinateurs,OU=Fournil,…`.
 >
 > ![w11-10-pc01-bienvenue-domaine](https://cours.kaya.ovh/windows11/assets/captures/w11-10-pc01-bienvenue-domaine.png)
 >
@@ -311,7 +314,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 **D6.** Sur `PC01`, ouvre une session avec `FOURNIL\stagiaire`. Vérifie que `whoami` affiche `fournil\stagiaire`.
 
 > [!success]- Afficher la correction — D6
-> Écran de connexion → **Autre utilisateur** → `FOURNIL\stagiaire` (ou `stagiaire@ad.fournil.lab`), mot de passe `Fournil2026!`. Sous le champ, Windows affiche « Connectez-vous à FOURNIL » : c'est le domaine qui authentifie.
+> Écran de connexion → **Autre utilisateur** → `FOURNIL\stagiaire` (ou `stagiaire@ad.fournil.lab`), mot de passe `MOT_DE_PASSE_DU_LAB`. Sous le champ, Windows affiche « Connectez-vous à FOURNIL » : c'est le domaine qui authentifie.
 >
 > ![w11-10-pc01-login-autre-utilisateur](https://cours.kaya.ovh/windows11/assets/captures/w11-10-pc01-login-autre-utilisateur.png) À la première ouverture, Windows crée le profil `C:\Users\stagiaire`.
 >
@@ -322,7 +325,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 > whoami /upn            # stagiaire@ad.fournil.lab
 > ```
 >
-> > En production, on crée les comptes avec `-ChangePasswordAtLogon $true` : Windows exigerait alors un nouveau mot de passe à cette première ouverture. Dans le lab, on garde `Fournil2026!` pour tous les comptes afin d'éviter les blocages.
+> > En production, on crée les comptes avec `-ChangePasswordAtLogon $true` : Windows exigerait alors un nouveau mot de passe à cette première ouverture. Dans le lab, on garde `MOT_DE_PASSE_DU_LAB` pour tous les comptes afin d'éviter les blocages.
 
 ---
 

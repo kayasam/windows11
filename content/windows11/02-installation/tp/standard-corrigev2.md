@@ -9,6 +9,9 @@ aliases: ["windows11/02-installation/tp-corrigev2"]
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/02-installation-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp/standard">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/02-installation/tp/standard-corrigev2" aria-current="page">Corrigé</a></nav>
 
+> [!tip] Mot de passe du lab
+> Remplace `MOT_DE_PASSE_DU_LAB` par la valeur donnée par le formateur pour le compte concerné.
+
 > [!abstract] Parcours TSSR
 > Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 
@@ -93,7 +96,7 @@ aliases: ["windows11/02-installation/tp-corrigev2"]
 >
 > Ce script a été retiré de certaines builds Insider : s'il est absent, on tape directement la ligne `reg add` puis `shutdown /r /t 0`. Et si Microsoft supprime aussi la prise en compte de la clé, il reste le fichier de réponse (chapitre 12).
 
-**A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
+**A5.** Termine l'OOBE : nom `admin`, mot de passe `MOT_DE_PASSE_DU_LAB`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 
 > [!success]- Afficher la correction — A5
 > ![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)

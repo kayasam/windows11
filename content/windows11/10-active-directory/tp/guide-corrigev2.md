@@ -8,6 +8,9 @@ title: "TP 10. Intégration Active Directory, corrigé guidé"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/10-active-directory-guide-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2" aria-current="page">Corrigé</a></nav>
 
+> [!tip] Mot de passe du lab
+> Remplace `MOT_DE_PASSE_DU_LAB` par la valeur donnée par le formateur pour le compte concerné.
+
 **Ta mission.** Préparer le serveur du Fournil, créer le domaine `ad.fournil.lab`, puis y joindre le poste `PC01`. À la fin, le compte `FOURNIL\stagiaire` doit pouvoir ouvrir une session sur `PC01`, et le poste doit apparaître dans l’UO `Fournil → Ordinateurs` sur le serveur.
 
 **Avant de commencer.** Il te faut l’[ISO Windows Server 2025 d’évaluation](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2025) sur l’hôte, un accès au Gestionnaire Hyper-V et la VM `PC01` utilisée dans les TP précédents. Elle est raccordée à `vSwitch-Rennes` et utilise l’adresse `192.168.3.10`.
@@ -26,7 +29,7 @@ title: "TP 10. Intégration Active Directory, corrigé guidé"
 
 1. Sur **l’hôte Hyper-V**, crée une VM de **génération 2** appelée `SRV01`. Donne-lui **4 Go de RAM statique**, **2 processeurs virtuels** et un disque de **64 Go**. Raccorde-la à `vSwitch-Rennes`.
 2. Attache l’ISO Windows Server 2025 au lecteur DVD virtuel, puis démarre la VM sur l’ISO.
-3. Dans l’installateur, choisis **Windows Server 2025 Standard Evaluation (expérience utilisateur)**. Au premier démarrage, définis le mot de passe Administrateur du lab `Fournil2026!` et ouvre la session.
+3. Dans l’installateur, choisis **Windows Server 2025 Standard Evaluation (expérience utilisateur)**. Au premier démarrage, définis le mot de passe Administrateur du lab `MOT_DE_PASSE_DU_LAB` et ouvre la session.
 
 **Tu peux continuer quand** le bureau s’affiche dans la console de `SRV01` et que le Gestionnaire de serveur s’ouvre.
 
@@ -88,7 +91,7 @@ Travaille dans la **console Hyper-V de `SRV01`** pour cette partie, afin de gard
 ### B2 — Créer le domaine `ad.fournil.lab`
 
 1. Clique sur **Promouvoir ce serveur en contrôleur de domaine**. Choisis **Ajouter une nouvelle forêt** et saisis `ad.fournil.lab` comme nom de domaine racine.
-2. Dans les **Options du contrôleur de domaine**, laisse les niveaux fonctionnels sur **Windows Server 2025** et conserve **Serveur DNS** et **Catalogue global** cochés. Pour le mot de passe de restauration (DSRM), saisis `Fournil2026!` dans le lab.
+2. Dans les **Options du contrôleur de domaine**, laisse les niveaux fonctionnels sur **Windows Server 2025** et conserve **Serveur DNS** et **Catalogue global** cochés. Pour le mot de passe de restauration (DSRM), saisis `MOT_DE_PASSE_DU_LAB` dans le lab.
 3. À la page **Options supplémentaires**, remplace le nom NetBIOS proposé par `FOURNIL`. C’est le nom court que tu utiliseras pour ouvrir les sessions de domaine.
 4. Garde les chemins par défaut. Une fois la vérification des prérequis réussie, clique sur **Installer** et laisse la VM terminer son redémarrage automatique. L’avertissement sur la délégation DNS est attendu dans ce lab.
 
@@ -177,7 +180,7 @@ Dans chaque UO, fais un clic droit → **Nouveau → Utilisateur**. Renseigne le
 | `Utilisateurs` | Stagiaire Boulangerie | `stagiaire` |
 | `Admins` | Admin Postes Stagiaire | `adm.stagiaire` |
 
-Dans ce lab, utilise `Fournil2026!` pour les deux comptes et décoche **L’utilisateur doit changer le mot de passe à la prochaine ouverture de session**.
+Dans ce lab, utilise `MOT_DE_PASSE_DU_LAB` pour les deux comptes et décoche **L’utilisateur doit changer le mot de passe à la prochaine ouverture de session**.
 
 **Résultat attendu.** Les deux comptes apparaissent dans les UO correspondantes. Garde `stagiaire` pour le test de connexion en D6.
 

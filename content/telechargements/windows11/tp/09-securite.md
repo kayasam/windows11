@@ -97,4 +97,7 @@
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/09-securite/tp/standard-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/09-securite/tp/standard-corrigev2)

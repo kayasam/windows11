@@ -9,6 +9,9 @@ aliases: ["windows11/03-configuration/tp-corrigev2"]
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/03-configuration-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/standard">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/standard-corrigev2" aria-current="page">Corrigé</a></nav>
 
+> [!tip] Mot de passe du lab
+> Remplace `MOT_DE_PASSE_DU_LAB` par la valeur donnée par le formateur pour le compte concerné.
+
 > [!abstract] Parcours TSSR
 > Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 > **Méthode au choix : interface graphique ou PowerShell. Une seule méthode suffit** pour chaque manipulation ; tu peux changer de méthode selon la question. Les raccourcis clavier sont facultatifs. Le script de la partie F reste un bonus.
@@ -96,14 +99,14 @@ aliases: ["windows11/03-configuration/tp-corrigev2"]
 
 ## Partie C — Comptes locaux
 
-**C1.** Crée l’utilisateur standard `employe1` (mot de passe `Fournil2026!`, nom complet « Employé 1 ») dans `lusrmgr.msc` **ou** en PowerShell. Vérifie qu’il appartient au groupe **Utilisateurs** et ajoute-le si nécessaire.
+**C1.** Crée l’utilisateur standard `employe1` (mot de passe `MOT_DE_PASSE_DU_LAB`, nom complet « Employé 1 ») dans `lusrmgr.msc` **ou** en PowerShell. Vérifie qu’il appartient au groupe **Utilisateurs** et ajoute-le si nécessaire.
 
 > [!success]- Afficher la correction — C1
 > **En graphique** : `lusrmgr.msc` → **Utilisateurs** → **Nouvel utilisateur** ; renseigner `employe1`, le nom complet « Employé 1 » et le mot de passe du lab. Vérifier ensuite l’onglet **Membre de** : le groupe **Utilisateurs** doit être présent.
 > **En PowerShell** :
 >
 > ```powershell
-> $mdp = ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force
+> $mdp = Read-Host "Mot de passe du compte à créer" -AsSecureString
 > New-LocalUser -Name "employe1" -Password $mdp -FullName "Employé 1" -Description "Poste Fournil"
 > Add-LocalGroupMember -Group "Utilisateurs" -Member "employe1"
 > ```

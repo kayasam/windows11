@@ -1,5 +1,8 @@
 # TP 02. Installation, mise à niveau et comptes — Correction
 
+> [!tip] Mot de passe du lab
+> Remplace `MOT_DE_PASSE_DU_LAB` par la valeur donnée par le formateur pour le compte concerné.
+
 > [!abstract] Parcours TSSR
 > Toutes les parties non marquées (bonus) sont à réaliser ; les exercices complémentaires sont facultatifs.
 
@@ -84,7 +87,7 @@
 >
 > Ce script a été retiré de certaines builds Insider : s'il est absent, on tape directement la ligne `reg add` puis `shutdown /r /t 0`. Et si Microsoft supprime aussi la prise en compte de la clé, il reste le fichier de réponse (chapitre 12).
 
-**A5.** Termine l'OOBE : nom `admin`, mot de passe `Fournil2026!`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
+**A5.** Termine l'OOBE : nom `admin`, mot de passe `MOT_DE_PASSE_DU_LAB`, questions de sécurité, refuse toutes les options de confidentialité facultatives.
 
 > [!success]- Afficher la correction — A5
 > ![w11-02-oobe-compte-local](https://cours.kaya.ovh/windows11/assets/captures/w11-02-oobe-compte-local.png)
