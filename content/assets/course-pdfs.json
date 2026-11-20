@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "17168d4b0d12a313e94db22cad49173e7b65500b39621ff6f30ea08ae80e2020",
+  "pdfSha256": "400e921ec1240ebe582cdf7f53a731a174ccbe571a9017b16a7ddfb58ee6377e",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
@@ -135,7 +135,7 @@
       "title": "16. Administrer SRV01 depuis PC01",
       "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/",
       "download": "telechargements/windows11/cours/12-acces-distant.md",
-      "sourceSha256": "99edcb4b25039b46c800eb3b6181c736a9f886921a9a8e7fdce3e3c43b7c38d9",
+      "sourceSha256": "1ec723683248d69f6a201a4fb1ba3cb939ccdce8e96f671ea66d787e404c12d1",
       "startPage": 251
     },
     {
@@ -144,7 +144,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/",
       "download": "telechargements/windows11/cours/17-wds-pxe.md",
       "sourceSha256": "fc6b58dc814b20520bd6c7c453a4c741efbf67466bea0d2d659a8e1ba6a89299",
-      "startPage": 253
+      "startPage": 257
     },
     {
       "key": "windows11/17-environnement-utilisateur",
@@ -152,7 +152,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
       "download": "telechargements/windows11/cours/17-environnement-utilisateur.md",
       "sourceSha256": "c5ef6e08cac1d0884e4bde7d0bc5316bb949bedcffa64244c09f666893b931aa",
-      "startPage": 272
+      "startPage": 276
     },
     {
       "key": "windows11/18-demarrage-recuperation",
@@ -160,7 +160,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/",
       "download": "telechargements/windows11/cours/18-demarrage-recuperation.md",
       "sourceSha256": "d12fa5452e4229becfa879439ec8a18376aa191896ba511807cacaf87edaec06",
-      "startPage": 281
+      "startPage": 285
     },
     {
       "key": "windows11/19-depannage",
@@ -168,7 +168,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/",
       "download": "telechargements/windows11/cours/19-depannage.md",
       "sourceSha256": "b729c19af21e21565c4dcd47c529ec5fb07b6219ed124ea5d08d8800b169fdf9",
-      "startPage": 293
+      "startPage": 297
     },
     {
       "key": "windows11/20-mco",
@@ -176,7 +176,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/",
       "download": "telechargements/windows11/cours/20-mco.md",
       "sourceSha256": "f418c8d967d9e5dcfd13369657f0b9543b3b5b45e58baf8b409136eb82240541",
-      "startPage": 300
+      "startPage": 304
     }
   ]
 }

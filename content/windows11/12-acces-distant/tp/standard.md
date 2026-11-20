@@ -13,6 +13,20 @@ title: "TP 16. Administrer SRV01 depuis PC01"
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
+### 0. Comparer les ports en écoute
+
+Sur les consoles des deux VM, ouvre **Windows PowerShell** et lance les mêmes commandes. Sur `SRV01`, tu peux aussi demander au formateur d’afficher le résultat.
+
+```powershell
+hostname
+Get-NetTCPConnection -State Listen |
+    Where-Object { $_.LocalPort -in 22, 135, 445, 3389, 5985 } |
+    Sort-Object LocalPort |
+    Select-Object LocalAddress, LocalPort, State
+```
+
+Repère le port `5985` sur `SRV01`. Si une ligne apparaît deux fois, compare les adresses locales (par exemple IPv4 et IPv6). Fais ensuite les trois étapes depuis `PC01`.
+
 ### 1. Tester le serveur
 
 Depuis `PC01`, vérifie que WinRM répond sur `srv01.ad.fournil.lab`. Note l’information qui te le confirme.

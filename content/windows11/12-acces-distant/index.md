@@ -6,45 +6,133 @@ title: "16. Administrer SRV01 depuis PC01"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/12-acces-distant.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
-Tu es sur `PC01`. Ton objectif est de te connecter à `SRV01` avec Windows PowerShell pour vérifier l’état de deux services du serveur.
+Le but est de choisir le bon accès selon la tâche. Dans le TP, tu gardes le même scénario : depuis `PC01`, vérifier l’état de DNS et DHCP sur `SRV01`. Les autres accès sont présentés en démos courtes.
 
-Prépare `PC01` joint au domaine `ad.fournil.lab`, `SRV01` démarré et un compte du lab autorisé à administrer le serveur. Fais le TP sur le réseau du lab, après le chapitre Active Directory.
+**Prépare le lab.** `PC01` est joint à `ad.fournil.lab`, `SRV01` est démarré et les deux VM sont sur `vSwitch-Rennes`. Utilise le compte autorisé fourni pour le lab.
 
-## 1. Tester l’accès à SRV01
+| Je veux… | J’utilise… | Port TCP à repérer |
+| --- | --- | --- |
+| Vérifier des services en PowerShell | WinRM | 5985 dans le lab, 5986 en HTTPS |
+| Ouvrir le bureau du serveur | RDP | 3389 |
+| Ouvrir un terminal | SSH | 22 |
+| Lire les événements du serveur | Observateur d’événements sur RPC | 135 pour trouver le service, puis ports négociés |
+| Ouvrir un dossier partagé | SMB | 445 |
+| Gérer une zone DNS avec une console | RSAT sur `PC01` | Selon la console. Pour cette démo DNS, commence par RPC, port 135 |
+| Aider une personne sur sa session | Assistance rapide | HTTPS sortant, 443 |
 
-Sur **PC01**, ouvre **Windows PowerShell**, puis tape :
+## Le même réflexe à chaque fois
 
-```powershell
-Test-WSMan srv01.ad.fournil.lab
-```
-
-Si tu vois `ProductVendor`, le service WinRM de `SRV01` répond. WinRM permet à PowerShell d’exécuter des commandes sur le serveur. Le test confirme la réponse du service. L’étape suivante vérifie les droits du compte.
-
-Si le test échoue, lance `Resolve-DnsName srv01.ad.fournil.lab` depuis `PC01`. Si le nom ne se résout pas, vérifie le réseau du lab et le DNS de `PC01`. Si le nom se résout, demande au formateur de vérifier WinRM sur `SRV01`.
-
-## 2. Ouvrir une session sur le serveur
-
-Toujours sur **PC01**, lance cette commande et saisis le compte autorisé du lab au format `FOURNIL\utilisateur`.
-
-```powershell
-Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential (Get-Credential)
-```
-
-Quand l’invite PowerShell commence par le nom de `SRV01` entre crochets, les commandes tapées dans cette fenêtre s’exécutent sur le serveur. Si l’accès est refusé, vérifie le compte choisi et ses droits avec le formateur.
-
-## 3. Vérifier DNS et DHCP, puis revenir sur PC01
-
-Dans la **session distante**, lance :
+**Sur la machine qui reçoit la connexion**, regarde les ports TCP en écoute. Fais-le sur les deux VM pour comparer.
 
 ```powershell
 hostname
-Get-Service DNS, DHCPServer
+Get-NetTCPConnection -State Listen |
+    Sort-Object LocalPort |
+    Select-Object LocalAddress, LocalPort, State
 ```
 
-`hostname` doit afficher `SRV01`. La colonne `Status` te permet de vérifier si les services DNS et DHCP sont démarrés (`Running`).
+Une ligne `Listen` indique qu’un service attend des connexions sur cette adresse et ce port. **Depuis la machine qui appelle**, `Test-NetConnection -Port` indique si la connexion TCP atteint la cible. Le test TCP et l’ouverture de session répondent à deux questions différentes : « Puis-je atteindre le service ? » et « Mon compte a-t-il le droit d’y entrer ? ».
 
-Tape `Exit-PSSession` pour fermer la session distante. Relance `hostname`. Tu dois revoir `PC01`.
+> [!example] Relevé du lab depuis l’hôte
+> Le 20 novembre 2026, le test TCP a réussi vers `SRV01` sur **22, 135, 445 et 5985**, et vers `PC01` sur **135** parmi les mêmes ports testés. Le **3389** n’a répondu sur aucune des deux VM. Ce relevé mesure la joignabilité depuis l’hôte. Pour constater `Listen`, exécute la commande directement dans la VM.
+
+## 1. WinRM · Vérifier DNS et DHCP
+
+Sur **SRV01**, en Windows PowerShell :
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 5985 -ErrorAction SilentlyContinue
+```
+
+Sur **PC01**, ouvre Windows PowerShell. `Test-WSMan` doit afficher une réponse contenant `ProductVendor`. Entre ensuite dans la session avec le compte autorisé du lab.
+
+```powershell
+Test-WSMan srv01.ad.fournil.lab
+Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential (Get-Credential)
+```
+
+L’invite affiche le nom de **SRV01** entre crochets. Exécute `hostname` et `Get-Service DNS, DHCPServer`, relève les états, puis tape `Exit-PSSession`. Relance `hostname` pour vérifier ton retour sur **PC01**.
+
+![Capture du lab. La première tentative est refusée. Avec un compte autorisé, la session s’ouvre et DNS et DHCP affichent Running.](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enter-pssession-srv01.png)
+
+## 2. RDP · Ouvrir le bureau du serveur
+
+Sur **SRV01**, dans **Gestionnaire de serveur → Serveur local → Bureau à distance**, clique sur l’état affiché. Si le formateur a prévu la démo, sélectionne **Autoriser les connexions à distance à cet ordinateur** et laisse l’authentification au niveau du réseau activée. Contrôle l’écoute sur **SRV01** :
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 3389 -ErrorAction SilentlyContinue
+```
+
+Sur **PC01**, tape `Test-NetConnection srv01.ad.fournil.lab -Port 3389`. Si `TcpTestSucceeded` vaut `True`, ouvre `mstsc`, saisis `srv01.ad.fournil.lab` et connecte-toi. Dans le bureau distant, `hostname` doit afficher `SRV01`. Déconnecte-toi après la démo.
+
+## 3. SSH · Ouvrir un terminal
+
+Sur **SRV01**, vérifie que le serveur OpenSSH écoute :
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 22 -ErrorAction SilentlyContinue
+```
+
+Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 22`. Pour ouvrir la session, remplace `utilisateur` par le compte autorisé pour OpenSSH.
+
+```powershell
+ssh -l 'FOURNIL\utilisateur' srv01.ad.fournil.lab
+```
+
+À la première connexion, compare l’empreinte avec celle que fournit le formateur. Si SSH dit que la clé a changé, arrête-toi et fais confirmer l’identité du serveur. Dans le terminal distant, teste `hostname` puis tape `exit`.
+
+![Capture du lab. La session SSH est ouverte et hostname renvoie SRV01.](https://cours.kaya.ovh/windows11/assets/captures/w11-12-ssh-srv01.png)
+
+## 4. RPC · Consulter les événements à distance
+
+Sur **SRV01**, vérifie le port d’entrée RPC :
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 135 -ErrorAction SilentlyContinue
+```
+
+Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 135`. Ouvre `eventvwr.msc`, fais un clic droit sur **Observateur d’événements (local) → Se connecter à un autre ordinateur**, puis saisis `srv01.ad.fournil.lab`. Ouvre **Journaux Windows → Système**. Le port 135 permet de repérer le service RPC. Si ce premier test réussit et que la console échoue, fais vérifier les droits et les règles de pare-feu de gestion distante des journaux, ainsi que les ports RPC négociés.
+
+## 5. SMB · Accéder au dossier Commun
+
+Sur **SRV01**, vérifie l’écoute SMB :
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 445 -ErrorAction SilentlyContinue
+```
+
+Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 445`, puis ouvre `\\SRV01\Commun` dans l’Explorateur. Le dossier doit s’ouvrir si le partage du TP GPO existe et si le compte a les droits du partage et du dossier.
+
+## 6. RSAT · Administrer DNS depuis PC01
+
+RSAT fournit les **consoles d’administration** sur `PC01`. Chaque console s’appuie sur ses propres services. Pour la démo, installe seulement **RSAT : outils du serveur DNS** via **Paramètres → Fonctionnalités facultatives**. Si cette entrée est difficile à trouver, recherche **Fonctionnalités facultatives** depuis Démarrer. En Windows PowerShell administrateur sur **PC01**, tu peux aussi exécuter :
+
+```powershell
+Add-WindowsCapability -Online -Name Rsat.Dns.Tools~~~~0.0.1.0
+```
+
+Sur **SRV01**, contrôle le premier port utilisé pour joindre la gestion DNS à distance :
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 135 -ErrorAction SilentlyContinue
+```
+
+Sur **PC01**, lance `dnsmgmt.msc`, connecte la console DNS à `SRV01` et ouvre **Zones de recherche directe → ad.fournil.lab**. Vérifie que les enregistrements s’affichent. Le port TCP/UDP 53 sert aux **requêtes DNS**, tandis que la console s’appuie sur la gestion distante.
+
+![Capture du lab. Dans les fonctionnalités facultatives, recherche RSAT et installe uniquement la console nécessaire.](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
+
+## 7. Assistance rapide · Aider quelqu’un sur sa session
+
+Sur **PC01**, ouvre **Assistance rapide**. Pour la démo, l’aidant se connecte, fournit un code et la personne aidée autorise le partage d’écran. Les deux postes ont besoin d’Internet.
+
+```powershell
+Get-NetTCPConnection -State Listen -LocalPort 443 -ErrorAction SilentlyContinue
+```
+
+Ce contrôle montre les éventuels services HTTPS **locaux**. Assistance rapide utilise une connexion **sortante** vers Microsoft : l’outil peut fonctionner même si la commande ne retourne rien. Pour observer les connexions sortantes HTTPS pendant la démo, compare avec `Get-NetTCPConnection -State Established -RemotePort 443`. Plusieurs applications peuvent utiliser ce même port.
+
+![Capture du lab. L’aidant choisit Aider quelqu’un et la personne aidée saisit le code dans la zone Aide.](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant.png)
 
 [Faire le TP guidé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
 
-[Microsoft Learn · Tester WinRM](https://learn.microsoft.com/powershell/module/microsoft.wsman.management/test-wsman?view=powershell-5.1) · [Microsoft Learn · Ouvrir une session à distance](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/enter-pssession?view=powershell-5.1)
+[Microsoft Learn · Get-NetTCPConnection](https://learn.microsoft.com/powershell/module/nettcpip/get-nettcpconnection?view=windowsserver2025-ps) · [Ports des services Windows](https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/service-overview-and-network-port-requirements) · [RSAT](https://learn.microsoft.com/windows-server/remote/remote-server-administration-tools) · [Assistance rapide](https://learn.microsoft.com/windows/client-management/client-tools/quick-assist)

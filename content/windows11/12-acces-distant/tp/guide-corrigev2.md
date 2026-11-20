@@ -13,6 +13,23 @@ title: "TP 16. Administrer SRV01 depuis PC01, corrigé guidé"
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
+### 0. Comparer les ports en écoute
+
+Sur les consoles des deux VM, ouvre **Windows PowerShell** et lance les mêmes commandes. Sur `SRV01`, tu peux aussi demander au formateur d’afficher le résultat.
+
+```powershell
+hostname
+Get-NetTCPConnection -State Listen |
+    Where-Object { $_.LocalPort -in 22, 135, 445, 3389, 5985 } |
+    Sort-Object LocalPort |
+    Select-Object LocalAddress, LocalPort, State
+```
+
+Repère le port `5985` sur `SRV01`. Si une ligne apparaît deux fois, compare les adresses locales (par exemple IPv4 et IPv6). Fais ensuite les trois étapes depuis `PC01`.
+
+> [!success]- Afficher la correction
+> Le port `5985` est attendu sur `SRV01` lorsque WinRM est disponible en HTTP. `PC01` peut appeler WinRM sans avoir son propre port `5985` en écoute. Les autres ports dépendent des services configurés.
+
 ### 1. Tester le serveur
 
 Dans **Windows PowerShell sur PC01**, lance `Test-WSMan srv01.ad.fournil.lab`. Est-ce que tu vois le champ `ProductVendor` ?
