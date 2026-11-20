@@ -1,106 +1,34 @@
-# TP 16. Administration et assistance à distance, corrigé guidé
+# TP 16. Administrer SRV01 depuis PC01, corrigé guidé
 
-**Ta mission.** Tu es technicien sur `PC01`. Tu vas intervenir sur `PC02` sans te déplacer : d'abord en prenant son écran (Bureau à distance), puis en lui envoyant des commandes (PowerShell à distance). Ouvre une session `FOURNIL\adm.stagiaire` sur `PC01` **et** sur `PC02`. Réalise ce TP **après le TP 15**, une fois `PC02` déployé et joint au domaine. Pour le test RDP, utilise aussi `FOURNIL\test.vendeur`, créé en C6 du TP 11.
+**Mission** · Depuis `PC01`, vérifie que le serveur Fournil répond et relève l’état de DNS et DHCP.
 
-**Avant A1, contrôle les deux postes.** Sur chaque console, tape `hostname` puis `whoami`. Tu dois avoir `PC01` ou `PC02`, et `fournil\adm.stagiaire`. Si le poste `PC02` manque, reprends le TP 15. Si tu ne peux pas ouvrir une console d’administration sur `PC02`, actualise les stratégies avec `gpupdate /force` depuis un compte administrateur autorisé sur ce poste, puis ferme et rouvre la session. Vérifie que `PC02` est dans l’UO **Fournil → Ordinateurs** et reçoit la GPO de la partie A du TP 11.
+**Avant de commencer** · `PC01` est joint au domaine `ad.fournil.lab`. `SRV01` est démarré sur le réseau du lab. Utilise le compte autorisé fourni pour administrer `SRV01`.
 
-[Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/) · [Ouvrir le TP d'origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)
+[Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
-## Bureau à distance
+### 1. Tester le serveur
 
-### A1 — Le port est-il ouvert ?
+Dans **Windows PowerShell sur PC01**, lance `Test-WSMan srv01.ad.fournil.lab`. Est-ce que tu vois le champ `ProductVendor` ?
 
-Sur `PC01`, ouvre un Terminal et tape `Test-NetConnection PC02 -Port 3389`. Relève la valeur de `TcpTestSucceeded`.
+> [!success]- Afficher la correction
+> Une réponse avec `ProductVendor` indique que le service WinRM répond sur `SRV01`. Si la commande échoue, vérifie le nom avec `Resolve-DnsName srv01.ad.fournil.lab`, puis suis le dépannage du cours.
 
-> [!success]- Afficher la correction — A1
-> `TcpTestSucceeded : False`. L'adresse de `PC02` s'affiche (le nom est trouvé), mais le port 3389 est fermé : le Bureau à distance est **désactivé par défaut** sur Windows 11.
+### 2. Ouvrir la session distante
 
-### A2 — Activer le Bureau à distance sur PC02
-
-Sur `PC02`, ouvre **Paramètres → Système → Bureau à distance**. Passe le bouton sur **Activé**, puis clique **Confirmer**. Retourne sur `PC01` et relance la commande de A1.
-
-> [!success]- Afficher la correction — A2
-> ![w11-12-parametres-rdp-confirmation](https://cours.kaya.ovh/windows11/assets/captures/w11-12-parametres-rdp-confirmation.png)
->
-> Le bouton indique **Activé**, port **3389**. Sur `PC01`, `TcpTestSucceeded` passe à **True** : le pare-feu a été ouvert automatiquement.
-
-### A3 — Autoriser un utilisateur
-
-Sur `PC02`, dans la même page, clique **Utilisateurs du Bureau à distance**. Lis la phrase sous la liste. Clique **Ajouter…**, tape `test.vendeur`, clique **Vérifier les noms**, puis **OK** deux fois.
-
-> [!success]- Afficher la correction — A3
-> La phrase dit **« FOURNIL\adm.stagiaire a déjà un accès »** : les administrateurs du poste sont toujours autorisés. Seuls les comptes **non administrateurs**, comme `test.vendeur`, doivent être ajoutés.
->
-> ![w11-12-utilisateurs-bureau-a-distance-ok](https://cours.kaya.ovh/windows11/assets/captures/w11-12-utilisateurs-bureau-a-distance-ok.png)
-
-### A4 — Se connecter avec mstsc
-
-Sur `PC01`, menu Démarrer → **Connexion Bureau à distance**. Tape `PC02`, clique **Connexion**. Choisis **Autres choix → Utiliser un autre compte** et saisis `FOURNIL\test.vendeur` et son mot de passe. Si une confirmation de certificat s’affiche, vérifie que tu as bien saisi `PC02` avant de l’accepter dans le lab. Si Windows affiche un message d’accueil, clique **OK**. Si la connexion est refusée, vérifie l’ajout de `test.vendeur` en A3.
-
-Dans la session distante, ouvre une invite de commandes, tape `hostname` puis `whoami`. Tu dois voir `PC02` et `fournil\test.vendeur`. Ferme la session en tapant `logoff`. Reconnecte ensuite `adm.stagiaire` sur la console de `PC02`.
-
-> [!success]- Afficher la correction — A4
-> `PC01` prévient qu'un autre utilisateur est connecté et sera déconnecté ; `PC02` demande à `adm.stagiaire` s'il autorise la connexion (sinon, déconnexion au bout de 30 secondes). **Windows 11 n'accepte qu'une session à la fois.**
->
-> ![w11-12-pc02-autoriser-connexion](https://cours.kaya.ovh/windows11/assets/captures/w11-12-pc02-autoriser-connexion.png)
->
-> Dans la session : `PC02` et `fournil\test.vendeur`.
->
-> ![w11-12-mstsc-session-pc02](https://cours.kaya.ovh/windows11/assets/captures/w11-12-mstsc-session-pc02.png)
-
-## PowerShell à distance
-
-### B1 — État de départ
-
-Sur `PC02`, ouvre `services.msc` et descends tout en bas jusqu'à **Windows Remote Management (Gestion WSM)**. Relève son état et son type de démarrage. Sur `PC01`, tape `Test-WSMan PC02` puis `Test-WSMan SRV01`.
-
-> [!success]- Afficher la correction — B1
-> Service **arrêté** (colonne *État* vide), démarrage **Manuel**. `Test-WSMan PC02` affiche une erreur rouge ; `Test-WSMan SRV01` répond. Windows Server a PowerShell à distance activé d'office, Windows 11 non.
->
-> ![w11-12-services-winrm-arrete](https://cours.kaya.ovh/windows11/assets/captures/w11-12-services-winrm-arrete.png)
-
-### B2 — Activer PowerShell à distance sur PC02
-
-Sur `PC02`, ouvre **Windows PowerShell** en administrateur depuis Démarrer, puis lance `Enable-PSRemoting -Force`. Sur `PC01`, relance `Test-WSMan PC02`.
-
-> [!success]- Afficher la correction — B2
-> ![w11-12-enable-psremoting](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enable-psremoting.png)
->
-> Le service démarre, l'écouteur et la règle de pare-feu sont créés. `Test-WSMan PC02` répond maintenant.
-
-### B3 — Envoyer une commande
-
-Sur `PC01`, tape :
+Depuis **PC01**, lance la commande ci-dessous. Dans la fenêtre d’identification, saisis le compte autorisé du lab au format `FOURNIL\utilisateur`. Attends de voir le nom du serveur entre crochets dans l’invite.
 
 ```powershell
-Invoke-Command -ComputerName PC02 -ScriptBlock { hostname; whoami }
+Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential (Get-Credential)
 ```
 
-Note si un mot de passe t'est demandé.
+> [!success]- Afficher la correction
+> L’invite commence par le nom de `SRV01` entre crochets. Les commandes s’exécutent alors sur le serveur.
 
-> [!success]- Afficher la correction — B3
-> Résultat : `PC02` puis `fournil\adm.stagiaire`. **Pas de mot de passe** : dans un domaine, Windows utilise le ticket Kerberos de ta session, et `adm.stagiaire` est administrateur de `PC02`.
+### 3. Vérifier les services et revenir sur PC01
 
-### B4 — Entrer sur le serveur (bonus)
+Dans la **session distante**, lance `hostname` puis `Get-Service DNS, DHCPServer`. Note le nom de la machine et le statut des deux services. Tape `Exit-PSSession`, puis relance `hostname`. Quel nom vois-tu maintenant ?
 
-Sur `PC01`, tape `Enter-PSSession SRV01` et lis le message. Recommence avec `Enter-PSSession SRV01 -Credential FOURNIL\Administrateur`. Dans la session, tape `hostname` puis `Get-Service DHCPServer, DNS`. Termine avec `Exit-PSSession`.
+> [!success]- Afficher la correction
+> Dans la session distante, `hostname` affiche `SRV01`. Les services `DNS` et `DHCPServer` doivent normalement afficher `Running` dans le lab. Après `Exit-PSSession`, `hostname` affiche `PC01`.
 
-> [!success]- Afficher la correction — B4
-> Premier essai : **Accès refusé**, car `adm.stagiaire` n'est pas administrateur du serveur. Avec `-Credential`, une fenêtre demande le mot de passe, puis l'invite commence par `[SRV01]:`.
->
-> ![w11-12-enter-pssession-srv01](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enter-pssession-srv01.png)
-
-## Assistance rapide
-
-### D1 — Découvrir l'outil
-
-Sur `PC02`, menu Démarrer → tape **Assistance rapide**. Repère les zones **Aide** et **Aider quelqu'un**. Clique **Aider quelqu'un**, regarde ce qui est demandé, puis ferme la fenêtre sans te connecter.
-
-> [!success]- Afficher la correction — D1
-> **Aide** = l'utilisateur saisit le code donné par le technicien. **Aider quelqu'un** = le technicien doit se connecter avec un **compte Microsoft**. Si Windows demande d'« énumérer vos clés d'accès », réponds **Non**.
->
-> Attention aux arnaques : on ne donne un code qu'à une personne du support qu'on a soi-même appelée.
->
-> ![w11-12-assistance-rapide-compte-microsoft](https://cours.kaya.ovh/windows11/assets/captures/w11-12-assistance-rapide-compte-microsoft.png)
-
-[Retour à l'énoncé guidé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
+[Retour à l’énoncé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)

@@ -27,7 +27,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 - Sur `PC01`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Get-Inventaire.ps1" download data-router-ignore>Get-Inventaire.ps1</a> dedans.
 - Sur `PC02`, crée `C:\MCO` et télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Test-Poste.ps1" download data-router-ignore>Test-Poste.ps1</a> dedans.
 - Ouvre Windows PowerShell en administrateur sur chaque poste avec le compte d’administration du lab. Sur chaque copie téléchargée, utilise `Unblock-File -LiteralPath` avec son chemin complet.
-- Depuis `PC01`, lance `Test-WSMan PC02`. Si la commande échoue, termine la partie B du [TP 16 sur l’accès distant](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide), puis recommence.
+- Depuis `PC01`, lance `Test-WSMan PC02`. Si la commande échoue, ouvre **Windows PowerShell en administrateur sur `PC02`**, exécute `Enable-PSRemoting -Force`, puis relance le test depuis `PC01`.
 
 ## Prérequis
 
