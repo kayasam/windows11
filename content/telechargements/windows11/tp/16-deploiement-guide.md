@@ -1,6 +1,6 @@
-# TP 15. Déployer Windows 11 : ISO, réseau, migration, moderne, version guidée
+# TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne, version guidée
 
-**Ta mission.** Déploie `PC02` depuis l’ISO officielle et une petite ISO contenant le fichier de réponse. Tu travailleras sur `PC01` pour créer la mini-ISO, sur l’hôte pour démarrer la VM et sur `SRV01` pour vérifier le domaine. Prépare le domaine et le DHCP du TP 10, l’UO `Fournil → Ordinateurs` et les outils ADK du TP 12.
+**Ta mission.** Déploie `PC02` depuis l’ISO officielle et une petite ISO contenant le fichier de réponse. Tu travailleras sur `PC01` pour créer la mini-ISO, sur l’hôte pour démarrer la VM et sur `SRV01` pour vérifier le domaine. Prépare le domaine et le DHCP du TP 10, l’UO `Fournil → Ordinateurs` et les outils ADK du TP 13.
 
 ## Fichiers à récupérer sur `PC01`
 
@@ -13,7 +13,7 @@ Crée le dossier `C:\Images\TP15` et enregistre les quatre fichiers ci-dessous d
 | <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/postinstall.ps1" download data-router-ignore>postinstall.ps1</a> | Installe les applications après le premier démarrage |
 | <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/MigFournil.xml" download data-router-ignore>MigFournil.xml</a> | Sélectionne les dossiers à migrer avec USMT |
 
-Dans l’ADK du TP 12, vérifie que **Outils de déploiement** et **User State Migration Tool (USMT)** sont installés sur `PC01`. Demande au formateur le mot de passe local du lab et les identifiants du compte autorisé à joindre les VM au domaine..
+Dans l’ADK du TP 13, vérifie que **Outils de déploiement** et **User State Migration Tool (USMT)** sont installés sur `PC01`. Demande au formateur le mot de passe local du lab et les identifiants du compte autorisé à joindre les VM au domaine..
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/16-deploiement/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/standard)
 

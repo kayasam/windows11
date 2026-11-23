@@ -1,5 +1,5 @@
 ---
-title: "14. Images WIM et DISM"
+title: "15. Images WIM et DISM"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/15-wim-dism"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -7,17 +7,17 @@ title: "14. Images WIM et DISM"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/15-wim-dism.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!abstract] Parcours TSSR
-> Socle : partie B uniquement, sur install.wim de l’ISO officielle. MASTER et les parties A, C, D, E sont (bonus) ; aucune capture n’est nécessaire pour suivre le TP 15.
+> Socle : partie B uniquement, sur install.wim de l’ISO officielle. MASTER et les parties A, C, D, E sont (bonus) ; aucune capture n’est nécessaire pour suivre le TP 16.
 > Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
-> Comprendre le format WIM, **capturer** l'image généralisée de `MASTER` (chapitre 13) avec DISM, la **maintenir hors ligne** (pilotes, mises à jour, applications, langues), et l'**appliquer** sur un disque vierge depuis Windows PE (`Dism /Apply-Image` + `bcdboot`).
+> Comprendre le format WIM, **capturer** l'image généralisée de `MASTER` (chapitre 14) avec DISM, la **maintenir hors ligne** (pilotes, mises à jour, applications, langues), et l'**appliquer** sur un disque vierge depuis Windows PE (`Dism /Apply-Image` + `bcdboot`).
 >
-> **Outils :** `dism.exe`, `Mount-VHD`/`Dismount-VHD` (Hyper-V), WinPE (chapitre 12)
+> **Outils :** `dism.exe`, `Mount-VHD`/`Dismount-VHD` (Hyper-V), WinPE (chapitre 13)
 > **Commandes à connaître :** `Dism /Capture-Image`, `Dism /Get-WimInfo`, `Dism /Mount-Image`, `Dism /Add-Driver`, `Dism /Add-Package`, `Dism /Unmount-Image`, `Dism /Apply-Image`, `bcdboot`
 
 > [!INFO] Fil rouge — Fournil
-> `D:\Images\MASTER.wim` capturée depuis l'hôte le 08/11/2026 (22 min, 8,3 Go). Le WinPE du chapitre 12 a été démarré sur une VM vierge pour la procédure d'application manuelle.
+> `D:\Images\MASTER.wim` capturée depuis l'hôte le 08/11/2026 (22 min, 8,3 Go). Le WinPE du chapitre 13 a été démarré sur une VM vierge pour la procédure d'application manuelle.
 
 ---
 
@@ -45,10 +45,10 @@ Get-WindowsImage -ImagePath "D:\Images\install.wim" -Index 6
 
 ## Capturer une image avec DISM (bonus)
 
-`MASTER` a été généralisée et éteinte au chapitre 13. Plutôt que de démarrer un environnement WinPE, on peut **monter directement le VHDX** depuis l'hôte Hyper-V et capturer son contenu avec DISM.
+`MASTER` a été généralisée et éteinte au chapitre 14. Plutôt que de démarrer un environnement WinPE, on peut **monter directement le VHDX** depuis l'hôte Hyper-V et capturer son contenu avec DISM.
 
 > [!WARNING] Le checkpoint change quel fichier monter
-> Depuis le `Checkpoint-VM "Avant-Sysprep"` (chapitre 13), `MASTER.vhdx` est devenu un disque **parent figé au moment du checkpoint** — donc **avant** Sysprep. Toutes les modifications faites depuis, y compris la généralisation elle-même, sont stockées dans un fichier de différence `.avhdx` séparé (visible à côté du `.vhdx` dans le dossier de la VM, nommé avec un GUID généré par Hyper-V). Monter directement `MASTER.vhdx` capturerait donc l'état **pré-Sysprep**, pas l'image généralisée qu'on veut réellement capturer.
+> Depuis le `Checkpoint-VM "Avant-Sysprep"` (chapitre 14), `MASTER.vhdx` est devenu un disque **parent figé au moment du checkpoint** — donc **avant** Sysprep. Toutes les modifications faites depuis, y compris la généralisation elle-même, sont stockées dans un fichier de différence `.avhdx` séparé (visible à côté du `.vhdx` dans le dossier de la VM, nommé avec un GUID généré par Hyper-V). Monter directement `MASTER.vhdx` capturerait donc l'état **pré-Sysprep**, pas l'image généralisée qu'on veut réellement capturer.
 
 Plutôt que deviner le nom du fichier `.avhdx`, on demande à Hyper-V quel est le disque **actuellement actif** de la VM — c'est automatiquement le bon fichier, avec ou sans checkpoint :
 
@@ -87,7 +87,7 @@ Dismount-VHD -Path $vhdPath
 ```
 
 > [!TIP] Pourquoi monter le VHDX plutôt que démarrer une VM WinPE
-> Hyper-V permet de monter un VHDX directement comme un disque sur l'hôte (`Mount-VHD`), sans avoir besoin de créer une VM WinPE dédiée juste pour la capture — plus rapide et plus simple en environnement de lab. `Mount-VHD` sur un fichier `.avhdx` résout automatiquement la chaîne parent/différence et présente le contenu fusionné, sans opération de fusion (`merge`) préalable — le checkpoint reste donc intact après la capture, disponible pour un futur rafraîchissement (chapitre 13). En dehors d'Hyper-V (poste physique par exemple), la capture se ferait effectivement en démarrant sur un support WinPE.
+> Hyper-V permet de monter un VHDX directement comme un disque sur l'hôte (`Mount-VHD`), sans avoir besoin de créer une VM WinPE dédiée juste pour la capture — plus rapide et plus simple en environnement de lab. `Mount-VHD` sur un fichier `.avhdx` résout automatiquement la chaîne parent/différence et présente le contenu fusionné, sans opération de fusion (`merge`) préalable — le checkpoint reste donc intact après la capture, disponible pour un futur rafraîchissement (chapitre 14). En dehors d'Hyper-V (poste physique par exemple), la capture se ferait effectivement en démarrant sur un support WinPE.
 
 ---
 
@@ -172,7 +172,7 @@ Dism /Image:C:\Mount /Cleanup-Image /StartComponentCleanup /ResetBase
 
 ## Appliquer une image depuis Windows PE (bonus)
 
-C'est ce que fait Windows Setup en coulisses, et ce que font tous les outils de déploiement : **partitionner**, **appliquer** le WIM, **rendre le disque démarrable**. On peut le faire à la main depuis le WinPE du chapitre 12 — indispensable quand on n'a ni ISO personnalisée ni infrastructure.
+C'est ce que fait Windows Setup en coulisses, et ce que font tous les outils de déploiement : **partitionner**, **appliquer** le WIM, **rendre le disque démarrable**. On peut le faire à la main depuis le WinPE du chapitre 13 — indispensable quand on n'a ni ISO personnalisée ni infrastructure.
 
 ### 1. Préparer un script de partitionnement UEFI
 
@@ -200,7 +200,7 @@ powershell -NoProfile -Command "Get-Disk | Format-Table Number,FriendlyName,Size
 
 ![w11-15-winpe-powershell-disques](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-powershell-disques.png)
 
-*WinPE du chapitre 12 sur une VM vierge : PowerShell 5.1 disponible, disque 0 vierge (RAW, cible), disque d'images monté en **C:** — dans WinPE, les lettres ne sont jamais celles de Windows. Toujours vérifier avant `clean`.*
+*WinPE du chapitre 13 sur une VM vierge : PowerShell 5.1 disponible, disque 0 vierge (RAW, cible), disque d'images monté en **C:** — dans WinPE, les lettres ne sont jamais celles de Windows. Toujours vérifier avant `clean`.*
 
 ### 3. Partitionner, appliquer, rendre démarrable
 
@@ -219,7 +219,7 @@ wpeutil reboot
 | `wpeutil reboot` | Redémarre : la passe **specialize** puis **oobeSystem** de l'image généralisée se jouent |
 
 > [!NOTE] Rejoué de bout en bout sur le lab formateur (08/11/2026)
-> VM vierge `PC03` démarrée sur le WinPE du chapitre 12, script `deploie.cmd` : `diskpart` → `Dism /Apply-Image` (100 %) → `bcdboot` (« *Boot files successfully created* ») → copie d'un `unattend.xml` (passes specialize + oobeSystem, `ComputerName = PC03`) dans `W:\Windows\Panther` → `wpeutil reboot`. **Une minute plus tard, `PC03` était sur le bureau, session `Utilisateur`, image Fournil.** Un premier essai avait échoué faute de place sur l'hôte : prévoir **au moins 40 Go libres**.
+> VM vierge `PC03` démarrée sur le WinPE du chapitre 13, script `deploie.cmd` : `diskpart` → `Dism /Apply-Image` (100 %) → `bcdboot` (« *Boot files successfully created* ») → copie d'un `unattend.xml` (passes specialize + oobeSystem, `ComputerName = PC03`) dans `W:\Windows\Panther` → `wpeutil reboot`. **Une minute plus tard, `PC03` était sur le bureau, session `Utilisateur`, image Fournil.** Un premier essai avait échoué faute de place sur l'hôte : prévoir **au moins 40 Go libres**.
 >
 > ![w11-15-winpe-apply-image](https://cours.kaya.ovh/windows11/assets/captures/w11-15-winpe-apply-image.png)
 
@@ -227,7 +227,7 @@ wpeutil reboot
 > Une VM Hyper-V dont le disque dynamique ne peut plus grandir passe en état **PausedCritical** (`Get-VM` → *State*) : elle est gelée, sans erreur visible dans la VM. Libérer de la place, puis `Resume-VM`. À surveiller pendant tout le jour 4 (WIM de 8 Go, ISO de 9 Go, copies…).
 
 > [!NOTE] Et le fichier de réponse ?
-> Une image généralisée appliquée ainsi démarre sur l'**OOBE** classique. Pour l'automatiser, on copie un `unattend.xml` (passes specialize/oobeSystem) dans `W:\Windows\Panther\unattend.xml` **avant** de redémarrer — c'est exactement le rôle que joue l'`autounattend.xml` à la racine de l'ISO au chapitre 15.
+> Une image généralisée appliquée ainsi démarre sur l'**OOBE** classique. Pour l'automatiser, on copie un `unattend.xml` (passes specialize/oobeSystem) dans `W:\Windows\Panther\unattend.xml` **avant** de redémarrer — c'est exactement le rôle que joue l'`autounattend.xml` à la racine de l'ISO au chapitre 16.
 
 ---
 
@@ -237,7 +237,7 @@ wpeutil reboot
 > **Format WIM**
 > - Basé fichiers (pas secteurs) · déduplication · multi-index dans un seul .wim
 >
-> **Capture (MASTER généralisée et éteinte, chapitre 13)**
+> **Capture (MASTER généralisée et éteinte, chapitre 14)**
 > - `$vhdPath = (Get-VMHardDiskDrive -VMName "MASTER").Path` — *disque actif, pas forcément `MASTER.vhdx` (checkpoint = `.avhdx`)*
 > - `Mount-VHD -Path $vhdPath -ReadOnly` → `Dism /Capture-Image /CaptureDir:E:\` → `Dismount-VHD -Path $vhdPath`
 >
@@ -257,4 +257,4 @@ wpeutil reboot
 > - `diskpart /s partition-uefi.txt` → `Dism /Apply-Image /ApplyDir:W:\` → `bcdboot W:\Windows /s S: /f UEFI`
 > - **Lettres différentes dans WinPE** : vérifier avec `Get-Volume` avant "clean"
 >
-> - → Chapitre 15 : `MASTER.wim` intégrée dans une ISO de déploiement personnalisée
+> - → Chapitre 16 : `MASTER.wim` intégrée dans une ISO de déploiement personnalisée

@@ -1,4 +1,4 @@
-# TP 12. ADK, Windows PE et fichier de réponse, version guidée
+# TP 13. ADK, Windows PE et fichier de réponse, version guidée
 
 **Ta mission.** Travaille sur `PC01` avec l’ISO Windows 11 et les fichiers fournis. Tu vas produire une ISO WinPE qui démarre une VM de test et valider un fichier de réponse avant de l’utiliser.
 

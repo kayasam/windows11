@@ -25,7 +25,7 @@ Livrable : un dossier `C:\MCO` sur `PC01` contenant l'inventaire, les journaux e
 ## Prérequis
 
 - `SRV01`, `PC01`, `PC02` démarrés, `PC01` et `PC02` joints au domaine
-- WinRM actif sur `PC02` (TP 16)
+- Sur `PC02`, ouvre Windows PowerShell en administrateur et active WinRM avec `Enable-PSRemoting -Force`. Depuis `PC01`, vérifie avec `Test-WSMan PC02`.
 - Les deux scripts téléchargés sur les postes indiqués ci-dessus
 - Points de contrôle Hyper-V de `PC01` et `PC02` : `Checkpoint-VM -Name PC01,PC02 -SnapshotName "Avant-TP21"`
 

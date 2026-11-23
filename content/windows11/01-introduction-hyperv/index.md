@@ -72,7 +72,7 @@ Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
 | **Windows 365 Link** | Petit boîtier dédié qui démarre directement sur un Cloud PC | Intégré |
 
 > [!NOTE] Windows App remplace l'application Bureau à distance
-> L'application « Bureau à distance » du Store a été retirée en mai 2025 et le client MSRDC en mars 2026, au profit de **Windows App** (Cloud PC, AVD). Le client classique `mstsc.exe` reste supporté pour se connecter à un PC ou un serveur (chapitre 16).
+> L'application « Bureau à distance » du Store a été retirée en mai 2025 et le client MSRDC en mars 2026, au profit de **Windows App** (Cloud PC, AVD). Le client classique `mstsc.exe` reste supporté pour se connecter à un PC ou un serveur (chapitre 12).
 
 ---
 
@@ -196,7 +196,7 @@ Un commutateur virtuel (vSwitch) connecte les cartes réseau des VM entre elles 
 > [!WARNING] Pourquoi on n'utilise pas le Default Switch dans ce cours
 > Le Default Switch est pratique pour un test rapide, mais son adressage **change à chaque reboot** de l'hôte. Impossible de configurer des IP fixes stables pour les VM, ce qui est indispensable pour monter un lab avec un contrôleur de domaine, du DNS et du DHCP.
 >
-> **Notre choix** : un switch **interne** avec un NAT configuré manuellement pour `PC01`, `SRV01` et `PC02`. C'est quelques commandes de plus, mais on maîtrise totalement le réseau. `MASTER` (chapitre 13) est la seule exception : elle n'a pas besoin d'IP stable ni de joindre le domaine, elle utilise directement le Default Switch pour son accès Internet.
+> **Notre choix** : un switch **interne** avec un NAT configuré manuellement pour `PC01`, `SRV01` et `PC02`. C'est quelques commandes de plus, mais on maîtrise totalement le réseau. `MASTER` (chapitre 14) est la seule exception : elle n'a pas besoin d'IP stable ni de joindre le domaine, elle utilise directement le Default Switch pour son accès Internet.
 
 > [!TIP] Pour aller plus loin sur les commutateurs virtuels
 > [IT-Connect — Hyper-V : switchs virtuels externe, interne et privé](https://www.it-connect.fr/chapitres/hyper-v-switchs-virtuels-externe-interne-et-prive/)

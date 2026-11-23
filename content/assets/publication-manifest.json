@@ -73,32 +73,32 @@
       "correction": false
     },
     {
+      "key": "windows11/12-acces-distant",
+      "title": "12. Administrer SRV01 depuis PC01",
+      "tp": true,
+      "correction": false
+    },
+    {
       "key": "windows11/13-adk-winpe",
-      "title": "12. ADK, Windows PE et fichier de réponse",
+      "title": "13. ADK, Windows PE et fichier de réponse",
       "tp": true,
       "correction": false
     },
     {
       "key": "windows11/14-sysprep-audit",
-      "title": "13. Poste de référence : mode audit et Sysprep (bonus)",
+      "title": "14. Poste de référence : mode audit et Sysprep (bonus)",
       "tp": true,
       "correction": false
     },
     {
       "key": "windows11/15-wim-dism",
-      "title": "14. Images WIM et DISM",
+      "title": "15. Images WIM et DISM",
       "tp": true,
       "correction": false
     },
     {
       "key": "windows11/16-deploiement",
-      "title": "15. Déployer Windows 11 : ISO, réseau, migration, moderne",
-      "tp": true,
-      "correction": false
-    },
-    {
-      "key": "windows11/12-acces-distant",
-      "title": "16. Administrer SRV01 depuis PC01",
+      "title": "16. Déployer Windows 11 : ISO, réseau, migration, moderne",
       "tp": true,
       "correction": false
     },
@@ -289,6 +289,20 @@
       "correction": false
     },
     {
+      "key": "windows11/12-acces-distant/tp/standard",
+      "correctionKey": "windows11/12-acces-distant/tp/standard-corrigev2",
+      "downloadStem": "12-acces-distant",
+      "track": "windows11",
+      "correction": false
+    },
+    {
+      "key": "windows11/12-acces-distant/tp/guide",
+      "correctionKey": "windows11/12-acces-distant/tp/guide-corrigev2",
+      "downloadStem": "12-acces-distant-guide",
+      "track": "windows11",
+      "correction": false
+    },
+    {
       "key": "windows11/13-adk-winpe/tp/standard",
       "correctionKey": "windows11/13-adk-winpe/tp/standard-corrigev2",
       "downloadStem": "13-adk-winpe",
@@ -341,20 +355,6 @@
       "key": "windows11/16-deploiement/tp/guide",
       "correctionKey": "windows11/16-deploiement/tp/guide-corrigev2",
       "downloadStem": "16-deploiement-guide",
-      "track": "windows11",
-      "correction": false
-    },
-    {
-      "key": "windows11/12-acces-distant/tp/standard",
-      "correctionKey": "windows11/12-acces-distant/tp/standard-corrigev2",
-      "downloadStem": "12-acces-distant",
-      "track": "windows11",
-      "correction": false
-    },
-    {
-      "key": "windows11/12-acces-distant/tp/guide",
-      "correctionKey": "windows11/12-acces-distant/tp/guide-corrigev2",
-      "downloadStem": "12-acces-distant-guide",
       "track": "windows11",
       "correction": false
     },

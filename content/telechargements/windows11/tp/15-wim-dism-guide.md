@@ -1,6 +1,6 @@
-# TP 14. Images WIM et DISM, version guidée
+# TP 15. Images WIM et DISM, version guidée
 
-**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 12. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
+**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 13. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/standard)
 

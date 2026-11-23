@@ -1,6 +1,6 @@
-# TP 13. Poste de référence : mode audit et Sysprep, version guidée (bonus)
+# TP 14. Poste de référence : mode audit et Sysprep, version guidée (bonus)
 
-**Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 14. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
+**Ta mission.** Atelier complémentaire. Prépare `MASTER` pour une capture réalisée au TP 15. Tu termines quand Sysprep a arrêté la VM et que son disque n’a pas redémarré.
 
 ## Fichiers de l’atelier (bonus)
 

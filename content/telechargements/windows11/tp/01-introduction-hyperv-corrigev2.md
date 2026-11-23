@@ -255,7 +255,7 @@
 > ```powershell
 > (Get-VMHardDiskDrive -VMName PC01).Path   # pointe désormais vers le .avhdx
 > ```
-> Ce détail sera crucial au chapitre 14 : pour capturer l'image d'une VM qui a un checkpoint, il faut monter le **disque actif** (le `.avhdx`), pas le `.vhdx`.
+> Ce détail sera crucial au chapitre 15 : pour capturer l'image d'une VM qui a un checkpoint, il faut monter le **disque actif** (le `.avhdx`), pas le `.vhdx`.
 
 **E3.** Explique la différence entre un checkpoint **Standard** et un checkpoint **Production**.
 
@@ -306,7 +306,7 @@
 > Import-VM -Path (Get-Item "D:\Export\PC01\Virtual Machines\*.vmcx").FullName `
 >     -Copy -GenerateNewId -VirtualMachinePath D:\HyperV\PC01-copie -VhdDestinationPath D:\HyperV\PC01-copie
 > ```
-> `-GenerateNewId` évite le conflit avec la VM d'origine. Attention : la copie a le **même nom de machine et le même SID** côté Windows. Pour multiplier des postes, on passera par Sysprep (chapitre 13).
+> `-GenerateNewId` évite le conflit avec la VM d'origine. Attention : la copie a le **même nom de machine et le même SID** côté Windows. Pour multiplier des postes, on passera par Sysprep (chapitre 14).
 
 ---
 

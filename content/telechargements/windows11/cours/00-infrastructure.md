@@ -18,11 +18,11 @@
 | Hôte `vEthernet (vSwitch-Rennes)` | Passerelle NAT | `192.168.3.254/24` | — | — | chap. 01 |
 | **SRV01** | Contrôleur de domaine (AD DS, DNS, DHCP) | `192.168.3.1` | `.254` | `192.168.3.1` | chap. 10 |
 | **PC01** | Poste d'administration Windows 11 Pro | `192.168.3.10` | `.254` | `8.8.8.8`, `1.1.1.1` → `192.168.3.1` (chap. 10) | chap. 01-02 |
-| **PC02** | Poste cible du déploiement | DHCP (`.100`–`.200`) | via DHCP | via DHCP | chap. 15 |
-| **MASTER** | VM de référence (image) — *bonus* | DHCP du Default Switch | — | — | chap. 13 |
+| **PC02** | Poste cible du déploiement | DHCP (`.100`–`.200`) | via DHCP | via DHCP | chap. 16 |
+| **MASTER** | VM de référence (image) — *bonus* | DHCP du Default Switch | — | — | chap. 14 |
 
 > [!NOTE] Chronologie
-> `PC01` reçoit son IP fixe au chapitre 03. `SRV01` est installé et configuré par chaque élève au chapitre 10 : avant, `PC01` utilise un DNS public. `MASTER` (chapitre 13) n'est **jamais** jointe au domaine et vit sur le **Default Switch** (Internet sans configuration). `PC02` n'apparaît qu'au chapitre 15.
+> `PC01` reçoit son IP fixe au chapitre 03. `SRV01` est installé et configuré par chaque élève au chapitre 10 : avant, `PC01` utilise un DNS public. `MASTER` (chapitre 14) n'est **jamais** jointe au domaine et vit sur le **Default Switch** (Internet sans configuration). `PC02` n'apparaît qu'au chapitre 16.
 
 ---
 
@@ -104,8 +104,8 @@ New-NetNat -Name "NAT-Rennes" -InternalIPInterfaceAddressPrefix "192.168.3.0/24"
 > - **Réseau** : `192.168.3.0/24` sur `vSwitch-Rennes` (interne + NAT), passerelle `192.168.3.254`
 > - **SRV01** : `192.168.3.1`, Windows Server 2025 (expérience de bureau) — AD DS, DNS, DHCP
 > - **PC01** : `192.168.3.10`, Windows 11 Pro 26H2 — poste d'administration
-> - **PC02** : adresse DHCP — cible du déploiement (chapitre 15)
-> - **MASTER** (bonus) : sur `Default Switch` — VM de référence (chapitre 13), inutile pour le déploiement du chapitre 15
+> - **PC02** : adresse DHCP — cible du déploiement (chapitre 16)
+> - **MASTER** (bonus) : sur `Default Switch` — VM de référence (chapitre 14), inutile pour le déploiement du chapitre 16
 > - **Domaine** : `ad.fournil.lab`, NetBIOS `FOURNIL`, niveau fonctionnel `Win2025`
 > - **DHCP** : plage `192.168.3.100` → `192.168.3.200`, routeur `.254`, DNS `.1`
 > - **Comptes** : `admin`, `Administrateur`, `stagiaire`, `adm.stagiaire`

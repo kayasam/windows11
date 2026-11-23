@@ -1,14 +1,16 @@
 ---
-title: "16. Administrer SRV01 depuis PC01"
+title: "12. Administrer SRV01 depuis PC01"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/12-acces-distant"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/12-acces-distant.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
-Le but est de choisir le bon accès selon la tâche. Dans le TP, tu gardes le même scénario : depuis `PC01`, vérifier l’état de DNS et DHCP sur `SRV01`. Les autres accès sont présentés en démos courtes.
+> [!abstract] Deux machines, deux rôles
+> **PC01** ouvre les connexions et **SRV01** les reçoit. Dans le TP, tu utilises **WinRM** pour vérifier DNS et DHCP sur le serveur. Les autres protocoles montrent comment la méthode change quand tu dois ouvrir un bureau, consulter les journaux ou accéder à un partage.
 
-**Prépare le lab.** `PC01` est joint à `ad.fournil.lab`, `SRV01` est démarré et les deux VM sont sur `vSwitch-Rennes`.
+> [!note] État du lab après le TP 11
+> `PC01` est joint à `ad.fournil.lab`. `SRV01` est démarré et les deux VM sont sur `vSwitch-Rennes`.
 
 > [!tip] Identifiants du lab
 > Dans la fenêtre d’identification de Windows, saisis `Administrateur@ad.fournil.lab` et le mot de passe fourni par le formateur.
@@ -22,7 +24,7 @@ Le but est de choisir le bon accès selon la tâche. Dans le TP, tu gardes le m�
 | Lire les événements du serveur | Observateur d’événements sur RPC | 135 pour trouver le service, puis ports négociés |
 | Ouvrir un dossier partagé | SMB | 445 |
 | Gérer une zone DNS avec une console | RSAT sur `PC01` | Selon la console. Pour cette démo DNS, commence par RPC, port 135 |
-| Aider une personne sur sa session | Assistance rapide | HTTPS sortant, 443 |
+| Aider une personne sur sa session (repère) | Assistance rapide | HTTPS sortant, 443 |
 
 ## Le même réflexe à chaque fois
 
@@ -137,19 +139,8 @@ Sur **PC01**, lance `dnsmgmt.msc`, connecte la console DNS à `SRV01` et ouvre *
 
 ![Capture du lab. Dans les fonctionnalités facultatives, recherche RSAT et installe uniquement la console nécessaire.](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
 
-## 7. Assistance rapide · Aider quelqu’un sur sa session
-
-Assistance rapide sert à dépanner une personne dans sa session Windows. Elle accepte de partager son écran, puis peut autoriser l’aidant à prendre la main.
-
-Sur **PC01**, ouvre **Assistance rapide**. Pour la démo, l’aidant se connecte, fournit un code et la personne aidée autorise le partage d’écran. Les deux postes ont besoin d’Internet.
-
-```powershell
-Get-NetTCPConnection -State Listen -LocalPort 443 -ErrorAction SilentlyContinue
-```
-
-Ce contrôle montre les éventuels services HTTPS **locaux**. Assistance rapide utilise une connexion **sortante** vers Microsoft : l’outil peut fonctionner même si la commande ne retourne rien. Pour observer les connexions sortantes HTTPS pendant la démo, compare avec `Get-NetTCPConnection -State Established -RemotePort 443`. Plusieurs applications peuvent utiliser ce même port.
-
-![Capture du lab. L’aidant choisit Aider quelqu’un et la personne aidée saisit le code dans la zone Aide.](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant.png)
+> [!note] Assistance rapide et Bureau à distance
+> L’Assistance rapide permet de **partager une session existante** avec l’accord de la personne aidée. Avec **RDP**, le technicien ouvre une session sur la machine distante. L’Assistance rapide utilise une connexion HTTPS sortante vers Microsoft. Le TP vérifie WinRM de PC01 vers SRV01.
 
 [Faire le TP guidé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
 

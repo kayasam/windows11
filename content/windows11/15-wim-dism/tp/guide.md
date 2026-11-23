@@ -1,5 +1,5 @@
 ---
-title: "TP 14. Images WIM et DISM, version guidée"
+title: "TP 15. Images WIM et DISM, version guidée"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/15-wim-dism"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -7,7 +7,7 @@ title: "TP 14. Images WIM et DISM, version guidée"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/15-wim-dism-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 
-**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 12. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
+**Ta mission.** La partie principale se fait sur `PC01` avec `C:\Images\install.wim` du TP 13. Si `MASTER` est prête, poursuis l’atelier complémentaire sur l’hôte.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/standard)
 

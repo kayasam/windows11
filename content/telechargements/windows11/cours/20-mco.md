@@ -76,11 +76,11 @@ PC02  26H2    26300.9457          60 KB5129195            417 FullyDecrypted / O
 
 Trois anomalies en une ligne de commande :
 - **Signatures Defender vieilles de 417 jours** sur les deux postes — alors qu'Internet fonctionne (voir section 4) ;
-- **`PC02` non chiffré** : conséquence de `PreventDeviceEncryption` dans le fichier de réponse du déploiement (chapitre 15) ;
+- **`PC02` non chiffré** : conséquence de `PreventDeviceEncryption` dans le fichier de réponse du déploiement (chapitre 16) ;
 - dernière mise à jour cumulative du **13/09/2026** : deux mois de retard.
 
 > [!TIP] Le poste local et WinRM
-> WinRM est **arrêté par défaut** sur Windows 11 (chapitre 16), y compris sur le poste d'administration lui-même : le script interroge donc le poste local directement et les autres par `Invoke-Command`. Première version du script : `if ($ComputerName -eq $env:COMPUTERNAME)` — sur un **tableau**, `-eq` filtre au lieu de comparer, la condition était vraie et seul `PC01` était inventorié. Toujours tester un script sur **plusieurs** postes.
+> WinRM est **arrêté par défaut** sur Windows 11 (chapitre 12), y compris sur le poste d'administration lui-même : le script interroge donc le poste local directement et les autres par `Invoke-Command`. Première version du script : `if ($ComputerName -eq $env:COMPUTERNAME)` — sur un **tableau**, `-eq` filtre au lieu de comparer, la condition était vraie et seul `PC01` était inventorié. Toujours tester un script sur **plusieurs** postes.
 
 ### Outils d'inventaire de parc
 
@@ -212,7 +212,7 @@ Et une sauvegarde non testée n'existe pas : prévoir **un test de restauration*
 ```
 
 > [!TIP] Réutiliser un poste
-> Pour **réattribuer** un poste à un autre utilisateur, pas besoin de réinstaller : *Réinitialiser ce PC* (ou redéploiement par l'ISO du chapitre 15) suffit. Avec Intune : *Autopilot Reset*.
+> Pour **réattribuer** un poste à un autre utilisateur, pas besoin de réinstaller : *Réinitialiser ce PC* (ou redéploiement par l'ISO du chapitre 16) suffit. Avec Intune : *Autopilot Reset*.
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "15. Déployer Windows 11 : ISO, réseau, migration, moderne"
+title: "16. Déployer Windows 11 : ISO, réseau, migration, moderne"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/16-deploiement"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -28,7 +28,7 @@ title: "15. Déployer Windows 11 : ISO, réseau, migration, moderne"
 |---------|----------|----------------|-------------|
 | **Manuelle** | ISO/clé USB officielle, on clique | Aucune | ✅ Dépannage, poste isolé |
 | **Automatisée** | ISO/clé officielle + `autounattend.xml` | Aucune | ✅ **Méthode du lab** (section 2) |
-| **Par image** | `MASTER.wim` appliquée (ISO personnalisée, WinPE + DISM) | Aucune, ou un partage | ✅ Grands parcs — bonus (section 3, chapitres 13-14) |
+| **Par image** | `MASTER.wim` appliquée (ISO personnalisée, WinPE + DISM) | Aucune, ou un partage | ✅ Grands parcs — bonus (section 3, chapitres 14-14) |
 | **Réseau — WDS** (PXE) | Le poste démarre sur la carte réseau, WDS fournit WinPE et l'image | Serveur WDS + DHCP | ⚠️ **Mains libres bloqué depuis avril 2026**, rôle **déprécié** |
 | **Réseau — MDT** (Lite Touch) | Séquences de tâches sur un partage, souvent via WDS | Serveur de déploiement | ❌ **Retiré le 6 janvier 2026** |
 | **Réseau — ConfigMgr OSD** | Séquences de tâches, PXE, multidiffusion | Microsoft Configuration Manager | ✅ Supporté (grandes entreprises sur site) |
@@ -56,7 +56,7 @@ Au démarrage, Windows Setup cherche un fichier nommé **exactement** `autounatt
 
 ### Étape 1 — Le fichier de réponse
 
-`autounattend-iso-officielle.xml` reprend le fichier du chapitre 12 et le complète :
+`autounattend-iso-officielle.xml` reprend le fichier du chapitre 13 et le complète :
 
 | Passe | Réglage | Effet |
 |---|---|---|
@@ -81,7 +81,7 @@ Au démarrage, Windows Setup cherche un fichier nommé **exactement** `autounatt
 
 Pour une VM, le plus simple est une **mini-ISO** de quelques centaines de kilo-octets, qui contient seulement les deux fichiers :
 
-`oscdimg` fait partie de l'ADK, installé **sur PC01** au chapitre 12 : on construit donc la mini-ISO **dans PC01** (Terminal administrateur), avec les deux fichiers fournis copiés dans `C:\Images\` :
+`oscdimg` fait partie de l'ADK, installé **sur PC01** au chapitre 13 : on construit donc la mini-ISO **dans PC01** (Terminal administrateur), avec les deux fichiers fournis copiés dans `C:\Images\` :
 
 ```powershell
 New-Item C:\Images\reponses-pc02 -ItemType Directory -Force
@@ -167,7 +167,7 @@ Vérifications : `Windows 11 Professionnel` build 26300 · `CN=PC02,OU=Ordinateu
 ## 3. Méthode 2 — l'ISO personnalisée avec une image maître (bonus)
 
 > [!abstract] Niveau : bonus
-> Cette méthode remplace l'image de l'ISO par `MASTER.wim` (chapitres 13 et 14). Elle sert aux grands parcs homogènes ; pour un public TSSR, la section 2 suffit.
+> Cette méthode remplace l'image de l'ISO par `MASTER.wim` (chapitres 14 et 15). Elle sert aux grands parcs homogènes ; pour un public TSSR, la section 2 suffit.
 
 ![Assembler l’ISO de déploiement — MASTER.wim et autounattend.xml remplacent ou complètent le contenu de l’ISO Windows 11, puis oscdimg crée l’ISO amorçable pour PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-16-iso-personnalisee.svg)
 
@@ -177,10 +177,10 @@ Vérifications : `Windows 11 Professionnel` build 26300 · `CN=PC02,OU=Ordinateu
 
 | Élément | Origine |
 |---------|---------|
-| `MASTER.wim` | Chapitre 14 (capture DISM) |
-| `autounattend.xml` | Chapitre 12 (Windows SIM, passes `windowsPE` + `specialize` + `oobeSystem`) |
+| `MASTER.wim` | Chapitre 15 (capture DISM) |
+| `autounattend.xml` | Chapitre 13 (Windows SIM, passes `windowsPE` + `specialize` + `oobeSystem`) |
 | ISO Windows 11 officielle | Celle utilisée depuis le chapitre 2 |
-| `oscdimg.exe` | Installé avec l'ADK (chapitre 12), dans `Deployment Tools\<arch>\Oscdimg\` |
+| `oscdimg.exe` | Installé avec l'ADK (chapitre 13), dans `Deployment Tools\<arch>\Oscdimg\` |
 
 ---
 
@@ -206,7 +206,7 @@ Copy-Item "D:\Images\MASTER.wim" -Destination "D:\ISO-Deploiement\sources\instal
 ```
 
 > [!DANGER] Vérifier qu'il ne reste pas de fichier de réponse dans l'image
-> Vécu sur le lab : le premier déploiement de `PC02` a échoué (« *Échec de l'installation de Windows 11* », `0x80070050`) parce que `MASTER.wim` contenait `Windows\Panther\unattend-original.xml` — copie du fichier qui avait servi à installer `MASTER`. Le Setup des médias 24H2+ refuse de l'écraser. Puis le deuxième essai a échoué sur un dossier `Windows.old` **vide** capturé dans l'image (`0x800700B7`, *CRelocateOS*). Correction et diagnostic : chapitre 13, *Dépanner Sysprep*, pièges n° 4 et 5. **Règle** : avant de distribuer une image, la monter et vérifier sa racine et `Windows\Panther`.
+> Vécu sur le lab : le premier déploiement de `PC02` a échoué (« *Échec de l'installation de Windows 11* », `0x80070050`) parce que `MASTER.wim` contenait `Windows\Panther\unattend-original.xml` — copie du fichier qui avait servi à installer `MASTER`. Le Setup des médias 24H2+ refuse de l'écraser. Puis le deuxième essai a échoué sur un dossier `Windows.old` **vide** capturé dans l'image (`0x800700B7`, *CRelocateOS*). Correction et diagnostic : chapitre 14, *Dépanner Sysprep*, pièges n° 4 et 5. **Règle** : avant de distribuer une image, la monter et vérifier sa racine et `Windows\Panther`.
 
 > [!NOTE] Le nom de fichier reste `install.wim`
 > Windows Setup cherche spécifiquement `sources\install.wim` — on ne renomme pas le fichier lui-même, seul le **contenu** change (l'image généralisée et personnalisée de `MASTER` à la place de l'image Windows "nue").
@@ -263,7 +263,7 @@ vmconnect.exe localhost "PC02"
 ```
 
 > [!WARNING] PC02 a les mêmes exigences que MASTER
-> Comme `MASTER` (chapitre 13), `PC02` doit répondre aux prérequis Windows 11 : au moins 2 processeurs virtuels et un TPM activé (`Set-VMKeyProtector` + `Enable-VMTPM`) — sans ça, l'installation peut échouer ou se comporter de façon imprévisible à des étapes tardives (le TPM est notamment sollicité par les vérifications BitLocker pendant Setup). `Set-VMFirmware -FirstBootDevice` force explicitement le démarrage sur le lecteur DVD, plutôt que de compter sur l'ordre par défaut.
+> Comme `MASTER` (chapitre 14), `PC02` doit répondre aux prérequis Windows 11 : au moins 2 processeurs virtuels et un TPM activé (`Set-VMKeyProtector` + `Enable-VMTPM`) — sans ça, l'installation peut échouer ou se comporter de façon imprévisible à des étapes tardives (le TPM est notamment sollicité par les vérifications BitLocker pendant Setup). `Set-VMFirmware -FirstBootDevice` force explicitement le démarrage sur le lecteur DVD, plutôt que de compter sur l'ordre par défaut.
 
 > [!WARNING] Mémoire dynamique = échecs aléatoires et difficiles à diagnostiquer
 > Si la mémoire dynamique est activée, Windows Setup peut demander de la RAM plus vite que Hyper-V n'arrive à la lui allouer pendant l'application de l'image — l'installation échoue alors avec une erreur `0x800705AA` ("ressources système insuffisantes", visible dans `setuperr.log` comme `CApplyWIM: Failure while applying image... GLE [1450]`), souvent tard dans le processus, sans lien apparent avec l'ISO ou le fichier de réponse. `Set-VMMemory -DynamicMemoryEnabled $false` avec au moins 6 Go statiques évite ce piège.
@@ -271,7 +271,7 @@ vmconnect.exe localhost "PC02"
 `PC02` démarre sur l'ISO (disque vierge, rien d'autre à booter), Windows Setup détecte `autounattend.xml` à la racine, partitionne le disque, applique `install.wim` (en réalité `MASTER.wim`), redémarre — et arrive directement sur le bureau, sans aucun écran ni clic intermédiaire.
 
 > [!NOTE] Nom d'ordinateur généré automatiquement
-> Grâce à `ComputerName: *` (passe `specialize`, chapitre 12), chaque déploiement génère un nom unique (`FOURNIL-AN4OLJL` sur le lab : préfixe = `RegisteredOrganization`) — plusieurs postes peuvent être déployés depuis la même ISO sans conflit. On le renomme ensuite à la jonction au domaine (`Add-Computer -NewName PC02`). **Ne pas** utiliser `PC-*` : invalide, il fait échouer la passe specialize (chapitre 12).
+> Grâce à `ComputerName: *` (passe `specialize`, chapitre 13), chaque déploiement génère un nom unique (`FOURNIL-AN4OLJL` sur le lab : préfixe = `RegisteredOrganization`) — plusieurs postes peuvent être déployés depuis la même ISO sans conflit. On le renomme ensuite à la jonction au domaine (`Add-Computer -NewName PC02`). **Ne pas** utiliser `PC-*` : invalide, il fait échouer la passe specialize (chapitre 13).
 
 ---
 
@@ -311,7 +311,7 @@ Avantage : **aucun support physique**, des dizaines de postes en parallèle (mul
 
 ## 5. Partitionnement automatisé
 
-Deux façons, vues aux chapitres 12 et 14 :
+Deux façons, vues aux chapitres 13 et 15 :
 
 | Méthode | Où | Quand |
 |---------|----|-------|

@@ -25,9 +25,9 @@ title: "TP 18. Environnement utilisateur et Microsoft 365"
 
 ## Prérequis
 
-- `SRV01` et `PC02` allumées, `PC02` joint au domaine (TP 15)
+- `SRV01` et `PC02` allumées, `PC02` joint au domaine (TP 16)
 - Sur `PC02` : session `FOURNIL\adm.stagiaire` ; sur `SRV01` : session `FOURNIL\Administrateur`
-- `test.vendeur` s'est déjà connecté à `PC02` (TP 16, Bureau à distance). Sinon, ouvre une fois une session `FOURNIL\test.vendeur` sur `PC02`, puis déconnecte-la.
+- `test.vendeur` doit avoir un profil sur `PC02`. Ouvre une fois une session avec ce compte dans la console de `PC02`, puis ferme-la.
 
 ---
 

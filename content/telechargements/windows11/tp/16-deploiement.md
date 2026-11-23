@@ -1,4 +1,4 @@
-# TP 15. Déployer Windows 11 : ISO, réseau, migration, moderne
+# TP 16. Déployer Windows 11 : ISO, réseau, migration, moderne
 
 > [!abstract] Parcours TSSR
 > Socle : déployer PC02 avec l’ISO officielle et les fichiers fournis, migrer un profil de test avec USMT et choisir une méthode selon le contexte. Un petit jeu de documents est préparé avant la capture. L’image maître et l’ISO personnalisée sont (bonus).
@@ -28,7 +28,7 @@ Crée le dossier `C:\Images\TP15` et enregistre les quatre fichiers ci-dessous d
 | <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/postinstall.ps1" download data-router-ignore>postinstall.ps1</a> | Installe les applications après le premier démarrage |
 | <a href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/MigFournil.xml" download data-router-ignore>MigFournil.xml</a> | Sélectionne les dossiers à migrer avec USMT |
 
-Dans l’ADK du TP 12, vérifie que **Outils de déploiement** et **User State Migration Tool (USMT)** sont installés sur `PC01`. Demande au formateur le mot de passe local du lab et les identifiants du compte autorisé à joindre les VM au domaine..
+Dans l’ADK du TP 13, vérifie que **Outils de déploiement** et **User State Migration Tool (USMT)** sont installés sur `PC01`. Demande au formateur le mot de passe local du lab et les identifiants du compte autorisé à joindre les VM au domaine..
 
 ## Prérequis
 
@@ -36,7 +36,7 @@ Dans l’ADK du TP 12, vérifie que **Outils de déploiement** et **User State M
 - Les quatre fichiers téléchargés sur `PC01`. Suis la préparation A2 du [TP guidé](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/guide) pour créer `autounattend.xml`.
 - Domaine `ad.fournil.lab` avec DHCP actif et l'OU `OU=Ordinateurs,OU=Fournil` (TP 10)
 - ADK sur `PC01` (oscdimg, USMT) ; partage `\\SRV01\USMT$` créé par l’élève avec la préparation ci-dessous ; compte de lab autorisé à lire les outils et à écrire le magasin et les journaux
-- Partie F seulement : `MASTER.wim` (TP 14) et **40 Go libres** sur l'hôte
+- Partie F seulement : `MASTER.wim` (TP 15) et **40 Go libres** sur l'hôte
 
 ---
 

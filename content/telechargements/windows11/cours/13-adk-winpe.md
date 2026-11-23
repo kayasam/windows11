@@ -1,17 +1,17 @@
-# 12. ADK, Windows PE et fichier de réponse
+# 13. ADK, Windows PE et fichier de réponse
 
 > [!abstract] Parcours TSSR
 > L'ADK et le module WinPE s'installent en **3 minutes** avec WinGet (testé sur le lab). La création du catalogue WSIM prend **≈ 10 minutes** : à lancer avant une pause. Socle : vérifier les outils, créer un WinPE standard, puis compléter et valider un fichier de réponse fourni. PowerShell dans WinPE et la préparation de MASTER sont (bonus).
 > Les sections marquées (bonus) sont facultatives.
 
 > [!NOTE] Objectif
-> Préparer les outils du déploiement : installer **Windows ADK et son module Windows PE** (en versions assorties), créer un support de démarrage **WinPE** personnalisé, et construire avec Windows SIM le fichier de réponse unique (`autounattend.xml`) qui servira au Sysprep de `MASTER` (chapitre 13) et à l'installation automatisée des postes (chapitre 15).
+> Préparer les outils du déploiement : installer **Windows ADK et son module Windows PE** (en versions assorties), créer un support de démarrage **WinPE** personnalisé, et construire avec Windows SIM le fichier de réponse unique (`autounattend.xml`) qui servira au Sysprep de `MASTER` (chapitre 14) et à l'installation automatisée des postes (chapitre 16).
 >
 > **Outils :** Windows ADK, module WinPE, Windows System Image Manager (WSIM), `copype`, `MakeWinPEMedia`, `DISM`
 > **Fichiers à connaître :** `install.wim`, `boot.wim`, `autounattend.xml`
 
 > [!INFO] Fil rouge — Fournil
-> L'ADK est installé sur `PC01` (poste d'administration) ; le fichier de réponse produit est `autounattend-fournil-26h2.xml` (dans `Ressources/Fichier-reponse/`). Sa version complète pour le déploiement du chapitre 15 (nom du poste, jonction au domaine, applications) est `autounattend-iso-officielle.xml`.
+> L'ADK est installé sur `PC01` (poste d'administration) ; le fichier de réponse produit est `autounattend-fournil-26h2.xml` (dans `Ressources/Fichier-reponse/`). Sa version complète pour le déploiement du chapitre 16 (nom du poste, jonction au domaine, applications) est `autounattend-iso-officielle.xml`.
 
 ---
 
@@ -20,31 +20,31 @@
 | | **Installation automatisée** (socle) | **Image maître** (bonus) |
 |---|---|---|
 | Principe | ISO **officielle** + `autounattend.xml` : Windows s'installe et se configure seul | Un poste de référence est préparé, généralisé (Sysprep), capturé (WIM), puis déployé |
-| Préparation | un fichier XML (ce chapitre) | VM `MASTER`, mode audit, Sysprep, capture DISM (chapitres 13 et 14) |
+| Préparation | un fichier XML (ce chapitre) | VM `MASTER`, mode audit, Sysprep, capture DISM (chapitres 14 et 15) |
 | Entretien | rien : l'ISO de Microsoft est tenue à jour | refaire l'image à chaque vague de mises à jour |
 | Pièges | aucun lié à BitLocker | Sysprep bloqué par le chiffrement automatique, paquets non provisionnés… |
 | Pour qui ? | petits et moyens parcs — **méthode retenue pour le lab** | grands parcs homogènes |
 
-Le fichier de réponse construit dans ce chapitre sert aux **deux** stratégies. Le chapitre 15 déploie `PC02` avec la première ; les chapitres 13 et 14 présentent la seconde.
+Le fichier de réponse construit dans ce chapitre sert aux **deux** stratégies. Le chapitre 16 déploie `PC02` avec la première ; les chapitres 14 et 15 présentent la seconde.
 
 ## Stratégie d'image master (bonus)
 
-Plutôt que réinstaller Windows 11 et reconfigurer chaque poste individuellement, on peut préparer une **image master** (ou "image de référence") : un poste configuré une fois (applications, paramètres, pilotes courants), puis **généralisé** et capturé sous forme de fichier `.wim` (chapitre 14), redéployable ensuite sur d'autres machines (chapitre 15).
+Plutôt que réinstaller Windows 11 et reconfigurer chaque poste individuellement, on peut préparer une **image master** (ou "image de référence") : un poste configuré une fois (applications, paramètres, pilotes courants), puis **généralisé** et capturé sous forme de fichier `.wim` (chapitre 15), redéployable ensuite sur d'autres machines (chapitre 16).
 
 > [!TIP] Pourquoi une VM dédiée (`MASTER`) plutôt que réutiliser PC01 ?
-> `PC01` est le poste de travail utilisé depuis le chapitre 1 : joint au domaine `ad.fournil.lab`, chargé de sa propre configuration, de comptes et d'historique. Généraliser cette machine serait risqué (casse la relation de confiance avec le domaine) et peu réaliste — en entreprise, on ne sysprep jamais un poste de production ou un poste d'administrateur en cours d'usage. La pratique standard est de préparer l'image sur une machine de référence **dédiée**, jamais jointe au domaine, jamais utilisée pour autre chose que la préparation d'image. C'est `MASTER`, créée au chapitre 13.
+> `PC01` est le poste de travail utilisé depuis le chapitre 1 : joint au domaine `ad.fournil.lab`, chargé de sa propre configuration, de comptes et d'historique. Généraliser cette machine serait risqué (casse la relation de confiance avec le domaine) et peu réaliste — en entreprise, on ne sysprep jamais un poste de production ou un poste d'administrateur en cours d'usage. La pratique standard est de préparer l'image sur une machine de référence **dédiée**, jamais jointe au domaine, jamais utilisée pour autre chose que la préparation d'image. C'est `MASTER`, créée au chapitre 14.
 
 > [!NOTE] Une VM réutilisable, pas jetable
-> Contrairement à une VM qu'on détruirait après chaque capture, `MASTER` est pensée pour vivre dans la durée : chaque mois (ou selon le rythme de l'entreprise), on la remet à jour (Windows Update, nouvelles versions d'applications), on la re-généralise, et on recapture une nouvelle version de l'image. Pour permettre ça sans tout recommencer de zéro à chaque fois, on protège l'état "prêt à généraliser" avec un point de contrôle Hyper-V plutôt qu'une sauvegarde complète de la VM — voir chapitre 13.
+> Contrairement à une VM qu'on détruirait après chaque capture, `MASTER` est pensée pour vivre dans la durée : chaque mois (ou selon le rythme de l'entreprise), on la remet à jour (Windows Update, nouvelles versions d'applications), on la re-généralise, et on recapture une nouvelle version de l'image. Pour permettre ça sans tout recommencer de zéro à chaque fois, on protège l'état "prêt à généraliser" avec un point de contrôle Hyper-V plutôt qu'une sauvegarde complète de la VM — voir chapitre 14.
 
-![De l’ISO au poste déployé — Le chapitre 12 prépare les outils et le fichier de réponse, le 14 prépare MASTER, le 15 capture le WIM et le 16 déploie PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-13-strategie-image-master.svg)
+![De l’ISO au poste déployé — Le chapitre 13 prépare les outils et le fichier de réponse, le 14 prépare MASTER, le 15 capture le WIM et le 16 déploie PC02.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-13-strategie-image-master.svg)
 
 > [!NOTE] Pourquoi une ISO personnalisée plutôt que WDS ou MDT ?
 > En 2026, les deux outils « historiques » du déploiement sur site sont hors jeu :
 > - **MDT** a été **retiré le 6 janvier 2026** (plus de support, plus de correctifs, téléchargement susceptible de disparaître) ;
 > - **WDS** : le déploiement *mains libres* (fichier de réponse servi par WDS) est **bloqué par défaut depuis la mise à jour d'avril 2026** (faille CVE-2026-0386), et le rôle entier est **déprécié** pour la prochaine version de Windows Server.
 >
-> Une **ISO personnalisée** (image généralisée + fichier de réponse) reste la méthode autonome, sans infrastructure, qui fonctionne. Le détail des alternatives (ConfigMgr, Autopilot) est au chapitre 15.
+> Une **ISO personnalisée** (image généralisée + fichier de réponse) reste la méthode autonome, sans infrastructure, qui fonctionne. Le détail des alternatives (ConfigMgr, Autopilot) est au chapitre 16.
 
 > [!WARNING] Pourquoi généraliser avant de capturer ?
 > Sans généralisation, tous les postes déployés à partir de l'image partageraient le **même SID machine** (identifiant de sécurité) que la référence — un problème connu sous le nom de "SID de duplication", qui peut causer des conflits en environnement Active Directory (identités machine ambiguës) et poser des problèmes de licence/activation.
@@ -80,7 +80,7 @@ Le [Kit de déploiement et d'évaluation Windows (ADK)](https://learn.microsoft.
 
 | Installeur | Fonctionnalités utiles ici |
 |------------|----------------------------|
-| **ADK** | **Outils de déploiement** (DISM, `oscdimg`, WSIM, `copype`) · **Outil de migration de l'état utilisateur (USMT)** (chapitre 15) |
+| **ADK** | **Outils de déploiement** (DISM, `oscdimg`, WSIM, `copype`) · **Outil de migration de l'état utilisateur (USMT)** (chapitre 16) |
 | **Module complémentaire Windows PE** (*WinPE add-on*) | L'environnement Windows PE (`winpe.wim`, composants optionnels) |
 
 ![w11-12-sysprep-images](https://cours.kaya.ovh/windows11/assets/captures/w11-12-sysprep-images.png)
@@ -204,7 +204,7 @@ Un fichier de réponse est découpé en **7 passes de configuration**, chacune e
 
 | # | Passe | S'exécute... | Utilisée ici ? |
 |---|-------|---------------|-----------------|
-| 1 | `windowsPE` | Dans l'environnement de préinstallation, avant la copie des fichiers : langue, partitionnement du disque, clé de produit | **Oui** — automatise l'installation sur les postes cibles (chapitre 15) |
+| 1 | `windowsPE` | Dans l'environnement de préinstallation, avant la copie des fichiers : langue, partitionnement du disque, clé de produit | **Oui** — automatise l'installation sur les postes cibles (chapitre 16) |
 | 2 | `offlineServicing` | Sur l'image Windows hors ligne, juste après la copie des fichiers (ajout de correctifs/pilotes) | Non |
 | 3 | `generalize` | Pendant `sysprep /generalize` (contrôle ce qui est généralisé — pilotes, identifiants matériels) | Non |
 | 4 | `specialize` | Au premier démarrage après généralisation, sur **chaque machine déployée** : nom d'ordinateur, fuseau horaire, réseau | **Oui** — `ComputerName` |
@@ -214,8 +214,8 @@ Un fichier de réponse est découpé en **7 passes de configuration**, chacune e
 
 > [!NOTE] Un seul fichier, deux usages
 > Ce même fichier est utilisé à **deux moments distincts**, chacun ne lisant que les passes qui le concernent :
-> - Au **Sysprep** de `MASTER` (`/generalize /oobe /unattend:`, chapitre 13) : seules les passes `specialize` et `oobeSystem` sont appliquées, la passe `windowsPE` est ignorée (le disque de `MASTER` est déjà partitionné).
-> - Au **démarrage de l'ISO de déploiement** sur un poste cible (chapitre 15) : c'est l'inverse, la passe `windowsPE` pilote l'installation (partitionnement, clé de produit), puis `specialize`/`oobeSystem` s'appliquent normalement au premier démarrage.
+> - Au **Sysprep** de `MASTER` (`/generalize /oobe /unattend:`, chapitre 14) : seules les passes `specialize` et `oobeSystem` sont appliquées, la passe `windowsPE` est ignorée (le disque de `MASTER` est déjà partitionné).
+> - Au **démarrage de l'ISO de déploiement** sur un poste cible (chapitre 16) : c'est l'inverse, la passe `windowsPE` pilote l'installation (partitionnement, clé de produit), puis `specialize`/`oobeSystem` s'appliquent normalement au premier démarrage.
 >
 > `generalize`, `offlineServicing`, `auditSystem` et `auditUser` ne sont utilisées dans aucun de ces deux scénarios ici.
 
@@ -226,7 +226,7 @@ Le schéma officiel Microsoft ci-dessous montre que la passe `specialize` n'est 
 ![Les passes de Windows Setup — L’installation normale suit quatre passes jusqu’au Bureau. MASTER passe par le mode audit, puis est généralisée et les postes rejouent specialize et oobeSystem.](https://cours.kaya.ovh/windows11/assets/captures/w11-schema-13-passes-unattend.svg)
 
 > [!NOTE] Ce que ça change concrètement
-> `MASTER` ne termine jamais elle-même la passe `oobeSystem` — on l'interrompt en mode audit avant. C'est chaque machine **déployée** à partir de l'image capturée qui rejoue `specialize` puis `oobeSystem` pour de vrai, avec un SID propre et un nom généré (`FOURNIL-XXXXXXX`). C'est exactement pour ça que la généralisation (chapitre 13) est indispensable avant toute capture.
+> `MASTER` ne termine jamais elle-même la passe `oobeSystem` — on l'interrompt en mode audit avant. C'est chaque machine **déployée** à partir de l'image capturée qui rejoue `specialize` puis `oobeSystem` pour de vrai, avec un SID propre et un nom généré (`FOURNIL-XXXXXXX`). C'est exactement pour ça que la généralisation (chapitre 14) est indispensable avant toute capture.
 
 > [!WARNING] Où est WSIM dans le menu Démarrer ?
 > Sur un Windows français, *Windows System Image Manager* apparaît sous le nom **« Assistant Gestion d'installation »**. Chercher « Windows System Image Manager » ne donne **aucun résultat**.
@@ -249,7 +249,7 @@ Si aucun fichier catalogue (`.clg`) n'existe encore, WSIM propose de le créer �
 > - **Components** : les composants logiciels disponibles dans l'image `install.wim` chargée. Chaque composant représente une fonctionnalité de Windows (langue, shell, réseau...) configurable via le fichier de réponse — c'est ici qu'on va chercher `Microsoft-Windows-Shell-Setup` dans les étapes suivantes.
 > - **Packages** : les paquets disponibles dans l'image (mises à jour, pilotes, fonctionnalités linguistiques, fonctionnalités optionnelles) pouvant être ajoutés à l'image pendant le déploiement. Non utilisé dans ce chapitre.
 
-**Étape 3 — Passe `windowsPE`.** Cette passe automatise l'installation elle-même sur les postes cibles (chapitre 15) : plus de clics sur langue/partition/édition, l'installation se lance seule jusqu'au premier démarrage.
+**Étape 3 — Passe `windowsPE`.** Cette passe automatise l'installation elle-même sur les postes cibles (chapitre 16) : plus de clics sur langue/partition/édition, l'installation se lance seule jusqu'au premier démarrage.
 
 Ajouter le composant `Microsoft-Windows-International-Core-WinPE` à la passe **1 windowsPE** :
 
@@ -365,7 +365,7 @@ La parade documentée : **empêcher** le chiffrement dès l'installation de la m
 C'est l'objet du fichier `Ressources/Fichier-reponse/autounattend-installation-master.xml`, utilisé pour **installer** `MASTER` (passe windowsPE pour le disque, specialize pour le chiffrement, et **pas** de passe oobeSystem : l'installation s'arrête à l'OOBE, où l'on bascule en mode audit). Il écrit `PreventDeviceEncryption = 1` sous `HKLM\SYSTEM\CurrentControlSet\Control\BitLocker` — valeur qui sera **capturée avec l'image** : les postes déployés ne se chiffreront pas d'eux-mêmes, c'est l'administrateur qui activera BitLocker proprement (GPO + sauvegarde des clés dans AD, chapitre 11).
 
 > [!WARNING] Le nom du fichier compte
-> Contrairement au fichier utilisé pour le Sysprep (peu importe son nom), celui déposé à la racine de l'ISO de déploiement (chapitre 15) doit s'appeler **exactement** `autounattend.xml` — c'est ce nom précis que Windows Setup recherche automatiquement au démarrage sur les supports amovibles/optiques.
+> Contrairement au fichier utilisé pour le Sysprep (peu importe son nom), celui déposé à la racine de l'ISO de déploiement (chapitre 16) doit s'appeler **exactement** `autounattend.xml` — c'est ce nom précis que Windows Setup recherche automatiquement au démarrage sur les supports amovibles/optiques.
 
 ---
 
@@ -408,10 +408,10 @@ Vue d'ensemble de tout ce que contient `autounattend.xml`, passe par passe :
 >   - → /Unmount-Image /Commit → `MakeWinPEMedia /ISO` ou /UFD
 > - **MASTER** : installée avec PreventDeviceEncryption=true (sinon Sysprep échoue : 0x80310039)
 > - `autounattend.xml` : via WSIM, un seul fichier pour deux usages :
->   - **windowsPE (passe 1)** : partitionnement, clé produit, langue → utilisé chapitre 15 (ISO)
->   - **specialize (passe 4)** : ComputerName, organisation, fuseau horaire → utilisé chapitre 13 (Sysprep)
+>   - **windowsPE (passe 1)** : partitionnement, clé produit, langue → utilisé chapitre 16 (ISO)
+>   - **specialize (passe 4)** : ComputerName, organisation, fuseau horaire → utilisé chapitre 14 (Sysprep)
 >   - **oobeSystem (passe 7)** : Hide* (5 écrans), ProtectYourPC, compte local → utilisé aux deux chapitres
 >   - Le compte local doit être membre de `Administrators` : sans lui, `HideLocalAccountScreen` bloque tout
 >
-> - → Chapitre 13 : création de MASTER, mode audit, et application de ce fichier au moment du Sysprep
-> - → Chapitre 15 : ce même fichier, déposé à la racine de l'ISO de déploiement
+> - → Chapitre 14 : création de MASTER, mode audit, et application de ce fichier au moment du Sysprep
+> - → Chapitre 16 : ce même fichier, déposé à la racine de l'ISO de déploiement

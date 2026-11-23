@@ -278,7 +278,7 @@ Un `autounattend.xml` à la racine du support d'installation masque les écrans 
 </UserAccounts>
 ```
 
-C'est **la méthode supportée par Microsoft**, et celle qu'on construira proprement avec Windows SIM au chapitre 12. Le lab formateur a été installé ainsi, en zéro clic.
+C'est **la méthode supportée par Microsoft**, et celle qu'on construira proprement avec Windows SIM au chapitre 13. Le lab formateur a été installé ainsi, en zéro clic.
 
 ### 2. Ce qui se passe vraiment sans réseau (testé sur 26300.9457)
 
@@ -319,7 +319,7 @@ Procédure validée sur le lab (ISO 26300.9457) :
 
 ### 3. Pro : « Configurer pour le travail ou l'école »
 
-Sur l'édition **Pro** connectée au réseau, l'OOBE propose **Configurer pour une utilisation professionnelle ou scolaire** : connexion avec un compte **Entra ID** (jonction Entra/Intune, voire Autopilot si le poste est enregistré, chapitre 15). Selon les builds, un lien **Options de connexion → Joindre un domaine à la place** crée un compte local en vue d'une jonction AD ultérieure : à vérifier sur l'ISO utilisée.
+Sur l'édition **Pro** connectée au réseau, l'OOBE propose **Configurer pour une utilisation professionnelle ou scolaire** : connexion avec un compte **Entra ID** (jonction Entra/Intune, voire Autopilot si le poste est enregistré, chapitre 16). Selon les builds, un lien **Options de connexion → Joindre un domaine à la place** crée un compte local en vue d'une jonction AD ultérieure : à vérifier sur l'ISO utilisée.
 
 ### 4. Rufus (poste physique, cas ponctuel)
 
@@ -403,9 +403,9 @@ D:\setup.exe /auto upgrade /quiet /eula accept /dynamicupdate disable
 
 ### Installation propre ou mise à niveau ?
 
-| | Mise à niveau en place | Installation propre (ou image, chap. 15) |
+| | Mise à niveau en place | Installation propre (ou image, chap. 16) |
 |-|------------------------|------------------------------------------|
-| Applications et données | Conservées | Perdues → migration (USMT, OneDrive, chap. 15) |
+| Applications et données | Conservées | Perdues → migration (USMT, OneDrive, chap. 16) |
 | Durée de l'intervention | Courte | Plus longue (réinstaller les applications) |
 | « Hygiène » du poste | Hérite des problèmes du système précédent | Poste propre, standardisé |
 | En entreprise | Parc homogène et sain | Changement de matériel, poste instable |

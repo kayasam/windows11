@@ -1,8 +1,8 @@
-# TP 16. Administrer SRV01 depuis PC01, version guidée
+# TP 12. Administrer SRV01 depuis PC01, version guidée
 
 **Mission** · Depuis `PC01`, vérifie que le serveur Fournil répond et relève l’état de DNS et DHCP.
 
-**Avant de commencer** · `PC01` est joint au domaine `ad.fournil.lab`. `SRV01` est démarré sur le réseau du lab.
+**Avant de commencer** · Après le TP 11, `PC01` est joint au domaine `ad.fournil.lab`. `SRV01` est démarré. Les deux VM sont sur `vSwitch-Rennes`.
 
 > [!tip] Identifiants du lab
 > Dans la fenêtre d’identification de Windows, saisis `Administrateur@ad.fournil.lab` et le mot de passe fourni par le formateur.
