@@ -16,7 +16,7 @@
       "key": "windows11/02-installation",
       "title": "02. Installation, mise à niveau et comptes",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/03-configuration",
@@ -153,14 +153,14 @@
       "correctionKey": "windows11/02-installation/tp/standard-corrigev2",
       "downloadStem": "02-installation",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/02-installation/tp/guide",
       "correctionKey": "windows11/02-installation/tp/guide-corrigev2",
       "downloadStem": "02-installation-guide",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/03-configuration/tp/standard",
@@ -431,7 +431,9 @@
   ],
   "corrections": [
     "windows11/01-introduction-hyperv/tp/standard",
-    "windows11/01-introduction-hyperv/tp/guide"
+    "windows11/01-introduction-hyperv/tp/guide",
+    "windows11/02-installation/tp/standard",
+    "windows11/02-installation/tp/guide"
   ],
   "tracks": [
     {

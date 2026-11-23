@@ -88,4 +88,7 @@
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/02-installation/tp/standard-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/02-installation/tp/standard-corrigev2)

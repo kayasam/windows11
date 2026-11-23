@@ -52,4 +52,7 @@ $p = Start-Process 'D:\setup.exe' -ArgumentList '/auto upgrade /quiet /eula acce
 '0x{0:X8}' -f $p.ExitCode
 ```
 
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/02-installation/tp/guide-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/02-installation/tp/guide-corrigev2)
