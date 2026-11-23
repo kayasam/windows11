@@ -44,7 +44,4 @@ Dans PowerShell administrateur, installe 7-Zip avec `winget install --id 7zip.7z
 
 Crée `C:\Temp` et lance `winget export -o C:\Temp\socle-fournil.json`. Ouvre le fichier puis lance `winget upgrade` pour voir l’état des mises à jour des applications.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/05-peripheriques-applications/tp/guide-corrigev2)

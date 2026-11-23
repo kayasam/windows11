@@ -49,7 +49,4 @@ Sur `MASTER`, dans PowerShell administrateur, exécute `& "$env:WINDIR\System32\
 
 Sur l’hôte, confirme que `MASTER` est arrêtée et relève `(Get-VMHardDiskDrive -VMName MASTER).Path`. Garde-la éteinte jusqu’à la capture.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/guide-corrigev2)

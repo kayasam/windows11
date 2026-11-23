@@ -58,7 +58,4 @@ Sur `PC02`, vérifie la jonction, Windows Update, `Get-MpComputerStatus` et `man
 
 Écris deux phrases que tu dirais à `stagiaire` avant un partage d’écran avec le support.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/tp/guide-corrigev2)

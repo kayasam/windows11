@@ -221,7 +221,4 @@ Sur **`PC01`**, lance `Get-LocalGroupMember Administrateurs` dans PowerShell. Re
 
 [Bonus sur l’heure et le canal sécurisé, partie E du TP](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard)
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2)

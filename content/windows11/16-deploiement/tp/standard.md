@@ -6,7 +6,7 @@ title: "TP 15. Déployer Windows 11 : ISO, réseau, migration, moderne"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="html" href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/html/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32"><path d="M2 2h24l-2 25-10 3-10-3Z" fill="#e44d26"/><path d="M14 5v22l7-2 2-20Z" fill="#f16529"/><path d="M7 8h15l-.3 3H11l.3 3h10l-.8 9-6.5 2-6.5-2-.4-5h3l.2 2.6 3.7 1 3.7-1 .3-3.6H8Z" fill="#fff"/></svg>
 </span><span class="resource-label">HTML</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/16-deploiement.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
-<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/standard" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/standard-corrigev2">Afficher les corrections</a></nav>
+
 
 > [!abstract] Parcours TSSR
 > Socle : déployer PC02 avec l’ISO officielle et les fichiers fournis, migrer un profil de test avec USMT et choisir une méthode selon le contexte. Un petit jeu de documents est préparé avant la capture. L’image maître et l’ISO personnalisée sont (bonus).
@@ -143,4 +143,4 @@ Préparer quelques documents identifiables dans le profil de `stagiaire`, fermer
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/standard-corrigev2)
+

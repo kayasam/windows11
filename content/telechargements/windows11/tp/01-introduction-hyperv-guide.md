@@ -48,7 +48,4 @@ Dans **Paramètres → Points de contrôle**, sélectionne **Standard** et déco
 
 Ouvre la console de `PC01`, démarre-la et appuie sur une touche au message **Press any key to boot from CD or DVD**. Arrête-toi au premier écran de l’installateur.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/01-introduction-hyperv/tp/guide-corrigev2)

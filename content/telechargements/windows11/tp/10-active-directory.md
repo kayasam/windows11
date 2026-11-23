@@ -100,7 +100,4 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard-corrigev2)

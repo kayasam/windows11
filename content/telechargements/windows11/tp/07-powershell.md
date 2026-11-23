@@ -112,7 +112,4 @@ Avant de conclure, vérifier qu’aucun champ du CSV n’est resté vide.
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp/standard-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp/standard-corrigev2)

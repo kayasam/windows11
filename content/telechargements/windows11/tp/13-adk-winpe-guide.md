@@ -48,7 +48,4 @@ Dans **specialize**, repère Fournil et `Romance Standard Time`. Dans **oobeSyst
 
 Dans WSIM, lance **Outils → Valider le fichier de réponses**. Corrige les erreurs signalées puis enregistre une copie `autounattend.xml`.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/guide-corrigev2)

@@ -46,7 +46,4 @@ Lance `winget upgrade` sur `PC01` et note une application proposée, si la liste
 
 Dans `gpedit.msc`, retrouve **Ne pas inclure les pilotes avec les mises à jour Windows**. Relève son état et le chemin de la stratégie.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/08-mises-a-jour/tp/guide-corrigev2)

@@ -42,7 +42,4 @@ Sur `PC01`, ouvre `control /name Microsoft.BitLockerDriveEncryption`. Pour `C:`,
 
 Lance `(Get-BitLockerVolume -MountPoint C:).KeyProtector | Select-Object KeyProtectorType,KeyProtectorId`. Confirme que ton enregistrement privé correspond au protecteur de récupération de ce poste.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/09-securite/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/09-securite/tp/guide-corrigev2)

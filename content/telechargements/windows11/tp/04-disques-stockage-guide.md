@@ -32,7 +32,4 @@ Sur l’hôte, ajoute deux VHDX vierges de **10 Go** nommés `Data2.vhdx` et `Da
 
 Dans le lab, confirme sur l’hôte le chemin du VHDX `Data3.vhdx`, puis détache-le de `PC01`. Dans la VM, ouvre `F:\recette.txt` et relève l’état de l’espace avec `Get-VirtualDisk`. Rattache ensuite le même VHDX et observe la réparation.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/guide-corrigev2)

@@ -135,7 +135,4 @@ Préparer quelques documents identifiables dans le profil de `stagiaire`, fermer
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/standard-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/standard-corrigev2)

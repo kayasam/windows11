@@ -43,7 +43,4 @@ Sur l’hôte, crée `PC03` vierge en génération 2, 4 Go statiques, 2 vCPU, 64
 
 Dans WinPE standard, lance `wpeinit` si l’initialisation réseau n’est pas terminée. Monte le partage avec `net use Z: \\SRV01\Deploy$ * /user:FOURNIL\svc.deploiement` ou le compte prévu, saisis le mot de passe à l’invite, puis lance `Z:\Windows11\setup.exe /unattend:Z:\autounattend.xml` sur la **VM vierge**. Après le premier démarrage, place le disque avant la carte réseau. Vérifie sur `SRV01` l’objet ordinateur et le DNS.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/tp/guide-corrigev2)

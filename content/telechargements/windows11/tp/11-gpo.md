@@ -106,7 +106,4 @@ Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà 
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)

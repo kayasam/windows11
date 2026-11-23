@@ -89,7 +89,4 @@ Explique et corrige.
 
 ---
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/standard-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/tp/standard-corrigev2)

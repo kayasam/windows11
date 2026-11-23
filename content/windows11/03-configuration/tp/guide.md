@@ -6,7 +6,7 @@ title: "TP 03. Configuration et personnalisation, version guidée"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="quiz" href="https://cours.kaya.ovh/windows11/windows11/03-configuration/quiz/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="6" fill="#7652ad"/><path d="M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="1.6" fill="#fff"/></svg>
 </span><span class="resource-label">Quiz</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/03-configuration/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/03-configuration-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
-<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/guide" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/guide-corrigev2">Afficher les corrections</a></nav>
+
 
 **Ta mission.** Configure le poste `PC01` installé au TP 02. Tu termines quand le compte standard, les trois tests réseau et les variables d’environnement sont vérifiés.
 
@@ -60,4 +60,4 @@ Ouvre `sysdm.cpl` → **Paramètres système avancés → Variables d’environn
 
 Dans la même fenêtre, sélectionne **Path** dans **Variables système**, clique sur **Modifier → Nouveau**, ajoute `C:\Outils` et ouvre un nouveau terminal. Vérifie que la nouvelle entrée et les anciennes sont visibles dans `$env:Path -split ';'`.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/guide-corrigev2)
+

@@ -36,9 +36,6 @@ Ouvre une session PowerShell distante sur `SRV01` avec le compte indiqué dans l
 
 Dans la **session distante**, lance `hostname` puis `Get-Service DNS, DHCPServer`. Note le nom de la machine et le statut des deux services. Tape `Exit-PSSession`, puis relance `hostname`. Quel nom vois-tu maintenant ?
 
-[Ouvrir le corrigé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard-corrigev2)
+
 
 [Ouvrir la version guidée](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
-
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard-corrigev2)

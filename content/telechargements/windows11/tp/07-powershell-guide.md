@@ -48,7 +48,4 @@ Lance `Get-CimInstance Win32_ComputerSystem | Select-Object Manufacturer,Model` 
 
 Crée `C:\Temp` puis lance `Get-Service | Select-Object Name,DisplayName,Status,StartType | Export-Csv C:\Temp\services.csv -Delimiter ';' -NoTypeInformation -Encoding UTF8`. Vérifie avec `Import-Csv C:\Temp\services.csv -Delimiter ';' | Select-Object -First 3`.
 
-[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp/guide-corrigev2)
 
-
-[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/07-powershell/tp/guide-corrigev2)
