@@ -10,7 +10,7 @@
       "key": "windows11/01-introduction-hyperv",
       "title": "01. Introduction à Windows 11 et lab Hyper-V",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/02-installation",
@@ -139,14 +139,14 @@
       "correctionKey": "windows11/01-introduction-hyperv/tp/standard-corrigev2",
       "downloadStem": "01-introduction-hyperv",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/01-introduction-hyperv/tp/guide",
       "correctionKey": "windows11/01-introduction-hyperv/tp/guide-corrigev2",
       "downloadStem": "01-introduction-hyperv-guide",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/02-installation/tp/standard",
@@ -429,7 +429,10 @@
       "correction": false
     }
   ],
-  "corrections": [],
+  "corrections": [
+    "windows11/01-introduction-hyperv/tp/standard",
+    "windows11/01-introduction-hyperv/tp/guide"
+  ],
   "tracks": [
     {
       "id": "windows11",
