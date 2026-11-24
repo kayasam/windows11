@@ -34,7 +34,7 @@
       "key": "windows11/05-peripheriques-applications",
       "title": "05. Pilotes, applications et WinGet",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/06-administration-diagnostic",
@@ -195,14 +195,14 @@
       "correctionKey": "windows11/05-peripheriques-applications/tp/standard-corrigev2",
       "downloadStem": "05-peripheriques-applications",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/05-peripheriques-applications/tp/guide",
       "correctionKey": "windows11/05-peripheriques-applications/tp/guide-corrigev2",
       "downloadStem": "05-peripheriques-applications-guide",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/06-administration-diagnostic/tp/standard",
@@ -437,7 +437,9 @@
     "windows11/03-configuration/tp/standard",
     "windows11/03-configuration/tp/guide",
     "windows11/04-disques-stockage/tp/standard",
-    "windows11/04-disques-stockage/tp/guide"
+    "windows11/04-disques-stockage/tp/guide",
+    "windows11/05-peripheriques-applications/tp/standard",
+    "windows11/05-peripheriques-applications/tp/guide"
   ],
   "tracks": [
     {
