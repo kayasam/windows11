@@ -52,4 +52,7 @@ Ouvre `sysdm.cpl` → **Paramètres système avancés → Variables d’environn
 
 Dans la même fenêtre, sélectionne **Path** dans **Variables système**, clique sur **Modifier → Nouveau**, ajoute `C:\Outils` et ouvre un nouveau terminal. Vérifie que la nouvelle entrée et les anciennes sont visibles dans `$env:Path -split ';'`.
 
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/guide-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/03-configuration/tp/guide-corrigev2)

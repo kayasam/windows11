@@ -22,7 +22,7 @@
       "key": "windows11/03-configuration",
       "title": "03. Configuration et personnalisation",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/04-disques-stockage",
@@ -167,14 +167,14 @@
       "correctionKey": "windows11/03-configuration/tp/standard-corrigev2",
       "downloadStem": "03-configuration",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/03-configuration/tp/guide",
       "correctionKey": "windows11/03-configuration/tp/guide-corrigev2",
       "downloadStem": "03-configuration-guide",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/04-disques-stockage/tp/standard",
@@ -433,7 +433,9 @@
     "windows11/01-introduction-hyperv/tp/standard",
     "windows11/01-introduction-hyperv/tp/guide",
     "windows11/02-installation/tp/standard",
-    "windows11/02-installation/tp/guide"
+    "windows11/02-installation/tp/guide",
+    "windows11/03-configuration/tp/standard",
+    "windows11/03-configuration/tp/guide"
   ],
   "tracks": [
     {
