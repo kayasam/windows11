@@ -21,6 +21,16 @@
 - `PC01` opérationnel (TP 03)
 - Sur l’hôte, ajoute `Data1.vhdx` de 10 Go à `PC01` via **Paramètres → Contrôleur SCSI → Disque dur**. Si le disque est déjà attaché, passe à la partie A.
 - **(bonus)** Pour le miroir de la partie C, ajoute aussi `Data2.vhdx` et `Data3.vhdx`, de 10 Go chacun. Garde-les non initialisés jusqu’à cette partie.
+- **Ou en PowerShell**, sur l’**hôte** (PowerShell **administrateur**) : une seule commande crée les **3 disques** de 10 Go et les branche sur `PC01` (la VM peut rester allumée) :
+
+  ```powershell
+  $dossier = (Get-VM PC01).Path      # le dossier de PC01, ex. D:\HyperV\PC01
+  foreach ($nom in "Data1", "Data2", "Data3") {
+      New-VHD -Path "$dossier\$nom.vhdx" -SizeBytes 10GB -Dynamic
+      Add-VMHardDiskDrive -VMName PC01 -Path "$dossier\$nom.vhdx"
+  }
+  Get-VMHardDiskDrive -VMName PC01   # vérification : 4 disques (le système + Data1, 2, 3)
+  ```
 
 ---
 
@@ -76,4 +86,7 @@
 
 ---
 
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard-corrigev2)

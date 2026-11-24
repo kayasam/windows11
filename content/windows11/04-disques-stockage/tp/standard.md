@@ -6,7 +6,7 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="quiz" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/quiz/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="6" fill="#7652ad"/><path d="M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="1.6" fill="#fff"/></svg>
 </span><span class="resource-label">Quiz</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/04-disques-stockage.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
-
+<nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard-corrigev2">Afficher les corrections</a></nav>
 
 > [!abstract] Parcours TSSR
 > Socle : A, B et D ; le volume G: est conservé pour la suite. Le miroir et sa panne simulée sont (bonus).
@@ -29,6 +29,16 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 - `PC01` opérationnel (TP 03)
 - Sur l’hôte, ajoute `Data1.vhdx` de 10 Go à `PC01` via **Paramètres → Contrôleur SCSI → Disque dur**. Si le disque est déjà attaché, passe à la partie A.
 - **(bonus)** Pour le miroir de la partie C, ajoute aussi `Data2.vhdx` et `Data3.vhdx`, de 10 Go chacun. Garde-les non initialisés jusqu’à cette partie.
+- **Ou en PowerShell**, sur l’**hôte** (PowerShell **administrateur**) : une seule commande crée les **3 disques** de 10 Go et les branche sur `PC01` (la VM peut rester allumée) :
+
+  ```powershell
+  $dossier = (Get-VM PC01).Path      # le dossier de PC01, ex. D:\HyperV\PC01
+  foreach ($nom in "Data1", "Data2", "Data3") {
+      New-VHD -Path "$dossier\$nom.vhdx" -SizeBytes 10GB -Dynamic
+      Add-VMHardDiskDrive -VMName PC01 -Path "$dossier\$nom.vhdx"
+  }
+  Get-VMHardDiskDrive -VMName PC01   # vérification : 4 disques (le système + Data1, 2, 3)
+  ```
 
 ---
 
@@ -84,4 +94,4 @@ title: "TP 04. Disques, volumes et systèmes de fichiers"
 
 ---
 
-
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard-corrigev2)

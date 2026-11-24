@@ -28,7 +28,7 @@
       "key": "windows11/04-disques-stockage",
       "title": "04. Gestion des disques et du stockage",
       "tp": true,
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/05-peripheriques-applications",
@@ -181,14 +181,14 @@
       "correctionKey": "windows11/04-disques-stockage/tp/standard-corrigev2",
       "downloadStem": "04-disques-stockage",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/04-disques-stockage/tp/guide",
       "correctionKey": "windows11/04-disques-stockage/tp/guide-corrigev2",
       "downloadStem": "04-disques-stockage-guide",
       "track": "windows11",
-      "correction": false
+      "correction": true
     },
     {
       "key": "windows11/05-peripheriques-applications/tp/standard",
@@ -435,7 +435,9 @@
     "windows11/02-installation/tp/standard",
     "windows11/02-installation/tp/guide",
     "windows11/03-configuration/tp/standard",
-    "windows11/03-configuration/tp/guide"
+    "windows11/03-configuration/tp/guide",
+    "windows11/04-disques-stockage/tp/standard",
+    "windows11/04-disques-stockage/tp/guide"
   ],
   "tracks": [
     {

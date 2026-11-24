@@ -2,6 +2,18 @@
 
 **Ta mission.** Prépare un disque de données dans `PC01` et, en atelier complémentaire, observe un miroir à deux disques. Sur l’hôte Hyper-V, dans **Paramètres de PC01 → Contrôleur SCSI → Disque dur**, ajoute un disque dynamique de **10 Go** nommé `Data1.vhdx`. Si ce disque est déjà attaché, passe à A1. Identifie le nouveau VHDX avant de formater quoi que ce soit.
 
+> [!TIP] Ou en PowerShell (les 3 disques d’un coup)
+> Sur l’**hôte**, dans PowerShell **administrateur** :
+> ```powershell
+> $dossier = (Get-VM PC01).Path      # le dossier de PC01, ex. D:\HyperV\PC01
+> foreach ($nom in "Data1", "Data2", "Data3") {
+>     New-VHD -Path "$dossier\$nom.vhdx" -SizeBytes 10GB -Dynamic
+>     Add-VMHardDiskDrive -VMName PC01 -Path "$dossier\$nom.vhdx"
+> }
+> Get-VMHardDiskDrive -VMName PC01   # vérification : 4 disques (le système + Data1, 2, 3)
+> ```
+> `Data2` et `Data3` servent à l’atelier miroir : laisse-les vierges d’ici là.
+
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/) · [Ouvrir le TP d’origine et les exercices complémentaires](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/standard)
 
 ## Identifier les disques et préparer le volume
@@ -32,4 +44,7 @@ Sur l’hôte, ajoute deux VHDX vierges de **10 Go** nommés `Data2.vhdx` et `Da
 
 Dans le lab, confirme sur l’hôte le chemin du VHDX `Data3.vhdx`, puis détache-le de `PC01`. Dans la VM, ouvre `F:\recette.txt` et relève l’état de l’espace avec `Get-VirtualDisk`. Rattache ensuite le même VHDX et observe la réparation.
 
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/guide-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/04-disques-stockage/tp/guide-corrigev2)
