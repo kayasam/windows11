@@ -1,20 +1,27 @@
 ﻿[CmdletBinding()]
 param(
-    [ValidateSet('Deploiement', 'Reference')]
+    [ValidateSet('Deploiement', 'Reference', 'Local')]
     [string]$Mode = 'Deploiement',
-    [ValidatePattern('^PC0[23]$')]
+    [ValidatePattern('^(?![0-9]+$)[A-Za-z0-9](?:[A-Za-z0-9-]{0,13}[A-Za-z0-9])?$')]
     [string]$NomPoste,
-    [string]$Sortie = '.\autounattend.xml'
+    [string]$Sortie = '.\autounattend.xml',
+    [ValidateLength(1, 253)]
+    [ValidatePattern('^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$')]
+    [string]$Domaine = 'ad.fournil.lab'
 )
 
 $ErrorActionPreference = 'Stop'
 if ($Mode -eq 'Reference' -and $NomPoste) {
-    throw 'Réserve -NomPoste à PC02 ou PC03 en mode Deploiement.'
+    throw 'Utilise -NomPoste en mode Deploiement ou Local.'
+}
+if ($Mode -ne 'Deploiement' -and $PSBoundParameters.ContainsKey('Domaine')) {
+    throw 'Utilise -Domaine en mode Deploiement.'
 }
 
 $templateName = switch ($Mode) {
     'Deploiement' { 'autounattend-iso-officielle.xml' }
     'Reference'   { 'autounattend-fournil-26h2.xml' }
+    'Local'       { 'autounattend-local.xml' }
 }
 $templatePath = Join-Path $PSScriptRoot $templateName
 if (-not (Test-Path -LiteralPath $templatePath -PathType Leaf)) {
@@ -46,17 +53,32 @@ if (-not $password -or $password.Length -eq 0) { throw 'Saisis le mot de passe p
 $localValue = ([pscredential]::new('local', $password)).GetNetworkCredential().Password
 foreach ($node in $localNodes) { $node.InnerText = $localValue }
 
+if ($NomPoste) {
+    $xml.SelectSingleNode('//u:settings[@pass="specialize"]//u:ComputerName', $ns).InnerText = $NomPoste
+}
+
 if ($Mode -eq 'Deploiement') {
-    $credentials = $xml.SelectSingleNode('//u:Identification/u:Credentials', $ns)
+    $identification = $xml.SelectSingleNode('//u:Identification', $ns)
+    $credentials = $identification.SelectSingleNode('u:Credentials', $ns)
     if (-not $credentials -or $credentials.Password -ne 'A_RENSEIGNER_MOT_DE_PASSE_JONCTION') {
         throw 'Modèle de jonction inattendu. Retélécharge le XML depuis le TP.'
     }
-    $join = Get-Credential -UserName 'FOURNIL\Administrateur' -Message 'Compte autorisé à joindre les VM au domaine du lab'
+    $joinPrompt = "Compte autorisé à joindre les VM au domaine $Domaine"
+    $join = if ($Domaine -eq 'ad.fournil.lab') {
+        Get-Credential -UserName 'FOURNIL\Administrateur' -Message $joinPrompt
+    } else {
+        Get-Credential -UserName "$Domaine\Administrateur" -Message $joinPrompt
+    }
     if (-not $join -or $join.Password.Length -eq 0) { throw 'Saisis un compte de jonction et son mot de passe.' }
     $credentials.Username = $join.GetNetworkCredential().UserName
     $credentials.Password = $join.GetNetworkCredential().Password
+    $credentials.SelectSingleNode('u:Domain', $ns).InnerText = $Domaine
+    $identification.SelectSingleNode('u:JoinDomain', $ns).InnerText = $Domaine
+    if ($Domaine -ne 'ad.fournil.lab') {
+        $ou = $identification.SelectSingleNode('u:MachineObjectOU', $ns)
+        [void]$identification.RemoveChild($ou)
+    }
     if ($NomPoste) {
-        $xml.SelectSingleNode('//u:settings[@pass="specialize"]//u:ComputerName', $ns).InnerText = $NomPoste
         $xml.SelectSingleNode('//u:AutoLogon/u:Domain', $ns).InnerText = $NomPoste
     }
 }

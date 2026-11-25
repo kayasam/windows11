@@ -66,6 +66,10 @@ input[type=radio],input[type=checkbox]{accent-color:var(--green);flex:none}
 .selects{display:flex;flex-wrap:wrap;gap:7px 16px;padding:11px 0;font-size:.83rem}
 .selects label{display:flex;gap:7px;align-items:center;font-weight:650}
 select{background:var(--paper);border:1px solid #94ae9d;border-radius:7px;padding:4px 7px;color:var(--ink)}
+.identity{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:10px;margin:10px 0}
+.identity label{display:grid;gap:4px;font-size:.83rem;font-weight:650}
+.identity input{width:100%;min-width:0;background:var(--paper);border:1px solid #94ae9d;border-radius:7px;padding:5px 8px;color:var(--ink)}
+.identity input[aria-invalid=true]{border-color:var(--warn)}
 .command{margin-top:10px;background:#152b23;color:#f4fbf1;border-radius:11px;overflow:hidden}
 .command-top{display:flex;justify-content:space-between;align-items:center;gap:7px;padding:7px 10px;background:#233c31;font:.72rem var(--mono)}
 .copy{border:1px solid #87ab92;border-radius:6px;background:#dff0dc;padding:4px 8px;color:#14271f;font-weight:800;font-size:.73rem;min-height:31px}
@@ -150,7 +154,7 @@ footer strong{font-size:.8rem}
             <ul class="compact-list">
               <li>Hyper-V actif et un compte administrateur sur l’hôte.</li>
               <li>Au moins <strong>30 Go libres</strong> pour l’ISO, son dossier de travail et la copie reconstruite. Prévois aussi l’espace du disque de la VM.</li>
-              <li data-only="domain"><code>SRV01</code> démarré, <code>vSwitch-Rennes</code>, nom <code>PC02</code> disponible dans le lab et compte de jonction autorisé. Les applications demandent Internet dans la VM.</li>
+              <li data-only="domain"><code>SRV01</code> démarré, <code>vSwitch-Rennes</code>, un nom de poste disponible et un compte de jonction autorisé. Les applications demandent Internet dans la VM.</li>
             </ul>
           </article>
         </div>
@@ -170,7 +174,7 @@ footer strong{font-size:.8rem}
         <p class="unit"><strong class="lead">1. Copier les fichiers de Windows</strong> Double-clique sur l’ISO officielle. Repère la lettre du DVD dans <b>Ce PC</b>, puis choisis-la ci-dessous. Utilise un dossier de travail neuf ou vide pour ce parcours.</p>
         <div class="selects">
           <label>DVD monté <select id="dvd" aria-label="Lettre du DVD monté"></select></label>
-          <label>Disque de travail <select id="work" aria-label="Lettre du disque de travail"><option>C:</option><option selected>D:</option><option>E:</option><option>F:</option></select></label>
+          <label>Disque de travail <select id="work" aria-label="Lettre du disque de travail"><option selected>C:</option><option>D:</option><option>E:</option><option>F:</option></select></label>
         </div>
         <p id="drive-conflict" class="notice" hidden>Choisis un disque de travail différent de la lettre du DVD.</p>
         <div class="command"><div class="command-top">Invite ADK <button class="copy" type="button" data-copy="extract" aria-label="Copier les commandes de préparation du dossier">Copier</button></div><pre id="extract"></pre></div>
@@ -178,32 +182,39 @@ footer strong{font-size:.8rem}
         <p class="unit"><strong class="lead">2. Ajouter le fichier de réponse<span data-only="domain"> et le script</span></strong> Enregistre les téléchargements dans le dossier <code data-path="files"></code>.</p>
         <div class="grid">
           <article class="box">
-            <h3>Fichiers du parcours</h3>
+            <h3>Personnalise autounattend.xml</h3>
+            <div class="identity">
+              <label>Nom du PC <input id="pc-name" type="text" value="PC02" spellcheck="false" autocomplete="off" aria-describedby="name-help"></label>
+              <label data-only="domain">Domaine Active Directory <input id="domain-name" type="text" value="ad.fournil.lab" spellcheck="false" autocomplete="off" aria-describedby="domain-help"></label>
+            </div>
+            <p id="name-help">De 1 à 15 lettres, chiffres et tirets. Commence et termine par une lettre ou un chiffre et utilise au moins une lettre ou un tiret.</p>
+            <p id="domain-help" data-only="domain">Saisis le nom DNS complet. Pour un autre domaine, adapte aussi le réseau et le DNS de la VM. L’OU Fournil s’applique uniquement à <code>ad.fournil.lab</code>.</p>
+            <p id="identity-error" class="notice" role="status" hidden></p>
+            <details>
+              <summary>Voir les balises modifiées</summary>
+              <div class="command"><pre id="xml-preview"></pre></div>
+            </details>
+            <p class="unit">Télécharge le modèle et l’assistant dans <code data-path="files"></code><span data-only="domain">, avec <code>postinstall.ps1</code></span>.</p>
             <a class="download" data-only="local" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-local.xml" download>autounattend-local.xml <span aria-hidden="true">↓</span></a>
             <a class="download" data-only="domain" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/autounattend-iso-officielle.xml" download>autounattend-iso-officielle.xml <span aria-hidden="true">↓</span></a>
+            <a class="download" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download>Preparer-Fichier-Reponse.ps1 <span aria-hidden="true">↓</span></a>
             <a class="download" data-only="domain" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/postinstall.ps1" download>postinstall.ps1 <span aria-hidden="true">↓</span></a>
-            <p class="unit">Copie le modèle dans <code data-path="source"></code> sous le nom <code>autounattend.xml</code>. Ouvre cette copie dans le Bloc-notes.</p>
-            <p data-only="local">Remplace <code>A_RENSEIGNER_MOT_DE_PASSE_LOCAL</code> par le mot de passe du compte local <code>admin</code>.</p>
-            <p data-only="domain">Remplace les deux marqueurs <code>A_RENSEIGNER_MOT_DE_PASSE_LOCAL</code> par le même mot de passe local. Dans <code>Credentials</code>, remplace le marqueur de jonction et renseigne le nom du compte autorisé dans <code>Username</code>. Copie aussi <code>postinstall.ps1</code> dans le dossier source.</p>
-            <details>
-              <summary>Mon mot de passe contient &amp; ou &lt;</summary>
-              <p>Dans le XML, écris <code>&amp;amp;</code> pour <code>&amp;</code> et <code>&amp;lt;</code> pour <code>&lt;</code>. Enregistre la copie avec l’extension <code>.xml</code>.</p>
-            </details>
-            <details data-only="domain">
-              <summary>Saisir les identifiants avec PowerShell</summary>
-              <a class="download" href="https://cours.kaya.ovh/windows11/telechargements/windows11/fichiers/Preparer-Fichier-Reponse.ps1" download>Preparer-Fichier-Reponse.ps1 <span aria-hidden="true">↓</span></a>
-              <p>Télécharge l’assistant dans le même dossier que le modèle. Utilise ce bloc à la place de la modification manuelle. L’assistant refuse d’écraser un <code>autounattend.xml</code> déjà présent.</p>
-              <div class="command"><div class="command-top">Windows PowerShell <button class="copy" type="button" data-copy="prepare-xml" aria-label="Copier les commandes de préparation du XML">Copier</button></div><pre id="prepare-xml"></pre></div>
-            </details>
+            <p class="unit">Lance ces commandes dans Windows PowerShell sur l’hôte. L’assistant demande le mot de passe du compte local <code>admin</code><span data-only="domain">, puis le compte autorisé à joindre le domaine et son mot de passe</span>. Il crée le XML et refuse d’écraser une copie existante.</p>
+            <div class="command"><div class="command-top">Windows PowerShell <button class="copy" type="button" data-copy="prepare-xml" aria-label="Copier les commandes de préparation du XML">Copier</button></div><pre id="prepare-xml"></pre></div>
           </article>
           <article class="box">
             <h3>Vérifie ton dossier</h3>
             <figure class="tree" aria-label="Arborescence du dossier source"><pre id="tree"></pre></figure>
             <p id="route-note"></p>
-            <details data-only="domain">
-              <summary>Que fait postinstall.ps1 ?</summary>
-              <p><code>FirstLogonCommands</code> lance le script à la première session. WinGet tente d’installer <b>Obsidian</b> et <b>VS Code</b>. Le script écrit un journal, coupe l’ouverture automatique et retire la copie d’origine du XML si Setup l’a conservée. Le script prévoit un redémarrage quand il termine normalement.</p>
-            </details>
+            <div class="unit" data-only="domain">
+              <h3>Après l’installation, postinstall.ps1</h3>
+              <ol class="compact-list">
+                <li>Windows ouvre une session avec le compte local <code>admin</code>. <code>FirstLogonCommands</code>, dans la passe <code>oobeSystem</code>, trouve et lance le script à la racine de l’ISO encore montée.</li>
+                <li>Le script attend WinGet jusqu’à 10 minutes, puis tente d’installer <b>Obsidian</b> et <b>VS Code</b> pour tous les utilisateurs. La VM doit accéder à Internet.</li>
+                <li>Il désactive l’ouverture automatique, retire <code>unattend-original.xml</code> de <code>C:\Windows\Panther</code> si cette copie existe et prévoit un redémarrage après 30 secondes s’il atteint la fin.</li>
+              </ol>
+              <p class="unit">Suis le résultat de chaque installation dans <code>C:\Windows\Temp\postinstall.log</code>.</p>
+            </div>
           </article>
         </div>
         <p class="notice">Le XML personnalisé et l’ISO reconstruite contiennent les mots de passe du lab. Garde-les sur l’hôte de travail.</p>
@@ -238,7 +249,7 @@ footer strong{font-size:.8rem}
             <div class="checks">
               <label><input type="checkbox" data-check="name"> <span><code>hostname</code> affiche <strong id="check-name">PC02</strong>.</span></label>
               <label data-only="local"><input type="checkbox" data-check="group"> <span><code>PartOfDomain</code> affiche <b>False</b>.</span></label>
-              <label data-only="domain"><input type="checkbox" data-check="domain"> <span><code>PartOfDomain</code> affiche <b>True</b> et <code>Domain</code> affiche <b>ad.fournil.lab</b>.</span></label>
+              <label data-only="domain"><input type="checkbox" data-check="domain"> <span><code>PartOfDomain</code> affiche <b>True</b> et <code>Domain</code> affiche <b id="check-domain">ad.fournil.lab</b>.</span></label>
               <label data-only="domain"><input type="checkbox" data-check="apps"> <span>Obsidian et VS Code apparaissent dans les applications installées.</span></label>
             </div>
             <p id="complete" role="status"></p>
@@ -246,7 +257,7 @@ footer strong{font-size:.8rem}
         </div>
         <details><summary>La VM ne démarre pas sur le DVD</summary><p>Vérifie dans <b>Microprogramme</b> de la VM que le DVD de la nouvelle ISO passe avant le disque. Vérifie aussi que ta commande contient <code>-bootdata:1#pEF,e,b…\efisys.bin</code>.</p></details>
         <details><summary>Windows Setup demande de choisir un disque</summary><p>Ouvre l’ISO reconstruite sur l’hôte. Vérifie que <code>autounattend.xml</code> est à côté de <code>setup.exe</code> et que le nom se termine par <code>.xml</code>. Vérifie aussi la syntaxe XML après la saisie du mot de passe.</p></details>
-        <details data-only="domain"><summary>La jonction échoue ou les applications manquent</summary><p>Pour la jonction, contrôle le DNS vers <code>SRV01</code> et lis <code>C:\Windows\debug\NetSetup.log</code>. Pour les applications, ouvre <code>C:\Windows\Temp\postinstall.log</code> et vérifie l’accès Internet de la VM. Si le journal est absent, vérifie que le script figure à la racine de l’ISO montée.</p></details>
+        <details data-only="domain"><summary>La jonction échoue ou les applications manquent</summary><p>Pour la jonction, vérifie que le DNS de la VM résout <code data-domain-name>ad.fournil.lab</code> et ses contrôleurs (dont <code>SRV01</code> dans le lab Fournil), puis lis <code>C:\Windows\debug\NetSetup.log</code>. Pour les applications, ouvre <code>C:\Windows\Temp\postinstall.log</code> et vérifie l’accès Internet de la VM. Si le journal est absent, vérifie que le script figure à la racine de l’ISO montée.</p></details>
       </div>
       <div class="actions"><button class="btn" type="button" data-go="1">← Fabriquer l’ISO</button><button class="btn" type="button" data-go="0">Revenir au début</button></div>
     </section>
@@ -268,8 +279,13 @@ footer strong{font-size:.8rem}
   const checks = [...document.querySelectorAll('[data-check]')];
   const dvd = byId('dvd');
   const work = byId('work');
+  const pc = byId('pc-name');
+  const domainName = byId('domain-name');
   const notice = byId('copy-status');
   const routeState = {domain: new Set(), local: new Set()};
+  const pcNames = {domain: 'PC02', local: 'PC02-LOCAL'};
+  const pcPattern = /^(?![0-9]+$)[A-Za-z0-9](?:[A-Za-z0-9-]{0,13}[A-Za-z0-9])?$/;
+  const domainPattern = /^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?$/;
   let route = 'domain';
   let timer;
   const setText = (id, text) => { byId(id).textContent = text; };
@@ -299,6 +315,40 @@ footer strong{font-size:.8rem}
 
   function updateCommands() {
     const domain = route === 'domain';
+    const name = pc.value.trim().toUpperCase();
+    const dns = domainName.value.trim().toLowerCase();
+    const pcValid = pcPattern.test(name);
+    const dnsValid = !domain || (dns.length <= 253 && domainPattern.test(dns));
+    const valid = pcValid && dnsValid;
+    pc.setAttribute('aria-invalid', String(!pcValid));
+    domainName.setAttribute('aria-invalid', String(!dnsValid));
+    byId('identity-error').hidden = valid;
+    setText('identity-error', !pcValid ? 'Corrige le nom du PC.' : 'Saisis un domaine comme ad.fournil.lab.');
+    setText('diagram-vm', pcValid ? name : 'VM');
+    setText('check-name', pcValid ? name : 'le nom choisi');
+    setText('check-domain', dnsValid && dns ? dns : 'le domaine choisi');
+    for (const item of document.querySelectorAll('[data-domain-name]')) item.textContent = dnsValid && dns ? dns : 'le domaine choisi';
+    setText('xml-preview', valid ? [
+      'Passe specialize',
+      '<ComputerName>' + name + '</ComputerName>',
+      ...(domain ? [
+        '<Identification>',
+        '  <Credentials>',
+        '    <Domain>' + dns + '</Domain>',
+        '  </Credentials>',
+        '  <JoinDomain>' + dns + '</JoinDomain>',
+        ...(dns === 'ad.fournil.lab' ? ['  <MachineObjectOU>OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab</MachineObjectOU>'] : []),
+        '</Identification>',
+        '',
+        'Passe oobeSystem',
+        '<AutoLogon>',
+        '  <Domain>' + name + '</Domain>',
+        '</AutoLogon>'
+      ] : [])
+    ].join('\n') : 'Corrige les champs pour voir les balises.');
+    setText('route-note', domain
+      ? 'Windows nomme le poste et le joint au domaine pendant la passe specialize. Dans AutoLogon, Domain contient le nom du PC pour ouvrir la première session avec admin en local.'
+      : 'Windows nomme le poste et crée le compte local admin. La VM reste en groupe de travail et arrive à l’écran de connexion.');
     const workFolder = work.value + '\\Win11-Lab';
     const paths = {
       source: workFolder + (domain ? '\\source-domaine' : '\\source-local'),
@@ -314,12 +364,14 @@ footer strong{font-size:.8rem}
       'mkdir ' + paths.files,
       'robocopy ' + dvd.value + '\\ ' + paths.source + ' /E'
     ].join('\n'));
-    setText('prepare-xml', [
+    copyButtons.find(button => button.dataset.copy === 'prepare-xml').disabled = !valid;
+    setText('prepare-xml', valid ? [
       'Set-Location ' + paths.files,
       'Unblock-File -LiteralPath .\\Preparer-Fichier-Reponse.ps1',
-      '.\\Preparer-Fichier-Reponse.ps1 -Sortie ' + paths.source + '\\autounattend.xml',
-      'Copy-Item -LiteralPath .\\postinstall.ps1 -Destination ' + paths.source
-    ].join('\n'));
+      '.\\Preparer-Fichier-Reponse.ps1 -Mode ' + (domain ? 'Deploiement' : 'Local') +
+        ' -NomPoste ' + name + (domain ? ' -Domaine ' + dns : '') + ' -Sortie ' + paths.source + '\\autounattend.xml',
+      ...(domain ? ['Copy-Item -LiteralPath .\\postinstall.ps1 -Destination ' + paths.source] : [])
+    ].join('\n') : 'Corrige les champs pour afficher les commandes.');
     setText('tree', [
       paths.source + '\\',
       '├─ setup.exe',
@@ -340,13 +392,9 @@ footer strong{font-size:.8rem}
   function updateRoute() {
     route = inputs.find(input => input.checked).value;
     const domain = route === 'domain';
+    pc.value = pcNames[route];
     for (const item of document.querySelectorAll('[data-only]')) item.hidden = item.dataset.only !== route;
-    setText('diagram-vm', domain ? 'PC02' : 'PC02-LOCAL');
     setText('diagram-files', domain ? 'XML + script' : 'XML seul');
-    setText('check-name', domain ? 'PC02' : 'PC02-LOCAL');
-    setText('route-note', domain
-      ? 'Le XML installe Windows, nomme PC02 et le joint à Fournil. Le script prend le relais après la première connexion.'
-      : 'Le XML installe Windows et crée le compte local admin. La VM reste en groupe de travail et arrive à l’écran de connexion.');
     updateCommands();
     updateChecks();
   }
@@ -371,6 +419,17 @@ footer strong{font-size:.8rem}
 
   for (const input of inputs) input.addEventListener('change', updateRoute);
   for (const input of [dvd, work]) input.addEventListener('change', updateCommands);
+  pc.addEventListener('input', () => {
+    pcNames[route] = pc.value;
+    routeState[route].delete('name');
+    updateCommands();
+    updateChecks();
+  });
+  domainName.addEventListener('input', () => {
+    routeState.domain.delete('domain');
+    updateCommands();
+    updateChecks();
+  });
   for (const button of stepButtons) button.addEventListener('click', () => showStep(Number(button.dataset.step)));
   for (const button of document.querySelectorAll('[data-go]')) button.addEventListener('click', () => showStep(Number(button.dataset.go)));
   for (const button of copyButtons) button.addEventListener('click', () => copyCommand(button));
