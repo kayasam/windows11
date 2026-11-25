@@ -1,5 +1,5 @@
 ---
-title: "TP 12. Administrer SRV01 depuis PC01"
+title: "TP 12. Administrer à distance : RSAT, WinRM, RPC et SSH"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/12-acces-distant"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
@@ -7,43 +7,111 @@ title: "TP 12. Administrer SRV01 depuis PC01"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/12-acces-distant.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard-corrigev2">Afficher les corrections</a></nav>
 
+**Mission** · Tu es technicien au Fournil. Tu ne veux plus te déplacer jusqu'au serveur ni jusqu'aux postes. Tu vas **configurer** quatre façons d'administrer à distance, puis vérifier qu'elles marchent :
 
-**Mission** · Depuis `PC01`, vérifie que le serveur Fournil répond et relève l’état de DNS et DHCP.
+| Partie | Outil | Sens | Ce que tu configures |
+|---|---|---|---|
+| A | **RSAT** | PC01 → SRV01 | Les consoles du serveur installées sur PC01 |
+| B | **WinRM** | SRV01 → PC01 | PowerShell à distance sur le poste |
+| C | **RPC** | SRV01 → PC01 | Le pare-feu du poste pour les consoles à distance |
+| D | **SSH** | PC01 → SRV01 | Une connexion par **clé**, sans mot de passe |
 
-**Avant de commencer** · Après le TP 11, `PC01` est joint au domaine `ad.fournil.lab`. `SRV01` est démarré. Les deux VM sont sur `vSwitch-Rennes`.
+**Avant de commencer**
+- `SRV01` (contrôleur de domaine) et `PC01` (joint au domaine) sont démarrés, sur `vSwitch-Rennes` (TP 10–11).
+- Sur **les deux** VM, ouvre une session avec `FOURNIL\Administrateur`.
+- Le serveur SSH de `SRV01` est démarré (TP 10).
 
-> [!tip] Identifiants du lab
-> Dans la fenêtre d’identification de Windows, saisis `Administrateur@ad.fournil.lab` et le mot de passe fourni par le formateur.
-
+> [!tip] Commence par la partie A
+> L'installation des RSAT télécharge les consoles depuis Internet : **≈ 10 minutes**. Lance-la, puis fais la partie B pendant qu'elle tourne.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
-### 0. Comparer les ports en écoute
+---
 
-Sur les consoles des deux VM, ouvre **Windows PowerShell** et lance les mêmes commandes. Sur `SRV01`, tu peux aussi demander au formateur d’afficher le résultat.
+## Partie A — RSAT : les consoles du serveur sur PC01
+
+**A1.** Sur `PC01`, installe **en graphique** ces trois outils RSAT :
+- *RSAT : outils Active Directory Domain Services Directory et services LDS…*
+- *RSAT : outils du serveur DNS*
+- *RSAT : outils du serveur DHCP*
+
+Par où passes-tu ? Pendant l'installation, passe à la partie B.
+
+**A2.** Une fois l'installation finie, où trouves-tu les nouvelles consoles sur `PC01` ?
+
+**A3.** Depuis `PC01` :
+1. dans **Utilisateurs et ordinateurs Active Directory**, retrouve le compte `stagiaire` ;
+2. dans la console **DNS**, connecte-toi à `SRV01` et retrouve l'enregistrement de `PC01` dans la zone `ad.fournil.lab` ;
+3. dans la console **DHCP**, retrouve la plage d'adresses de l'étendue.
+
+**A4.** Pourquoi est-il préférable d'administrer le serveur avec les RSAT plutôt qu'en ouvrant une session sur `SRV01` ?
+
+---
+
+## Partie B — WinRM : PowerShell à distance
+
+**B1.** Sur `PC01`, ouvre Windows PowerShell et tape `Test-WSMan srv01`. Puis, sur `SRV01`, tape `Test-WSMan PC01`. Que constates-tu ?
+
+**B2.** Sur `PC01`, ouvre `services.msc`. Dans quel état est le service **Windows Remote Management (Gestion WSM)** ?
+
+**B3.** Active PowerShell à distance sur `PC01`. Vérifie depuis `SRV01` avec `Test-WSMan PC01`.
+
+**B4.** Depuis `SRV01`, lance une commande sur `PC01` sans quitter le serveur :
 
 ```powershell
-hostname
-Get-NetTCPConnection -State Listen |
-    Where-Object { $_.LocalPort -in 22, 135, 445, 3389, 5985 } |
-    Sort-Object LocalPort |
-    Select-Object LocalAddress, LocalPort, State
+Invoke-Command -ComputerName PC01 -ScriptBlock { hostname; Get-Service Spooler }
 ```
 
-Repère le port `5985` sur `SRV01`. Si une ligne apparaît deux fois, compare les adresses locales (par exemple IPv4 et IPv6). Fais ensuite les trois étapes depuis `PC01`.
+Un mot de passe est-il demandé ? Pourquoi ?
 
-### 1. Tester le serveur
+**B5.** Toujours depuis `SRV01`, entre dans une session sur `PC01`, tape `hostname`, puis ressors. À quoi vois-tu que tu es sur `PC01` ?
 
-Depuis `PC01`, vérifie que WinRM répond sur `srv01.ad.fournil.lab`. Note l’information qui te le confirme.
+---
 
-### 2. Ouvrir la session distante
+## Partie C — RPC : les consoles graphiques à distance
 
-Ouvre une session PowerShell distante sur `SRV01` avec le compte indiqué dans l’encadré. Relève l’indice qui te confirme que tu es dans cette session.
+**C1.** Sur `SRV01`, ouvre l'**Observateur d'événements** et connecte-le à l'ordinateur `PC01`. Que se passe-t-il ? WinRM est pourtant activé depuis la partie B : pourquoi cela ne suffit-il pas ?
 
-### 3. Vérifier les services et revenir sur PC01
+**C2.** Sur `PC01`, ouvre le **Pare-feu Windows Defender avec fonctions avancées de sécurité** (`wf.msc`) et active, dans les **Règles de trafic entrant**, les deux groupes :
+- **Gestion à distance des journaux des événements**
+- **Gestion des services à distance**
 
-Dans la **session distante**, lance `hostname` puis `Get-Service DNS, DHCPServer`. Note le nom de la machine et le statut des deux services. Tape `Exit-PSSession`, puis relance `hostname`. Quel nom vois-tu maintenant ?
+Comment fais-tu pour activer tout un groupe d'un coup ?
 
+**C3.** Sur `SRV01`, recommence C1. Ouvre le journal **Système** de `PC01`.
 
+**C4.** Sur `SRV01`, ouvre **Gestion de l'ordinateur** et connecte-la à `PC01`. Dans **Services**, arrête puis redémarre le **Spouleur d'impression** de `PC01`. Vérifie sur `PC01` que le service a bien redémarré.
+
+**C5.** (bonus) Comment ouvrirais-tu ces règles sur les 35 postes du Fournil sans passer sur chacun ?
+
+---
+
+## Partie D — SSH avec une clé
+
+**D1.** Sur `PC01`, connecte-toi en SSH à `SRV01` avec le mot de passe :
+
+```powershell
+ssh administrateur@srv01.ad.fournil.lab
+```
+
+Que demande SSH à la toute première connexion ? Tape `hostname`, puis `exit`.
+
+**D2.** Sur `PC01`, crée une paire de clés :
+
+```powershell
+ssh-keygen -t ed25519
+```
+
+Où sont créés les fichiers ? Lequel ne doit **jamais** quitter `PC01` ?
+
+**D3.** Dépose ta **clé publique** sur `SRV01`. Pour un compte membre des **Administrateurs**, OpenSSH pour Windows la lit dans un fichier particulier : `C:\ProgramData\ssh\administrators_authorized_keys`. Utilise WinRM (partie B) pour l'y copier depuis `PC01`.
+
+**D4.** Reconnecte-toi avec `ssh administrateur@srv01.ad.fournil.lab`. Qu'est-ce qui a changé ?
+
+**D5.** (bonus) Lance une seule commande sur `SRV01` sans ouvrir de terminal interactif : `ssh administrateur@srv01.ad.fournil.lab hostname`. À quoi cela sert-il pour un administrateur ?
+
+---
+
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard-corrigev2)
 
 [Ouvrir la version guidée](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)

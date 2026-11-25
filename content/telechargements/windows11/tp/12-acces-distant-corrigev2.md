@@ -1,51 +1,256 @@
-# TP 12. Administrer SRV01 depuis PC01, corrigé
+# TP 12. Administrer à distance : RSAT, WinRM, RPC et SSH — Correction
 
-**Mission** · Depuis `PC01`, vérifie que le serveur Fournil répond et relève l’état de DNS et DHCP.
+**Mission** · Configurer quatre façons d'administrer à distance, puis vérifier qu'elles marchent :
 
-**Avant de commencer** · Après le TP 11, `PC01` est joint au domaine `ad.fournil.lab`. `SRV01` est démarré. Les deux VM sont sur `vSwitch-Rennes`.
+| Partie | Outil | Sens | Ce que tu configures |
+|---|---|---|---|
+| A | **RSAT** | PC01 → SRV01 | Les consoles du serveur installées sur PC01 |
+| B | **WinRM** | SRV01 → PC01 | PowerShell à distance sur le poste |
+| C | **RPC** | SRV01 → PC01 | Le pare-feu du poste pour les consoles à distance |
+| D | **SSH** | PC01 → SRV01 | Une connexion par **clé**, sans mot de passe |
 
-> [!tip] Identifiants du lab
-> Dans la fenêtre d’identification de Windows, saisis `Administrateur@ad.fournil.lab` et le mot de passe fourni par le formateur.
+**Avant de commencer** · `SRV01` et `PC01` démarrés, `PC01` joint au domaine, session `FOURNIL\Administrateur` sur les deux VM, serveur SSH démarré sur `SRV01` (TP 10).
 
+> Essaie chaque question avant d'ouvrir **Afficher la correction**.
 
 [Revoir le cours](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/)
 
-### 0. Comparer les ports en écoute
+---
 
-Sur les consoles des deux VM, ouvre **Windows PowerShell** et lance les mêmes commandes. Sur `SRV01`, tu peux aussi demander au formateur d’afficher le résultat.
+## Partie A — RSAT : les consoles du serveur sur PC01
 
-```powershell
-hostname
-Get-NetTCPConnection -State Listen |
-    Where-Object { $_.LocalPort -in 22, 135, 445, 3389, 5985 } |
-    Sort-Object LocalPort |
-    Select-Object LocalAddress, LocalPort, State
-```
+**A1.** Installer en graphique les outils RSAT AD DS, DNS et DHCP.
 
-Repère le port `5985` sur `SRV01`. Si une ligne apparaît deux fois, compare les adresses locales (par exemple IPv4 et IPv6). Fais ensuite les trois étapes depuis `PC01`.
+> [!success]- Afficher la correction — A1
+> **Paramètres** → **Système** → **Fonctionnalités facultatives** → **Afficher les fonctionnalités** → **Oui** à l'invite UAC.
+> Dans la recherche, tape `RSAT`, puis coche :
+> - *RSAT : outils Active Directory Domain Services Directory et services LDS (Lightweight Directory Services)*
+> - *RSAT : outils du serveur DNS*
+> - *RSAT : outils du serveur DHCP*
+>
+> **Suivant** → **Ajouter**. L'avancement s'affiche dans la page des fonctionnalités facultatives.
+>
+> ![w11-11-acces-distant-1](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
+>
+> En PowerShell (Windows PowerShell **administrateur**) :
+> ```powershell
+> Add-WindowsCapability -Online -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0
+> Add-WindowsCapability -Online -Name Rsat.Dns.Tools~~~~0.0.1.0
+> Add-WindowsCapability -Online -Name Rsat.DHCP.Tools~~~~0.0.1.0
+> ```
+> Les RSAT sont téléchargées depuis Windows Update : **Internet obligatoire**, environ 10 minutes. Ne pas redémarrer pendant l'installation.
 
-> [!success]- Afficher la correction
-> Le port `5985` est attendu sur `SRV01` lorsque WinRM est disponible en HTTP. `PC01` peut appeler WinRM sans avoir son propre port `5985` en écoute. Les autres ports dépendent des services configurés.
+**A2.** Où trouver les nouvelles consoles ?
 
-### 1. Tester le serveur
+> [!success]- Afficher la correction — A2
+> Menu **Démarrer** → **Toutes les applications** → **Outils Windows**. On y retrouve *Utilisateurs et ordinateurs Active Directory*, *DNS* et *DHCP*.
+> Raccourcis avec `Win + R` : `dsa.msc` (Active Directory), `dnsmgmt.msc` (DNS), `dhcpmgmt.msc` (DHCP).
 
-Depuis `PC01`, vérifie que WinRM répond sur `srv01.ad.fournil.lab`. Note l’information qui te le confirme.
+**A3.** Retrouver `stagiaire`, l'enregistrement DNS de `PC01` et la plage DHCP, depuis `PC01`.
 
-> [!success]- Afficher la correction
-> Tape `Test-WSMan srv01.ad.fournil.lab`. Une réponse avec `ProductVendor` indique que le service WinRM répond sur `SRV01`. Si la commande échoue, vérifie le nom avec `Resolve-DnsName srv01.ad.fournil.lab`, puis suis le dépannage du cours.
+> [!success]- Afficher la correction — A3
+> 1. **Utilisateurs et ordinateurs Active Directory** s'ouvre directement sur le domaine `ad.fournil.lab` : `stagiaire` est dans **Fournil → Utilisateurs**.
+> 2. **DNS** : à l'ouverture, la console demande à quel serveur se connecter → **L'ordinateur suivant** → `srv01.ad.fournil.lab` → **OK**. Puis **Zones de recherche directe** → `ad.fournil.lab` : la ligne `PC01` est de type **Hôte (A)**, avec l'adresse IP de `PC01`.
+> 3. **DHCP** : `srv01.ad.fournil.lab` apparaît dans la liste (sinon : clic droit sur **DHCP** → **Ajouter un serveur**). **IPv4** → l'étendue → **Pool d'adresses** : la plage configurée au TP 10 (`192.168.3.100` à `192.168.3.200` dans le lab).
+>
+> Les consoles s'ouvrent **avec le compte de la session** de `PC01` : c'est pour cela qu'on travaille en `FOURNIL\Administrateur`. Un compte sans droits peut lire l'annuaire, mais pas modifier le DNS ni le DHCP.
 
-### 2. Ouvrir la session distante
+**A4.** Pourquoi les RSAT plutôt qu'une session sur `SRV01` ?
 
-Ouvre une session PowerShell distante sur `SRV01` avec le compte indiqué dans l’encadré. Relève l’indice qui te confirme que tu es dans cette session.
+> [!success]- Afficher la correction — A4
+> - On **ne travaille pas sur le contrôleur de domaine** : moins de risques d'erreur ou de mauvaise manipulation sur la machine la plus sensible du réseau.
+> - On administre **depuis son poste**, sans ouvrir et fermer de session ailleurs.
+> - Une console RSAT peut gérer **plusieurs serveurs** à la fois.
 
-> [!success]- Afficher la correction
-> Ouvre la session avec `Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential 'Administrateur@ad.fournil.lab'`. L’invite commence par le nom de `SRV01` entre crochets. Les commandes s’exécutent alors sur le serveur.
+---
 
-### 3. Vérifier les services et revenir sur PC01
+## Partie B — WinRM : PowerShell à distance
 
-Dans la **session distante**, lance `hostname` puis `Get-Service DNS, DHCPServer`. Note le nom de la machine et le statut des deux services. Tape `Exit-PSSession`, puis relance `hostname`. Quel nom vois-tu maintenant ?
+**B1.** `Test-WSMan srv01` sur PC01, puis `Test-WSMan PC01` sur SRV01.
 
-> [!success]- Afficher la correction
-> Dans la session distante, `hostname` affiche `SRV01`. Les services `DNS` et `DHCPServer` doivent normalement afficher `Running` dans le lab. Après `Exit-PSSession`, `hostname` affiche `PC01`.
+> [!success]- Afficher la correction — B1
+> - Sur `PC01`, `Test-WSMan srv01` répond (lignes `wsmid`, `ProductVendor : Microsoft Corporation`).
+> - Sur `SRV01`, `Test-WSMan PC01` affiche une **erreur rouge** : *« La Gestion à distance de Windows ne peut pas terminer l'opération… »*.
+>
+> **Windows Server** a PowerShell à distance **activé d'office**, **Windows 11 non**.
 
-[Retour à l’énoncé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)
+**B2.** État du service WinRM sur PC01.
+
+> [!success]- Afficher la correction — B2
+> Dans `services.msc`, tout en bas (nom non traduit) : **Windows Remote Management (Gestion WSM)**. Colonne *État* **vide** = arrêté ; type de démarrage **Manuel**.
+>
+> ![w11-12-services-winrm-arrete](https://cours.kaya.ovh/windows11/assets/captures/w11-12-services-winrm-arrete.png)
+
+**B3.** Activer PowerShell à distance sur PC01.
+
+> [!success]- Afficher la correction — B3
+> Il n'y a **pas de case à cocher** dans les Paramètres. Sur `PC01` : `Win + X` → **Terminal (administrateur)** → **Oui**, puis :
+> ```powershell
+> Enable-PSRemoting -Force
+> ```
+> ![w11-12-enable-psremoting](https://cours.kaya.ovh/windows11/assets/captures/w11-12-enable-psremoting.png)
+>
+> La commande démarre le service WinRM, le passe en **Automatique**, crée l'écouteur (port **5985**) et ouvre le pare-feu (groupe *Gestion à distance de Windows*). Sur `SRV01`, `Test-WSMan PC01` répond maintenant.
+
+**B4.** `Invoke-Command` de SRV01 vers PC01 : un mot de passe est-il demandé ?
+
+> [!success]- Afficher la correction — B4
+> ```
+> PC01
+>
+> Status   Name      DisplayName
+> ------   ----      -----------
+> Running  Spooler   Spouleur d'impression
+> ```
+> **Pas de mot de passe** : les deux machines sont dans le domaine, Windows présente le **ticket Kerberos** de la session. Et `FOURNIL\Administrateur` est membre des *Admins du domaine*, donc **administrateur de `PC01`** : c'est obligatoire pour PowerShell à distance.
+
+**B5.** `Enter-PSSession` vers PC01.
+
+> [!success]- Afficher la correction — B5
+> ```powershell
+> Enter-PSSession PC01
+> [PC01]: PS C:\Users\Administrateur\Documents> hostname
+> PC01
+> [PC01]: PS C:\Users\Administrateur\Documents> Exit-PSSession
+> PS C:\Users\Administrateur>
+> ```
+> L'invite commence par **`[PC01]:`** tant qu'on est dans la session distante. `Exit-PSSession` ramène sur `SRV01`.
+
+---
+
+## Partie C — RPC : les consoles graphiques à distance
+
+**C1.** Observateur d'événements de SRV01 vers PC01 : que se passe-t-il ?
+
+> [!success]- Afficher la correction — C1
+> Sur `SRV01` : `eventvwr.msc` → clic droit sur **Observateur d'événements (local)** → **Se connecter à un autre ordinateur…** → **Autre ordinateur** : `PC01` → **OK**.
+>
+> La connexion **échoue** : le message indique en général que **le serveur RPC n'est pas disponible**.
+>
+> WinRM ne sert à rien ici : les consoles graphiques (Observateur d'événements, Gestion de l'ordinateur, Services) n'utilisent **pas** WinRM (port 5985) mais **RPC** : le port **135** pour trouver le service, puis un port choisi au moment de la connexion. Et sur Windows 11, le pare-feu bloque ces connexions par défaut.
+
+**C2.** Activer les deux groupes de règles dans `wf.msc` sur PC01.
+
+> [!success]- Afficher la correction — C2
+> Sur `PC01` : `Win + R` → `wf.msc` → **Règles de trafic entrant**.
+> 1. Clique sur l'en-tête de la colonne **Groupe** pour trier les règles par groupe.
+> 2. Clique sur la première règle **Gestion à distance des journaux des événements**, puis **Maj + clic** sur la dernière du groupe (6 règles).
+> 3. Clic droit → **Activer la règle** : l'icône devient verte.
+> 4. Fais de même pour les 6 règles **Gestion des services à distance**.
+>
+> Autre méthode : dans le volet de droite, **Filtrer par groupe** → choisir le groupe, puis tout sélectionner (`Ctrl + A`) → **Activer la règle**.
+>
+> En PowerShell (administrateur, sur `PC01`) :
+> ```powershell
+> Enable-NetFirewallRule -DisplayGroup "Gestion à distance des journaux des événements", "Gestion des services à distance"
+> ```
+> Chaque groupe contient des règles pour le port 135 (*RPC-EPMAP*), pour les ports RPC choisis à la connexion (*RPC*) et pour les canaux nommés (*NP-Entrée*).
+
+**C3.** Recommencer C1.
+
+> [!success]- Afficher la correction — C3
+> La connexion réussit : le titre de l'arborescence devient **Observateur d'événements (PC01)**. **Journaux Windows → Système** affiche les événements **de PC01**, lus depuis le serveur.
+
+**C4.** Gestion de l'ordinateur de SRV01 vers PC01 : arrêter et redémarrer le Spouleur.
+
+> [!success]- Afficher la correction — C4
+> Sur `SRV01` : `compmgmt.msc` → clic droit sur **Gestion de l'ordinateur (local)** → **Se connecter à un autre ordinateur…** → `PC01` → **OK**.
+> **Services et applications → Services** → **Spouleur d'impression** → **Arrêter**, puis **Démarrer** (barre d'outils ou clic droit).
+>
+> Vérification sur `PC01` : `Get-Service Spooler` → **Running**, ou `services.msc`.
+>
+> Toutes les parties de la console ne marchent pas forcément : *Gestion des disques*, par exemple, a besoin d'un autre groupe de règles (*Gestion des volumes à distance*). On n'ouvre que ce dont on a besoin.
+
+**C5.** (bonus) Ouvrir ces règles sur les 35 postes.
+
+> [!success]- Afficher la correction — C5
+> Une **GPO** liée à l'UO des ordinateurs (TP 11) :
+> *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Pare-feu Windows Defender avec fonctions avancées de sécurité → … → **Règles de trafic entrant*** → clic droit → **Nouvelle règle** → **Prédéfinie** → *Gestion à distance des journaux des événements* → cocher les règles → **Autoriser la connexion**. Même chose pour *Gestion des services à distance*.
+
+---
+
+## Partie D — SSH avec une clé
+
+**D1.** Première connexion SSH avec le mot de passe.
+
+> [!success]- Afficher la correction — D1
+> À la **toute première** connexion, SSH ne connaît pas encore le serveur et demande s'il doit lui faire confiance :
+> ```
+> The authenticity of host 'srv01.ad.fournil.lab (192.168.3.1)' can't be established.
+> ED25519 key fingerprint is SHA256:…
+> Are you sure you want to continue connecting (yes/no/[fingerprint])?
+> ```
+> On tape **`yes`** en entier, puis le mot de passe d'`Administrateur`. `hostname` affiche `SRV01`.
+>
+> ![w11-12-ssh-srv01](https://cours.kaya.ovh/windows11/assets/captures/w11-12-ssh-srv01.png)
+>
+> L'empreinte est enregistrée dans `.ssh\known_hosts` sur `PC01` : la question ne reviendra plus. Si un jour SSH signale que l'empreinte **a changé**, on s'arrête et on vérifie : le serveur a peut-être été réinstallé… ou ce n'est pas le bon serveur.
+
+**D2.** Créer une paire de clés.
+
+> [!success]- Afficher la correction — D2
+> ```powershell
+> ssh-keygen -t ed25519
+> ```
+> - *Enter file in which to save the key* → **Entrée** (emplacement par défaut).
+> - *Enter passphrase* → **Entrée**, puis encore **Entrée** (pas de phrase de passe dans le lab).
+>
+> Deux fichiers sont créés dans le dossier **`.ssh`** de ton profil (par exemple `C:\Users\Administrateur\.ssh\`) :
+>
+> | Fichier | Rôle | Où va-t-il ? |
+> |---|---|---|
+> | `id_ed25519` | Clé **privée** | Reste **sur PC01**, ne se partage **jamais** |
+> | `id_ed25519.pub` | Clé **publique** | Se copie sur les serveurs auxquels on veut se connecter |
+>
+> En entreprise, on protège la clé privée par une **phrase de passe** : si quelqu'un vole le fichier, il ne peut pas s'en servir.
+
+**D3.** Déposer la clé publique sur SRV01.
+
+> [!success]- Afficher la correction — D3
+> Sur `PC01`, dans Windows PowerShell, on se sert de WinRM (partie B) pour écrire sur `SRV01` :
+> ```powershell
+> $cle = Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
+> Invoke-Command -ComputerName SRV01 -ArgumentList $cle -ScriptBlock {
+>     param($cle)
+>     Add-Content -Path C:\ProgramData\ssh\administrators_authorized_keys -Value $cle
+>     icacls C:\ProgramData\ssh\administrators_authorized_keys /inheritance:r /grant "BUILTIN\Administrateurs:F" "SYSTEM:F"
+> }
+> ```
+> - `Add-Content` ajoute la clé à la fin du fichier (il est créé s'il n'existe pas) ;
+> - `icacls` ne laisse les droits qu'aux **Administrateurs** et à **SYSTEM**. Sinon, le serveur SSH **ignore** le fichier par sécurité : un autre utilisateur pourrait y ajouter sa propre clé.
+>
+> **Pourquoi ce fichier ?** Pour un compte **administrateur**, OpenSSH pour Windows ne lit pas le fichier habituel `C:\Users\<nom>\.ssh\authorized_keys` mais `C:\ProgramData\ssh\administrators_authorized_keys`, commun à tous les administrateurs (c'est réglé dans `C:\ProgramData\ssh\sshd_config`).
+
+**D4.** Reconnexion.
+
+> [!success]- Afficher la correction — D4
+> ```powershell
+> ssh administrateur@srv01.ad.fournil.lab
+> ```
+> **Plus de mot de passe** : SSH prouve l'identité avec la clé privée de `PC01`, que le serveur vérifie avec la clé publique.
+>
+> Si le mot de passe est encore demandé, vérifie sur `SRV01` :
+> - que le fichier contient bien **une ligne** commençant par `ssh-ed25519` : `Get-Content C:\ProgramData\ssh\administrators_authorized_keys` ;
+> - ses droits : `icacls C:\ProgramData\ssh\administrators_authorized_keys` ne doit montrer que *Administrateurs* et *SYSTEM*.
+
+**D5.** (bonus) Une commande sans terminal interactif.
+
+> [!success]- Afficher la correction — D5
+> ```powershell
+> ssh administrateur@srv01.ad.fournil.lab hostname
+> SRV01
+> ```
+> La commande s'exécute sur `SRV01`, le résultat s'affiche sur `PC01` et la connexion se ferme. Avec une clé, il n'y a **aucun mot de passe à taper** : on peut l'utiliser dans un **script** ou une **tâche planifiée**. C'est la méthode habituelle pour administrer des serveurs Linux.
+
+---
+
+## Ce qu'il faut retenir
+
+| Outil | Port | Activé par défaut sur Windows 11 ? | Comment l'activer sur le poste |
+|---|---|---|---|
+| RSAT | (selon la console) | Non installé | Paramètres → Fonctionnalités facultatives |
+| WinRM | 5985 | **Non** | `Enable-PSRemoting -Force` (ou GPO) |
+| RPC (consoles MMC) | 135 + ports choisis à la connexion | **Non** (pare-feu fermé) | `wf.msc` : groupes *Gestion à distance des journaux des événements*, *Gestion des services à distance* (ou GPO) |
+| SSH | 22 | Client oui, serveur non | Serveur déjà présent sur Windows Server ; clé : `ssh-keygen` + `administrators_authorized_keys` |
+
+[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)

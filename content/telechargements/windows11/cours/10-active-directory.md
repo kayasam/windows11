@@ -104,6 +104,16 @@ Start-Service sshd
 Set-Service sshd -StartupType Automatic
 ```
 
+> [!TIP] `Get-WindowsCapability` ne marche pas dans PowerShell 7 ?
+> Cette commande fait partie du module **DISM**, prévu pour **Windows PowerShell 5.1**. Dans PowerShell 7 (`pwsh`), elle échoue souvent avec « *Classe non enregistrée* ». Deux solutions :
+> - la lancer dans **Windows PowerShell** (le plus simple) ;
+> - ou, dans PowerShell 7, charger d'abord le module en mode compatibilité (à refaire dans chaque nouvelle fenêtre) :
+> ```powershell
+> Import-Module Dism -UseWindowsPowerShell
+> Get-WindowsCapability -Online -Name OpenSSH.Server*
+> ```
+> Dans les deux cas, le terminal doit être ouvert **en administrateur**.
+
 > [!WARNING] La règle de pare-feu ne couvre que le profil Privé
 > La règle `OpenSSH-Server-In-TCP` n'est active que sur le profil **Privé**. Or la carte de SRV01 est en profil **Public** (puis **Domaine** après la promotion) : le port 22 reste bloqué, silencieusement (*timeout*). On élargit la règle aux trois profils, une fois pour toutes :
 > ```powershell

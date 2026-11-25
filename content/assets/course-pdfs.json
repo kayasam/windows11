@@ -1,6 +1,6 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "c652fd686753c9d5ae375fbc980475088c1ed786145955ba41518bcaf7f50025",
+  "pdfSha256": "2f5d4e15da952b791eb7685719646f676a0ebd88d229fb40cab0930f222467a5",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
@@ -87,7 +87,7 @@
       "title": "10. Active Directory et services réseau",
       "href": "https://cours.kaya.ovh/windows11/windows11/10-active-directory/",
       "download": "telechargements/windows11/cours/10-active-directory.md",
-      "sourceSha256": "41b23e37bb8676c67e1832608608bade295bf26687de2f1f5421437570c00bd9",
+      "sourceSha256": "5357f5390487ce8dfee96e1176f20868cc40069054f360aafcfa34932124f18d",
       "startPage": 151
     },
     {
@@ -103,7 +103,7 @@
       "title": "12. Administrer SRV01 depuis PC01",
       "href": "https://cours.kaya.ovh/windows11/windows11/12-acces-distant/",
       "download": "telechargements/windows11/cours/12-acces-distant.md",
-      "sourceSha256": "c0f6c37cbf287f30a0bed405ca78e36c728afee782a4cbd82237aa7cd872ca39",
+      "sourceSha256": "38f2dd6ab065c824be538294a134cb7ab6aa2df52582704dbcb022456d0e6a84",
       "startPage": 195
     },
     {
@@ -112,7 +112,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/",
       "download": "telechargements/windows11/cours/13-adk-winpe.md",
       "sourceSha256": "92cf243f00ee53904513450778de4f272a15f7d43883f0e6f9dae6588112ad5d",
-      "startPage": 200
+      "startPage": 201
     },
     {
       "key": "windows11/14-sysprep-audit",
@@ -120,7 +120,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/",
       "download": "telechargements/windows11/cours/14-sysprep-audit.md",
       "sourceSha256": "7c29fa0aebbea9f6b050656d1baec97a74e351a696bb441ed57756bf2b78d771",
-      "startPage": 222
+      "startPage": 223
     },
     {
       "key": "windows11/15-wim-dism",
@@ -128,7 +128,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/15-wim-dism/",
       "download": "telechargements/windows11/cours/15-wim-dism.md",
       "sourceSha256": "bad4c0299ea921a122413e7dcf34409c942cdcc1c37dec8e34f0d9543df35c2f",
-      "startPage": 232
+      "startPage": 233
     },
     {
       "key": "windows11/16-deploiement",
@@ -136,7 +136,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/16-deploiement/",
       "download": "telechargements/windows11/cours/16-deploiement.md",
       "sourceSha256": "105bd53602324286e51634e774783ba652ab896bc939b72c42a351f66ed2dfd3",
-      "startPage": 239
+      "startPage": 240
     },
     {
       "key": "windows11/17-wds-pxe",
@@ -144,7 +144,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/",
       "download": "telechargements/windows11/cours/17-wds-pxe.md",
       "sourceSha256": "bf30ee13651da4a915c78a9aacc900095d449eff36ba386bf882ea0ab5c1b48b",
-      "startPage": 256
+      "startPage": 257
     },
     {
       "key": "windows11/17-environnement-utilisateur",
@@ -152,7 +152,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/",
       "download": "telechargements/windows11/cours/17-environnement-utilisateur.md",
       "sourceSha256": "51c0041f19aadc2fe4b12e9413e58b9174f1f728557fd9ffef08bf541f70f606",
-      "startPage": 275
+      "startPage": 276
     },
     {
       "key": "windows11/18-demarrage-recuperation",
@@ -160,7 +160,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/",
       "download": "telechargements/windows11/cours/18-demarrage-recuperation.md",
       "sourceSha256": "df0b939bebc8c713310ae3f3ce2675c91da0443b78e081c0d6afd7012e351395",
-      "startPage": 284
+      "startPage": 285
     },
     {
       "key": "windows11/19-depannage",
@@ -168,7 +168,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/19-depannage/",
       "download": "telechargements/windows11/cours/19-depannage.md",
       "sourceSha256": "6a3b1a98a5da8e700c6eeab1ae2e92e3452f513f735c5c08e7cafbde39d61df2",
-      "startPage": 296
+      "startPage": 297
     },
     {
       "key": "windows11/20-mco",
@@ -176,7 +176,7 @@
       "href": "https://cours.kaya.ovh/windows11/windows11/20-mco/",
       "download": "telechargements/windows11/cours/20-mco.md",
       "sourceSha256": "a197446b1739af863c6c68d1a77ef5f675df3bbc43012961e3b01cbd84c6dca7",
-      "startPage": 303
+      "startPage": 304
     }
   ]
 }

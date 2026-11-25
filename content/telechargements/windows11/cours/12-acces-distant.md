@@ -1,7 +1,7 @@
 # 12. Administrer SRV01 depuis PC01
 
 > [!abstract] Deux machines, deux rôles
-> **PC01** ouvre les connexions et **SRV01** les reçoit. Dans le TP, tu utilises **WinRM** pour vérifier DNS et DHCP sur le serveur. Les autres protocoles montrent comment la méthode change quand tu dois ouvrir un bureau, consulter les journaux ou accéder à un partage.
+> **PC01** ouvre les connexions et **SRV01** les reçoit. Dans le TP, tu **configures** quatre accès : les consoles du serveur sur PC01 (**RSAT**), PowerShell à distance (**WinRM**), les consoles graphiques à distance (**RPC**) et **SSH avec une clé**. Les autres protocoles montrent comment la méthode change quand tu dois ouvrir un bureau ou accéder à un partage.
 
 > [!note] État du lab après le TP 11
 > `PC01` est joint à `ad.fournil.lab`. `SRV01` est démarré et les deux VM sont sur `vSwitch-Rennes`.
@@ -55,6 +55,13 @@ Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential 'Administrateur@a
 
 L’invite affiche le nom de **SRV01** entre crochets. Exécute `hostname` et `Get-Service DNS, DHCPServer`, relève les états, puis tape `Exit-PSSession`. Relance `hostname` pour vérifier ton retour sur **PC01**.
 
+> [!warning] Dans l'autre sens, WinRM est fermé
+> Windows **Server** accepte PowerShell à distance d'office, Windows **11** non : le service *Windows Remote Management (Gestion WSM)* est **arrêté**. Pour administrer PC01 depuis SRV01, on l'active une fois sur PC01, dans un Terminal **administrateur** :
+> ```powershell
+> Enable-PSRemoting -Force
+> ```
+> Ensuite, depuis SRV01 : `Invoke-Command -ComputerName PC01 -ScriptBlock { hostname }`.
+
 ![Extrait de la capture du lab. La session est ouverte sur SRV01. Les services DNS et DHCP affichent Running. La capture utilise la forme courte FOURNIL\Administrateur pour le même compte.](https://cours.kaya.ovh/windows11/assets/captures/w11-16-winrm-session-reussie.png)
 
 ## 2. RDP · Ouvrir le bureau du serveur
@@ -89,6 +96,18 @@ ssh -l 'FOURNIL\Administrateur' srv01.ad.fournil.lab
 
 ![Capture du lab. La session SSH est ouverte et hostname renvoie SRV01.](https://cours.kaya.ovh/windows11/assets/captures/w11-12-ssh-srv01.png)
 
+### Se connecter avec une clé plutôt qu'un mot de passe
+
+Une **paire de clés** remplace le mot de passe : la clé **privée** reste sur PC01 et ne se partage jamais, la clé **publique** se copie sur le serveur.
+
+```powershell
+# Sur PC01 : créer la paire de clés (Entrée 3 fois dans le lab)
+ssh-keygen -t ed25519
+# → C:\Users\<profil>\.ssh\id_ed25519 (privée) et id_ed25519.pub (publique)
+```
+
+Pour un compte **administrateur**, OpenSSH pour Windows lit les clés autorisées dans **`C:\ProgramData\ssh\administrators_authorized_keys`** (pas dans `.ssh\authorized_keys`). Ce fichier ne doit être accessible qu'aux Administrateurs et à SYSTEM, sinon SSH l'ignore. Le TP montre comment y déposer la clé grâce à WinRM. Ensuite, `ssh administrateur@srv01.ad.fournil.lab` ne demande plus de mot de passe.
+
 ## 4. RPC · Consulter les événements à distance
 
 RPC permet à une application d’appeler un service sur une autre machine. Ici, l’Observateur d’événements de PC01 demande les journaux à SRV01.
@@ -100,6 +119,16 @@ Get-NetTCPConnection -State Listen -LocalPort 135 -ErrorAction SilentlyContinue
 ```
 
 Sur **PC01**, teste `Test-NetConnection srv01.ad.fournil.lab -Port 135`. Ouvre `eventvwr.msc`, fais un clic droit sur **Observateur d’événements (local) → Se connecter à un autre ordinateur**, puis saisis `srv01.ad.fournil.lab`. Ouvre **Journaux Windows → Système**. Le port 135 permet de repérer le service RPC. Si ce premier test réussit et que la console échoue, fais vérifier les droits et les règles de pare-feu de gestion distante des journaux, ainsi que les ports RPC négociés.
+
+> [!warning] Vers un poste Windows 11, le pare-feu bloque RPC
+> Pour ouvrir l'Observateur d'événements ou la Gestion de l'ordinateur **de PC01** depuis SRV01, il faut d'abord activer sur PC01 les groupes de règles du pare-feu (désactivés par défaut) : `wf.msc` → **Règles de trafic entrant** → trier par **Groupe** → sélectionner les règles → clic droit → **Activer la règle**.
+> - **Gestion à distance des journaux des événements** (Observateur d'événements)
+> - **Gestion des services à distance** (Services)
+>
+> ```powershell
+> Enable-NetFirewallRule -DisplayGroup "Gestion à distance des journaux des événements", "Gestion des services à distance"
+> ```
+> Activer WinRM ne suffit pas : les consoles graphiques passent par **RPC**, pas par WinRM.
 
 ## 5. SMB · Accéder au dossier Commun
 
@@ -134,7 +163,7 @@ Sur **PC01**, lance `dnsmgmt.msc`, connecte la console DNS à `SRV01` et ouvre *
 ![Capture du lab. Dans les fonctionnalités facultatives, recherche RSAT et installe uniquement la console nécessaire.](https://cours.kaya.ovh/windows11/assets/captures/w11-11-acces-distant-1.png)
 
 > [!note] Assistance rapide et Bureau à distance
-> L’Assistance rapide permet de **partager une session existante** avec l’accord de la personne aidée. Avec **RDP**, le technicien ouvre une session sur la machine distante. L’Assistance rapide utilise une connexion HTTPS sortante vers Microsoft. Le TP vérifie WinRM de PC01 vers SRV01.
+> L’Assistance rapide permet de **partager une session existante** avec l’accord de la personne aidée. Avec **RDP**, le technicien ouvre une session sur la machine distante. L’Assistance rapide utilise une connexion HTTPS sortante vers Microsoft.
 
 [Faire le TP guidé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
 

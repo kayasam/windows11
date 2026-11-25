@@ -6,6 +6,6 @@ title: "Travaux pratiques — 12. Administrer SRV01 depuis PC01"
 </span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
-- [TP 12. Administrer SRV01 depuis PC01](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)
+- [TP 12. Administrer à distance : RSAT, WinRM, RPC et SSH](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard)
 
-- [TP 12. Administrer SRV01 depuis PC01, version guidée](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
+- [TP 12. Administrer à distance : RSAT, WinRM, RPC et SSH, version guidée](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
