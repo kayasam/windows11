@@ -54,4 +54,7 @@ Ouvre `eventvwr.msc` → **Journaux Windows → Système → Filtrer le journal 
 
 Ouvre `perfmon /rel` et sélectionne une journée où une erreur ou un avertissement apparaît. Relève l’application et l’heure.
 
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp/guide-corrigev2)
 
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/06-administration-diagnostic/tp/guide-corrigev2)
