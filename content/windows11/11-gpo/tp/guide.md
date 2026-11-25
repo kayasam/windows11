@@ -7,7 +7,6 @@ title: "TP 11. Stratégies de groupe et gestion centralisée, version guidée"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/11-gpo-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide-corrigev2">Afficher les corrections</a></nav>
 
-
 **Ta mission.** Appliquer une GPO aux postes du Fournil et une autre aux utilisateurs de la boulangerie. À la fin, tu dois pouvoir expliquer pourquoi deux utilisateurs sur le même poste ne reçoivent pas les mêmes réglages.
 
 - **Sur SRV01**, ouvre une session `FOURNIL\Administrateur` pour créer les GPO.
@@ -37,7 +36,7 @@ Sur **`SRV01`**, dans `gpmc.msc`, fais un clic droit sur **Fournil → Ordinateu
 
 Dans la console, fais un clic droit sur la GPO → **Modifier**. Suis **Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints**.
 
-1. Fais un clic droit → **Ajouter un groupe…**. Sélectionne `FOURNIL\GG-Admins-Postes`.
+1. Fais un clic droit → **Ajouter un groupe…**. Sélectionne `FOURNIL\G-Admins-Postes`.
 2. Dans la zone du bas **Ce groupe est membre de**, ajoute `Administrateurs`. Laisse la zone du haut **Membres de ce groupe** vide.
 
 ### B3 — Configurer Windows LAPS (bonus)
@@ -70,7 +69,7 @@ Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate |
     Select-Object DeferQualityUpdatesPeriodInDays
 ```
 
-Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\GG-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
+Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\G-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
 
 **(bonus) Si tu as fait B3**, sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
 
@@ -206,4 +205,4 @@ Get-ADObject -SearchBase $pc.DistinguishedName -SearchScope OneLevel -Filter "ob
 
 **À vérifier.** La seconde commande liste au moins une entrée. Si elle manque, vérifie que `$protecteurs` contient un protecteur sur `PC01` et relis les messages de sauvegarde.
 
-
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide-corrigev2)

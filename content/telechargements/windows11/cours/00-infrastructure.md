@@ -55,9 +55,9 @@
 | Objet | Type | Détail |
 |-------|------|--------|
 | `stagiaire` | Utilisateur | Utilisateur standard, mot de passe `Fournil2026!` (pas de changement imposé dans le lab) |
-| `adm.stagiaire` | Utilisateur | Membre de `GG-Admins-Postes` |
+| `adm.stagiaire` | Utilisateur | Membre de `G-Admins-Postes` |
 | `G-Boulangerie` | Groupe global de sécurité | Contient `stagiaire` — filtrage des GPO |
-| `GG-Admins-Postes` | Groupe global de sécurité | Ajouté aux Administrateurs locaux des postes par GPO (chap. 11) |
+| `G-Admins-Postes` | Groupe global de sécurité | Ajouté aux Administrateurs locaux des postes par GPO (chap. 11) |
 
 ---
 

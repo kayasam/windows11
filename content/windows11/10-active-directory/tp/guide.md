@@ -8,7 +8,6 @@ title: "TP 10. Intégration Active Directory, version guidée"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/10-active-directory-guide.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2">Afficher les corrections</a></nav>
 
-
 **Ta mission.** Préparer le serveur du Fournil, créer le domaine `ad.fournil.lab`, puis y joindre le poste `PC01`. À la fin, le compte `FOURNIL\stagiaire` doit pouvoir ouvrir une session sur `PC01`, et le poste doit apparaître dans l’UO `Fournil → Ordinateurs` sur le serveur.
 
 **Avant de commencer.** Il te faut l’[ISO Windows Server 2025 d’évaluation](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2025) sur l’hôte, un accès au Gestionnaire Hyper-V et la VM `PC01` utilisée dans les TP précédents. Elle est raccordée à `vSwitch-Rennes` et utilise l’adresse `192.168.3.10`.
@@ -157,8 +156,8 @@ Dans ce lab, utilise `Fournil2026!` pour les deux comptes et décoche **L’util
 
 ### C3 — Créer les groupes et ajouter leurs membres
 
-1. Dans l’UO `Groupes`, crée `G-Boulangerie` et `GG-Admins-Postes` via **Nouveau → Groupe**. Pour chacun, choisis **Globale** et **Sécurité**.
-2. Double-clique sur chaque groupe, puis ouvre **Membres → Ajouter…**. Dans `G-Boulangerie`, ajoute `stagiaire`. Dans `GG-Admins-Postes`, ajoute `adm.stagiaire`. Pour chaque compte, utilise **Vérifier les noms**, puis valide.
+1. Dans l’UO `Groupes`, crée `G-Boulangerie` et `G-Admins-Postes` via **Nouveau → Groupe**. Pour chacun, choisis **Globale** et **Sécurité**.
+2. Double-clique sur chaque groupe, puis ouvre **Membres → Ajouter…**. Dans `G-Boulangerie`, ajoute `stagiaire`. Dans `G-Admins-Postes`, ajoute `adm.stagiaire`. Pour chaque compte, utilise **Vérifier les noms**, puis valide.
 
 **Résultat attendu.** L’onglet **Membres** de chaque groupe affiche le compte prévu.
 
@@ -230,4 +229,4 @@ Sur **`PC01`**, lance `Get-LocalGroupMember Administrateurs` dans PowerShell. Re
 
 [Bonus sur l’heure et le canal sécurisé, partie E du TP](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard)
 
-
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2)

@@ -320,11 +320,17 @@ Une **UO** (Unité d'Organisation) est un conteneur AD qui sert à ranger les ob
 ![w11-10-srv-aduc-mot-de-passe](https://cours.kaya.ovh/windows11/assets/captures/w11-10-srv-aduc-mot-de-passe.png)
 
 > [!WARNING] « Ce mot de passe ne correspond pas aux critères de stratégie de mot de passe »
-> Le domaine impose un mot de passe **complexe** d'au moins 7 caractères, qui **ne contient pas le nom du compte** ni son nom complet. Vécu sur le lab : avec le nom complet *Stagiaire Fournil*, `Fournil2026!` est refusé (il contient « Fournil »), et la console crée quand même le compte… **désactivé** et sans mot de passe. Dans ce cas, supprimer le compte et recommencer avec un autre nom complet (ici *Stagiaire Boulangerie*).
+> Le domaine impose un mot de passe **complexe** d'au moins 7 caractères, qui **ne contient pas le nom du compte** ni son nom complet. Avec le nom complet *Stagiaire Fournil*, `Fournil2026!` est refusé : il contient « Fournil ». Au clic sur **Terminer**, ce message s'affiche et **le compte n'est pas créé** :
 >
 > ![w11-10-srv-aduc-erreur-complexite](https://cours.kaya.ovh/windows11/assets/captures/w11-10-srv-aduc-erreur-complexite.png)
+>
+> **OK** → **Précédent** (deux fois) → changer le nom complet (ici *Stagiaire Boulangerie*), ou **Annuler** et recommencer.
 
 - **Créer un groupe** : UO `Groupes` → clic droit → **Nouveau → Groupe** → nom `G-Boulangerie`, étendue **Globale**, type **Sécurité**.
+
+> [!TIP] Pourquoi « G- » devant le nom des groupes ?
+> C'est une **convention de nommage** : le préfixe `G-` indique un **G**roupe global de sécurité. Tous les groupes du Fournil la suivent : `G-Boulangerie`, `G-Admins-Postes`, `G-Direction` (chapitre 18). En voyant le nom, on sait tout de suite que c'est un groupe et pas un utilisateur. Chaque entreprise choisit sa convention (`GG_`, `GRP-`…) ; l'important est de **garder toujours la même**.
+
 - **Ajouter un membre** : double-clic sur le groupe → onglet **Membres** → **Ajouter…** → taper `stagiaire` → **Vérifier les noms** → **OK**.
 
 ### En PowerShell
@@ -345,15 +351,15 @@ Add-ADGroupMember -Identity "G-Boulangerie" -Members "stagiaire"
 # Le compte d'administration des postes, séparé du compte utilisateur (moindre privilège, chap. 09/11)
 New-ADUser -Name "Admin Postes Stagiaire" -SamAccountName "adm.stagiaire" -UserPrincipalName "adm.stagiaire@ad.fournil.lab" `
     -Path "OU=Admins,$base" -AccountPassword (ConvertTo-SecureString "Fournil2026!" -AsPlainText -Force) -Enabled $true
-New-ADGroup -Name "GG-Admins-Postes" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,$base"
-Add-ADGroupMember -Identity "GG-Admins-Postes" -Members "adm.stagiaire"
+New-ADGroup -Name "G-Admins-Postes" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,$base"
+Add-ADGroupMember -Identity "G-Admins-Postes" -Members "adm.stagiaire"
 
 # Vérifications
 Get-ADUser stagiaire -Properties MemberOf | Select-Object DistinguishedName, Enabled, MemberOf
 ```
 
-> [!NOTE] En PowerShell, l'erreur de complexité est claire
-> `New-ADUser` avec un mot de passe refusé affiche une erreur explicite et ne crée **rien** — contrairement à la console graphique, qui laisse un compte désactivé derrière elle.
+> [!NOTE] En PowerShell, même règle
+> `New-ADUser` avec un mot de passe refusé affiche une erreur rouge sur la complexité du mot de passe. Vérifie avec `Get-ADUser stagiaire` qu'aucun compte n'est resté : s'il existe, désactivé, supprime-le (`Remove-ADUser stagiaire`) avant de recommencer.
 
 ### Que les nouveaux postes arrivent dans la bonne UO
 
@@ -448,7 +454,7 @@ Côté serveur, dans `dsa.msc`, `PC01` apparaît dans l'UO **Fournil › Ordinat
 > - `dhcpmgmt.msc` → IPv4 → *Nouvelle étendue* : 100-200, routeur `.254` (relire les options !)
 >
 > **Structure AD**
-> - `dsa.msc` : UO `Fournil` › Utilisateurs, Ordinateurs, Groupes, Admins · `stagiaire`, `adm.stagiaire` · `G-Boulangerie`, `GG-Admins-Postes`
+> - `dsa.msc` : UO `Fournil` › Utilisateurs, Ordinateurs, Groupes, Admins · `stagiaire`, `adm.stagiaire` · `G-Boulangerie`, `G-Admins-Postes`
 > - Mot de passe refusé s'il contient le nom du compte · `redircmp` avant la première jonction
 >
 > **Jonction de PC01**

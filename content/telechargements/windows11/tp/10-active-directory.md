@@ -54,7 +54,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 
 **C2.** Dans l’UO `Utilisateurs`, crée le compte `stagiaire` (nom complet *Stagiaire Boulangerie*). Dans l’UO `Admins`, crée le compte `adm.stagiaire`. Utilise le mot de passe du lab `Fournil2026!` pour les deux comptes et décoche le changement obligatoire à la première connexion.
 
-**C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `GG-Admins-Postes`.
+**C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `G-Admins-Postes`.
 
 **C4.** Pour joindre `PC01` via l’interface graphique en D3, configure maintenant l’UO `Fournil → Ordinateurs` comme destination par défaut des nouveaux postes avec `redircmp`. Si tu utilises PowerShell avec `-OUPath` en D3, passe directement à la partie D.
 
@@ -99,5 +99,8 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 **E2.** Le canal sécurisé de `PC01` est cassé (« La relation d'approbation entre cette station de travail et le domaine principal a échoué »). Répare-le sans quitter le domaine.
 
 ---
+
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard-corrigev2)
+
 
 [Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard-corrigev2)

@@ -1,13 +1,13 @@
 {
   "pdf": "telechargements/cours-complets.pdf",
-  "pdfSha256": "2f5d4e15da952b791eb7685719646f676a0ebd88d229fb40cab0930f222467a5",
+  "pdfSha256": "3d753a1ee6ec9967bfd1bf927102a05d5c96ebf0108d0a31077490c292c6335d",
   "chapters": [
     {
       "key": "windows11/00-infrastructure",
       "title": "00. Infrastructure de référence (fil rouge)",
       "href": "https://cours.kaya.ovh/windows11/windows11/00-infrastructure/",
       "download": "telechargements/windows11/cours/00-infrastructure.md",
-      "sourceSha256": "31da4b574b3c8163702b3db226d6db15b256d333be4fc2eae1f42328d0d8b76c",
+      "sourceSha256": "b6aafddd2000608bdf9310ed37d3e12e8a9ae7df7370488305ee41062853a420",
       "startPage": 2
     },
     {
@@ -87,7 +87,7 @@
       "title": "10. Active Directory et services réseau",
       "href": "https://cours.kaya.ovh/windows11/windows11/10-active-directory/",
       "download": "telechargements/windows11/cours/10-active-directory.md",
-      "sourceSha256": "5357f5390487ce8dfee96e1176f20868cc40069054f360aafcfa34932124f18d",
+      "sourceSha256": "9d47b729becb007f22d5df6f796c4078795dcc13bce993f3da77933444d4428a",
       "startPage": 151
     },
     {
@@ -95,7 +95,7 @@
       "title": "11. Stratégies de groupe et gestion centralisée",
       "href": "https://cours.kaya.ovh/windows11/windows11/11-gpo/",
       "download": "telechargements/windows11/cours/11-gpo.md",
-      "sourceSha256": "4683d2f5cb1d6afff4f5fbffc9fb72c2b3f149c0be468654e34da01f86f2dd3f",
+      "sourceSha256": "21dd4f1a2cd3cf250e8a933d3e2143aa6765373e0412c15d4815499862af65f1",
       "startPage": 179
     },
     {

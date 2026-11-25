@@ -7,7 +7,6 @@ title: "TP 11. Stratégies de groupe et gestion centralisée"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/11-gpo.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2">Afficher les corrections</a></nav>
 
-
 > [!abstract] Parcours TSSR
 > Les RSAT sont préchargés et vérifiés en A1. Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C. Les GPO restent créées et testées par le stagiaire.
 
@@ -47,7 +46,7 @@ Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Sa
 
 **B1.** Crée la GPO `GPO-Postes-Securite` et lie-la à `OU=Ordinateurs,OU=Fournil` (GPMC ou PowerShell).
 
-**B2.** Fais en sorte que `FOURNIL\GG-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
+**B2.** Fais en sorte que `FOURNIL\G-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
 
 **B3.** (bonus) Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
 
@@ -114,4 +113,4 @@ Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà 
 
 ---
 
-
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)

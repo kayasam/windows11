@@ -12,7 +12,7 @@
 
 > [!INFO] Fil rouge — Fournil
 > Deux GPO sur le lab (créées et vérifiées le 08/11/2026) :
-> - **GPO-Postes-Securite** liée à `OU=Ordinateurs` : LAPS, BitLocker → AD, `GG-Admins-Postes` admin local, anneau WU +7 jours ;
+> - **GPO-Postes-Securite** liée à `OU=Ordinateurs` : LAPS, BitLocker → AD, `G-Admins-Postes` admin local, anneau WU +7 jours ;
 > - **GPO-Boulangerie-Utilisateurs** liée à `OU=Utilisateurs`, filtrée sur `G-Boulangerie` : lecteur `P:` → `\\SRV01\Commun`, Panneau de configuration interdit.
 
 ---
@@ -147,13 +147,13 @@ Résultat dans la session de `stagiaire`, *Ce PC* → *Emplacements réseau* :
 
 ### Administrateurs locaux maîtrisés
 
-Objectif : `GG-Admins-Postes` (les techniciens) administrateur de tous les postes, et **pas** les Admins du domaine en usage courant.
+Objectif : `G-Admins-Postes` (les techniciens) administrateur de tous les postes, et **pas** les Admins du domaine en usage courant.
 
 | Méthode | Où | Remarque |
 |---------|----|---------|
 | **Groupes restreints** → « Ce groupe est membre de : Administrateurs » | Paramètres de sécurité → Groupes restreints | Ajoute sans retirer les autres membres (utilisé sur le lab) |
 
-En graphique : *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → **Groupes restreints*** → clic droit → **Ajouter un groupe…** → `FOURNIL\GG-Admins-Postes` → dans la section du **bas**, *Ce groupe est membre de*, **Ajouter…** → `Administrateurs`. (Ne rien mettre dans *Membres de ce groupe*.)
+En graphique : *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → **Groupes restreints*** → clic droit → **Ajouter un groupe…** → `FOURNIL\G-Admins-Postes` → dans la section du **bas**, *Ce groupe est membre de*, **Ajouter…** → `Administrateurs`. (Ne rien mettre dans *Membres de ce groupe*.)
 
 ![w11-11-gpo-groupes-restreints](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-groupes-restreints.png)
 | **Préférences → Utilisateurs et groupes locaux** | Préférences | Plus souple : ajouter/retirer, ciblage par élément |
@@ -164,7 +164,7 @@ Résultat sur `PC01` après `gpupdate` :
 Name                      PrincipalSource
 ----                      ---------------
 FOURNIL\Admins du domaine ActiveDirectory
-FOURNIL\GG-Admins-Postes  ActiveDirectory    ← ajouté par GPO-Postes-Securite
+FOURNIL\G-Admins-Postes  ActiveDirectory    ← ajouté par GPO-Postes-Securite
 PC01\admin                Local
 PC01\Administrateur       Local
 ```
@@ -284,7 +284,7 @@ Journal : *Applications et services → Microsoft → Windows → GroupPolicy �
 > - **LSDOU** : Local → Site → Domaine → UO → UO enfant (le dernier gagne) · Appliqué / Bloquer l'héritage
 > - **Ciblage** : liaison (UO) + filtrage de sécurité (garder LIRE pour Utilisateurs authentifiés) + WMI
 > - Stratégies (imposées) vs Préférences (lecteurs, groupes locaux, tâches, ciblage par élément)
-> - **Sécurité parc** : Groupes restreints/GPP → GG-Admins-Postes · Windows LAPS (`Get-LapsADPassword`)
+> - **Sécurité parc** : Groupes restreints/GPP → G-Admins-Postes · Windows LAPS (`Get-LapsADPassword`)
 >   - BitLocker → AD (`Backup-BitLockerKeyProtector` pour l'existant) · anneau WU
 > - **Diagnostic** : `gpupdate /force` · `gpresult /r /h` · journal GroupPolicy/Operational
 > - **Cloud** : Intune + Entra ID (hybride, Group Policy Analytics)

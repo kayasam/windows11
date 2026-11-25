@@ -177,17 +177,17 @@ Dans ce lab, utilise `MOT_DE_PASSE_DU_LAB` pour les deux comptes et décoche **L
 **Résultat attendu.** Les deux comptes apparaissent dans les UO correspondantes. Garde `stagiaire` pour le test de connexion en D6.
 
 > [!success]- Afficher la correction — C2
-> `stagiaire` est dans `Utilisateurs` et `adm.stagiaire` dans `Admins`. Les deux comptes doivent être activés. Si le mot de passe a été refusé avec le nom *Stagiaire Fournil*, utilise *Stagiaire Boulangerie*, définis le mot de passe prévu, puis active le compte s’il est resté désactivé.
+> `stagiaire` est dans `Utilisateurs` et `adm.stagiaire` dans `Admins`. Les deux comptes doivent être activés. Si le mot de passe a été refusé avec le nom *Stagiaire Fournil* (il contient « Fournil »), le compte n’est pas créé : clique **OK** → **Précédent**, remplace le nom par *Stagiaire Boulangerie*, puis termine l’assistant.
 
 ### C3 — Créer les groupes et ajouter leurs membres
 
-1. Dans l’UO `Groupes`, crée `G-Boulangerie` et `GG-Admins-Postes` via **Nouveau → Groupe**. Pour chacun, choisis **Globale** et **Sécurité**.
-2. Double-clique sur chaque groupe, puis ouvre **Membres → Ajouter…**. Dans `G-Boulangerie`, ajoute `stagiaire`. Dans `GG-Admins-Postes`, ajoute `adm.stagiaire`. Pour chaque compte, utilise **Vérifier les noms**, puis valide.
+1. Dans l’UO `Groupes`, crée `G-Boulangerie` et `G-Admins-Postes` via **Nouveau → Groupe**. Pour chacun, choisis **Globale** et **Sécurité**.
+2. Double-clique sur chaque groupe, puis ouvre **Membres → Ajouter…**. Dans `G-Boulangerie`, ajoute `stagiaire`. Dans `G-Admins-Postes`, ajoute `adm.stagiaire`. Pour chaque compte, utilise **Vérifier les noms**, puis valide.
 
 **Résultat attendu.** L’onglet **Membres** de chaque groupe affiche le compte prévu.
 
 > [!success]- Afficher la correction — C3
-> Les deux groupes sont de type **Sécurité**, avec une étendue **Globale**. `Get-ADGroupMember G-Boulangerie` doit lister `stagiaire` et `Get-ADGroupMember GG-Admins-Postes` doit lister `adm.stagiaire`.
+> Les deux groupes sont de type **Sécurité**, avec une étendue **Globale**. `Get-ADGroupMember G-Boulangerie` doit lister `stagiaire` et `Get-ADGroupMember G-Admins-Postes` doit lister `adm.stagiaire`.
 
 ### C4 — Préparer l’arrivée de `PC01` dans la bonne UO
 

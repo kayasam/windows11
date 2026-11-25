@@ -201,16 +201,20 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 > En graphique : UO `Utilisateurs` → **Nouvel utilisateur** → prénom, nom, `stagiaire` → mot de passe ×2, **décocher** *L'utilisateur doit changer le mot de passe…*
 >
 > > [!WARNING] Mot de passe refusé
-> > Un mot de passe qui **contient le nom du compte ou le nom complet** est refusé. Vécu sur le lab : avec le nom complet *Stagiaire Fournil*, `MOT_DE_PASSE_DU_LAB` est refusé… et la console crée quand même le compte **désactivé**. Supprimer le compte et recommencer avec un autre nom complet (*Stagiaire Boulangerie*). PowerShell, lui, refuse proprement sans rien créer.
+> > Un mot de passe qui **contient le nom du compte ou le nom complet** est refusé. Avec le nom complet *Stagiaire Fournil*, `MOT_DE_PASSE_DU_LAB` est refusé : au clic sur **Terminer**, le message *« Windows ne peut pas définir le mot de passe… »* s'affiche et **le compte n'est pas créé**. **OK** → **Précédent** → changer le nom complet (*Stagiaire Boulangerie*), ou **Annuler** et recommencer.
+> >
+> > ![w11-10-srv-aduc-erreur-complexite](https://cours.kaya.ovh/windows11/assets/captures/w11-10-srv-aduc-erreur-complexite.png)
+> >
+> > En PowerShell, `New-ADUser` affiche une erreur rouge : vérifie avec `Get-ADUser stagiaire` qu'aucun compte désactivé n'est resté, sinon supprime-le (`Remove-ADUser stagiaire`).
 
-**C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `GG-Admins-Postes`.
+**C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `G-Admins-Postes`.
 
 > [!success]- Afficher la correction — C3
 > ```powershell
 > New-ADGroup -Name "G-Boulangerie"    -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
-> New-ADGroup -Name "GG-Admins-Postes" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> New-ADGroup -Name "G-Admins-Postes" -GroupScope Global -GroupCategory Security -Path "OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > Add-ADGroupMember G-Boulangerie -Members stagiaire
-> Add-ADGroupMember GG-Admins-Postes -Members adm.stagiaire
+> Add-ADGroupMember G-Admins-Postes -Members adm.stagiaire
 > Get-ADUser stagiaire -Properties MemberOf | Select-Object SamAccountName, MemberOf
 > ```
 > `MemberOf : {CN=G-Boulangerie,OU=Groupes,OU=Fournil,DC=ad,DC=fournil,DC=lab}`
@@ -309,7 +313,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 > PC01\admin                  Local
 > PC01\Administrateur         Local
 > ```
-> La jonction ajoute **automatiquement** le groupe *Admins du domaine* aux Administrateurs locaux. Pratique, mais contraire au modèle en tiers : au chapitre 11, une GPO y ajoutera `GG-Admins-Postes` à la place, et LAPS gérera le mot de passe de l'admin local.
+> La jonction ajoute **automatiquement** le groupe *Admins du domaine* aux Administrateurs locaux. Pratique, mais contraire au modèle en tiers : au chapitre 11, une GPO y ajoutera `G-Admins-Postes` à la place, et LAPS gérera le mot de passe de l'admin local.
 
 **D6.** Sur `PC01`, ouvre une session avec `FOURNIL\stagiaire`. Vérifie que `whoami` affiche `fournil\stagiaire`.
 

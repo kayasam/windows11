@@ -23,7 +23,7 @@
     <path d="M44 321L63 321" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <rect x="63" y="300" width="560" height="63" rx="10" fill="#ffffff" stroke="#c1afe8"/>
     <text x="78" y="327" fill="#4d2b79" font-size="21" font-weight="700">OU=Groupes</text>
-    <text x="78" y="348" fill="#253b54" font-size="18">G-Boulangerie et GG-Admins-Postes</text>
+    <text x="78" y="348" fill="#253b54" font-size="18">G-Boulangerie et G-Admins-Postes</text>
     <path d="M44 321L44 392" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M44 392L63 392" fill="none" stroke="#6e85a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <rect x="63" y="371" width="560" height="63" rx="10" fill="#ffffff" stroke="#dac08d"/>

@@ -38,11 +38,11 @@ Sur **`SRV01`**, dans `gpmc.msc`, fais un clic droit sur **Fournil → Ordinateu
 
 Dans la console, fais un clic droit sur la GPO → **Modifier**. Suis **Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints**.
 
-1. Fais un clic droit → **Ajouter un groupe…**. Sélectionne `FOURNIL\GG-Admins-Postes`.
+1. Fais un clic droit → **Ajouter un groupe…**. Sélectionne `FOURNIL\G-Admins-Postes`.
 2. Dans la zone du bas **Ce groupe est membre de**, ajoute `Administrateurs`. Laisse la zone du haut **Membres de ce groupe** vide.
 
 > [!success]- Afficher la correction — B2
-> La fiche indique que `GG-Admins-Postes` est membre de `Administrateurs`. Ce réglage ajoute le groupe du domaine aux administrateurs locaux de `PC01` et conserve les membres déjà présents.
+> La fiche indique que `G-Admins-Postes` est membre de `Administrateurs`. Ce réglage ajoute le groupe du domaine aux administrateurs locaux de `PC01` et conserve les membres déjà présents.
 
 ### B3 — Configurer Windows LAPS (bonus)
 
@@ -80,7 +80,7 @@ Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate |
     Select-Object DeferQualityUpdatesPeriodInDays
 ```
 
-Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\GG-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
+Repère `GPO-Postes-Securite` dans les GPO appliquées, `FOURNIL\G-Admins-Postes` dans les administrateurs locaux et `7` à la ligne du report.
 
 **(bonus) Si tu as fait B3**, sur **`SRV01`**, lance `Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp`. Repère le compte géré et l’échéance.
 

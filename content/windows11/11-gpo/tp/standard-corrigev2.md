@@ -75,10 +75,10 @@ Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Sa
 > New-GPO -Name "GPO-Postes-Securite" | New-GPLink -Target "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
 > ```
 
-**B2.** Fais en sorte que `FOURNIL\GG-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
+**B2.** Fais en sorte que `FOURNIL\G-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
 
 > [!success]- Afficher la correction — B2
-> - **Groupes restreints** : *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints* → Ajouter `FOURNIL\GG-Admins-Postes` → section **« Ce groupe est membre de »** → `Administrateurs`. (Ne **pas** utiliser la section « Membres de ce groupe » sur *Administrateurs* : elle **remplace** toute la liste et peut retirer l'admin local de secours.)
+> - **Groupes restreints** : *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints* → Ajouter `FOURNIL\G-Admins-Postes` → section **« Ce groupe est membre de »** → `Administrateurs`. (Ne **pas** utiliser la section « Membres de ce groupe » sur *Administrateurs* : elle **remplace** toute la liste et peut retirer l'admin local de secours.)
 > - **Préférences** : *Configuration ordinateur → Préférences → Paramètres du Panneau de configuration → Utilisateurs et groupes locaux* → Nouveau groupe local → `Administrateurs (intégré)`, action *Mettre à jour*, ajouter le membre.
 >
 > Le lab utilise la première méthode.
@@ -122,7 +122,7 @@ Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Sa
 > ```
 > ```
 > FOURNIL\Admins du domaine ActiveDirectory
-> FOURNIL\GG-Admins-Postes  ActiveDirectory
+> FOURNIL\G-Admins-Postes  ActiveDirectory
 > PC01\admin                Local
 > PC01\Administrateur       Local
 > ```

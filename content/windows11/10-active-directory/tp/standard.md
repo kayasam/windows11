@@ -8,7 +8,6 @@ title: "TP 10. Intégration Active Directory"
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/10-active-directory.md">↓ Télécharger le TP (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard" aria-current="page">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard-corrigev2">Afficher les corrections</a></nav>
 
-
 > Chapitres associés : [10. Intégration Active Directory](https://cours.kaya.ovh/windows11/windows11/10-active-directory/)
 
 ---
@@ -63,7 +62,7 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 
 **C2.** Dans l’UO `Utilisateurs`, crée le compte `stagiaire` (nom complet *Stagiaire Boulangerie*). Dans l’UO `Admins`, crée le compte `adm.stagiaire`. Utilise le mot de passe du lab `Fournil2026!` pour les deux comptes et décoche le changement obligatoire à la première connexion.
 
-**C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `GG-Admins-Postes`.
+**C3.** Dans l’UO `Groupes`, crée deux groupes de sécurité globaux. Ajoute `stagiaire` à `G-Boulangerie` et `adm.stagiaire` à `G-Admins-Postes`.
 
 **C4.** Pour joindre `PC01` via l’interface graphique en D3, configure maintenant l’UO `Fournil → Ordinateurs` comme destination par défaut des nouveaux postes avec `redircmp`. Si tu utilises PowerShell avec `-OUPath` en D3, passe directement à la partie D.
 
@@ -109,4 +108,4 @@ Tu prépares `SRV01` sur l’hôte Hyper-V, puis tu crées le domaine sur `SRV01
 
 ---
 
-
+[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard-corrigev2)

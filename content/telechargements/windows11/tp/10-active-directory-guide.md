@@ -148,8 +148,8 @@ Dans ce lab, utilise `Fournil2026!` pour les deux comptes et décoche **L’util
 
 ### C3 — Créer les groupes et ajouter leurs membres
 
-1. Dans l’UO `Groupes`, crée `G-Boulangerie` et `GG-Admins-Postes` via **Nouveau → Groupe**. Pour chacun, choisis **Globale** et **Sécurité**.
-2. Double-clique sur chaque groupe, puis ouvre **Membres → Ajouter…**. Dans `G-Boulangerie`, ajoute `stagiaire`. Dans `GG-Admins-Postes`, ajoute `adm.stagiaire`. Pour chaque compte, utilise **Vérifier les noms**, puis valide.
+1. Dans l’UO `Groupes`, crée `G-Boulangerie` et `G-Admins-Postes` via **Nouveau → Groupe**. Pour chacun, choisis **Globale** et **Sécurité**.
+2. Double-clique sur chaque groupe, puis ouvre **Membres → Ajouter…**. Dans `G-Boulangerie`, ajoute `stagiaire`. Dans `G-Admins-Postes`, ajoute `adm.stagiaire`. Pour chaque compte, utilise **Vérifier les noms**, puis valide.
 
 **Résultat attendu.** L’onglet **Membres** de chaque groupe affiche le compte prévu.
 
@@ -220,5 +220,8 @@ Sur **`PC01`**, lance `Get-LocalGroupMember Administrateurs` dans PowerShell. Re
 **Résultat attendu.** La commande affiche `fournil\stagiaire`. Tu as vérifié que le poste accepte une ouverture de session avec le compte créé dans le domaine.
 
 [Bonus sur l’heure et le canal sécurisé, partie E du TP](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/standard)
+
+[Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2)
+
 
 [Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide-corrigev2)
