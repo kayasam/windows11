@@ -119,4 +119,4 @@ La trame ne vaut pas validation : chaque ligne doit correspondre à l’état ob
 
 ---
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/20-mco/tp/standard-corrigev2)

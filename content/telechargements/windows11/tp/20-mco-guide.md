@@ -66,4 +66,4 @@ Depuis le Planificateur sur `PC02`, exécute la tâche et actualise l’affichag
 
 Sur `PC01`, crée `C:\MCO\Plan-MCO.md`. Pour chaque contrôle, indique **responsable**, **fréquence**, **preuve attendue** et **action en cas d’échec**. Ajoute le prochain test de restauration, la durée de support des versions constatées et la référence à l’inventaire.
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/20-mco/tp/guide-corrigev2)

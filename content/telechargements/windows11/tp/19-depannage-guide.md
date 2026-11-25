@@ -48,4 +48,4 @@ Après validation par le formateur, exporte la tâche pour la fiche puis désact
 
 Dans Windows PowerShell en administrateur sur le poste en panne, exécute `Unblock-File -LiteralPath C:\MCO\Test-Poste.ps1` sur la copie téléchargée, puis `C:\MCO\Test-Poste.ps1`. Lis les lignes `OK` et `KO`. Pour chaque `KO` restant, indique le contrôle à reprendre dans le ticket. Rejoue aussi l’ouverture du partage avec le compte prévu et l’impression de test.
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/19-depannage/tp/guide-corrigev2)

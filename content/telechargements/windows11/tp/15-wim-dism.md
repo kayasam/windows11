@@ -74,4 +74,4 @@
 
 ---
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/standard-corrigev2)

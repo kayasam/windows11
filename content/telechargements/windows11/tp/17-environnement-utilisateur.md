@@ -75,4 +75,4 @@
 
 ---
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/tp/standard-corrigev2)

@@ -83,4 +83,4 @@
 
 ---
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp/standard-corrigev2)

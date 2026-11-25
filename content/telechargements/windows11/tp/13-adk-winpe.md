@@ -85,4 +85,4 @@ Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11
 
 ---
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/standard-corrigev2)

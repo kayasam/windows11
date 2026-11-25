@@ -36,4 +36,4 @@ Sur l’hôte, ferme toute fenêtre ouverte sur le volume puis lance `Dismount-V
 
 Si `MASTER.wim` dépasse 4 Gio et doit être copié sur FAT32, utilise `dism /Split-Image /ImageFile:D:\Images\MASTER.wim /SWMFile:D:\Images\MASTER.swm /FileSize:3800`. Regroupe les fragments dans le même dossier.
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/15-wim-dism/tp/guide-corrigev2)

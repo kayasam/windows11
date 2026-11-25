@@ -198,4 +198,4 @@ Get-ADObject -SearchBase $pc.DistinguishedName -SearchScope OneLevel -Filter "ob
 
 **À vérifier.** La seconde commande liste au moins une entrée. Si elle manque, vérifie que `$protecteurs` contient un protecteur sur `PC01` et relis les messages de sauvegarde.
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/guide-corrigev2)

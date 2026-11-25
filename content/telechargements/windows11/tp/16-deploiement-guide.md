@@ -120,4 +120,4 @@ Pour un code `0`, ouvre une session `FOURNIL\stagiaire`. Retrouve `preuve-usmt.t
 
 [Référence Microsoft pour ScanState](https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-scanstate-syntax) · [Référence Microsoft pour LoadState](https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-loadstate-syntax)
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/16-deploiement/tp/guide-corrigev2)

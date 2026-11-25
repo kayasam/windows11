@@ -42,4 +42,4 @@ Sur la VM de test, ouvre l’invite de commandes dans WinRE. Exécute `diskpart`
 
 Dans le cours, retrouve l’exemple de `bcdboot` pour un démarrage UEFI. Sur ta fiche, remplace les lettres par celles que tu as relevées et explique le rôle du volume cible EFI.
 
-
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/tp/guide-corrigev2)

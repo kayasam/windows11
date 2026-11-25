@@ -39,3 +39,5 @@ Dans la **session distante**, lance `hostname` puis `Get-Service DNS, DHCPServer
 
 
 [Ouvrir la version guidée](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)
+
+[Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/standard-corrigev2)
