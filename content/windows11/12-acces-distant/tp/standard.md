@@ -104,9 +104,13 @@ ssh-keygen -t ed25519
 
 Où sont créés les fichiers ? Lequel ne doit **jamais** quitter `PC01` ?
 
-**D3.** Dépose ta **clé publique** sur `SRV01`. Pour un compte membre des **Administrateurs**, OpenSSH pour Windows la lit dans un fichier particulier : `C:\ProgramData\ssh\administrators_authorized_keys`. Utilise WinRM (partie B) pour l'y copier depuis `PC01`.
+**D3.** Depuis **PC01**, copie ta clé publique sur **SRV01** en utilisant SSH. Pour ce compte administrateur, dépose-la dans `C:\ProgramData\ssh\administrators_authorized_keys`. Sur le serveur, retrouve la règle `Match Group administrators` dans `C:\ProgramData\ssh\sshd_config`.
 
-**D4.** Reconnecte-toi avec `ssh administrateur@srv01.ad.fournil.lab`. Qu'est-ce qui a changé ?
+**D4.** Depuis **PC01**, teste la connexion en n’autorisant que la clé pour cette connexion. Quel nom de machine s’affiche ?
+
+```powershell
+ssh -o PreferredAuthentications=publickey Administrateur@srv01.ad.fournil.lab hostname
+```
 
 **D5.** (bonus) Lance une seule commande sur `SRV01` sans ouvrir de terminal interactif : `ssh administrateur@srv01.ad.fournil.lab hostname`. À quoi cela sert-il pour un administrateur ?
 

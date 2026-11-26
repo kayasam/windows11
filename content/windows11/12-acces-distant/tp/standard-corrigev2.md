@@ -215,31 +215,26 @@ aliases: ["windows11/12-acces-distant/tp-corrigev2"]
 **D3.** Déposer la clé publique sur SRV01.
 
 > [!success]- Afficher la correction — D3
-> Sur `PC01`, dans Windows PowerShell, on se sert de WinRM (partie B) pour écrire sur `SRV01` :
-> ```powershell
-> $cle = Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
-> Invoke-Command -ComputerName SRV01 -ArgumentList $cle -ScriptBlock {
->     param($cle)
->     Add-Content -Path C:\ProgramData\ssh\administrators_authorized_keys -Value $cle
->     icacls C:\ProgramData\ssh\administrators_authorized_keys /inheritance:r /grant "BUILTIN\Administrateurs:F" "SYSTEM:F"
-> }
-> ```
-> - `Add-Content` ajoute la clé à la fin du fichier (il est créé s'il n'existe pas) ;
-> - `icacls` ne laisse les droits qu'aux **Administrateurs** et à **SYSTEM**. Sinon, le serveur SSH **ignore** le fichier par sécurité : un autre utilisateur pourrait y ajouter sa propre clé.
+> Sur **PC01**, dans la session qui a créé la clé, exécute ce bloc. SSH demande le mot de passe du compte pour le premier dépôt.
 >
-> **Pourquoi ce fichier ?** Pour un compte **administrateur**, OpenSSH pour Windows ne lit pas le fichier habituel `C:\Users\<nom>\.ssh\authorized_keys` mais `C:\ProgramData\ssh\administrators_authorized_keys`, commun à tous les administrateurs (c'est réglé dans `C:\ProgramData\ssh\sshd_config`).
+> ```powershell
+> $cle = Get-Content "$HOME\.ssh\id_ed25519.pub" -ErrorAction Stop
+> $fichier = 'C:\ProgramData\ssh\administrators_authorized_keys'
+> ssh Administrateur@srv01.ad.fournil.lab "powershell.exe -NoProfile -Command Add-Content -Path '$fichier' -Value '$cle' -Encoding ascii -ErrorAction Stop; icacls.exe '$fichier' /inheritance:r /grant:r '*S-1-5-32-544:F' '*S-1-5-18:F'"
+> ```
+>
+> Sur **SRV01**, le bloc `Match Group administrators` de `C:\ProgramData\ssh\sshd_config` dirige OpenSSH vers `C:\ProgramData\ssh\administrators_authorized_keys`. Les deux SID de `icacls` désignent les **Administrateurs** et **SYSTEM**, quelle que soit la langue de Windows.
 
 **D4.** Reconnexion.
 
 > [!success]- Afficher la correction — D4
 > ```powershell
-> ssh administrateur@srv01.ad.fournil.lab
+> ssh -o PreferredAuthentications=publickey Administrateur@srv01.ad.fournil.lab hostname
 > ```
-> **Plus de mot de passe** : SSH prouve l'identité avec la clé privée de `PC01`, que le serveur vérifie avec la clé publique.
 >
-> Si le mot de passe est encore demandé, vérifie sur `SRV01` :
-> - que le fichier contient bien **une ligne** commençant par `ssh-ed25519` : `Get-Content C:\ProgramData\ssh\administrators_authorized_keys` ;
-> - ses droits : `icacls C:\ProgramData\ssh\administrators_authorized_keys` ne doit montrer que *Administrateurs* et *SYSTEM*.
+> Si `hostname` renvoie `SRV01`, la clé fonctionne. Une demande de phrase secrète concerne la clé privée sur `PC01`.
+>
+> Si tu obtiens `Permission denied`, vérifie sur **SRV01** la présence de `administrators_authorized_keys`, la ligne `ssh-ed25519` et les droits du fichier avec `icacls`.
 
 **D5.** (bonus) Une commande sans terminal interactif.
 

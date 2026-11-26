@@ -1,311 +1,353 @@
 # TP 11. Stratégies de groupe et gestion centralisée — Correction
 
-> [!abstract] Parcours TSSR
-> Les RSAT sont préchargés et vérifiés en A1. Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C. Les GPO restent créées et testées par le stagiaire.
+**Mission** — Appliquer une GPO aux postes, monter un lecteur pour la boulangerie et configurer un compte de dépannage LAPS.
 
-> Essaie chaque question avant d'ouvrir **Afficher la correction**. Chaque réponse se replie indépendamment.
+- **Sur SRV01** — Ouvre une session `FOURNIL\Administrateur`, puis lance `gpmc.msc` pour ouvrir la console **Gestion de stratégie de groupe**.
+- **Sur PC01** — Utilise `FOURNIL\Administrateur` pour les tâches qui demandent une élévation. Ouvre les sessions `stagiaire` et `test.vendeur` pour les tests utilisateur.
+- **Prérequis** — `PC01` est joint au domaine et se trouve dans **Fournil → Ordinateurs**. Le TP 10 a préparé `stagiaire` et les groupes `G-Admins-Postes` et `G-Boulangerie`. Pour LAPS, `PC01` doit être sous Windows 11 24H2 ou plus récent.
 
-> Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://cours.kaya.ovh/windows11/windows11/11-gpo/)
+> [!tip] Se repérer dans la console
+> Les UO **Ordinateurs** et **Utilisateurs** sont sous **Fournil**. Le lien de la GPO donne son périmètre. Le filtrage précise qui reçoit la GPO dans ce périmètre.
 
----
+[Chapitre GPO](https://cours.kaya.ovh/windows11/windows11/11-gpo/) · [TP Active Directory guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide)
 
-## Objectifs
+## A. Prendre ses repères
 
-- Administrer les GPO depuis `PC01` (RSAT)
-- Créer une GPO **ordinateur** de sécurité : admins locaux et anneau Windows Update. Windows LAPS est proposé en (bonus)
-- Créer une GPO **utilisateur** filtrée sur un groupe : lecteur réseau et restriction
-- Diagnostiquer avec `gpresult`
+### A1 — Comparer deux liens existants
 
----
-
-## Prérequis
-
-- `SRV01` contrôleur de domaine, `PC01` joint dans `OU=Ordinateurs,OU=Fournil` (TP 10)
-- Session `FOURNIL\Administrateur` sur `SRV01` pour créer les GPO ; sur `PC01`, une session `FOURNIL\Administrateur` (ou `PC01\admin`) pour les vérifications, puis `FOURNIL\stagiaire` pour la partie C
-
----
-
-Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Saute les étapes marquées **(bonus)** si le temps est compté.
-
-## Partie A — Outils
-
-**A1.** Ouvre la console **Gestion de stratégie de groupe** sur `SRV01` (session `FOURNIL\Administrateur`). Où la trouve-t-on ? (bonus : installe aussi les RSAT sur `PC01`.)
+Sur **SRV01**, relève le nom de la GPO liée au domaine et celui de la GPO liée à l’UO **Domain Controllers**.
 
 > [!success]- Afficher la correction — A1
-> Sur `SRV01` : Gestionnaire de serveur → **Outils → Gestion de stratégie de groupe**, ou `Win + R` → `gpmc.msc`. La console a été installée avec le rôle AD DS (*Ajouter les fonctionnalités requises*, TP 10).
+> Sélectionne **ad.fournil.lab**, puis **Objets de stratégie de groupe liés**. Recommence depuis **Domain Controllers**.
 >
-> (bonus) Sur `PC01`, en Terminal administrateur :
-> ```powershell
-> Add-WindowsCapability -Online -Name "Rsat.GroupPolicy.Management.Tools~~~~0.0.1.0"
-> Add-WindowsCapability -Online -Name "Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0"
-> ```
-> Environ **10 minutes** pour les deux sur le lab : ce sont des **Features on Demand** téléchargées depuis Windows Update. Ne pas redémarrer le poste pendant ce temps — vécu sur le lab : un redémarrage en cours d'installation fait échouer l'opération, à relancer.
+> **Default Domain Policy** est liée au domaine. **Default Domain Controllers Policy** est liée à l’UO **Domain Controllers**. Une GPO peut exister dans le domaine et être liée à un emplacement précis.
 
-**A2.** Ouvre `gpmc.msc`. Quelles GPO existent déjà ? Où sont-elles liées ?
+## B. Ajouter les administrateurs locaux
 
-> [!success]- Afficher la correction — A2
-> Sur un domaine neuf : **Default Domain Policy** (liée au domaine : stratégie de mots de passe, de verrouillage, Kerberos) et **Default Domain Controllers Policy** (liée à l'UO *Domain Controllers* : droits sur les DC, audit).
+### B1 — Créer la GPO des administrateurs de postes
 
-**A3.** (bonus) Où sont stockées physiquement les GPO ? Retrouve le dossier de la *Default Domain Policy*.
-
-> [!success]- Afficher la correction — A3
-> - Objet AD : `CN={31B2F340-016D-11D2-945F-00C04FB984F9},CN=Policies,CN=System,DC=ad,DC=fournil,DC=lab` (GUID fixe de la *Default Domain Policy*).
-> - Fichiers : `\\ad.fournil.lab\SYSVOL\ad.fournil.lab\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\` (`GPT.INI`, `Machine\`, `User\`).
-> Les deux portent un **numéro de version** : un poste ne retraite une GPO que si ce numéro a changé (sauf `gpupdate /force`).
-
----
-
-## Partie B — GPO ordinateur « GPO-Postes-Securite »
-
-**B1.** Crée la GPO `GPO-Postes-Securite` et lie-la à `OU=Ordinateurs,OU=Fournil` (GPMC ou PowerShell).
+Sur **SRV01**, crée `GPO-Postes-Admins-Locaux` et lie-la à **Ordinateurs**.
 
 > [!success]- Afficher la correction — B1
-> GPMC : **Forêt → Domaines → ad.fournil.lab → Fournil** → clic droit sur `Ordinateurs` → **Créer un objet GPO dans ce domaine, et le lier ici…** → `GPO-Postes-Securite`.
+> Fais un clic droit sur **Ordinateurs** → **Créer un objet GPO dans ce domaine, et le lier ici…**. Donne le nom indiqué.
+>
+> Le lien apparaît sous **Ordinateurs**. La création et la liaison peuvent aussi se faire dans PowerShell sur `SRV01`.
+>
+> ```powershell
+> New-GPO -Name 'GPO-Postes-Admins-Locaux' | New-GPLink -Target 'OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab'
+> ```
 >
 > ![w11-11-gpmc-creer-lier](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpmc-creer-lier.png)
-> ```powershell
-> New-GPO -Name "GPO-Postes-Securite" | New-GPLink -Target "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
-> ```
 
-**B2.** Fais en sorte que `FOURNIL\G-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
+### B2 — Ajouter le groupe du domaine au groupe local
+
+Sur **SRV01**, configure la GPO pour ajouter `FOURNIL\G-Admins-Postes` aux **Administrateurs** locaux de `PC01`. Conserve les membres actuels.
+
+**Ordinateurs → GPO-Postes-Admins-Locaux → Modifier**
+
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints**.
 
 > [!success]- Afficher la correction — B2
-> - **Groupes restreints** : *Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints* → Ajouter `FOURNIL\G-Admins-Postes` → section **« Ce groupe est membre de »** → `Administrateurs`. (Ne **pas** utiliser la section « Membres de ce groupe » sur *Administrateurs* : elle **remplace** toute la liste et peut retirer l'admin local de secours.)
-> - **Préférences** : *Configuration ordinateur → Préférences → Paramètres du Panneau de configuration → Utilisateurs et groupes locaux* → Nouveau groupe local → `Administrateurs (intégré)`, action *Mettre à jour*, ajouter le membre.
+> 1. Fais un clic droit dans **Groupes restreints** → **Ajouter un groupe…**. Sélectionne `FOURNIL\G-Admins-Postes`.
+> 2. Dans **Ce groupe est membre de** (en bas), ajoute **Administrateurs**. Laisse **Membres de ce groupe** (en haut) vide.
 >
-> Le lab utilise la première méthode.
+> Dans la fenêtre **Propriétés** de FOURNIL\G-Admins-Postes, **Ce groupe est membre de** contient **Administrateurs**.
 >
-> ![w11-11-gpo-groupes-restreints](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-groupes-restreints.png)
+> ![Groupes restreints — G-Admins-Postes est membre du groupe Administrateurs](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-groupes-restreints.png)
 
-**B3.** (bonus) Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
+### B3 — Vérifier l’ajout sur PC01
+
+Sur **PC01**, dans la session `FOURNIL\Administrateur`, actualise les stratégies ordinateur et vérifie que `FOURNIL\G-Admins-Postes` figure dans les Administrateurs locaux.
 
 > [!success]- Afficher la correction — B3
-> Sur un DC (module `LAPS` intégré à Windows Server 2025) :
-> ```powershell
-> Update-LapsADSchema
-> Set-LapsADComputerSelfPermission -Identity "OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
-> ```
-> GPO : *Configuration ordinateur → Stratégies → Modèles d'administration → Système → LAPS* :
-> - **Configurer le répertoire de sauvegarde des mots de passe** → Activé → *Active Directory*
-> - **Paramètres du mot de passe** → longueur 14, âge 30 jours (valeurs par défaut), complexité *majuscules + minuscules + chiffres + spéciaux*
+> 1. Ouvre PowerShell en administrateur et lance `gpupdate /target:computer /force`.
+> 2. Ouvre **Gestion de l’ordinateur → Utilisateurs et groupes locaux → Groupes → Administrateurs**.
 >
-> > [!WARNING] Piège de la liste « Répertoire de sauvegarde »
-> > Une fois *Activé* coché, la valeur affichée est **Azure Active Directory** : la changer en **Active Directory**, sinon le mot de passe n'est sauvegardé nulle part (le poste n'est pas joint à Entra ID).
-> >
-> > ![w11-11-gpo-laps-repertoire-piege](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-laps-repertoire-piege.png)
+> `FOURNIL\G-Admins-Postes` est dans la liste. Pour afficher la même liste dans PowerShell sur `PC01` :
 >
-> (En PowerShell : `Set-GPRegistryValue … -Key "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\LAPS" -ValueName BackupDirectory -Value 2`, `PasswordLength 14`, `PasswordAgeDays 30`.)
-
-**B4.** Ajoute un report de **7 jours** des mises à jour qualité (anneau « large »).
-
-> [!success]- Afficher la correction — B4
-> *Composants Windows → Windows Update → Gérer les mises à jour proposées de Windows Update → **Choisir quand recevoir les mises à jour qualité*** → Activé, **7** jours.
-
-**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux et le report des mises à jour qualité. (bonus) Si tu as fait B3, vérifie aussi Windows LAPS.
-
-> [!success]- Afficher la correction — B5
-> ```powershell
-> gpupdate /target:computer /force
-> gpresult /scope computer /r          # GPO-Postes-Securite dans « Objets Stratégie de groupe appliqués »
-> ```
-> 1. **Admins locaux** :
 > ```powershell
 > Get-LocalGroupMember Administrateurs
 > ```
-> ```
-> FOURNIL\Admins du domaine ActiveDirectory
-> FOURNIL\G-Admins-Postes  ActiveDirectory
-> PC01\admin                Local
-> PC01\Administrateur       Local
-> ```
-> 2. **LAPS (bonus, seulement si B3 a été réalisé)** — journal *Microsoft-Windows-LAPS/Operational* : 10018 « LAPS a mis à jour Active Directory avec le nouveau mot de passe », 10020, et 10067 « Le compte local configuré est actuellement désactivé » (voir B6). Lecture du mot de passe : sur SRV01, `dsa.msc` → propriétés de `PC01` → onglet **LAPS** → *Afficher le mot de passe* ;
->
-> ![w11-11-aduc-onglet-laps](https://cours.kaya.ovh/windows11/assets/captures/w11-11-aduc-onglet-laps.png)
->
-> ou en PowerShell (sur SRV01, ou sur PC01 si les RSAT sont installés) :
-> ```powershell
-> Get-LapsADPassword -Identity PC01 -AsPlainText
-> ```
-> ```
-> ComputerName        : PC01
-> Account             : Administrateur
-> Password            : [&a!l0wL53#/[S
-> ExpirationTimestamp : 17/12/2026 09:21:24
-> ```
-> 3. **Windows Update** :
-> ```powershell
-> Get-ItemProperty HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate | Select-Object DeferQualityUpdates*
-> # DeferQualityUpdates : 1 / DeferQualityUpdatesPeriodInDays : 7
-> ```
 
-**B6.** (bonus) Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
+## C. Distribuer le lecteur Commun
 
-> [!success]- Afficher la correction — B6
-> LAPS gère par défaut le compte **RID 500** (`Administrateur`), qui est **désactivé** sur Windows 11. Le mot de passe change bien, mais le compte reste inutilisable. Solutions :
-> - activer le compte `Administrateur` (par GPO : *Options de sécurité → Comptes : état du compte Administrateur*) ;
-> - ou faire gérer un autre compte (paramètre **Nom du compte administrateur à gérer**) ; depuis 24H2, **Configurer la gestion automatique des comptes** permet à LAPS de créer ce compte lui-même.
+### C1 — Préparer et tester le partage
 
----
-
-## Partie C — GPO utilisateur filtrée
-
-Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au groupe `G-Boulangerie`. Avant C1, prépare-le avec ce modèle guidé (sur SRV01, après le TP 10) :
-
-```powershell
-New-Item C:\Partages\Commun -ItemType Directory -Force
-icacls C:\Partages\Commun /inheritance:r
-icacls C:\Partages\Commun /grant 'SYSTEM:(OI)(CI)F' 'BUILTIN\Administrateurs:(OI)(CI)F' 'FOURNIL\G-Boulangerie:(OI)(CI)M'
-New-SmbShare -Name Commun -Path C:\Partages\Commun -ChangeAccess 'FOURNIL\G-Boulangerie' -FullAccess 'FOURNIL\Admins du domaine'
-```
-
-Vérifie l’accès avec `stagiaire` avant de créer le mappage.
-
-**C1.** Crée la GPO `GPO-Boulangerie-Utilisateurs`, liée à `OU=Utilisateurs,OU=Fournil`.
+Sur **SRV01**, prépare le partage `Commun` s’il manque. Sur **PC01**, ouvre `\\SRV01\Commun` dans la session `FOURNIL\stagiaire`, puis crée et supprime un fichier de test.
 
 > [!success]- Afficher la correction — C1
+> **Créer le partage sur SRV01, s’il manque.** Dans **Gestionnaire de serveur → Services de fichiers et de stockage → Partages → Tâches → Nouveau partage**, crée un partage SMB nommé `Commun` sur `C:\Partages\Commun`.
+>
+> | Autorisation | `FOURNIL\G-Boulangerie` |
+> | --- | --- |
+> | Partage SMB | Modifier |
+> | Sécurité du dossier (NTFS) | Modification |
+>
+> Garde le **Contrôle total** pour les Administrateurs et, sur le dossier, pour `SYSTEM`.
+>
+> Sur `SRV01`, ouvre PowerShell en administrateur avec `FOURNIL\Administrateur`. Si le dossier et le partage sont à créer, exécute les commandes dans l’ordre.
+>
 > ```powershell
-> New-GPO -Name "GPO-Boulangerie-Utilisateurs" | New-GPLink -Target "OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab"
+> $dossier = 'C:\Partages\Commun'
+> New-Item -Path $dossier -ItemType Directory -Force
+>
+> # Sur le dossier : contrôle total pour SYSTEM et les administrateurs.
+> icacls $dossier /grant:r '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-544:(OI)(CI)F' 'FOURNIL\G-Boulangerie:(OI)(CI)M'
+> icacls $dossier /inheritance:r
+>
+> # Sur le partage : modification pour G-Boulangerie.
+> New-SmbShare -Name Commun -Path $dossier -FullAccess 'BUILTIN\Administrateurs' -ChangeAccess 'FOURNIL\G-Boulangerie'
+> ```
+>
+> Si le dossier existe déjà, réutilise-le et vérifie ses autorisations avant de créer le partage.
+>
+> Le fichier peut être créé et supprimé dans la session de `stagiaire`. Si l’accès échoue, vérifie l’appartenance à `G-Boulangerie` et les droits du partage et du dossier. Rouvre la session de `stagiaire` après un changement de groupe.
+>
+> Sur `SRV01`, tu peux vérifier la présence du partage dans PowerShell :
+>
+> ```powershell
+> Get-SmbShare -Name Commun
 > ```
 
-**C2.** Ajoute une **préférence** qui monte `\\SRV01\Commun` en `P:`, nommé « Commun ». Pourquoi une préférence et pas une stratégie ?
+### C2 — Créer la GPO et configurer le lecteur
+
+Sur **SRV01**, crée et lie `GPO-Utilisateurs-Lecteur-Commun` sous **Utilisateurs**. Fais pointer `P:` vers `\\SRV01\Commun`, avec le libellé `Commun`.
+
+**Utilisateurs → GPO-Utilisateurs-Lecteur-Commun → Modifier**
+
+Dans l’éditeur, ouvre **Configuration utilisateur → Préférences → Paramètres Windows → Mappages de lecteurs**.
 
 > [!success]- Afficher la correction — C2
-> *Configuration utilisateur → Préférences → Paramètres Windows → Mappages de lecteurs* → Nouveau → Lecteur mappé :
-> - Action : **Mettre à jour** · Emplacement : `\\SRV01\Commun` · Libellé : `Commun` · Lettre : **P** · Reconnecter : coché
+> Fais un clic droit dans **Mappages de lecteurs** → **Nouveau → Lecteur mappé**.
+>
+> | Champ | Valeur |
+> | --- | --- |
+> | Action | Mettre à jour |
+> | Emplacement | `\\SRV01\Commun` |
+> | Lettre | `P:` |
+> | Libellé | `Commun` |
+> | Reconnecter | Coché |
 >
 > ![w11-11-gpo-preference-lecteur-p](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-preference-lecteur-p.png)
 >
-> Il n'existe **pas** de *stratégie* « mapper un lecteur » : c'est une préférence (comme les imprimantes, les raccourcis). Avantage : le **ciblage au niveau de l'élément** (onglet Commun) permet de ne monter `P:` que pour un groupe, sans créer une GPO par lecteur.
+> La préférence **Mettre à jour** crée le lecteur s’il manque et actualise le mappage s’il existe. La GPO est liée sous **Utilisateurs**.
+>
+> ```powershell
+> New-GPO -Name 'GPO-Utilisateurs-Lecteur-Commun' | New-GPLink -Target 'OU=Utilisateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab'
+> ```
 
-**C3.** Ajoute la stratégie « Interdire l'accès au Panneau de configuration et à l'application Paramètres du PC ».
+### C3 — Réserver le lecteur au groupe Boulangerie
+
+Sur **SRV01**, réserve l’application de la GPO à `G-Boulangerie`. Garde **Lecture** pour **Utilisateurs authentifiés**.
+
+**Utilisateurs → GPO-Utilisateurs-Lecteur-Commun → Délégation → Avancé**
 
 > [!success]- Afficher la correction — C3
-> *Configuration utilisateur → Stratégies → Modèles d'administration → Panneau de configuration → **Interdire l'accès au Panneau de configuration et à l'application Paramètres du PC*** → Activé (registre : `HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoControlPanel = 1`).
+> 1. Pour **Utilisateurs authentifiés**, conserve **Lecture** et décoche **Appliquer la stratégie de groupe** dans la colonne **Autoriser**.
+> 2. Pour `FOURNIL\G-Boulangerie`, autorise **Lecture** et **Appliquer la stratégie de groupe**.
+>
+> > [!important] Pourquoi conserver la lecture ?
+> > `PC01` en a besoin pour lire la GPO utilisateur avec son compte ordinateur.
+>
+> Dans **Étendue → Filtrage de sécurité**, `G-Boulangerie` apparaît comme groupe autorisé. Dans **Délégation**, **Utilisateurs authentifiés** garde **Lecture**.
+>
+> Équivalent sur `SRV01` dans PowerShell en administrateur :
+>
+> ```powershell
+> Set-GPPermission -Name 'GPO-Utilisateurs-Lecteur-Commun' -TargetName 'Utilisateurs authentifiés' -TargetType Group -PermissionLevel GpoRead -Replace
+> Set-GPPermission -Name 'GPO-Utilisateurs-Lecteur-Commun' -TargetName 'G-Boulangerie' -TargetType Group -PermissionLevel GpoApply
+> ```
+>
+> [Microsoft Learn — Lecture des GPO utilisateur par le compte ordinateur](https://learn.microsoft.com/fr-fr/troubleshoot/windows-server/group-policy/cannot-apply-user-gpo-when-computer-objects-dont-have-read-permissions)
+>
+> ![Volet Filtrage de sécurité de la console GPO — G-Boulangerie](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpmc-filtrage-g-boulangerie.png)
+>
+> ![Rapport du lecteur P et du filtre G-Boulangerie](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lab-gpo-lecteur-commun.png)
 
-**C4.** Restreins la GPO aux membres de `G-Boulangerie`. Quelle erreur classique faut-il éviter ?
+### C4 — Comparer deux utilisateurs sur le même poste
+
+Sur **PC01**, reconnecte-toi en `FOURNIL\stagiaire` et cherche `P:` dans **Ce PC**. Recommence avec `FOURNIL\test.vendeur`, qui est dans la même UO et hors de `G-Boulangerie`. Note le résultat de chaque session.
 
 > [!success]- Afficher la correction — C4
-> ```powershell
-> Set-GPPermission -Name "GPO-Boulangerie-Utilisateurs" -TargetName "Utilisateurs authentifiés" -TargetType Group -PermissionLevel GpoRead -Replace
-> Set-GPPermission -Name "GPO-Boulangerie-Utilisateurs" -TargetName "G-Boulangerie" -TargetType Group -PermissionLevel GpoApply
-> Get-GPPermission -Name "GPO-Boulangerie-Utilisateurs" -All | Select-Object @{N='Qui';E={$_.Trustee.Name}}, Permission
-> ```
-> ```
-> G-Boulangerie                                  GpoApply
-> Utilisateurs authentifiés                       GpoRead
-> Admins du domaine          GpoEditDeleteModifySecurity
-> ...
-> ```
-> En graphique : GPMC → la GPO → onglet **Étendue** → *Filtrage de sécurité* : ajouter `G-Boulangerie`, retirer *Utilisateurs authentifiés* (puis vérifier qu'il garde **Lecture** dans l'onglet *Délégation*).
+> Si `test.vendeur` manque, ouvre `dsa.msc` sur **SRV01**. Dans **Utilisateurs**, crée le compte `test.vendeur` et choisis un mot de passe pour le lab. Laisse le compte hors de `G-Boulangerie`.
 >
-> ![w11-11-gpmc-etendue-filtrage](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpmc-etendue-filtrage.png)
->
-> **Erreur classique** : supprimer *Utilisateurs authentifiés* de l'onglet « Filtrage de sécurité » de GPMC. Depuis MS16-072, le poste lit la GPO avec son **compte ordinateur** ; sans droit de lecture, la GPO n'est plus appliquée à personne. Il faut lui laisser **Lire** (onglet **Délégation** → Avancé).
-
-**C5.** Ferme la session en cours sur `PC01` et ouvre une session `FOURNIL\stagiaire`. Vérifie le lecteur `P:` et la restriction.
-
-> [!success]- Afficher la correction — C5
-> ![w11-11-lecteur-p-gpo](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lecteur-p-gpo.png)
->
-> **Commun (P:)** apparaît dans *Ce PC → Emplacements réseau*.
+> `Commun (P:)` est visible pour `stagiaire` et absent pour `test.vendeur`. Les deux comptes sont dans la portée du lien, mais seul `stagiaire` appartient au groupe autorisé à appliquer la GPO.
 >
 > ![w11-11-pc01-lecteur-p-stagiaire](https://cours.kaya.ovh/windows11/assets/captures/w11-11-pc01-lecteur-p-stagiaire.png)
+
+## D. Comprendre pourquoi une GPO s’applique
+
+### D1 — Lire les résultats sur PC01
+
+Sur **PC01**, relève la GPO appliquée à `stagiaire` et celle qui ajoute les administrateurs locaux au poste.
+
+> [!success]- Afficher la correction — D1
+> | Session sur PC01 | Commande PowerShell |
+> | --- | --- |
+> | `FOURNIL\stagiaire` | `gpresult /scope user /r` |
+> | `FOURNIL\Administrateur`, PowerShell en administrateur | `gpresult /scope computer /r` |
 >
-> `Win + I` (Paramètres) **ne s'ouvre pas du tout**, sans message. `Win + R` → `control` affiche : « *Cette opération a été annulée en raison de restrictions sur cet ordinateur. Contactez votre administrateur système.* »
+> Cherche **Objets de stratégie de groupe appliqués** dans chaque sortie.
+>
+> La partie utilisateur affiche `GPO-Utilisateurs-Lecteur-Commun`. La partie ordinateur affiche `GPO-Postes-Admins-Locaux`.
+>
+> ![Rapport gpresult des stratégies ordinateur appliquées à PC01](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lab-pc01-gpresult.png)
+
+### D2 — Expliquer une GPO absente
+
+**Cas fictif.** Un poste a été déplacé dans **Computers** et ne reçoit plus `GPO-Postes-Admins-Locaux`. Compare l’emplacement de `PC01` dans AD au lien de la GPO. Explique le résultat en gardant `PC01` dans son UO.
+
+**Ordinateurs → GPO-Postes-Admins-Locaux**
+
+> [!success]- Afficher la correction — D2
+> Sur **SRV01**, ouvre `dsa.msc` et retrouve **Ordinateurs → PC01**. Compare avec l’emplacement du lien dans la console GPO.
+>
+> Le poste du collègue est hors de l’UO qui porte le lien. Il faut replacer son compte ordinateur dans la bonne UO, actualiser ses stratégies puis relire le rapport.
+
+## E. Créer un compte de dépannage avec Windows LAPS
+
+### E1 — Préparer Active Directory
+
+Sur **SRV01**, prépare le schéma Windows LAPS et autorise chaque ordinateur de l’UO **Ordinateurs** à sauvegarder ses propres informations.
+
+> [!success]- Afficher la correction — E1
+> L’extension du schéma se fait une fois par domaine, avec un compte habilité. Dans PowerShell en administrateur sur **SRV01**, lance les commandes suivantes.
+>
+> ```powershell
+> Update-LapsADSchema
+> Set-LapsADComputerSelfPermission -Identity 'OU=Ordinateurs,OU=Fournil,DC=ad,DC=fournil,DC=lab'
+> ```
+>
+> Le schéma reçoit les attributs LAPS. La permission sur l’UO permet à chaque poste d’écrire ses propres données. [Microsoft Learn — Déployer Windows LAPS avec Active Directory](https://learn.microsoft.com/fr-fr/windows-server/identity/laps/laps-scenarios-windows-server-active-directory)
+
+### E2 — Créer et activer adm-laps par GPO
+
+Sur **SRV01**, crée et lie `GPO-Postes-LAPS` sous **Ordinateurs** pour créer `adm-laps` et sauvegarder son mot de passe chiffré dans AD.
+
+**Ordinateurs → GPO-Postes-LAPS → Modifier**
+
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Système → LAPS**.
+
+> [!success]- Afficher la correction — E2
+> | Paramètre LAPS | Valeur |
+> | --- | --- |
+> | Configurer le répertoire de sauvegarde de mot de passe | Activé → Active Directory |
+> | Activer le chiffrement du mot de passe | Activé |
+> | Configurer la gestion automatique des comptes | Activé |
+> | Nom du compte administrateur à gérer | Non configuré |
+>
+> Dans **Configurer la gestion automatique des comptes**, renseigne ces options.
+>
+> | Option | Valeur |
+> | --- | --- |
+> | Spécifiez le compte cible à gérer | Gérer un compte d’administrateur personnalisé |
+> | Nom du compte automatique (ou préfixe du nom) | `adm-laps` |
+> | Activer le compte géré | Coché pour le test |
+> | Choisir au hasard le nom du compte géré | Décoché |
+>
+> > [!tip] LAPS crée le compte
+> > La gestion automatique crée `adm-laps` sur le poste. Le champ **Nom du compte administrateur à gérer** sert en mode manuel à désigner un compte déjà présent.
+>
+> LAPS crée `adm-laps` sur `PC01` et gère son mot de passe. La case **Activer le compte géré** le rend utilisable pendant le TP. Le compte `Administrateur` intégré garde son état désactivé.
+>
+> ![w11-11-gpo-laps-repertoire-ad](https://cours.kaya.ovh/windows11/assets/captures/w11-11-gpo-laps-repertoire-ad.png)
+>
+> La capture illustre le choix du répertoire de sauvegarde. Si **Configurer la gestion automatique des comptes** manque dans l’éditeur, vérifie la version du modèle `LAPS.admx` et de son fichier de langue dans le magasin central, s’il existe. [Microsoft Learn — Paramètres Windows LAPS](https://learn.microsoft.com/fr-fr/windows-server/identity/laps/laps-management-policy-settings#automaticaccountmanagementenabled)
+>
+> ![Réglages LAPS du compte adm-laps dans le rapport du lab](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lab-gpo-laps-compte-auto.png)
+
+### E3 — Vérifier le compte et la sauvegarde
+
+Sur **PC01**, vérifie que `adm-laps` est actif et que le compte Administrateur intégré est désactivé. Sur **SRV01**, vérifie la sauvegarde de `adm-laps` dans AD.
+
+> [!success]- Afficher la correction — E3
+> 1. **Sur PC01**, ouvre PowerShell en administrateur avec `FOURNIL\Administrateur` et lance `gpupdate /target:computer /force`. Vérifie l’état des deux comptes dans **Gestion de l’ordinateur → Utilisateurs et groupes locaux → Utilisateurs**.
+> 2. **Sur SRV01**, dans `dsa.msc`, ouvre **Ordinateurs → PC01 → Propriétés → LAPS**. Vérifie le nom du compte et la date d’expiration. Tu peux afficher le mot de passe si tu as le droit de lecture. Garde-le hors du compte rendu.
+> 3. **Pour tester LAPS**, ouvre brièvement une session `.\adm-laps` sur `PC01` avec le mot de passe récupéré.
+>
+> `adm-laps` est actif sur le poste, `Administrateur` est désactivé et l’onglet **LAPS** affiche les données de `adm-laps`. Si nécessaire, actualise les informations LAPS sur `PC01` avec `Invoke-LapsPolicyProcessing`, puis consulte **Observateur d’événements → Journaux des applications et des services → Microsoft → Windows → LAPS → Operational**. L’événement **10018** indique la sauvegarde réussie dans AD.
+>
+> Équivalents PowerShell, depuis `PC01` puis `SRV01` :
+>
+> ```powershell
+> Get-LocalUser -Name 'adm-laps' | Select-Object Name, Enabled
+> ```
+>
+> ```powershell
+> Get-LapsADPassword -Identity PC01 | Select-Object ComputerName, Account, ExpirationTimestamp
+> ```
+
+## F. Ateliers facultatifs
+
+### F1 — Différer les mises à jour qualité
+
+Sur **SRV01**, crée et lie `GPO-Postes-Windows-Update` sous **Ordinateurs** pour reporter les mises à jour qualité de **7 jours**.
+
+**Ordinateurs → GPO-Postes-Windows-Update → Modifier**
+
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Windows Update → Gérer les mises à jour proposées de Windows Update**.
+
+> [!success]- Afficher la correction — F1
+> Active **Choisir quand recevoir les mises à jour qualité** et saisis **7 jours**. Sur **PC01**, actualise les stratégies ordinateur avec `FOURNIL\Administrateur`, puis vérifie le réglage dans `rsop.msc`.
+>
+> Le rapport indique **7 jours**. Vérification équivalente sur `PC01` :
+>
+> ```powershell
+> Get-ItemPropertyValue 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate' -Name DeferQualityUpdatesPeriodInDays
+> ```
+>
+> ![Report de sept jours dans la GPO Windows Update](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lab-gpo-windows-update.png)
+
+### F2 — Bloquer le Panneau de configuration
+
+Sur **SRV01**, crée et lie `GPO-Utilisateurs-Bloquer-Parametres` sous **Utilisateurs**. Réserve le blocage du Panneau de configuration aux membres de `G-Boulangerie`.
+
+**Utilisateurs → GPO-Utilisateurs-Bloquer-Parametres → Modifier**
+
+Dans l’éditeur, ouvre **Configuration utilisateur → Stratégies → Modèles d’administration → Panneau de configuration**.
+
+> [!success]- Afficher la correction — F2
+> 1. Active **Interdire l’accès au Panneau de configuration et à l’application Paramètres du PC**.
+> 2. Reprends le filtrage de C3 sous **Utilisateurs → GPO-Utilisateurs-Bloquer-Parametres → Délégation → Avancé**.
+> 3. Sur **PC01**, reconnecte `stagiaire` puis `test.vendeur`. Lance `control` dans chaque session.
+>
+> L’accès est bloqué pour `stagiaire` et le Panneau de configuration s’ouvre pour `test.vendeur`.
 >
 > ![w11-11-pc01-panneau-interdit](https://cours.kaya.ovh/windows11/assets/captures/w11-11-pc01-panneau-interdit.png)
 >
-> > [!NOTE] Vérifier dans la bonne session
-> > `Get-SmbMapping` ou `net use` lancés dans une **autre** session (un Terminal ouvert en `admin`, une session distante) ne montrent pas le lecteur de `stagiaire` : les lecteurs réseau sont propres à chaque session.
-> ```powershell
-> gpresult /user stagiaire /scope user /r
-> ```
-> ```
-> Objets Stratégie de groupe appliqués
->     GPO-Boulangerie-Utilisateurs
-> ```
+> ![Restriction du Panneau de configuration dans la GPO dédiée](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lab-gpo-bloquer-parametres.png)
 
-**C6.** Crée un utilisateur `test.vendeur` dans `OU=Utilisateurs`, **hors** de `G-Boulangerie`. Que reçoit-il ?
+### F3 — Sauvegarder une clé de récupération BitLocker
 
-> [!success]- Afficher la correction — C6
-> `test.vendeur` est bien dans l'UO, mais n'a pas le droit **Appliquer** : `gpresult` liste `GPO-Boulangerie-Utilisateurs` dans **« Les objets stratégie de groupe n'ont pas été appliqués car ils ont été refusés — Filtrage : refusé (sécurité) »**. Pas de lecteur `P:`, Panneau de configuration accessible.
+Si `PC01` a déjà un protecteur de récupération du TP 09, crée et lie `GPO-Postes-BitLocker` sous **Ordinateurs** sur **SRV01**. Sauvegarde le protecteur dans AD.
 
----
+**Ordinateurs → GPO-Postes-BitLocker → Modifier**
 
-## Partie D — Diagnostic
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d’exploitation**.
 
-**D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. (bonus) Produis aussi un rapport HTML.
-
-> [!success]- Afficher la correction — D1
-> ```powershell
-> gpresult /scope computer /r
-> gpresult /scope user /r
-> gpresult /h C:\Temp\rsop-pc01.html
-> Start-Process C:\Temp\rsop-pc01.html
-> ```
-> Le rapport HTML détaille chaque paramètre et **la GPO gagnante** (*GPO gagnante* pour chaque réglage), ainsi que les GPO refusées et pourquoi.
-
-**D2.** Un collègue a déplacé `PC01` dans `CN=Computers` par erreur. Que montre `gpresult` ? Pourquoi ?
-
-> [!success]- Afficher la correction — D2
-> `gpresult /scope computer /r` n'affiche plus que la **Default Domain Policy** : `GPO-Postes-Securite` est liée à l'UO `Ordinateurs`, que le poste a quittée. `CN=Computers` est un conteneur, pas une UO : on ne peut rien y lier. Les réglages déjà appliqués restent en partie (tatouage des préférences, groupes restreints) mais ne sont plus maintenus. D'où `redircmp` (TP 10).
-
-**D3.** (bonus) Où chercher si une GPO ne s'applique pas du tout (aucune trace) ?
-
-> [!success]- Afficher la correction — D3
-> Journal **Applications et services → Microsoft → Windows → GroupPolicy → Operational** (début/fin de traitement, DC contacté, durée, erreurs SYSVOL), et le journal **Système** (source *GroupPolicy*, ID 1058/1030 : SYSVOL ou DNS inaccessible). Vérifier ensuite DNS du poste, `nltest /dsgetdc:ad.fournil.lab`, accès à `\\ad.fournil.lab\SYSVOL`.
-
----
-
-## Partie E — Exercices complémentaires (bonus)
-
-**E1.** (bonus) Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
-
-> [!success]- Afficher la correction — E1
-> ```powershell
-> New-Item C:\Sauvegarde\GPO -ItemType Directory -Force
-> Backup-GPO -All -Path C:\Sauvegarde\GPO
-> ```
-> Chaque GPO est sauvegardée dans un dossier `{GUID}` avec un rapport. Restauration : `Restore-GPO -Name … -Path …` ; copie vers un autre domaine : `Import-GPO`.
-
-**E2.** (bonus) Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
-
-> [!success]- Afficher la correction — E2
-> Dans Intune (*Appareils → Gérer les appareils → Configuration → Importer des ADMX / Analyse de la stratégie de groupe*) : on importe le **rapport XML** d'une GPO (`Get-GPOReport -ReportType Xml`). L'outil indique, paramètre par paramètre, s'il existe un équivalent dans Intune (CSP / *Settings catalog*) et peut créer directement le profil de configuration. C'est le point de départ d'une migration GPO → Intune.
-
----
-
-## Partie F — Atelier facultatif BitLocker (bonus)
-
-Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
-
-**F1.** (bonus) Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
-
-> [!success]- Afficher la correction — F1
-> *Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d'exploitation → **Sélectionner la méthode de récupération des lecteurs du système d'exploitation protégés par BitLocker*** → Activé :
-> - *Enregistrer les informations de récupération dans AD DS* : mots de passe et packages de clés
-> - *Ne pas activer BitLocker tant que les informations de récupération ne sont pas stockées dans AD DS* : coché
-
-**F2.** (bonus) La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
-
-> [!success]- Afficher la correction — F2
-> La GPO ne concerne que les protecteurs **créés après** son application. Le protecteur de `PC01` date du TP 09. On l'envoie à la main :
-> ```powershell
-> $kp = (Get-BitLockerVolume C:).KeyProtector | Where-Object KeyProtectorType -eq RecoveryPassword
-> Backup-BitLockerKeyProtector -MountPoint C: -KeyProtectorId $kp.KeyProtectorId
-> ```
-> Vérification sur `SRV01` :
-> ```powershell
-> Get-ADObject -Filter "objectClass -eq 'msFVE-RecoveryInformation'" -SearchBase (Get-ADComputer PC01).DistinguishedName -Properties msFVE-RecoveryPassword
-> ```
-> ```
-> Name                   : 2026-11-16T09:44:08+01:00{C70A756F-74A8-48AD-A7F1-BCA5F7788131}
-> msFVE-RecoveryPassword : [clé de récupération à relever dans le lab]
-> ```
-> En graphique : onglet **Récupération BitLocker** des propriétés de `PC01` dans `dsa.msc`, après installation sur SRV01 de la fonctionnalité *Visionneuse de mots de passe de récupération BitLocker* (`Install-WindowsFeature RSAT-Feature-Tools-BitLocker-BdeAducExt`, sans redémarrage).
+> [!success]- Afficher la correction — F3
+> 1. Active **Sélectionner la méthode de récupération des lecteurs du système d’exploitation protégés par BitLocker**.
+> 2. Coche **Enregistrer les informations de récupération dans AD DS**. Sélectionne **Mots de passe et packages de clés** et coche l’option qui impose la sauvegarde avant l’activation de BitLocker.
+> 3. Sur **PC01**, actualise les stratégies ordinateur. Ouvre PowerShell en administrateur avec `FOURNIL\Administrateur` et sauvegarde le protecteur existant.
 >
-> ![w11-11-aduc-onglet-bitlocker](https://cours.kaya.ovh/windows11/assets/captures/w11-11-aduc-onglet-bitlocker.png)
+> ```powershell
+> (Get-BitLockerVolume -MountPoint 'C:').KeyProtector |
+>     Where-Object KeyProtectorType -eq RecoveryPassword |
+>     ForEach-Object { Backup-BitLockerKeyProtector -MountPoint 'C:' -KeyProtectorId $_.KeyProtectorId }
+> ```
+>
+> Sur `SRV01`, dans `dsa.msc`, ouvre **Ordinateurs → PC01 → Propriétés → Récupération BitLocker**, si le composant d’affichage est installé. Une entrée de récupération doit apparaître.
+>
+> ![Onglet Récupération BitLocker des propriétés de PC01, avec une entrée de récupération](https://cours.kaya.ovh/windows11/assets/captures/w11-11-aduc-onglet-bitlocker.png)
+>
+> **Vérification PowerShell**
+>
+> ```powershell
+> $pc = Get-ADComputer PC01
+> Get-ADObject -SearchBase $pc.DistinguishedName -SearchScope OneLevel -Filter "objectClass -eq 'msFVE-RecoveryInformation'" |
+>     Select-Object Name
+> ```
+>
+> ![Sauvegarde de la récupération BitLocker dans Active Directory](https://cours.kaya.ovh/windows11/assets/captures/w11-11-lab-gpo-bitlocker.png)
 
----
-
-[Retour à l'énoncé](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard)
+[Retour à l’énoncé](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard)

@@ -104,22 +104,23 @@ Get-ChildItem $env:USERPROFILE\.ssh
 
 ### D3. Copier la clé publique sur SRV01
 
-```powershell
-$cle = Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
-Invoke-Command -ComputerName SRV01 -ArgumentList $cle -ScriptBlock {
-    param($cle)
-    Add-Content -Path C:\ProgramData\ssh\administrators_authorized_keys -Value $cle
-    icacls C:\ProgramData\ssh\administrators_authorized_keys /inheritance:r /grant "BUILTIN\Administrateurs:F" "SYSTEM:F"
-}
-```
-
-### D4. Se reconnecter
+Sur **PC01**, dans la session qui a créé la clé, exécute ce bloc. SSH demande le mot de passe du compte pour le premier dépôt.
 
 ```powershell
-ssh administrateur@srv01.ad.fournil.lab
+$cle = Get-Content "$HOME\.ssh\id_ed25519.pub" -ErrorAction Stop
+$fichier = 'C:\ProgramData\ssh\administrators_authorized_keys'
+ssh Administrateur@srv01.ad.fournil.lab "powershell.exe -NoProfile -Command Add-Content -Path '$fichier' -Value '$cle' -Encoding ascii -ErrorAction Stop; icacls.exe '$fichier' /inheritance:r /grant:r '*S-1-5-32-544:F' '*S-1-5-18:F'"
 ```
 
-Note ce qui a changé. Tape `exit`.
+Sur **SRV01**, le bloc `Match Group administrators` de `C:\ProgramData\ssh\sshd_config` dirige OpenSSH vers `C:\ProgramData\ssh\administrators_authorized_keys`. Les deux SID de `icacls` désignent les **Administrateurs** et **SYSTEM**, quelle que soit la langue de Windows.
+
+### D4. Vérifier la connexion par clé
+
+```powershell
+ssh -o PreferredAuthentications=publickey Administrateur@srv01.ad.fournil.lab hostname
+```
+
+Si `hostname` renvoie `SRV01`, la clé fonctionne. Une demande de phrase secrète concerne la clé privée sur `PC01`.
 
 [Ouvrir le corrigé guidé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide-corrigev2)
 

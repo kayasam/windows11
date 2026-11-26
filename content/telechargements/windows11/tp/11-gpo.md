@@ -1,112 +1,119 @@
 # TP 11. Stratégies de groupe et gestion centralisée
 
-> [!abstract] Parcours TSSR
-> Les RSAT sont préchargés et vérifiés en A1. Le partage Commun doit exister avant C ; sa préparation guidée est incluse dans C. Les GPO restent créées et testées par le stagiaire.
+**Mission** — Appliquer une GPO aux postes, monter un lecteur pour la boulangerie et configurer un compte de dépannage LAPS.
 
-> Chapitres associés : [11. Stratégies de groupe et gestion centralisée](https://cours.kaya.ovh/windows11/windows11/11-gpo/)
+- **Sur SRV01** — Ouvre une session `FOURNIL\Administrateur`, puis lance `gpmc.msc` pour ouvrir la console **Gestion de stratégie de groupe**.
+- **Sur PC01** — Utilise `FOURNIL\Administrateur` pour les tâches qui demandent une élévation. Ouvre les sessions `stagiaire` et `test.vendeur` pour les tests utilisateur.
+- **Prérequis** — `PC01` est joint au domaine et se trouve dans **Fournil → Ordinateurs**. Le TP 10 a préparé `stagiaire` et les groupes `G-Admins-Postes` et `G-Boulangerie`. Pour LAPS, `PC01` doit être sous Windows 11 24H2 ou plus récent.
 
----
+> [!tip] Se repérer dans la console
+> Les UO **Ordinateurs** et **Utilisateurs** sont sous **Fournil**. Le lien de la GPO donne son périmètre. Le filtrage précise qui reçoit la GPO dans ce périmètre.
 
-## Objectifs
+[Chapitre GPO](https://cours.kaya.ovh/windows11/windows11/11-gpo/) · [TP Active Directory guidé](https://cours.kaya.ovh/windows11/windows11/10-active-directory/tp/guide)
 
-- Administrer les GPO depuis `PC01` (RSAT)
-- Créer une GPO **ordinateur** de sécurité : admins locaux et anneau Windows Update. Windows LAPS est proposé en (bonus)
-- Créer une GPO **utilisateur** filtrée sur un groupe : lecteur réseau et restriction
-- Diagnostiquer avec `gpresult`
+## A. Prendre ses repères
 
----
+### A1 — Comparer deux liens existants
 
-## Prérequis
+Sur **SRV01**, relève le nom de la GPO liée au domaine et celui de la GPO liée à l’UO **Domain Controllers**.
 
-- `SRV01` contrôleur de domaine, `PC01` joint dans `OU=Ordinateurs,OU=Fournil` (TP 10)
-- Session `FOURNIL\Administrateur` sur `SRV01` pour créer les GPO ; sur `PC01`, une session `FOURNIL\Administrateur` (ou `PC01\admin`) pour les vérifications, puis `FOURNIL\stagiaire` pour la partie C
+## B. Ajouter les administrateurs locaux
 
----
+### B1 — Créer la GPO des administrateurs de postes
 
-Après le TP 10, réalise les parties A à D en suivant les étapes du socle. Saute les étapes marquées **(bonus)** si le temps est compté.
+Sur **SRV01**, crée `GPO-Postes-Admins-Locaux` et lie-la à **Ordinateurs**.
 
-## Partie A — Outils
+### B2 — Ajouter le groupe du domaine au groupe local
 
-**A1.** Ouvre la console **Gestion de stratégie de groupe** sur `SRV01` (session `FOURNIL\Administrateur`). Où la trouve-t-on ? (bonus : installe aussi les RSAT sur `PC01`.)
+Sur **SRV01**, configure la GPO pour ajouter `FOURNIL\G-Admins-Postes` aux **Administrateurs** locaux de `PC01`. Conserve les membres actuels.
 
-**A2.** Ouvre `gpmc.msc`. Quelles GPO existent déjà ? Où sont-elles liées ?
+**Ordinateurs → GPO-Postes-Admins-Locaux → Modifier**
 
-**A3.** (bonus) Où sont stockées physiquement les GPO ? Retrouve le dossier de la *Default Domain Policy*.
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Paramètres Windows → Paramètres de sécurité → Groupes restreints**.
 
----
+### B3 — Vérifier l’ajout sur PC01
 
-## Partie B — GPO ordinateur « GPO-Postes-Securite »
+Sur **PC01**, dans la session `FOURNIL\Administrateur`, actualise les stratégies ordinateur et vérifie que `FOURNIL\G-Admins-Postes` figure dans les Administrateurs locaux.
 
-**B1.** Crée la GPO `GPO-Postes-Securite` et lie-la à `OU=Ordinateurs,OU=Fournil` (GPMC ou PowerShell).
+## C. Distribuer le lecteur Commun
 
-**B2.** Fais en sorte que `FOURNIL\G-Admins-Postes` soit administrateur local de tous les postes de l'UO. Deux méthodes possibles : lesquelles ? Choisis-en une.
+### C1 — Préparer et tester le partage
 
-**B3.** (bonus) Sur `SRV01`, prépare Active Directory pour **Windows LAPS**. Modifie ensuite `GPO-Postes-Securite`, créée en B1 et liée à `Fournil → Ordinateurs`. Configure la sauvegarde dans AD, une longueur de 14 caractères et un âge de 30 jours.
+Sur **SRV01**, prépare le partage `Commun` s’il manque. Sur **PC01**, ouvre `\\SRV01\Commun` dans la session `FOURNIL\stagiaire`, puis crée et supprime un fichier de test.
 
-**B4.** Ajoute un report de **7 jours** des mises à jour qualité (anneau « large »).
+### C2 — Créer la GPO et configurer le lecteur
 
-**B5.** Applique la GPO sur `PC01`, puis vérifie le groupe des administrateurs locaux et le report des mises à jour qualité. (bonus) Si tu as fait B3, vérifie aussi Windows LAPS.
+Sur **SRV01**, crée et lie `GPO-Utilisateurs-Lecteur-Commun` sous **Utilisateurs**. Fais pointer `P:` vers `\\SRV01\Commun`, avec le libellé `Commun`.
 
-**B6.** (bonus) Le mot de passe LAPS est bien dans AD… mais un technicien ne peut pas s'en servir pour ouvrir une session. Pourquoi ?
+**Utilisateurs → GPO-Utilisateurs-Lecteur-Commun → Modifier**
 
----
+Dans l’éditeur, ouvre **Configuration utilisateur → Préférences → Paramètres Windows → Mappages de lecteurs**.
 
-## Partie C — GPO utilisateur filtrée
+### C3 — Réserver le lecteur au groupe Boulangerie
 
-Sur `SRV01`, un partage `\\SRV01\Commun` est accessible en modification au groupe `G-Boulangerie`. Avant C1, prépare-le avec ce modèle guidé (sur SRV01, après le TP 10) :
+Sur **SRV01**, réserve l’application de la GPO à `G-Boulangerie`. Garde **Lecture** pour **Utilisateurs authentifiés**.
 
-```powershell
-New-Item C:\Partages\Commun -ItemType Directory -Force
-icacls C:\Partages\Commun /inheritance:r
-icacls C:\Partages\Commun /grant 'SYSTEM:(OI)(CI)F' 'BUILTIN\Administrateurs:(OI)(CI)F' 'FOURNIL\G-Boulangerie:(OI)(CI)M'
-New-SmbShare -Name Commun -Path C:\Partages\Commun -ChangeAccess 'FOURNIL\G-Boulangerie' -FullAccess 'FOURNIL\Admins du domaine'
-```
+**Utilisateurs → GPO-Utilisateurs-Lecteur-Commun → Délégation → Avancé**
 
-Vérifie l’accès avec `stagiaire` avant de créer le mappage.
+### C4 — Comparer deux utilisateurs sur le même poste
 
-**C1.** Crée la GPO `GPO-Boulangerie-Utilisateurs`, liée à `OU=Utilisateurs,OU=Fournil`.
+Sur **PC01**, reconnecte-toi en `FOURNIL\stagiaire` et cherche `P:` dans **Ce PC**. Recommence avec `FOURNIL\test.vendeur`, qui est dans la même UO et hors de `G-Boulangerie`. Note le résultat de chaque session.
 
-**C2.** Ajoute une **préférence** qui monte `\\SRV01\Commun` en `P:`, nommé « Commun ». Pourquoi une préférence et pas une stratégie ?
+## D. Comprendre pourquoi une GPO s’applique
 
-**C3.** Ajoute la stratégie « Interdire l'accès au Panneau de configuration et à l'application Paramètres du PC ».
+### D1 — Lire les résultats sur PC01
 
-**C4.** Restreins la GPO aux membres de `G-Boulangerie`. Quelle erreur classique faut-il éviter ?
+Sur **PC01**, relève la GPO appliquée à `stagiaire` et celle qui ajoute les administrateurs locaux au poste.
 
-**C5.** Ferme la session en cours sur `PC01` et ouvre une session `FOURNIL\stagiaire`. Vérifie le lecteur `P:` et la restriction.
+### D2 — Expliquer une GPO absente
 
-**C6.** Crée un utilisateur `test.vendeur` dans `OU=Utilisateurs`, **hors** de `G-Boulangerie`. Que reçoit-il ?
+**Cas fictif.** Un poste a été déplacé dans **Computers** et ne reçoit plus `GPO-Postes-Admins-Locaux`. Compare l’emplacement de `PC01` dans AD au lien de la GPO. Explique le résultat en gardant `PC01` dans son UO.
 
----
+**Ordinateurs → GPO-Postes-Admins-Locaux**
 
-## Partie D — Diagnostic
+## E. Créer un compte de dépannage avec Windows LAPS
 
-**D1.** Avec `gpresult`, affiche les GPO ordinateur puis utilisateur appliquées sur `PC01`. (bonus) Produis aussi un rapport HTML.
+### E1 — Préparer Active Directory
 
-**D2.** Un collègue a déplacé `PC01` dans `CN=Computers` par erreur. Que montre `gpresult` ? Pourquoi ?
+Sur **SRV01**, prépare le schéma Windows LAPS et autorise chaque ordinateur de l’UO **Ordinateurs** à sauvegarder ses propres informations.
 
-**D3.** (bonus) Où chercher si une GPO ne s'applique pas du tout (aucune trace) ?
+### E2 — Créer et activer adm-laps par GPO
 
----
+Sur **SRV01**, crée et lie `GPO-Postes-LAPS` sous **Ordinateurs** pour créer `adm-laps` et sauvegarder son mot de passe chiffré dans AD.
 
-## Partie E — Exercices complémentaires (bonus)
+**Ordinateurs → GPO-Postes-LAPS → Modifier**
 
-**E1.** (bonus) Sauvegarde toutes les GPO du domaine dans `C:\Sauvegarde\GPO` en une commande.
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Système → LAPS**.
 
-**E2.** (bonus) Explique à quoi servirait **Group Policy Analytics** si le Fournil passait à Intune.
+### E3 — Vérifier le compte et la sauvegarde
 
----
+Sur **PC01**, vérifie que `adm-laps` est actif et que le compte Administrateur intégré est désactivé. Sur **SRV01**, vérifie la sauvegarde de `adm-laps` dans AD.
 
-## Partie F — Atelier facultatif BitLocker (bonus)
+## F. Ateliers facultatifs
 
-Fais cet atelier si le chapitre 09 a été traité et si `PC01` possède déjà un protecteur de récupération. Si tu as passé le chapitre 09, le TP est terminé après les vérifications de la partie D. Tu peux revenir ici plus tard.
+### F1 — Différer les mises à jour qualité
 
-**F1.** (bonus) Configure la sauvegarde des clés de récupération BitLocker du disque système dans AD DS.
+Sur **SRV01**, crée et lie `GPO-Postes-Windows-Update` sous **Ordinateurs** pour reporter les mises à jour qualité de **7 jours**.
 
-**F2.** (bonus) La clé BitLocker n'apparaît pas dans AD. Pourquoi ? Corrige.
+**Ordinateurs → GPO-Postes-Windows-Update → Modifier**
 
----
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Windows Update → Gérer les mises à jour proposées de Windows Update**.
 
-[Ouvrir la correction](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)
+### F2 — Bloquer le Panneau de configuration
+
+Sur **SRV01**, crée et lie `GPO-Utilisateurs-Bloquer-Parametres` sous **Utilisateurs**. Réserve le blocage du Panneau de configuration aux membres de `G-Boulangerie`.
+
+**Utilisateurs → GPO-Utilisateurs-Bloquer-Parametres → Modifier**
+
+Dans l’éditeur, ouvre **Configuration utilisateur → Stratégies → Modèles d’administration → Panneau de configuration**.
+
+### F3 — Sauvegarder une clé de récupération BitLocker
+
+Si `PC01` a déjà un protecteur de récupération du TP 09, crée et lie `GPO-Postes-BitLocker` sous **Ordinateurs** sur **SRV01**. Sauvegarde le protecteur dans AD.
+
+**Ordinateurs → GPO-Postes-BitLocker → Modifier**
+
+Dans l’éditeur, ouvre **Configuration ordinateur → Stratégies → Modèles d’administration → Composants Windows → Chiffrement de lecteur BitLocker → Lecteurs du système d’exploitation**.
 
 
 [Afficher les corrections](https://cours.kaya.ovh/windows11/windows11/11-gpo/tp/standard-corrigev2)

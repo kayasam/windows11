@@ -105,12 +105,25 @@ Paramètres → Système → Fonctionnalités facultatives → **Afficher les fo
 ### D3. Copier la clé publique sur SRV01
 
 > [!success]- Afficher la correction — D3
-> La clé est ajoutée à `C:\ProgramData\ssh\administrators_authorized_keys` : pour un **administrateur**, OpenSSH pour Windows lit ce fichier-là, pas `.ssh\authorized_keys`. `icacls` ne laisse les droits qu'aux *Administrateurs* et à *SYSTEM* : sinon, SSH ignore le fichier par sécurité. `icacls` affiche *1 fichiers correctement traités*.
+> Sur **PC01**, dans la session qui a créé la clé, exécute ce bloc. SSH demande le mot de passe du compte pour le premier dépôt.
+>
+> ```powershell
+> $cle = Get-Content "$HOME\.ssh\id_ed25519.pub" -ErrorAction Stop
+> $fichier = 'C:\ProgramData\ssh\administrators_authorized_keys'
+> ssh Administrateur@srv01.ad.fournil.lab "powershell.exe -NoProfile -Command Add-Content -Path '$fichier' -Value '$cle' -Encoding ascii -ErrorAction Stop; icacls.exe '$fichier' /inheritance:r /grant:r '*S-1-5-32-544:F' '*S-1-5-18:F'"
+> ```
+>
+> Sur **SRV01**, le bloc `Match Group administrators` de `C:\ProgramData\ssh\sshd_config` dirige OpenSSH vers `C:\ProgramData\ssh\administrators_authorized_keys`. Les deux SID de `icacls` désignent les **Administrateurs** et **SYSTEM**, quelle que soit la langue de Windows.
 
-### D4. Se reconnecter
+### D4. Vérifier la connexion par clé
 
 > [!success]- Afficher la correction — D4
-> **Plus de mot de passe demandé** : la clé privée de PC01 prouve ton identité.
-> Si le mot de passe est encore demandé : sur SRV01, vérifie le contenu (`Get-Content C:\ProgramData\ssh\administrators_authorized_keys`, une ligne qui commence par `ssh-ed25519`) et les droits (`icacls`) du fichier.
+> ```powershell
+> ssh -o PreferredAuthentications=publickey Administrateur@srv01.ad.fournil.lab hostname
+> ```
+>
+> Si `hostname` renvoie `SRV01`, la clé fonctionne. Une demande de phrase secrète concerne la clé privée sur `PC01`.
+>
+> Si tu obtiens `Permission denied`, vérifie sur **SRV01** la présence de `administrators_authorized_keys`, la ligne `ssh-ed25519` et les droits du fichier avec `icacls`.
 
 [Retour à l'énoncé guidé](https://cours.kaya.ovh/windows11/windows11/12-acces-distant/tp/guide)

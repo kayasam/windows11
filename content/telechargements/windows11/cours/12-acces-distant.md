@@ -106,7 +106,13 @@ ssh-keygen -t ed25519
 # → C:\Users\<profil>\.ssh\id_ed25519 (privée) et id_ed25519.pub (publique)
 ```
 
-Pour un compte **administrateur**, OpenSSH pour Windows lit les clés autorisées dans **`C:\ProgramData\ssh\administrators_authorized_keys`** (pas dans `.ssh\authorized_keys`). Ce fichier ne doit être accessible qu'aux Administrateurs et à SYSTEM, sinon SSH l'ignore. Le TP montre comment y déposer la clé grâce à WinRM. Ensuite, `ssh administrateur@srv01.ad.fournil.lab` ne demande plus de mot de passe.
+Le TP dépose la clé publique depuis **PC01** avec SSH. Sur **SRV01**, le bloc `Match Group administrators` de `C:\ProgramData\ssh\sshd_config` dirige OpenSSH vers `C:\ProgramData\ssh\administrators_authorized_keys`. Les deux SID de `icacls` désignent les **Administrateurs** et **SYSTEM**, quelle que soit la langue de Windows.
+
+### Où régler le serveur SSH ?
+
+Sur **SRV01**, ouvre `C:\ProgramData\ssh\sshd_config` dans le Bloc-notes en tant qu’administrateur. Ce fichier définit le port d’écoute, les modes d’authentification et l’emplacement des clés autorisées.
+
+Après une modification, valide la syntaxe dans PowerShell en administrateur avec `sshd.exe -t`. Si la commande ne renvoie aucune erreur, applique le changement avec `Restart-Service sshd`. [Microsoft Learn — Clés OpenSSH pour les comptes administratifs](https://learn.microsoft.com/fr-fr/windows-server/administration/openssh/openssh_keymanagement#utilisateur-administratif)
 
 ## 4. RPC · Consulter les événements à distance
 
