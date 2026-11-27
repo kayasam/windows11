@@ -34,17 +34,17 @@ Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11
 
 ## Partie A — Installer l'ADK
 
-**A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et le module WinPE ? Quel problème vois-tu ?
+**A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et pour le module WinPE ? Quelle version Microsoft indique-t-il pour l’ISO Windows 11 26H2 du lab ?
 
 > [!success]- Afficher la correction — A1
 > ```powershell
-> winget search "Microsoft.WindowsADK"
+> winget search Microsoft.WindowsADK --source winget
 > ```
 > ```
 > Windows Assessment and Deployment Kit           Microsoft.WindowsADK            10.1.28000.3481
-> Windows ADK Preinstallation Environment Add-ons Microsoft.WindowsADK.WinPEAddon 10.1.26100.9457
+> Windows ADK Preinstallation Environment Add-ons Microsoft.WindowsADK.WinPEAddon 10.1.28000.3481
 > ```
-> Les deux **ne correspondent pas** : l'ADK 28000 est la branche **26H1** (PC Arm Snapdragon récents), le module WinPE est en 26100 (24H2/25H2/26H2). Microsoft exige **la même version** pour l'ADK et le module, alignée sur la famille de Windows déployée. Constaté lors de la construction du lab : il a fallu désinstaller l'ADK 28000.
+> WinGet propose la branche **10.1.28000.3481** pour les deux paquets. Microsoft indique cette version pour Windows 11 **26H1**. Pour l’ISO **26H2** du lab, prends l’ADK et son module WinPE en **10.1.26100.9457**. [Versions prises en charge par Microsoft](https://learn.microsoft.com/windows-hardware/get-started/adk-install)
 
 **A2.** Installe en mode silencieux l'ADK **10.1.26100.9457** (Outils de déploiement + USMT) puis le module WinPE correspondant.
 
@@ -52,7 +52,7 @@ Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11
 > ```powershell
 > winget install --id Microsoft.WindowsADK -e --version 10.1.26100.9457 `
 >     --override "/quiet /norestart /features OptionId.DeploymentTools OptionId.UserStateMigrationTool"
-> winget install --id Microsoft.WindowsADK.WinPEAddon -e `
+> winget install --id Microsoft.WindowsADK.WinPEAddon -e --version 10.1.26100.9457 `
 >     --override "/quiet /norestart /features OptionId.WindowsPreinstallationEnvironment"
 > ```
 > `--override` remplace les arguments par défaut de l'installeur : on choisit précisément les fonctionnalités. Les deux installations prennent **≈ 3 minutes** sur le lab (petit installeur qui télécharge le reste).

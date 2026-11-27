@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz · 16. Déployer Windows 11 : ISO, réseau, migration, moderne · Windows 11</title>
+<style>
+:root{color-scheme:light;--bg:#f5f5fb;--surface:#fff;--surface2:#eef1f7;--text:#182d3e;--dim:#455d70;--border:#b5bfce;--violet:#6940bd;--tint:#eeebfa;--mint:#087465;--mint-bg:#e7f6f1;--amber:#925500;--amber-bg:#fff4dd;--blue:#245db7;--blue-bg:#eaf1ff;--shadow:0 16px 45px #23314a09;--terminal:#132232;--terminal-text:#e7f3fc;--terminal-mint:#93e5ca;--accent:var(--violet)}
+html[data-theme=dark]{color-scheme:dark;--bg:#101827;--surface:#192638;--surface2:#223249;--text:#edf4ff;--dim:#bacce0;--border:#566a85;--violet:#c4a4ff;--tint:#302a49;--mint:#80dec6;--mint-bg:#163b36;--amber:#ffcb77;--amber-bg:#42341c;--blue:#9dbfff;--blue-bg:#203456;--shadow:0 16px 45px #0002;--terminal:#0c1725}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 'Segoe UI',system-ui,sans-serif}button{font:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.6}a{color:var(--violet);text-underline-offset:4px}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--violet);outline-offset:4px}h1,h2,h3,p,figure{margin:0}h1,h2,h3{line-height:1.18}p+p{margin-top:.7rem}code,kbd,pre{font-family:'Cascadia Code',Consolas,monospace}code{background:var(--surface2);border-radius:5px;padding:.12em .35em;font-size:.91em}pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:.87rem;line-height:1.85}pre code{padding:0;background:none;font-size:inherit}ul{padding-left:1.25rem}.wrap{max-width:1180px;margin:auto;padding:0 28px}.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:20px 0 0;font-size:.78rem}.toolbar a{text-decoration:none}.secondary{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 14px;font-weight:650;font-size:.83rem}.primary{border:0;background:var(--violet);color:#fff;border-radius:10px;padding:11px 18px;font-size:.88rem;font-weight:750}html[data-theme=dark] .primary{color:#1b1530}.eyebrow{text-transform:uppercase;font-size:.69rem;letter-spacing:.16em;font-weight:800;color:var(--violet)}.hero{display:grid;grid-template-columns:1fr 310px;align-items:center;gap:2rem;padding:35px 0 30px}.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);letter-spacing:-.05em;margin:.75rem 0 1rem}.hero h1 em{color:var(--violet);font-style:normal}.hero p{max-width:59ch;color:var(--dim);font-size:1.02rem}.chapter-tabs{display:flex;gap:6px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow-x:auto;margin-bottom:27px;box-shadow:var(--shadow)}.chapter-tabs button{flex:1;white-space:nowrap;border:0;background:none;border-radius:11px;color:var(--dim);font-size:.88rem;font-weight:700;padding:12px 15px}.chapter-tabs button[aria-selected=true]{color:var(--violet);background:var(--tint)}.tab-number{opacity:.65;margin-right:7px;font-size:.75rem}.section-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin:0 0 20px}.section-head h2{font-size:1.55rem;letter-spacing:-.025em;margin:5px 0}.section-head p{color:var(--dim);font-size:.9rem;max-width:65ch}.pill{border:1px solid var(--border);border-radius:30px;padding:6px 12px;font-size:.73rem;white-space:nowrap;color:var(--dim)}.terminal{background:var(--terminal);color:var(--terminal-text);border-radius:14px;overflow:hidden}.terminal-top{display:flex;align-items:center;gap:6px;padding:11px 15px;border-bottom:1px solid #ffffff16;color:#c8d7e6;font-size:.68rem}.terminal-top i{width:7px;height:7px;border-radius:50%;background:#91a2b4;display:inline-block}.terminal-top span{margin-left:auto}.terminal-body{padding:18px 21px}.terminal code{background:none;color:inherit}.prompt{color:var(--terminal-mint)}.terminal-label{font-size:.72rem;color:var(--dim);margin-bottom:8px}.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.surface{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow);min-width:0}.surface h3{font-size:1.15rem;margin:0 0 10px}.surface>p,.muted{color:var(--dim)}.surface>p{font-size:.9rem}.spaced{margin-top:24px}.note{border-left:3px solid var(--mint);padding:13px 17px;background:var(--mint-bg);border-radius:0 12px 12px 0;margin-top:17px;font-size:.87rem}.note strong{color:var(--mint)}.warning{background:var(--amber-bg);border-color:var(--amber)}.warning strong{color:var(--amber)}.result{min-height:55px;font-size:.9rem;margin-top:12px;padding:12px 15px;border-radius:11px;background:var(--surface2);overflow-wrap:anywhere}.button-row,.mode-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.mode-row{margin-bottom:16px}.mode-row button[aria-pressed=true],.button-row button[aria-pressed=true]{background:var(--tint);border-color:var(--violet);color:var(--violet)}.step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:20px}.step-card{border:1px solid var(--border);border-radius:17px;padding:20px;background:var(--surface);text-align:left;color:var(--text)}.step-card[aria-pressed=true]{background:var(--tint);border-color:var(--violet)}.step-card strong{display:block;margin:10px 0 5px}.step-card small{display:block;color:var(--dim);font-size:.8rem}.code-block{margin-top:15px;padding:17px 19px;background:var(--surface2);border-radius:12px}.timeline{display:flex;gap:7px;margin:19px 0}.timeline span{height:5px;border-radius:5px;background:var(--surface2);flex:1}.timeline span.active{background:var(--violet)}.mini-label,.simulation{font-size:.69rem;text-transform:uppercase;letter-spacing:.1em;font-weight:750;color:var(--dim)}.simulation{color:var(--mint)}.small-note{font-size:.8rem;color:var(--dim);margin-top:12px}.footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;margin:35px 0 24px;padding-top:22px;border-top:1px solid var(--border);font-size:.8rem;color:var(--dim)}.quiz-frame{width:100%;height:1100px;border:1px solid var(--border);border-radius:18px;background:var(--surface);margin-top:22px}.destination-card{display:flex;flex-direction:column;gap:12px}.destination-card a{font-weight:750;margin-top:auto}.panel-bottom{margin:24px 0}.panel-bottom button{width:100%}.noscript{padding:20px;background:var(--amber-bg)}label{display:block;font-size:.85rem;font-weight:650;margin:14px 0 6px}input,select{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;width:100%;max-width:100%}.tokens{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.token{padding:9px 14px;border-radius:12px;background:var(--tint);border:1px solid var(--violet);color:var(--violet);font-family:Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+@media(max-width:850px){.hero{grid-template-columns:1fr 210px}.chapter-tabs button{padding:12px 14px}}@media(max-width:620px){.wrap{padding:0 17px}.hero{grid-template-columns:1fr;padding:26px 0 24px;gap:20px}.hero-visual{display:none}.hero h1{font-size:2.3rem}.grid-two,.step-grid{grid-template-columns:1fr}.section-head{align-items:start}.section-head h2{font-size:1.4rem}.pill{white-space:normal;font-size:.68rem}.surface{padding:20px}.chapter-tabs{margin-bottom:24px}.toolbar{font-size:.7rem}.terminal-body{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+.wrap{max-width:860px}.hero{display:block;padding:30px 0 24px}.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero p{max-width:62ch}.toolbar{font-size:.85rem}.quiz-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.quiz-meta p{font-weight:700;font-size:.9rem}
+progress{display:block;width:100%;height:8px;border:0;border-radius:9px;overflow:hidden;accent-color:var(--violet);margin-bottom:26px;background:var(--surface2)}progress::-webkit-progress-bar{background:var(--surface2)}progress::-webkit-progress-value{background:var(--violet)}
+fieldset{border:0;padding:0;margin:0;min-width:0}legend{font-size:1.35rem;font-weight:750;line-height:1.45;margin-bottom:22px;width:100%}
+.choices{display:grid;gap:12px}.choice{display:flex;align-items:center;gap:13px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:0;font-weight:500;font-size:1rem;cursor:pointer;line-height:1.5;background:var(--surface)}
+.choice:has(input:checked){border-color:var(--violet);background:var(--tint)}.choice:has(input:focus-visible){outline:3px solid var(--violet);outline-offset:3px}
+.choice input{appearance:auto;width:19px;height:19px;flex:0 0 19px;margin:0;padding:0;accent-color:var(--violet)}.choice.correct{border-color:var(--mint);background:var(--mint-bg)}.choice.wrong{border-color:var(--amber);background:var(--amber-bg)}
+fieldset:disabled .choice{cursor:default}.feedback{margin-top:22px;padding:18px;border-radius:12px;background:var(--mint-bg);border-left:4px solid var(--mint)}.feedback.wrong{background:var(--amber-bg);border-color:var(--amber)}.feedback strong{display:block;margin-bottom:5px}.actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}.primary,.secondary{font-size:.95rem;min-height:44px}
+.result-score{font-size:3.4rem;font-weight:800;letter-spacing:-.05em;color:var(--violet);margin:14px 0}.review{padding:0;list-style:none;display:grid;gap:14px;margin:24px 0 0}.review li{padding:16px;border:1px solid var(--border);border-radius:12px}.review p{font-size:.92rem;margin-top:7px}.review .status{font-size:.8rem;font-weight:750;color:var(--mint)}.review .status.revise{color:var(--amber)}.footer{justify-content:center}.small-note{margin:10px 0 0}.surface{padding:28px}h2:focus{outline:none}
+@media(max-width:500px){.surface{padding:20px 16px}.hero{padding-top:22px}.hero h1{font-size:2rem}legend{font-size:1.15rem}.choice{padding:12px}.actions button{flex:1}.quiz-meta{align-items:flex-start}.pill{font-size:.7rem}.result-score{font-size:2.8rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="toolbar"><span>Windows 11 · Chapitre 16</span><button class="secondary" id="theme" type="button" aria-pressed="false">Thème sombre</button></div>
+ <header class="hero"><p class="eyebrow">Révision TSSR · 12 questions</p><h1>16. Déployer Windows 11 : ISO, réseau, migration, moderne</h1><p>Choisis une réponse, puis valide pour comprendre. Pas de chronomètre : prends le temps de réfléchir.</p></header>
+ <main>
+  <section class="surface" id="quiz" aria-label="Quiz du chapitre 16">
+   <div class="quiz-meta"><p id="counter"></p><span class="pill" id="topic"></span></div>
+   <progress id="progress" value="0" max="12" aria-label="Questions validées"></progress>
+   <form id="form">
+    <fieldset id="question"><legend id="prompt"></legend><div class="choices" id="choices"></div></fieldset>
+    <div id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1" hidden></div>
+    <div class="actions"><button class="primary" id="validate" type="submit" disabled>Valider ma réponse</button><button class="primary" id="next" type="button" hidden>Question suivante →</button></div>
+   </form>
+  </section>
+  <section class="surface" id="results" aria-labelledby="result-title" hidden>
+   <p class="eyebrow">Ton bilan</p><h2 id="result-title" tabindex="-1">Quiz terminé</h2><p class="result-score" id="score"></p><p id="conclusion"></p>
+   <div class="button-row"><button id="restart" class="primary" type="button">Recommencer le quiz</button></div>
+   <h3 class="spaced">Les réponses à retenir</h3><ol class="review" id="review"></ol>
+  </section>
+ </main>
+ <footer class="footer">Quiz d’entraînement · 16. Déployer Windows 11 : ISO, réseau, migration, moderne · Aucune donnée envoyée</footer>
+</div>
+<noscript><p class="noscript">Active JavaScript pour utiliser ce quiz interactif.</p></noscript>
+<script>
+'use strict';
+const questions = [
+ {
+  "topic": "Méthode du lab",
+  "q": "Comment PC02 est-il déployé dans le lab ?",
+  "choices": [
+   "Par WDS en mode mains libres",
+   "Avec MDT",
+   "Avec l’ISO officielle intacte et un autounattend.xml sur un second support",
+   "En clonant le disque de PC01"
+  ],
+  "answer": 2,
+  "explanation": "On ne modifie pas l’ISO de Microsoft : Setup lit autounattend.xml à la racine de tout support (2e DVD, clé USB)."
+ },
+ {
+  "topic": "Statut 2026",
+  "q": "Quel est le statut de MDT en 2026 ?",
+  "choices": [
+   "Retiré le 6 janvier 2026",
+   "Recommandé par Microsoft",
+   "Remplacé par WDS",
+   "Intégré à Windows 11"
+  ],
+  "answer": 0,
+  "explanation": "WDS : mains libres bloqué depuis avril 2026 et rôle déprécié. ConfigMgr OSD reste supporté."
+ },
+ {
+  "topic": "Fichier de réponse",
+  "q": "Quel composant de la passe specialize fait rejoindre le domaine pendant l’installation ?",
+  "choices": [
+   "Microsoft-Windows-Shell-Setup",
+   "Microsoft-Windows-International-Core",
+   "Microsoft-Windows-SecureStartup-FilterDriver",
+   "Microsoft-Windows-UnattendedJoin"
+  ],
+  "answer": 3,
+  "explanation": "Le poste arrive dans OU=Ordinateurs,OU=Fournil. Cette OU doit exister avant le déploiement."
+ },
+ {
+  "topic": "AutoLogon",
+  "q": "Pourquoi préciser <Domain>PC02</Domain> dans AutoLogon ?",
+  "choices": [
+   "Pour nommer le poste",
+   "Parce qu’une fois joint, Windows chercherait FOURNIL\\admin, qui n’existe pas",
+   "Pour activer BitLocker",
+   "Pour masquer l’OOBE"
+  ],
+  "answer": 1,
+  "explanation": "Le compte admin est local au poste : il faut lui indiquer le nom de la machine comme domaine."
+ },
+ {
+  "topic": "Mini-ISO",
+  "q": "Avec quel outil de l’ADK fabrique-t-on la mini-ISO contenant autounattend.xml et postinstall.ps1 ?",
+  "choices": [
+   "copype",
+   "MakeWinPEMedia",
+   "oscdimg",
+   "scanstate"
+  ],
+  "answer": 2,
+  "explanation": "oscdimg -u2 -udfver102 -lREPONSES … crée une ISO de quelques centaines de kilo-octets."
+ },
+ {
+  "topic": "Traces",
+  "q": "Quelles traces postinstall.ps1 efface-t-il à la fin du déploiement ?",
+  "choices": [
+   "L’ouverture de session automatique (AutoAdminLogon) et la copie du fichier de réponse dans Panther, qui contient les mots de passe",
+   "Le compte Administrateur du domaine",
+   "Les journaux d’événements",
+   "Les partitions EFI et MSR"
+  ],
+  "answer": 0,
+  "explanation": "Sans ça, la session admin se rouvrirait et le mot de passe de jonction resterait lisible dans unattend-original.xml."
+ },
+ {
+  "topic": "Hyper-V",
+  "q": "Setup échoue aléatoirement avec 0x800705AA en appliquant l’image. Cause probable ?",
+  "choices": [
+   "Pas de TPM",
+   "Mauvaise clé de produit",
+   "La mémoire dynamique de la VM",
+   "Le fichier de réponse est mal nommé"
+  ],
+  "answer": 2,
+  "explanation": "Setup demande la RAM plus vite que Hyper-V ne l’alloue. Mémoire fixe d’au moins 4 à 6 Go."
+ },
+ {
+  "topic": "Zéro clic",
+  "q": "Comment supprimer le message « Press any key to boot from CD or DVD » d’une ISO personnalisée ?",
+  "choices": [
+   "Avec /noprompt dans autounattend.xml",
+   "En construisant l’ISO avec efisys_noprompt.bin",
+   "En désactivant Secure Boot",
+   "Ce n’est pas possible"
+  ],
+  "answer": 1,
+  "explanation": "Attention : une telle ISO efface le disque de tout PC qui démarre dessus par erreur (WillWipeDisk)."
+ },
+ {
+  "topic": "USMT",
+  "q": "Dans scanstate, que font /ue:*\\* puis /ui:FOURNIL\\stagiaire ?",
+  "choices": [
+   "Ils excluent tous les profils sauf celui de stagiaire",
+   "Ils incluent tous les profils",
+   "Ils chiffrent le magasin",
+   "Ils listent les fichiers sans migrer"
+  ],
+  "answer": 0,
+  "explanation": "/ui l’emporte sur /ue. Pour tester ce qui partirait, on utilise /listfiles."
+ },
+ {
+  "topic": "USMT",
+  "q": "Pourquoi le magasin USMT faisait 7 Go pour deux fichiers de test ?",
+  "choices": [
+   "Parce que stagiaire avait beaucoup de documents",
+   "Parce que /c compresse mal",
+   "Parce que le partage était plein",
+   "MigDocs.xml ratisse tout le disque et USMT embarquait le cache de l’Optimisation de la distribution"
+  ],
+  "answer": 3,
+  "explanation": "Après Delete-DeliveryOptimizationCache -Force : 0,9 Go. Toujours vérifier avec /listfiles."
+ },
+ {
+  "topic": "Moderne",
+  "q": "Quel est le principe de Windows Autopilot ?",
+  "choices": [
+   "Garder le Windows installé en usine et le configurer depuis le cloud au premier démarrage",
+   "Capturer une image maître chaque mois",
+   "Démarrer en PXE sur un serveur WDS",
+   "Migrer les profils avec USMT"
+  ],
+  "answer": 0,
+  "explanation": "Entra ID + Intune : pas d’image à maintenir, le poste peut être livré directement à l’utilisateur."
+ },
+ {
+  "topic": "Moderne",
+  "q": "Quelle commande récupère le hash matériel d’un poste pour l’enregistrer dans Autopilot ?",
+  "choices": [
+   "Get-ComputerInfo",
+   "Get-WindowsAutopilotInfo -OutputFile …csv",
+   "Get-LapsADPassword",
+   "msinfo32 /report"
+  ],
+  "answer": 1,
+  "explanation": "Avec les droits sur le tenant, Get-WindowsAutopilotInfo -Online l’envoie directement."
+ }
+];
+const $=id=>document.getElementById(id);
+let index=0,answers=[];
+function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function render(focus=false){
+ const q=questions[index];$('counter').textContent=`Question ${index+1} sur ${questions.length}`;$('topic').textContent=q.topic;
+ $('progress').value=answers.length;$('progress').max=questions.length;$('prompt').textContent=q.q;
+ $('question').disabled=false;$('choices').replaceChildren();$('feedback').hidden=true;$('feedback').replaceChildren();
+ $('validate').hidden=false;$('validate').disabled=true;$('next').hidden=true;
+ q.choices.forEach((text,i)=>{const label=node('label',undefined,'choice');const input=document.createElement('input');input.type='radio';input.name='answer';input.value=String(i);input.required=true;input.addEventListener('change',()=>{$('validate').disabled=false;});label.append(input,node('span',text));$('choices').append(label);});
+ if(focus){$('prompt').tabIndex=-1;$('prompt').focus();}
+}
+$('form').addEventListener('submit',e=>{
+ e.preventDefault();if(answers.length>index)return;const chosen=document.querySelector('input[name="answer"]:checked');if(!chosen)return;
+ const value=Number(chosen.value),q=questions[index],correct=value===q.answer;answers.push(value);$('progress').value=answers.length;$('question').disabled=true;
+ [...$('choices').children].forEach((label,i)=>{if(i===q.answer)label.classList.add('correct');else if(i===value)label.classList.add('wrong');});
+ const feedback=$('feedback');feedback.className='feedback'+(correct?'':' wrong');feedback.append(node('strong',correct?'Bonne réponse !':'À retenir : '+q.choices[q.answer]),node('p',q.explanation));feedback.hidden=false;
+ $('validate').hidden=true;$('next').hidden=false;$('next').textContent=index===questions.length-1?'Voir mon bilan →':'Question suivante →';feedback.focus();
+});
+$('next').addEventListener('click',()=>{if(answers.length<=index)return;if(index<questions.length-1){index++;render(true);}else finish();});
+function finish(){
+ $('quiz').hidden=true;$('results').hidden=false;const score=answers.filter((a,i)=>a===questions[i].answer).length;
+ $('score').textContent=`${score} / ${questions.length}`;
+ $('conclusion').textContent=score===questions.length?'Tous les bons réflexes sont là. Tu peux reprendre le TP avec ces repères.':score>=Math.ceil(questions.length*0.7)?'Les bases sont bien engagées. Relis les explications des questions à revoir.':'Prends le temps de relire les explications, puis réessaie tranquillement.';
+ $('review').replaceChildren();questions.forEach((q,i)=>{const correct=answers[i]===q.answer,li=node('li');li.append(node('span',`${i+1}. ${correct?'Acquis':'À revoir'}`,'status'+(correct?'':' revise')),node('p',q.q),node('p','Bonne réponse : '+q.choices[q.answer]));if(!correct)li.append(node('p','Ta réponse : '+q.choices[answers[i]]));li.append(node('p',q.explanation));$('review').append(li);});$('result-title').focus();
+}
+$('restart').addEventListener('click',()=>{index=0;answers=[];$('results').hidden=true;$('quiz').hidden=false;render(true);});
+function setTheme(theme){document.documentElement.dataset.theme=theme;$('theme').textContent=theme==='dark'?'Thème clair':'Thème sombre';$('theme').setAttribute('aria-pressed',String(theme==='dark'));try{localStorage.setItem('theme',theme);}catch{}}
+let initial='light';try{if(localStorage.getItem('theme')==='dark')initial='dark';}catch{}setTheme(initial);
+$('theme').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+window.addEventListener('message',e=>{if(e.source!==window.parent||!e.data||e.data.type!=='linux-theme')return;if(e.data.theme==='light'||e.data.theme==='dark')setTheme(e.data.theme);});
+render();
+</script>
+</body>
+</html>

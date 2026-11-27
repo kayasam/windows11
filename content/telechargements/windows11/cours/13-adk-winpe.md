@@ -88,17 +88,19 @@ Le [Kit de déploiement et d'évaluation Windows (ADK)](https://learn.microsoft.
 > [!TIP] Pas besoin du "Concepteur de configuration"
 > Cette fonctionnalité (ICD, *Imaging and Configuration Designer*) sert à créer des **paquets de provisionnement** (`.ppkg`) — une méthode alternative de personnalisation en bloc, indépendante de Windows SIM. Elle n'est pas nécessaire ici.
 
-### Installation silencieuse avec WinGet (testée sur PC01)
+### Installation silencieuse avec WinGet sur PC01
 
 ```powershell
 winget install --id Microsoft.WindowsADK -e --version 10.1.26100.9457 `
     --override "/quiet /norestart /features OptionId.DeploymentTools OptionId.UserStateMigrationTool"
-winget install --id Microsoft.WindowsADK.WinPEAddon -e `
+winget install --id Microsoft.WindowsADK.WinPEAddon -e --version 10.1.26100.9457 `
     --override "/quiet /norestart /features OptionId.WindowsPreinstallationEnvironment"
 ```
 
 > [!WARNING] ADK et module WinPE : toujours la **même version**
-> Vécu sur le lab : `winget install Microsoft.WindowsADK` installe par défaut l'ADK **10.1.28000** (branche *26H1*, pour les PC Arm Snapdragon), alors que le module WinPE disponible est en **10.1.26100.9457**. Les deux doivent avoir **exactement** la même version, et correspondre à la famille de Windows déployée : pour 24H2/25H2/**26H2**, c'est la branche **26100**. D'où le `--version 10.1.26100.9457` explicite.
+> WinGet propose par défaut l’ADK et son module WinPE en **10.1.28000.3481**, la version que Microsoft indique pour Windows 11 **26H1**. Pour l’ISO **26H2** du lab, indique **10.1.26100.9457** dans les deux commandes. [Versions prises en charge par Microsoft](https://learn.microsoft.com/windows-hardware/get-started/adk-install)
+> Si l’installateur refuse la mise à niveau d’un ADK déjà installé avec le code `2008`, désinstalle l’ancienne version dans **Applications installées**, puis relance les deux installations.
+>
 > À noter aussi : WinPE **x86** n'existe plus dans les ADK récents (amd64 et arm64 uniquement).
 
 Résultat dans `C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\` :
@@ -120,6 +122,15 @@ Windows Setup
 - **partitionner** un disque (`diskpart`) avant déploiement ;
 - **dépanner** un poste qui ne démarre plus (accès aux fichiers, `bcdboot`) ;
 - lancer un outil de déploiement (ConfigMgr, outils tiers).
+
+> [!QUESTION] Pourquoi créer un WinPE, si l'ISO officielle en contient déjà un ?
+> Pour **déployer PC02** (chapitre 16), on n'en a **pas besoin** : l'ISO officielle démarre sur son propre WinPE. Le WinPE qu'on fabrique ici, c'est **la clé USB du technicien** :
+> - un PC ne démarre plus → on démarre sur la clé, on **récupère les fichiers** de l'utilisateur, on **répare le démarrage** (`bcdboot`) ;
+> - un disque BitLocker est verrouillé → on le **déverrouille** avec la clé de récupération sauvegardée dans l'AD (chapitre 11) ;
+> - un disque pose problème → on le **voit et on le prépare** avec `diskpart` ;
+> - en entreprise, WDS, MDT et ConfigMgr démarrent **tous** les postes sur un WinPE personnalisé (chapitres 16 et 17).
+>
+> C'est aussi le moyen de voir concrètement ce qui tourne « avant Windows » pendant une installation.
 
 ### Créer un WinPE (environnement « Outils de déploiement et de création d'images »)
 

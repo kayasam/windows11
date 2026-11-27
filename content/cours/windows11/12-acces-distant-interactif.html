@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12. Accès distant — PC01 ↔ SRV01</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#ffffff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8;
+  --soft:#eef1f7; --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --winrm:#2f6fdf; --rdp:#e0731f; --ssh:#1f9d55; --rpc:#8a4fd8; --smb:#0f9aa8; --rsat:#d6458f; --qa:#6b7280;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#0f131a; --card:#171c25; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2a3140; --soft:#1e2430; --code:#0a0e14; --codeink:#d7dde8;}
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 8px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+main{max-width:1180px;margin:0 auto;padding:12px 20px 40px;display:grid;gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.protos{display:flex;flex-wrap:wrap;gap:8px}
+.proto{border:2px solid var(--c);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-weight:600;cursor:pointer;display:flex;gap:8px;align-items:center;transition:.15s}
+.proto small{font-weight:500;color:var(--muted)}
+.proto:hover{background:color-mix(in srgb,var(--c) 12%,transparent)}
+.proto.active{background:var(--c);color:#fff}
+.proto.active small{color:#ffffffcc}
+svg{width:100%;height:auto;display:block}
+.svgwrap{position:relative}
+.node rect{fill:var(--soft);stroke:var(--line);stroke-width:1.5}
+.node .title{font-weight:700;font-size:20px;fill:var(--ink)}
+.node .sub{font-size:12.5px;fill:var(--muted)}
+.port circle{fill:var(--card);stroke:var(--muted);stroke-width:2;transition:.2s}
+.port text{font-size:12.5px;fill:var(--muted);font-family:ui-monospace,Consolas,monospace}
+.port.lit circle{stroke:var(--pc);fill:var(--pc)}
+.port.lit text{fill:var(--ink);font-weight:700}
+.port.ok circle{fill:var(--ok);stroke:var(--ok)}
+.port.ko circle{fill:var(--ko);stroke:var(--ko)}
+.link{fill:none;stroke-width:3;opacity:.18;transition:.25s}
+.link.on{opacity:1;stroke-width:4}
+.link.dashed{stroke-dasharray:6 6}
+.switch rect{fill:var(--card);stroke:var(--muted);stroke-width:1.5}
+.switch text{font-size:12px;fill:var(--muted)}
+.cloud path{fill:var(--card);stroke:var(--muted);stroke-width:1.5}
+.cloud text{font-size:12px;fill:var(--muted)}
+.blocker{font-size:30px;font-weight:800;fill:var(--ko)}
+.legend{font-size:12px;fill:var(--muted)}
+.grid2>*{min-width:0}
+.grid2{display:grid;grid-template-columns:1.05fr 1fr;gap:18px}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+h2{margin:0 0 6px;font-size:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--muted)}
+.badge.port{background:var(--pc);color:#fff;border-color:transparent}
+.desc{margin:4px 0 12px}
+.dirs{display:flex;gap:6px;margin:6px 0 12px;flex-wrap:wrap}
+.dirs button{font:inherit;font-size:.9rem;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--ink);cursor:pointer}
+.dirs button.active{border-color:var(--pc);box-shadow:inset 0 0 0 1px var(--pc);font-weight:700}
+.step{margin:12px 0}
+.step h3{margin:0 0 4px;font-size:.92rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+pre{position:relative;margin:0;background:var(--code);color:var(--codeink);padding:30px 12px 11px 12px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.95rem}
+.callout.note{border-color:var(--pc)}
+.sim{display:flex;flex-direction:column;gap:10px}
+.simbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:9px 16px;background:var(--pc);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.toggle{display:flex;align-items:center;gap:8px;font-size:.93rem;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pc)}
+.checks{display:grid;gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--soft)}
+.check .ico{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none;background:var(--line);color:var(--muted);font-size:13px}
+.check.ok .ico{background:var(--ok);color:#fff}
+.check.ko .ico{background:var(--ko);color:#fff}
+.check.run .ico{background:var(--pc);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.4}}
+.check>div>b{display:block}
+.check span{color:var(--muted);font-size:.9rem}
+.check code{font-size:.85rem}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600}
+td .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+tr.clickable{cursor:pointer}
+tr.clickable:hover{background:var(--soft)}
+.quiz .q{font-size:1.1rem;font-weight:700;margin:6px 0 10px}
+.quiz .opts{display:flex;flex-wrap:wrap;gap:8px}
+.quiz .opts button{font:inherit;padding:7px 13px;border-radius:9px;border:1px solid var(--line);background:var(--soft);color:var(--ink);cursor:pointer}
+.quiz .opts button.good{background:var(--ok);color:#fff;border-color:var(--ok)}
+.quiz .opts button.bad{background:var(--ko);color:#fff;border-color:var(--ko)}
+.quiz .fb{min-height:1.5em;margin-top:10px;color:var(--muted)}
+.score{float:right;color:var(--muted);font-weight:600}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<header>
+  <h1>12. Administrer SRV01 depuis PC01</h1>
+  <p><b>PC01</b> ouvre les connexions, <b>SRV01</b> les reçoit. Choisis un protocole, puis lance la connexion pour voir le chemin, le port et les deux questions à se poser : <i>« Puis-je atteindre le service ? »</i> et <i>« Mon compte a-t-il le droit d’y entrer ? »</i></p>
+</header>
+
+<main>
+  <section class="card">
+    <div class="protos" id="protos"></div>
+  </section>
+
+  <section class="card svgwrap">
+    <svg id="net" viewBox="0 0 920 400" role="img" aria-label="Schéma réseau PC01, vSwitch-Rennes, SRV01">
+      <defs>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g id="links"></g>
+
+      <!-- Cloud Microsoft -->
+      <g class="cloud" transform="translate(450,58)">
+        <path d="M-58,14 a20,20 0 0 1 6,-38 a28,28 0 0 1 52,-8 a22,22 0 0 1 40,10 a18,18 0 0 1 2,36 z"/>
+        <text x="0" y="4" text-anchor="middle">Microsoft · Internet</text>
+      </g>
+
+      <!-- Switch -->
+      <g class="switch">
+        <rect x="395" y="212" width="110" height="36" rx="8"/>
+        <text x="450" y="235" text-anchor="middle">vSwitch-Rennes</text>
+      </g>
+
+      <!-- PC01 -->
+      <g class="node">
+        <rect x="40" y="160" width="180" height="140" rx="14"/>
+        <text class="title" x="60" y="195">PC01</text>
+        <text class="sub" x="60" y="216">Windows 11</text>
+        <text class="sub" x="60" y="234">joint à ad.fournil.lab</text>
+
+      </g>
+      <text class="sub" x="130" y="320" text-anchor="middle" style="font-size:12.5px;fill:var(--muted)">ouvre les connexions</text>
+      <g id="pcports"></g>
+
+      <!-- SRV01 -->
+      <g class="node">
+        <rect x="680" y="120" width="210" height="220" rx="14"/>
+        <text class="title" x="790" y="152" text-anchor="middle">SRV01</text>
+        <text class="sub" x="790" y="170" text-anchor="middle">Windows Server · DC, DNS, DHCP</text>
+
+      </g>
+      <text x="785" y="360" text-anchor="middle" style="font-size:12.5px;fill:var(--muted)">reçoit les connexions</text>
+      <g id="srvports"></g>
+
+      <g id="blockers"></g>
+      <circle id="pkt" r="8" fill="#000" opacity="0" filter="url(#glow)"/>
+      <circle id="pkt2" r="8" fill="#000" opacity="0" filter="url(#glow)"/>
+      <text class="legend" x="460" y="390" text-anchor="middle" id="legend">Clique sur un protocole</text>
+    </svg>
+  </section>
+
+  <section class="grid2">
+    <div class="card" id="panel"></div>
+    <div class="card sim" id="sim"></div>
+  </section>
+
+  <section class="card">
+    <h2>Le même réflexe à chaque fois</h2>
+    <p class="desc"><b>Sur la machine qui reçoit</b>, regarde les ports TCP en écoute. <b>Depuis la machine qui appelle</b>, teste la joignabilité avec <code>Test-NetConnection -Port</code>.</p>
+    <pre>hostname
+Get-NetTCPConnection -State Listen |
+    Sort-Object LocalPort |
+    Select-Object LocalAddress, LocalPort, State</pre>
+    <div class="callout note" style="--pc:var(--winrm)"><b>Relevé du lab (20 novembre 2026, depuis l’hôte)</b> : le test TCP réussit vers SRV01 sur <b>22, 135, 445 et 5985</b>, et vers PC01 sur <b>135</b>. Le <b>3389</b> ne répond sur aucune des deux VM.</div>
+  </section>
+
+  <section class="card">
+    <h2>Récapitulatif</h2>
+    <table id="recap">
+      <thead><tr><th>Je veux…</th><th>J’utilise…</th><th>Port TCP</th><th>TP</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="card quiz">
+    <h2>Quiz · Quel protocole ? <span class="score" id="score"></span></h2>
+    <div class="q" id="qtext"></div>
+    <div class="opts" id="qopts"></div>
+    <div class="fb" id="qfb"></div>
+    <div style="margin-top:10px"><button class="btn ghost" id="qnext">Question suivante →</button></div>
+  </section>
+</main>
+
+<footer>
+  Chapitre 12 · Windows 11 administration et déploiement · Lab <code>ad.fournil.lab</code> · <a href="https://cours.kaya.ovh/windows11/windows11/12-acces-distant/quiz/">Faire le quiz du chapitre</a> ·
+  <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/service-overview-and-network-port-requirements" target="_blank" rel="noopener">Ports des services Windows</a> ·
+  <a href="https://learn.microsoft.com/windows-server/remote/remote-server-administration-tools" target="_blank" rel="noopener">RSAT</a> ·
+  <a href="https://learn.microsoft.com/windows/client-management/client-tools/quick-assist" target="_blank" rel="noopener">Assistance rapide</a>
+</footer>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const SRV_PORTS = {22:"OpenSSH", 135:"RPC", 445:"SMB", 3389:"RDP", 5985:"WinRM"};
+const SRV_Y = {22:200, 135:228, 445:256, 3389:284, 5985:312};
+const PC_Y = {135:200, 5985:262};
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const fwdPath = y => `M220,230 C320,230 380,230 450,230 S600,${y} 680,${y}`;
+const revPath = y => `M680,230 C580,230 520,230 450,230 S320,${y} 220,${y}`;
+const QA_PC  = "M130,160 C130,100 290,64 392,64";
+const QA_SRV = "M785,120 C785,84 610,64 508,64";
+
+const P = [
+ { id:"winrm", name:"WinRM", color:"--winrm", port:5985, portLabel:"5985 (5986 en HTTPS)", tp:"Partie B",
+   want:"Vérifier des services en PowerShell",
+   desc:"Exécuter des commandes PowerShell sur un poste ou un serveur Windows à distance. Ici, tu vérifies l’état de DNS et DHCP depuis PC01.",
+   scenarios:{
+     fwd:{ label:"PC01 → SRV01", dir:"fwd",
+       listen:String.raw`Get-NetTCPConnection -State Listen -LocalPort 5985 -ErrorAction SilentlyContinue`,
+       test:String.raw`Test-WSMan srv01.ad.fournil.lab`,
+       open:String.raw`Enter-PSSession -ComputerName srv01.ad.fournil.lab -Credential 'Administrateur@ad.fournil.lab'
+hostname
+Get-Service DNS, DHCPServer
+Exit-PSSession`,
+       reach:"Test-WSMan répond avec <code>ProductVendor</code>",
+       auth:"L’invite affiche <code>[srv01.ad.fournil.lab]</code>, DNS et DHCPServer sont <i>Running</i>",
+       note:"Windows <b>Server</b> accepte PowerShell à distance d’office." },
+     rev:{ label:"SRV01 → PC01", dir:"rev",
+       gate:{ text:"WinRM activé sur PC01", off:"Le service <i>Gestion WSM</i> est <b>arrêté</b> sur Windows 11 : rien n’écoute sur 5985.", cmd:String.raw`# Sur PC01, Terminal administrateur
+Enable-PSRemoting -Force` },
+       listen:String.raw`# Sur PC01
+Get-NetTCPConnection -State Listen -LocalPort 5985 -ErrorAction SilentlyContinue`,
+       test:String.raw`# Sur SRV01
+Test-WSMan PC01`,
+       open:String.raw`Invoke-Command -ComputerName PC01 -ScriptBlock { hostname; Get-Service Spooler }
+Enter-PSSession PC01`,
+       reach:"<code>Test-WSMan PC01</code> répond",
+       auth:"Pas de mot de passe demandé : tu es déjà Administrateur du domaine (Kerberos)",
+       note:"Windows <b>11</b> n’accepte pas PowerShell à distance par défaut." }
+   }},
+ { id:"rdp", name:"RDP", color:"--rdp", port:3389, portLabel:"3389", tp:"Démo",
+   want:"Ouvrir le bureau du serveur",
+   desc:"Ouvrir une session graphique sur un autre ordinateur et utiliser les menus et consoles de SRV01 comme devant son écran.",
+   scenarios:{ fwd:{ label:"PC01 → SRV01", dir:"fwd",
+     gate:{ text:"Bureau à distance autorisé sur SRV01", off:"Dans le lab, le 3389 ne répond pas : le Bureau à distance n’est pas autorisé.", cmd:"Gestionnaire de serveur → Serveur local → Bureau à distance\n→ « Autoriser les connexions à distance à cet ordinateur »\n(laisser l’authentification au niveau du réseau activée)" },
+     listen:String.raw`Get-NetTCPConnection -State Listen -LocalPort 3389 -ErrorAction SilentlyContinue`,
+     test:String.raw`Test-NetConnection srv01.ad.fournil.lab -Port 3389`,
+     open:String.raw`mstsc
+# Ordinateur : srv01.ad.fournil.lab
+# puis dans le bureau distant :
+hostname`,
+     reach:"<code>TcpTestSucceeded : True</code>",
+     auth:"Le bureau de SRV01 s’ouvre, <code>hostname</code> affiche SRV01. Déconnecte-toi après la démo.",
+     note:"Avec RDP, le technicien <b>ouvre sa propre session</b> sur la machine distante." }}},
+ { id:"ssh", name:"SSH", color:"--ssh", port:22, portLabel:"22", tp:"Partie D",
+   want:"Ouvrir un terminal",
+   desc:"Ouvrir un terminal distant chiffré, sous Linux comme sous Windows avec OpenSSH. Le TP remplace le mot de passe par une paire de clés.",
+   scenarios:{
+     fwd:{ label:"Mot de passe", dir:"fwd",
+       listen:String.raw`Get-NetTCPConnection -State Listen -LocalPort 22 -ErrorAction SilentlyContinue`,
+       test:String.raw`Test-NetConnection srv01.ad.fournil.lab -Port 22`,
+       open:String.raw`ssh -l 'FOURNIL\Administrateur' srv01.ad.fournil.lab
+hostname
+exit`,
+       reach:"<code>TcpTestSucceeded : True</code>",
+       auth:"Empreinte du serveur vérifiée, mot de passe accepté, <code>hostname</code> → SRV01",
+       note:"À la première connexion, compare l’empreinte avec celle du formateur. Si SSH dit que la clé a changé, <b>arrête-toi</b>." },
+     key:{ label:"Avec une clé", dir:"fwd",
+       listen:String.raw`# Sur SRV01 : les clés des administrateurs vont ici
+C:\ProgramData\ssh\administrators_authorized_keys
+# (bloc « Match Group administrators » dans C:\ProgramData\ssh\sshd_config)
+sshd.exe -t ; Restart-Service sshd`,
+       test:String.raw`# Sur PC01 : créer la paire (Entrée 3 fois dans le lab)
+ssh-keygen -t ed25519
+# → C:\Users\<profil>\.ssh\id_ed25519      (privée : ne quitte JAMAIS PC01)
+# → C:\Users\<profil>\.ssh\id_ed25519.pub  (publique : à copier sur SRV01)`,
+       open:String.raw`ssh -o PreferredAuthentications=publickey Administrateur@srv01.ad.fournil.lab hostname`,
+       reach:"Port 22 joignable",
+       auth:"Authentification par <b>clé publique</b>, aucun mot de passe demandé, SRV01 s’affiche",
+       note:"Les deux SID de <code>icacls</code> désignent <b>Administrateurs</b> et <b>SYSTEM</b>, quelle que soit la langue de Windows." }
+   }},
+ { id:"rpc", name:"RPC", color:"--rpc", port:135, portLabel:"135 + ports négociés", tp:"Partie C",
+   want:"Lire les événements du serveur",
+   desc:"Permettre à une application d’appeler un service sur une autre machine. Ici, l’Observateur d’événements de PC01 demande les journaux à SRV01.",
+   scenarios:{
+     fwd:{ label:"PC01 → SRV01", dir:"fwd",
+       listen:String.raw`Get-NetTCPConnection -State Listen -LocalPort 135 -ErrorAction SilentlyContinue`,
+       test:String.raw`Test-NetConnection srv01.ad.fournil.lab -Port 135`,
+       open:String.raw`eventvwr.msc
+# clic droit « Observateur d’événements (local) »
+# → Se connecter à un autre ordinateur → srv01.ad.fournil.lab
+# → Journaux Windows → Système`,
+       reach:"Port 135 joignable : le service RPC est repéré",
+       auth:"Le journal Système de SRV01 s’affiche (puis bascule sur les ports négociés)",
+       note:"Si le 135 répond mais que la console échoue : droits, règles de pare-feu de gestion des journaux, ports RPC négociés." },
+     rev:{ label:"SRV01 → PC01", dir:"rev",
+       gate:{ text:"Règles de pare-feu activées sur PC01", off:"Sur Windows 11, les groupes de règles de gestion à distance sont <b>désactivés</b> : la console échoue.", cmd:String.raw`# Sur PC01, en administrateur
+Enable-NetFirewallRule -DisplayGroup "Gestion à distance des journaux des événements", "Gestion des services à distance"` },
+       listen:String.raw`# Sur PC01 : wf.msc → Règles de trafic entrant → trier par Groupe`,
+       test:String.raw`# Sur SRV01
+Test-NetConnection PC01 -Port 135`,
+       open:String.raw`eventvwr.msc   # → Se connecter à un autre ordinateur → PC01
+compmgmt.msc   # → Services → Spouleur d’impression → Arrêter / Démarrer`,
+       reach:"Port 135 joignable sur PC01",
+       auth:"Le journal Système et les services de PC01 s’ouvrent depuis SRV01",
+       note:"Activer WinRM ne suffit pas : les consoles graphiques passent par <b>RPC</b>, pas par WinRM." }
+   }},
+ { id:"smb", name:"SMB", color:"--smb", port:445, portLabel:"445", tp:"Démo",
+   want:"Ouvrir un dossier partagé",
+   desc:"Ouvrir et modifier des fichiers sur un partage réseau selon les droits du compte. Ici, le dossier Commun hébergé sur SRV01.",
+   scenarios:{ fwd:{ label:"PC01 → SRV01", dir:"fwd",
+     listen:String.raw`Get-NetTCPConnection -State Listen -LocalPort 445 -ErrorAction SilentlyContinue`,
+     test:String.raw`Test-NetConnection srv01.ad.fournil.lab -Port 445`,
+     open:String.raw`explorer \\SRV01\Commun`,
+     reach:"<code>TcpTestSucceeded : True</code>",
+     auth:"Le dossier s’ouvre si le partage du TP GPO existe et si le compte a les droits <b>du partage et du dossier</b>",
+     note:"Deux niveaux de droits : partage (SMB) et NTFS (dossier)." }}},
+ { id:"rsat", name:"RSAT", color:"--rsat", port:135, portLabel:"selon la console (DNS : 135)", tp:"Partie A", dashed:true,
+   want:"Gérer une zone DNS avec une console",
+   desc:"Installer sur PC01 les consoles d’administration de Windows Server (DNS, DHCP, Active Directory). Chaque console s’appuie sur ses propres services.",
+   scenarios:{ fwd:{ label:"PC01 → SRV01", dir:"fwd",
+     gate:{ text:"RSAT DNS installé sur PC01", off:"La console <code>dnsmgmt.msc</code> n’existe pas encore sur PC01.", cmd:String.raw`# Paramètres → Fonctionnalités facultatives, ou en admin :
+Add-WindowsCapability -Online -Name Rsat.Dns.Tools~~~~0.0.1.0` },
+     listen:String.raw`Get-NetTCPConnection -State Listen -LocalPort 135 -ErrorAction SilentlyContinue`,
+     test:String.raw`Test-NetConnection srv01.ad.fournil.lab -Port 135`,
+     open:String.raw`dnsmgmt.msc
+# connecter la console à SRV01
+# → Zones de recherche directe → ad.fournil.lab`,
+     reach:"Port 135 joignable",
+     auth:"Les enregistrements de la zone <code>ad.fournil.lab</code> s’affichent",
+     note:"Le port 53 sert aux <b>requêtes DNS</b> ; la <b>console</b> passe par la gestion distante. L’installation télécharge depuis Internet (≈ 10 min) : lance-la en premier." }}},
+ { id:"qa", name:"Assistance rapide", color:"--qa", port:443, portLabel:"443 sortant", tp:"Repère",
+   want:"Aider une personne sur sa session",
+   desc:"Partager une session existante avec l’accord de la personne aidée. Les deux postes sortent en HTTPS vers Microsoft : aucun port entrant à ouvrir.",
+   scenarios:{ fwd:{ label:"Via Microsoft", dir:"qa",
+     listen:"Aucun port en écoute à ouvrir : les deux machines font une connexion sortante.",
+     test:String.raw`Test-NetConnection remoteassistance.support.services.microsoft.com -Port 443`,
+     open:String.raw`quickassist
+# le technicien donne un code, la personne aidée le saisit puis accepte`,
+     reach:"Les deux postes atteignent Microsoft en HTTPS 443",
+     auth:"La personne aidée <b>accepte</b> le partage de sa session",
+     note:"Différence avec RDP : on rejoint la session <b>de la personne</b>, on n’ouvre pas la sienne." }}}
+];
+
+/* ---------- SVG build ---------- */
+const $ = s => document.querySelector(s);
+const links = $("#links"), srvports = $("#srvports"), pcports = $("#pcports"), blockers = $("#blockers");
+const el = (t, a={}, parent) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; };
+
+const pathEls = {};
+P.forEach(p => {
+  const color = `var(${p.color})`;
+  if (p.id === "qa") {
+    pathEls.qa1 = el("path", {d:QA_PC, class:"link", stroke:color}, links);
+    pathEls.qa2 = el("path", {d:QA_SRV, class:"link", stroke:color}, links);
+  } else {
+    pathEls[p.id+"-fwd"] = el("path", {d:fwdPath(SRV_Y[p.port]), class:"link"+(p.dashed?" dashed":""), stroke:color}, links);
+    if (p.scenarios.rev) pathEls[p.id+"-rev"] = el("path", {d:revPath(PC_Y[p.port]), class:"link", stroke:color}, links);
+  }
+});
+const portEls = {srv:{}, pc:{}};
+for (const [port, name] of Object.entries(SRV_PORTS)) {
+  const g = el("g", {class:"port"}, srvports);
+  el("circle", {cx:680, cy:SRV_Y[port], r:7}, g);
+  const t = el("text", {x:696, y:SRV_Y[port]+4}, g); t.textContent = `${port} · ${name}`;
+  portEls.srv[port] = g;
+}
+for (const port of [135, 5985]) {
+  const g = el("g", {class:"port"}, pcports);
+  el("circle", {cx:220, cy:PC_Y[port], r:7}, g);
+  const t = el("text", {x:206, y:PC_Y[port]+4, "text-anchor":"end"}, g); t.textContent = port;
+  portEls.pc[port] = g;
+}
+
+/* ---------- state ---------- */
+let cur = null, scen = null, gateOn = {}, running = false, runId = 0;
+
+function resetVisual(){
+  Object.entries(pathEls).forEach(([k,l]) => { l.classList.remove("on"); l.style.opacity = k.endsWith("-rev") ? 0 : ""; });
+  document.querySelectorAll(".port").forEach(g => g.classList.remove("lit","ok","ko"));
+  blockers.innerHTML = "";
+  $("#pkt").setAttribute("opacity", 0); $("#pkt2").setAttribute("opacity", 0);
+}
+
+function currentPaths(){
+  const s = cur.scenarios[scen];
+  if (s.dir === "qa") return [pathEls.qa1, pathEls.qa2];
+  if (s.dir === "rev") return [pathEls[cur.id+"-rev"]];
+  return [pathEls[cur.id+"-fwd"]];
+}
+function targetPort(){
+  const s = cur.scenarios[scen];
+  if (s.dir === "qa") return null;
+  return s.dir === "rev" ? portEls.pc[cur.port] : portEls.srv[cur.port];
+}
+
+function highlight(){
+  resetVisual();
+  if (!cur) return;
+  document.documentElement.style.setProperty("--pc", css(cur.color));
+  // dim others
+  const curP = currentPaths();
+  Object.entries(pathEls).forEach(([k,l]) => { if (!k.endsWith("-rev") && !curP.includes(l)) l.style.opacity = .07; });
+  currentPaths().forEach(l => { l.classList.add("on"); l.style.opacity = 1; });
+  const tp = targetPort(); if (tp) tp.classList.add("lit");
+  const s = cur.scenarios[scen];
+  $("#legend").textContent = s.dir === "qa" ? "PC01 et SRV01 sortent tous les deux vers Microsoft en 443"
+    : s.dir === "rev" ? `SRV01 appelle PC01 sur le port ${cur.port}` : `PC01 appelle SRV01 sur le port ${cur.portLabel}`;
+}
+
+function animate(path, pkt, {dur=1300, stop=1, color}={}){
+  return new Promise(res => {
+    const len = path.getTotalLength(), id = runId; let t0 = null;
+    pkt.setAttribute("fill", color); pkt.setAttribute("opacity", 1);
+    function f(ts){
+      if (id !== runId) { pkt.setAttribute("opacity",0); return res(false); }
+      if (!t0) t0 = ts;
+      let k = Math.min((ts - t0) / dur, 1), e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2) / 2;
+      const pt = path.getPointAtLength(len * e * stop);
+      pkt.setAttribute("cx", pt.x); pkt.setAttribute("cy", pt.y);
+      if (k < 1) requestAnimationFrame(f); else res(true);
+    }
+    requestAnimationFrame(f);
+  });
+}
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+/* ---------- panel ---------- */
+function codeBlock(title, code){
+  const d = document.createElement("div"); d.className = "step";
+  d.innerHTML = `<h3>${title}</h3>`;
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => { (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.reject()).then(() => { b.textContent = "Copié ✓"; setTimeout(()=>b.textContent="Copier",1200); }).catch(()=>{ const r=document.createRange(); r.selectNodeContents(pre); const s=getSelection(); s.removeAllRanges(); s.addRange(r); }); };
+  pre.appendChild(b); d.appendChild(pre); return d;
+}
+
+function renderPanel(){
+  const s = cur.scenarios[scen], panel = $("#panel");
+  const rev = s.dir === "rev";
+  const where1 = s.dir === "qa" ? "Écoute" : rev ? "Sur PC01 · ce qui doit écouter" : "Sur SRV01 · vérifier l’écoute";
+  const where2 = s.dir === "qa" ? "Test de sortie" : rev ? "Sur SRV01 · tester" : "Sur PC01 · tester";
+  const where3 = rev ? "Sur SRV01 · se connecter" : "Sur PC01 · se connecter";
+  panel.innerHTML = `<h2><span style="color:var(--pc)">${cur.name}</span> <span class="badge port">${cur.portLabel}</span> <span class="badge">${cur.tp}</span></h2><p class="desc">${cur.desc}</p>`;
+  const keys = Object.keys(cur.scenarios);
+  if (keys.length > 1) {
+    const dirs = document.createElement("div"); dirs.className = "dirs";
+    keys.forEach(k => { const b = document.createElement("button"); b.textContent = cur.scenarios[k].label; if (k===scen) b.className="active"; b.onclick = () => select(cur.id, k); dirs.appendChild(b); });
+    panel.appendChild(dirs);
+  }
+  if (s.dir === "qa") { const p = document.createElement("p"); p.innerHTML = s.listen; panel.appendChild(p); }
+  else panel.appendChild(codeBlock(where1, s.listen));
+  panel.appendChild(codeBlock(s.dir==="qa" ? where2 : (scen==="key" ? "Sur PC01 · créer la paire de clés" : where2), s.test));
+  panel.appendChild(codeBlock(where3, s.open));
+  if (s.note) { const c = document.createElement("div"); c.className = "callout"; c.innerHTML = s.note; panel.appendChild(c); }
+}
+
+function renderSim(){
+  const s = cur.scenarios[scen], sim = $("#sim");
+  const gk = cur.id + "-" + scen;
+  sim.innerHTML = `<h2>Simuler la connexion</h2>`;
+  if (s.gate) {
+    const lab = document.createElement("label"); lab.className = "toggle";
+    lab.innerHTML = `<input type="checkbox" ${gateOn[gk]?"checked":""}> ${s.gate.text}`;
+    lab.querySelector("input").onchange = e => { gateOn[gk] = e.target.checked; renderSim(); highlight(); };
+    sim.appendChild(lab);
+    if (!gateOn[gk]) {
+      const c = document.createElement("div"); c.className = "callout"; c.innerHTML = s.gate.off + "<br>Coche la case après avoir appliqué :";
+      sim.appendChild(c); sim.appendChild(codeBlock("Configuration", s.gate.cmd));
+    }
+  }
+  const bar = document.createElement("div"); bar.className = "simbar";
+  const go = document.createElement("button"); go.className = "btn"; go.textContent = "▶ Lancer la connexion";
+  const rs = document.createElement("button"); rs.className = "btn ghost"; rs.textContent = "Réinitialiser";
+  bar.append(go, rs); sim.appendChild(bar);
+  const checks = document.createElement("div"); checks.className = "checks";
+  checks.innerHTML = `
+    <div class="check" id="c1"><div class="ico">1</div><div><b>Puis-je atteindre le service ?</b><span>Test TCP vers le port ${cur.portLabel}</span></div></div>
+    <div class="check" id="c2"><div class="ico">2</div><div><b>Mon compte a-t-il le droit d’y entrer ?</b><span>Ouverture de session</span></div></div>`;
+  sim.appendChild(checks);
+  go.onclick = run; rs.onclick = () => { runId++; running = false; renderSim(); highlight(); };
+}
+
+function setCheck(id, state, html){
+  const c = document.getElementById(id); if (!c) return;
+  c.className = "check " + state;
+  c.querySelector(".ico").textContent = state === "ok" ? "✓" : state === "ko" ? "✕" : state === "run" ? "…" : c.querySelector(".ico").textContent;
+  if (html) c.querySelector("span").innerHTML = html;
+}
+
+async function run(){
+  runId++; const myId = runId; highlight();
+  const s = cur.scenarios[scen], color = css(cur.color), gk = cur.id + "-" + scen;
+  const blocked = s.gate && !gateOn[gk];
+  setCheck("c1","run"); setCheck("c2","", "Ouverture de session");
+  if (s.dir === "qa") {
+    await Promise.all([animate(pathEls.qa1, $("#pkt"), {color}), animate(pathEls.qa2, $("#pkt2"), {color, dur:1500})]);
+    if (myId !== runId) return;
+    setCheck("c1","ok", s.reach); setCheck("c2","run"); await wait(700); if (myId !== runId) return;
+    setCheck("c2","ok", s.auth); return;
+  }
+  const path = currentPaths()[0], port = targetPort();
+  // RSAT sans console : rien ne part
+  if (blocked && cur.id === "rsat") {
+    setCheck("c1","ko", s.gate.off); setCheck("c2","ko","Installe d’abord la console"); return;
+  }
+  const ok = await animate(path, $("#pkt"), {color, stop: blocked ? .96 : 1});
+  if (!ok || myId !== runId) return;
+  if (blocked) {
+    port.classList.add("ko");
+    const pt = path.getPointAtLength(path.getTotalLength()*.96);
+    const x = el("text", {x:pt.x, y:pt.y+10, class:"blocker", "text-anchor":"middle"}, blockers); x.textContent = "✕";
+    $("#pkt").setAttribute("opacity", 0);
+    if (cur.id === "rpc") { port.classList.remove("ko"); port.classList.add("ok"); setCheck("c1","ok", "Le 135 répond sur PC01…"); setCheck("c2","ko", s.gate.off); }
+    else { setCheck("c1","ko", cur.id==="rdp" ? "<code>TcpTestSucceeded : False</code> — " + s.gate.off : s.gate.off); setCheck("c2","ko","Impossible tant que le service n’écoute pas"); }
+    return;
+  }
+  port.classList.add("ok"); $("#pkt").setAttribute("opacity", 0);
+  setCheck("c1","ok", s.reach); setCheck("c2","run");
+  await wait(250);
+  await animate(path, $("#pkt2"), {color, dur:900});
+  if (myId !== runId) return;
+  $("#pkt2").setAttribute("opacity", 0);
+  setCheck("c2","ok", s.auth);
+}
+
+function select(id, sc){
+  runId++;
+  cur = P.find(p => p.id === id); scen = sc || Object.keys(cur.scenarios)[0];
+  document.querySelectorAll(".proto").forEach(b => b.classList.toggle("active", b.dataset.id === id));
+  highlight(); renderPanel(); renderSim();
+}
+
+/* ---------- buttons, recap ---------- */
+P.forEach(p => {
+  const b = document.createElement("button"); b.className = "proto"; b.dataset.id = p.id;
+  b.style.setProperty("--c", `var(${p.color})`);
+  b.innerHTML = `${p.name} <small>${p.port === 443 ? "443" : p.id==="rpc" ? "135+" : p.port}</small>`;
+  b.onclick = () => select(p.id); $("#protos").appendChild(b);
+  const tr = document.createElement("tr"); tr.className = "clickable";
+  tr.innerHTML = `<td>${p.want}</td><td><span class="dot" style="background:var(${p.color})"></span>${p.name}</td><td><code>${p.portLabel}</code></td><td>${p.tp}</td>`;
+  tr.onclick = () => { select(p.id); window.scrollTo({top:0, behavior:"smooth"}); };
+  $("#recap tbody").appendChild(tr);
+});
+
+/* ---------- quiz ---------- */
+const Q = [
+ ["Vérifier l’état du service DHCP de SRV01 en PowerShell, sans ouvrir son bureau", "winrm"],
+ ["Ouvrir le bureau de SRV01 pour utiliser le Gestionnaire de serveur", "rdp"],
+ ["Ouvrir un terminal chiffré sur SRV01 avec une clé ed25519", "ssh"],
+ ["Lire le journal Système de SRV01 dans eventvwr.msc depuis PC01", "rpc"],
+ ["Ouvrir \\\\SRV01\\Commun dans l’Explorateur", "smb"],
+ ["Avoir la console DNS de SRV01 installée directement sur PC01", "rsat"],
+ ["Aider une collègue sur SA session, avec son accord", "qa"],
+ ["Lancer Invoke-Command vers PC01 depuis SRV01 (il faut d’abord Enable-PSRemoting)", "winrm"],
+ ["Arrêter le Spouleur de PC01 dans Gestion de l’ordinateur sur SRV01 (il faut ouvrir le pare-feu de PC01)", "rpc"],
+ ["Le seul port qui ne répondait sur aucune VM dans le relevé du lab", "rdp"]
+];
+let qi = 0, good = 0, done = 0, answered = false;
+const order = Q.map((_,i)=>i).sort(()=>Math.random()-.5);
+function showQ(){
+  answered = false; const [txt, ans] = Q[order[qi % Q.length]];
+  $("#qtext").textContent = "Je veux… " + txt; $("#qfb").textContent = "";
+  const o = $("#qopts"); o.innerHTML = "";
+  P.forEach(p => { const b = document.createElement("button"); b.textContent = p.name; b.onclick = () => {
+    if (answered) return; answered = true; done++;
+    const right = P.find(x=>x.id===ans);
+    if (p.id === ans) { good++; b.className = "good"; $("#qfb").innerHTML = `Bien vu : <b>${right.name}</b>, port <code>${right.portLabel}</code>.`; }
+    else { b.className = "bad"; [...o.children].find(x => x.textContent === right.name).className = "good"; $("#qfb").innerHTML = `C’était <b>${right.name}</b> (port <code>${right.portLabel}</code>). Clique-le en haut pour revoir le chemin.`; }
+    $("#score").textContent = `${good} / ${done}`;
+  }; o.appendChild(b); });
+}
+$("#qnext").onclick = () => { qi++; showQ(); };
+showQ();
+select("winrm");
+</script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>18. Environnement utilisateur — profils, partages, remise</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8; --soft:#eef1f7;
+  --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --acc:#2f6fdf; --pe:#8a4fd8; --disk:#0f9aa8; --iso:#e0731f;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f131a;--card:#171c25;--ink:#e6e9ef;--muted:#9aa3b2;--line:#2a3140;--soft:#1e2430;--code:#0a0e14;--codeink:#d7dde8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 6px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+.big-idea{max-width:1180px;margin:14px auto 0;padding:0 20px}
+.big-idea div{background:linear-gradient(135deg,color-mix(in srgb,var(--pe) 16%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--pe) 40%,var(--line));border-radius:14px;padding:14px 18px;font-size:1.05rem}
+nav{max-width:1180px;margin:16px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:600;padding:8px 14px;border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);cursor:pointer}
+nav button.active{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--pe)}
+nav button span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-size:.8rem;margin-right:6px}
+nav button.active span{background:var(--pe);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tab{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:18px}
+.tab.active{display:block}
+h2{margin:0 0 6px;font-size:1.3rem}
+h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{font:inherit;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600}
+.chip.active{border-color:var(--pe);background:var(--pe);color:#fff}
+svg{width:100%;height:auto;display:block}
+.svgtxt{font-size:13px;fill:var(--muted)}
+.svgtitle{font-size:16px;font-weight:700;fill:var(--ink)}
+.media{cursor:pointer}
+.media rect{fill:var(--card);stroke:var(--line);stroke-width:2;transition:.2s}
+.media:hover rect{stroke:var(--muted)}
+.media.sel rect{stroke-width:3}
+.result{border-radius:12px;padding:14px;border:1px solid var(--line);background:var(--card);min-height:150px}
+.result h3{margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.pill{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.ko{background:var(--ko)}.pill.mid{background:var(--warn)}
+ul.can{margin:6px 0 0;padding-left:20px}
+ul.can li{margin:2px 0}
+pre{position:relative;margin:6px 0;background:var(--code);color:var(--codeink);padding:30px 12px 11px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;font-size:.92em}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.callout.info{border-color:var(--pe);background:color-mix(in srgb,var(--pe) 9%,transparent)}
+.callout.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 9%,transparent)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:8px 15px;background:var(--pe);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+/* ISO tree */
+.tree{font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.tree div{padding:5px 8px;border-radius:7px}
+.tree .f{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.tree .f:hover{background:var(--card)}
+.tree .f.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--pe)}
+.tree .tag{font-family:system-ui;font-size:.75rem;padding:1px 8px;border-radius:999px;color:#fff;align-self:center}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.steps button{font:inherit;font-size:.9rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--muted);cursor:pointer}
+.steps button.done{color:var(--ink)}
+.steps button.active{border-color:var(--pe);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--pe)}
+.fs{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.7}
+.fs .n{opacity:.25;transition:.3s}
+.fs .n.on{opacity:1}
+.fs .n.hot{color:var(--pe);font-weight:700}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.order button{font:inherit;font-family:ui-monospace,Consolas,monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.order button.placed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.order button.shake{animation:shake .35s;border-color:var(--ko)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* terminal */
+.term{background:#0b0f16;color:#cfd8e3;border-radius:10px;padding:12px 14px;font:13.5px/1.5 ui-monospace,Consolas,monospace;min-height:300px;max-height:440px;overflow:auto;white-space:pre-wrap;border:1px solid #1f2633}
+.term .p{color:#8fd16a}.term .c{color:#fff}.term .o{color:#9fb0c4}.term .e{color:#ff8a8a}.term .k{color:#e9c46a}
+.kbd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.kbd input[type=text]{font:14px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:260px}
+.kbd .out{font:15px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;background:#0b0f16;color:#fff;min-width:200px}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pe)}
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+@media (max-width:800px){.passes{grid-template-columns:repeat(2,1fr)}}
+.pass{border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);cursor:pointer;opacity:.45;transition:.2s;text-align:center}
+.pass b{display:block;font-size:.95rem}
+.pass small{color:var(--muted);font-size:.78rem}
+.pass .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);font-size:.78rem;font-weight:700}
+.pass.used{opacity:1;border-color:var(--pe)}
+.pass.used .n{background:var(--pe);color:#fff}
+.pass.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 35%,transparent)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.namecheck{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.namecheck input{font:14px ui-monospace,Consolas,monospace;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+/* chain */
+.chain{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:6px 0 10px}
+.ch{flex:1;min-width:150px;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;cursor:pointer;position:relative;margin-right:22px}
+.ch:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;color:var(--muted);font-weight:700}
+.ch b{display:block}
+.ch small{color:var(--muted)}
+.ch.pe{border-color:var(--pe)}
+.ch.sel{background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.pebadge{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;background:var(--pe);color:#fff;border-radius:999px;padding:1px 8px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--soft)}
+.card h4{margin:0 0 4px}
+.stage{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.st{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:10px;padding:9px;background:var(--soft);cursor:pointer;text-align:center;transition:.2s}
+.st b{display:block}.st small{color:var(--muted)}
+.st.sel{border-color:var(--pe);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.st.ok{border-color:var(--ok)}.st.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 10%,var(--soft))}
+.mini{font-size:.88rem;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{font:inherit;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{height:26px;border-radius:7px;background:var(--soft);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:700;transition:width .5s}
+.log{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:#0b0f16;color:#ffb4b4;padding:9px 11px;border-radius:8px;white-space:pre-wrap;margin:6px 0}
+.ok-t{color:var(--ok);font-weight:700}.ko-t{color:var(--ko);font-weight:700}
+
+:root{--pe:#8a4fd8}
+</style>
+</head>
+<body>
+<header>
+  <h1>18. Environnement utilisateur et Microsoft 365</h1>
+  <p>Un profil qui se charge, un dossier partagé qui s’ouvre (ou pas), un poste remis proprement.</p>
+</header>
+<div class="big-idea"><div>💡 <b>L’idée à retenir :</b> un profil, c’est <b>un dossier ET une entrée de registre</b> (ProfileList). Un partage, c’est <b>deux portes</b> (partage + NTFS) et c’est la plus fermée qui décide. Dans les deux cas, ce qu’on voit dans l’Explorateur ne raconte que la moitié de l’histoire.</div></div>
+<nav id="nav">
+  <button data-t="t1" class="active"><span>1</span>Profils</button>
+  <button data-t="t2"><span>2</span>Partage + NTFS</button>
+  <button data-t="t3"><span>3</span>Voir ou ne pas voir</button>
+  <button data-t="t4"><span>4</span>Remise du poste</button>
+</nav>
+<main>
+<section class="tab active" id="t1">
+  <h2>Supprimer un profil : la bonne et la mauvaise méthode</h2>
+  <p class="lead">Le profil de <code>test.vendeur</code> doit disparaître. Choisis une méthode, puis reconnecte l’utilisateur.</p>
+  <div class="row" style="margin-bottom:12px" id="pbtns"></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3 style="margin-top:0">📁 C:\Users</h3><div class="fs" id="users"></div>
+      <h3>🗝️ HKLM\…\ProfileList</h3><div class="fs" id="reg"></div>
+    </div>
+    <div class="result" id="pres"></div>
+  </div>
+</section>
+
+<section class="tab" id="t2">
+  <h2>Deux portes à franchir</h2>
+  <p class="lead">Pour ouvrir un fichier <b>par le réseau</b>, il faut passer le <b>partage</b> puis <b>NTFS</b>. Le plus restrictif gagne. Règle les deux et choisis qui frappe à la porte.</p>
+  <div class="grid2">
+    <div class="panel">
+      <div class="row"><b style="width:150px">Utilisateur</b><select id="who"><option value="dir">Marie (membre de G-Direction)</option><option value="stag">stagiaire (pas dans G-Direction)</option></select></div>
+      <div class="row" style="margin-top:8px"><b style="width:150px">Accès</b><select id="via"><option value="net">par le réseau \\SRV01\Direction</option><option value="local">en local, session sur SRV01</option></select></div>
+      <h3>🚪 Porte 1 · Partage (Tout le monde)</h3><select id="share"><option value="3">Contrôle total</option><option value="2">Modifier</option><option value="1">Lecture</option></select>
+      <h3>🚪 Porte 2 · NTFS (G-Direction)</h3><select id="ntfs"><option value="2">Modification</option><option value="3">Contrôle total</option><option value="1">Lecture et exécution</option></select>
+      <p class="mini">NTFS : héritage désactivé (converti), « Utilisateurs » retirés, G-Direction ajouté. Administrateurs et SYSTEM gardent le contrôle total.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 460 150" id="doors"></svg>
+      <div id="eff"></div>
+    </div>
+  </div>
+  <div class="callout info"><b>Bonne pratique</b> (et réglage par défaut de l’assistant) : partage <b>large</b>, vraies restrictions en <b>NTFS</b>, toujours par <b>groupes</b>.</div>
+</section>
+
+<section class="tab" id="t3">
+  <h2>Ce que voit stagiaire en ouvrant \\SRV01</h2>
+  <p class="lead">L’énumération basée sur l’accès (ABE) et le <code>$</code> en fin de nom ne cachent pas la même chose. Teste les deux.</p>
+  <div class="row" style="margin-bottom:12px">
+    <label class="toggle"><input type="checkbox" id="abe"> ABE activée sur le partage</label>
+    <label class="toggle"><input type="checkbox" id="dollar"> Nom du partage <code>Direction$</code></label>
+  </div>
+  <div class="grid2">
+    <div class="panel"><div class="fs" id="explorer"></div></div>
+    <div id="vis"></div>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <h2>Check-list avant de remettre PC02 à stagiaire</h2>
+  <p class="lead">Coche chaque contrôle. Clique sur une ligne pour voir la commande et le résultat relevé sur le lab.</p>
+  <div class="grid2">
+    <div class="panel" id="check"></div>
+    <div id="checkinfo" class="result"></div>
+  </div>
+  <div class="bar" style="margin-top:12px"><div id="prog" style="width:0;background:var(--ok)"></div></div>
+  <div id="checkend"></div>
+</section>
+</main>
+<footer>Chapitre 18 · <a href="https://cours.kaya.ovh/windows11/windows11/17-environnement-utilisateur/quiz/">Faire le quiz du chapitre</a> · <a href="https://cours.kaya.ovh/windows11/windows11/18-demarrage-recuperation/html/">Chapitre 19 interactif</a></footer>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+function codeBlock(code){
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)});
+  pre.appendChild(b); return pre;
+}
+function codeHTML(code){ const d=document.createElement("div"); d.appendChild(codeBlock(code)); return d.innerHTML; }
+function chips(container, items, onPick, initial){
+  const box = $(container); box.innerHTML = "";
+  items.forEach(([id,label]) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = label; b.dataset.id = id;
+    b.onclick = () => { box.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c===b)); onPick(id); }; box.appendChild(b); });
+  if (initial) box.querySelector(`[data-id="${initial}"]`).click();
+}
+function initTabs(){ $$("#nav button").forEach(b => b.onclick = () => {
+  $$("#nav button").forEach(x => x.classList.toggle("active", x===b));
+  $$(".tab").forEach(t => t.classList.toggle("active", t.id === b.dataset.t)); }); }
+function wireCopy(root){ (root||document).querySelectorAll("pre .copy").forEach(b=>{ const pre=b.parentElement; const code=pre.firstChild.textContent; b.onclick=()=>navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)}); }); }
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+</script>
+
+<script>
+initTabs();
+/* ---- 1 profils ---- */
+const SIDV = "S-1-5-21-…-3129441405-1112";
+let P;
+function resetP(){ P = {folder:"ok", reg:"ok", state:"start"}; renderP(); }
+function renderP(){
+  const f = P.folder, r = P.reg;
+  $("#users").innerHTML = ["Administrateur","stagiaire","Default"].map(n=>`<div class="n on">📁 ${n}</div>`).join("") +
+    (f==="ok" ? `<div class="n on hot">📁 test.vendeur</div>` : f==="partial" ? `<div class="n on" style="color:var(--warn)">📁 test.vendeur <small>(à moitié effacé, fichiers verrouillés)</small></div>` : "") +
+    (P.temp ? `<div class="n on" style="color:var(--ko)">📁 TEMP <small>(profil temporaire)</small></div>` : "") +
+    (P.fresh ? `<div class="n on" style="color:var(--ok)">📁 ${f==="partial"?"test.vendeur.PC02":"test.vendeur"} <small>(profil neuf${f==="partial"?" : l’ancien dossier existe encore, Windows ajoute le nom du poste":""})</small></div>` : "");
+  $("#reg").innerHTML = `<div class="n on">🗝️ S-1-5-…-500 → C:\\Users\\Administrateur</div><div class="n on">🗝️ S-1-5-…-1109 → C:\\Users\\stagiaire</div>` +
+    (r==="ok" ? `<div class="n on hot">🗝️ ${SIDV} → C:\\Users\\test.vendeur</div>` : r==="bak" ? `<div class="n on" style="color:var(--ko)">🗝️ ${SIDV}<b>.bak</b> → C:\\Users\\test.vendeur</div>` : "") +
+    (P.fresh ? `<div class="n on" style="color:var(--ok)">🗝️ ${SIDV} → C:\\Users\\test.vendeur</div>` : "");
+  const B = [];
+  if (P.state==="start") B.push(["good","✅ sysdm.cpl → Supprimer"],["bad","🗑️ Effacer le dossier dans l’Explorateur"]);
+  if (P.state==="deleted"||P.state==="broken") B.push(["login","🔑 Reconnecter test.vendeur"]);
+  if (P.state==="temp") B.push(["fix","🛠️ regedit : supprimer la clé .bak"]);
+  if (P.state==="fixed") B.push(["login2","🔑 Reconnecter test.vendeur"]);
+  B.push(["reset","↺"]);
+  $("#pbtns").innerHTML = B.map(([id,l])=>`<button class="btn ${id==="reset"?"ghost":""}" data-p="${id}">${l}</button>`).join("");
+  $$("#pbtns button").forEach(b => b.onclick = () => act(b.dataset.p));
+}
+function msg(h){ $("#pres").innerHTML = h; }
+function act(a){
+  if (a==="reset"){ resetP(); msg(`<h3>Situation</h3><p>Le profil de <code>test.vendeur</code> existe : un dossier dans <code>C:\\Users</code> <b>et</b> une entrée dans <code>ProfileList</code> (valeur <code>ProfileImagePath</code>).</p>`); return; }
+  if (a==="good"){ P.folder="none"; P.reg="none"; P.state="deleted"; msg(`<h3><span class="pill ok">Propre</span> Dossier et registre supprimés ensemble</h3><p>sysdm.cpl → Paramètres système avancés → Profil des utilisateurs → Supprimer. Le bouton est grisé si la session est ouverte.</p>` + codeHTML(`Get-CimInstance Win32_UserProfile | Where-Object LocalPath -eq "C:\\Users\\test.vendeur" | Remove-CimInstance`)); }
+  if (a==="bad"){ P.folder="partial"; P.state="broken"; msg(`<h3><span class="pill ko">Danger</span> Seul le dossier est (à moitié) effacé</h3><p>Testé sur le lab : l’effacement échoue en partie (fichiers verrouillés). Et l’entrée <code>ProfileList</code> pointe toujours vers ce dossier.</p>`); }
+  if (a==="login"){ if (P.state==="deleted"){ P.fresh=true; P.state="done"; msg(`<h3><span class="pill ok">OK</span> Profil neuf créé depuis Default</h3><p>L’utilisateur repart d’un profil propre. Ses données reviennent par OneDrive ou par copie.</p>`); }
+    else { P.reg="bak"; P.temp=true; P.state="temp"; msg(`<h3><span class="pill ko">Profil temporaire</span></h3><div class="callout ko">« Nous ne pouvons pas nous connecter à votre compte »</div><p>Windows n’a pas pu charger le profil : il a renommé l’entrée en <b>&lt;SID&gt;.bak</b> et ouvert <code>C:\\Users\\TEMP</code>. <b>Tout ce que l’utilisateur fait dans cette session est perdu</b> à la déconnexion. Et le profil n’apparaît plus dans sysdm.cpl.</p>`); } }
+  if (a==="fix"){ P.reg="none"; P.temp=false; P.state="fixed"; msg(`<h3>Réparation</h3><ol><li>Sauvegarder les données de l’utilisateur si son dossier existe encore.</li><li>L’utilisateur se <b>déconnecte</b>.</li><li><code>regedit</code> → <code>HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList</code></li><li>Clé qui finit par <b>.bak</b> (vérifier <code>ProfileImagePath</code>) → Supprimer.</li></ol>`); }
+  if (a==="login2"){ P.fresh=true; P.state="done"; P.folder = P.folder==="partial" ? "partial" : P.folder; msg(`<h3><span class="pill ok">Réparé</span> Profil neuf</h3><p>Windows crée un profil neuf. On recopie les documents sauvegardés (ou OneDrive les resynchronise). Autres causes du même symptôme : NTUSER.DAT verrouillé, disque plein, droits NTFS cassés.</p>`); }
+  renderP();
+}
+act("reset");
+
+/* ---- 2 doors ---- */
+const LV = ["Aucun","Lecture","Modifier","Contrôle total"];
+function renderDoors(){
+  const who = $("#who").value, via = $("#via").value, sh = +$("#share").value, nt = who==="dir" ? +$("#ntfs").value : 0;
+  const shareApplies = via==="net"; const eff = shareApplies ? Math.min(sh, nt) : nt;
+  const c = v => v===0 ? "var(--ko)" : v===1 ? "var(--warn)" : "var(--ok)";
+  $("#doors").innerHTML = `<text x="10" y="18" class="svgtxt">${who==="dir"?"Marie":"stagiaire"}</text><text x="20" y="80" font-size="34">🧑</text>
+   <rect x="110" y="30" width="120" height="80" rx="10" fill="var(--card)" stroke="${shareApplies?c(sh):"var(--line)"}" stroke-width="3" ${shareApplies?"":'stroke-dasharray="5 5"'}/>
+   <text x="170" y="62" text-anchor="middle" class="svgtitle" style="font-size:13px">Partage</text><text x="170" y="84" text-anchor="middle" font-size="12" fill="var(--ink)">${shareApplies?LV[sh]:"ignoré en local"}</text>
+   <rect x="250" y="30" width="120" height="80" rx="10" fill="var(--card)" stroke="${c(nt)}" stroke-width="3"/>
+   <text x="310" y="62" text-anchor="middle" class="svgtitle" style="font-size:13px">NTFS</text><text x="310" y="84" text-anchor="middle" font-size="12" fill="var(--ink)">${nt?LV[nt]:"aucun droit"}</text>
+   <text x="400" y="80" font-size="34">${eff?"📂":"🚫"}</text><text x="230" y="138" text-anchor="middle" font-size="14" font-weight="700" fill="${c(eff)}">Résultat : ${LV[eff]}</text>`;
+  let txt = who==="stag" ? `stagiaire n’a <b>aucun droit NTFS</b> : quel que soit le partage, la porte 2 reste fermée. C’est l’écran « Accès refusé » du lab.` :
+    !shareApplies ? `En local sur SRV01, les droits du <b>partage ne s’appliquent pas</b> : seul NTFS compte.` :
+    sh < nt ? `Le <b>partage</b> est plus restrictif (${LV[sh]}) que NTFS (${LV[nt]}) : c’est lui qui gagne. Piège classique d’un partage « Lecture ».` :
+    `NTFS (${LV[nt]}) est le plus restrictif : c’est lui qui décide. Le partage large ne gêne pas.`;
+  $("#eff").innerHTML = `<div class="callout ${eff?"info":"ko"}">${txt}</div>`;
+}
+["#who","#via","#share","#ntfs"].forEach(s => $(s).onchange = renderDoors); renderDoors();
+const ps = codeHTML(`New-Item C:\\Partages\\Direction -ItemType Directory
+icacls C:\\Partages\\Direction /inheritance:r /grant "Administrateurs:(OI)(CI)F" "SYSTEM:(OI)(CI)F" "FOURNIL\\G-Direction:(OI)(CI)M"
+New-SmbShare -Name Direction -Path C:\\Partages\\Direction -FullAccess "Tout le monde" -FolderEnumerationMode AccessBased`);
+$("#t2").insertAdjacentHTML("beforeend", `<h3>En PowerShell</h3>${ps}<div class="callout">⚠️ En désactivant l’héritage : <b>Convertir</b>, jamais <b>Supprimer</b> (ça retire aussi Administrateurs et SYSTEM).</div>`); wireCopy($("#t2"));
+
+/* ---- 3 visibility ---- */
+function renderVis(){
+  const abe = $("#abe").checked, dol = $("#dollar").checked;
+  const shares = ["Commun","NETLOGON","SYSVOL","USMT$"].filter(s=>!s.endsWith("$"));
+  let h = `<div class="n on">🖥️ \\\\SRV01</div>` + shares.map(s=>`<div class="n on" style="padding-left:20px">📁 ${s}</div>`).join("");
+  h += dol ? `<div class="n on" style="padding-left:20px;opacity:.35">(Direction$ n’apparaît pas)</div>` : `<div class="n on hot" style="padding-left:20px">📁 Direction ${abe?"":""}</div>`;
+  h += `<div class="n on" style="margin-top:10px">📂 contenu, une fois ouvert (si stagiaire avait un accès en lecture sur le dossier) :</div>`;
+  h += `<div class="n on" style="padding-left:20px">📄 Planning-boutique.xlsx</div>` + (abe ? `<div class="n on" style="padding-left:20px;opacity:.35">(Salaires-2026.xlsx masqué par ABE)</div>` : `<div class="n on" style="padding-left:20px;color:var(--ko)">📄 Salaires-2026.xlsx <small>visible mais « Accès refusé »</small></div>`);
+  $("#explorer").innerHTML = h;
+  $("#vis").innerHTML = `<div class="callout info"><b>ABE</b> masque les <b>fichiers et sous-dossiers</b> qu’on ne peut pas ouvrir, <b>à l’intérieur</b> du partage. Constaté sur le lab : avec ABE, <code>Direction</code> reste visible dans <code>\\\\SRV01</code>.</div>
+   <div class="callout info"><b>Le $ final</b> cache le partage de la liste (comme <code>USMT$</code>, <code>Deploy$</code>). Ce n’est qu’un <b>camouflage</b> : qui connaît le nom peut taper <code>\\\\SRV01\\Direction$</code>.</div>
+   <div class="callout">La sécurité, ce sont toujours les <b>droits</b>. ABE et $ ne font que du rangement visuel.</div>`;
+}
+$("#abe").onchange = renderVis; $("#dollar").onchange = renderVis; renderVis();
+
+/* ---- 4 checklist ---- */
+const CK = [
+ ["Poste nommé, dans le domaine","Get-CimInstance Win32_ComputerSystem | Select-Object Name, Domain","Name : PC02 · Domain : ad.fournil.lab",true],
+ ["GPO appliquées","gpresult /r","GPO-Postes-Admins-Locaux, Default Domain Policy…",true],
+ ["Windows à jour","Get-HotFix | Where-Object InstalledOn | Sort-Object InstalledOn -Descending | Select-Object -First 1","Dernière KB installée",true],
+ ["BitLocker actif, clé dans AD","Get-BitLockerVolume C:","VolumeStatus : FullyDecrypted ⚠️",false],
+ ["Defender actif","Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled, AntivirusSignatureAge","RealTimeProtectionEnabled : True",true],
+ ["LAPS opérationnel (sur SRV01)","Get-LapsADPassword PC02 -AsPlainText","Compte adm-laps, échéance affichée",true],
+ ["Données, lecteurs, imprimantes","Session test de l’utilisateur","P: monté, données migrées (USMT, ch. 16)",true],
+ ["Inventaire (GLPI…)","(Get-CimInstance Win32_BIOS).SerialNumber","Numéro de série relevé",true]
+];
+const done4 = new Set();
+$("#check").innerHTML = CK.map(([t],i)=>`<label class="toggle" style="margin:7px 0" data-i="${i}"><input type="checkbox" data-i="${i}"> ${t}</label>`).join("");
+$$("#check label").forEach(l => l.onmouseenter = l.onclick = () => showCk(+l.dataset.i));
+$$("#check input").forEach(c => c.onchange = () => { const i = +c.dataset.i;
+  if (c.checked && !CK[i][3] && !done4.has("bl")) { c.checked = false; showCk(i, true); return; }
+  c.checked ? done4.add(i) : done4.delete(i); prog(); });
+function showCk(i, blocked){ const [t,cmd,res,ok] = CK[i];
+  $("#checkinfo").innerHTML = `<h3>${t}</h3>` + codeHTML(cmd) + `<p><b>Relevé :</b> ${res}</p>` + (!ok ? `<div class="callout ${blocked?"ko":""}">${blocked?"❌ Impossible de cocher : ":""}PC02 n’est <b>pas chiffré</b>. Normal : le fichier de réponse du chapitre 16 empêche le chiffrement automatique. Il faut <b>activer BitLocker</b> (ch. 09) et vérifier que la clé part dans l’AD (ch. 11) avant la remise.</div><button class="btn" id="blfix">Activer BitLocker + sauvegarde AD</button>` : "");
+  wireCopy($("#checkinfo"));
+  const f = $("#blfix"); if (f) f.onclick = () => { done4.add("bl"); CK[3][2] = "VolumeStatus : EncryptionInProgress → FullyEncrypted, clé dans msFVE-RecoveryInformation ✓"; CK[3][3] = true; showCk(3); };
+}
+function prog(){ const n = [...done4].filter(x=>x!=="bl").length; $("#prog").style.width = (n/CK.length*100)+"%";
+  $("#checkend").innerHTML = n===CK.length ? `<div class="callout info">✅ Poste prêt. <b>Pendant la remise :</b> première connexion avec l’utilisateur (mot de passe, Windows Hello, MFA), montrer P: et OneDrive, présenter Obtenir de l’aide et l’Assistance rapide, faire signer la <b>fiche de remise</b>.</div>` : ""; }
+showCk(0);
+</script>
+
+</body>
+</html>

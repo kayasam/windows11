@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13. ADK et Windows PE — pourquoi un mini-Windows ?</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8; --soft:#eef1f7;
+  --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --acc:#2f6fdf; --pe:#8a4fd8; --disk:#0f9aa8; --iso:#e0731f;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f131a;--card:#171c25;--ink:#e6e9ef;--muted:#9aa3b2;--line:#2a3140;--soft:#1e2430;--code:#0a0e14;--codeink:#d7dde8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 6px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+.big-idea{max-width:1180px;margin:14px auto 0;padding:0 20px}
+.big-idea div{background:linear-gradient(135deg,color-mix(in srgb,var(--pe) 16%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--pe) 40%,var(--line));border-radius:14px;padding:14px 18px;font-size:1.05rem}
+nav{max-width:1180px;margin:16px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:600;padding:8px 14px;border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);cursor:pointer}
+nav button.active{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--pe)}
+nav button span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-size:.8rem;margin-right:6px}
+nav button.active span{background:var(--pe);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tab{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:18px}
+.tab.active{display:block}
+h2{margin:0 0 6px;font-size:1.3rem}
+h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{font:inherit;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600}
+.chip.active{border-color:var(--pe);background:var(--pe);color:#fff}
+svg{width:100%;height:auto;display:block}
+.svgtxt{font-size:13px;fill:var(--muted)}
+.svgtitle{font-size:16px;font-weight:700;fill:var(--ink)}
+.media{cursor:pointer}
+.media rect{fill:var(--card);stroke:var(--line);stroke-width:2;transition:.2s}
+.media:hover rect{stroke:var(--muted)}
+.media.sel rect{stroke-width:3}
+.result{border-radius:12px;padding:14px;border:1px solid var(--line);background:var(--card);min-height:150px}
+.result h3{margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.pill{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.ko{background:var(--ko)}.pill.mid{background:var(--warn)}
+ul.can{margin:6px 0 0;padding-left:20px}
+ul.can li{margin:2px 0}
+pre{position:relative;margin:6px 0;background:var(--code);color:var(--codeink);padding:30px 12px 11px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;font-size:.92em}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.callout.info{border-color:var(--pe);background:color-mix(in srgb,var(--pe) 9%,transparent)}
+.callout.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 9%,transparent)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:8px 15px;background:var(--pe);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+/* ISO tree */
+.tree{font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.tree div{padding:5px 8px;border-radius:7px}
+.tree .f{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.tree .f:hover{background:var(--card)}
+.tree .f.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--pe)}
+.tree .tag{font-family:system-ui;font-size:.75rem;padding:1px 8px;border-radius:999px;color:#fff;align-self:center}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.steps button{font:inherit;font-size:.9rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--muted);cursor:pointer}
+.steps button.done{color:var(--ink)}
+.steps button.active{border-color:var(--pe);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--pe)}
+.fs{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.7}
+.fs .n{opacity:.25;transition:.3s}
+.fs .n.on{opacity:1}
+.fs .n.hot{color:var(--pe);font-weight:700}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.order button{font:inherit;font-family:ui-monospace,Consolas,monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.order button.placed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.order button.shake{animation:shake .35s;border-color:var(--ko)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* terminal */
+.term{background:#0b0f16;color:#cfd8e3;border-radius:10px;padding:12px 14px;font:13.5px/1.5 ui-monospace,Consolas,monospace;min-height:300px;max-height:440px;overflow:auto;white-space:pre-wrap;border:1px solid #1f2633}
+.term .p{color:#8fd16a}.term .c{color:#fff}.term .o{color:#9fb0c4}.term .e{color:#ff8a8a}.term .k{color:#e9c46a}
+.kbd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.kbd input[type=text]{font:14px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:260px}
+.kbd .out{font:15px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;background:#0b0f16;color:#fff;min-width:200px}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pe)}
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+@media (max-width:800px){.passes{grid-template-columns:repeat(2,1fr)}}
+.pass{border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);cursor:pointer;opacity:.45;transition:.2s;text-align:center}
+.pass b{display:block;font-size:.95rem}
+.pass small{color:var(--muted);font-size:.78rem}
+.pass .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);font-size:.78rem;font-weight:700}
+.pass.used{opacity:1;border-color:var(--pe)}
+.pass.used .n{background:var(--pe);color:#fff}
+.pass.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 35%,transparent)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.namecheck{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.namecheck input{font:14px ui-monospace,Consolas,monospace;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+/* chain */
+.chain{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:6px 0 10px}
+.ch{flex:1;min-width:150px;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;cursor:pointer;position:relative;margin-right:22px}
+.ch:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;color:var(--muted);font-weight:700}
+.ch b{display:block}
+.ch small{color:var(--muted)}
+.ch.pe{border-color:var(--pe)}
+.ch.sel{background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.pebadge{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;background:var(--pe);color:#fff;border-radius:999px;padding:1px 8px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+</style>
+</head>
+<body>
+<header>
+  <h1>13. ADK, Windows PE et fichier de réponse</h1>
+  <p>Pourquoi fabriquer un « mini-Windows » alors qu’on a déjà Windows ? Explore les six onglets dans l’ordre.</p>
+</header>
+<div class="big-idea"><div>💡 <b>L’idée à retenir :</b> on ne peut pas réparer, effacer ou copier le disque <b>sur lequel on est assis</b>. WinPE est un Windows minimal qui tourne <b>entièrement en mémoire</b> (lecteur <code>X:</code>) : le disque <code>C:</code> devient un simple disque de données, libre pour le technicien.</div></div>
+
+<nav id="nav">
+  <button data-t="t1" class="active"><span>1</span>Le problème</button>
+  <button data-t="t2"><span>2</span>Déjà dans l’ISO</button>
+  <button data-t="t3"><span>3</span>Fabriquer sa clé</button>
+  <button data-t="t4"><span>4</span>Sur le terrain</button>
+  <button data-t="t5"><span>5</span>Fichier de réponse</button>
+  <button data-t="t6"><span>6</span>Dans la suite</button>
+</nav>
+
+<main>
+<!-- ============ 1 ============ -->
+<section class="tab active" id="t1">
+  <h2>Sur quoi démarrer ?</h2>
+  <p class="lead">Choisis une situation, puis clique sur un support de démarrage. Regarde où tourne Windows (mémoire ou disque) et ce que tu peux faire.</p>
+  <div class="chips" id="situations"></div>
+  <div class="grid2">
+    <div class="panel">
+      <svg viewBox="0 0 520 330" id="bootsvg">
+        <!-- media -->
+        <g class="media" data-m="disk" transform="translate(10,20)"><rect width="150" height="70" rx="10"/><text class="svgtitle" x="14" y="30">💽 Disque C:</text><text class="svgtxt" x="14" y="52">Windows installé</text></g>
+        <g class="media" data-m="pe" transform="translate(10,130)"><rect width="150" height="70" rx="10"/><text class="svgtitle" x="14" y="30">🔑 Clé WinPE</text><text class="svgtxt" x="14" y="52">la clé du technicien</text></g>
+        <g class="media" data-m="iso" transform="translate(10,240)"><rect width="150" height="70" rx="10"/><text class="svgtitle" x="14" y="30">📀 ISO Windows 11</text><text class="svgtxt" x="14" y="52">l’ISO officielle</text></g>
+        <path id="bootpath" d="" fill="none" stroke="var(--pe)" stroke-width="3" stroke-dasharray="6 6" opacity="0"/>
+        <circle id="bootpkt" r="7" fill="var(--pe)" opacity="0"/>
+        <!-- PC -->
+        <rect x="230" y="20" width="280" height="290" rx="14" fill="var(--soft)" stroke="var(--line)" stroke-width="1.5"/>
+        <text class="svgtitle" x="250" y="48">Le poste</text>
+        <text class="svgtxt" x="250" y="68">Firmware UEFI → démarre sur…</text>
+        <!-- RAM -->
+        <text class="svgtxt" x="250" y="104">Mémoire vive (RAM)</text>
+        <rect x="250" y="112" width="240" height="56" rx="8" fill="var(--card)" stroke="var(--line)"/>
+        <rect id="ramfill" x="252" y="114" width="0" height="52" rx="7" fill="var(--pe)" opacity=".85"/>
+        <text id="ramtxt" x="370" y="146" text-anchor="middle" font-size="14" font-weight="700" fill="#fff"></text>
+        <!-- DISK -->
+        <text class="svgtxt" x="250" y="200">Disque interne</text>
+        <rect id="diskbox" x="250" y="208" width="240" height="56" rx="8" fill="var(--card)" stroke="var(--line)"/>
+        <text id="disktxt" x="370" y="241" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)"></text>
+        <text id="lockico" x="474" y="244" text-anchor="middle" font-size="20"></text>
+        <text id="screen" x="370" y="293" text-anchor="middle" font-size="13" fill="var(--muted)"></text>
+      </svg>
+    </div>
+    <div class="result" id="bootres"><h3>Clique sur un support</h3><p class="lead">Disque, clé WinPE ou ISO : à toi de tester.</p></div>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="tab" id="t2">
+  <h2>Tu as déjà utilisé WinPE sans le savoir</h2>
+  <p class="lead">Quand tu démarres sur l’ISO officielle pour installer Windows, ce n’est pas Windows 11 qui tourne : c’est <b>WinPE</b>, caché dans <code>boot.wim</code>. Clique sur les fichiers.</p>
+  <div class="grid2">
+    <div class="panel tree" id="tree">
+      <div>📀 Win11_26H2_French.iso</div>
+      <div style="padding-left:22px">📁 boot\ · 📁 efi\</div>
+      <div style="padding-left:22px">📁 sources\</div>
+      <div class="f" data-f="boot" style="margin-left:44px">📦 boot.wim <span class="tag" style="background:var(--pe)">WinPE</span></div>
+      <div class="f" data-f="install" style="margin-left:44px">📦 install.wim <span class="tag" style="background:var(--disk)">Windows 11</span></div>
+      <div class="f" data-f="setup" style="margin-left:22px">⚙️ setup.exe</div>
+      <div class="f" data-f="unattend" style="margin-left:22px;opacity:.7">📝 autounattend.xml <span class="tag" style="background:var(--iso)">ch. 16</span></div>
+      <div style="margin-top:10px;border-top:1px dashed var(--line);padding-top:10px">🔑 WinPE-Fournil.iso <i style="font-family:system-ui;color:var(--muted)">(ton WinPE)</i></div>
+      <div class="f" data-f="mine" style="margin-left:22px">📦 sources\boot.wim <span class="tag" style="background:var(--pe)">WinPE perso</span></div>
+    </div>
+    <div class="result" id="treeres"><h3>Clique sur un fichier</h3></div>
+  </div>
+  <div class="callout info"><b>Alors pourquoi en fabriquer un ?</b> Pour déployer PC02 au chapitre 16, on n’en a <b>pas besoin</b> : l’ISO officielle démarre sur son propre WinPE. Le WinPE de ce chapitre est <b>la clé USB du technicien</b>, avec <b>tes</b> outils, <b>ton</b> clavier, <b>tes</b> pilotes. Et c’est le même principe que WDS, MDT et ConfigMgr utilisent pour démarrer tous les postes.</div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="tab" id="t3">
+  <h2>Fabriquer la clé du technicien</h2>
+  <p class="lead">Avance étape par étape : le dossier de travail se remplit à droite.</p>
+  <div class="steps" id="steps"></div>
+  <div class="grid2">
+    <div id="stepbody"></div>
+    <div class="panel">
+      <h3 style="margin-top:0">Sur PC01</h3>
+      <div class="fs" id="fs">
+        <div class="n" data-s="0">📁 C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\</div>
+        <div class="n" data-s="0" style="padding-left:20px">📁 Deployment Tools · 📁 User State Migration Tool</div>
+        <div class="n" data-s="0" style="padding-left:20px">📁 Windows Preinstallation Environment <small>(module WinPE)</small></div>
+        <div class="n" data-s="2">📁 C:\WinPE_amd64\</div>
+        <div class="n" data-s="2" style="padding-left:20px">📁 fwfiles\</div>
+        <div class="n" data-s="2" style="padding-left:20px">📁 media\sources\<b data-hot="3">boot.wim</b></div>
+        <div class="n" data-s="3" style="padding-left:20px" data-id="mount">📁 mount\ <small id="mountstate"></small></div>
+        <div class="n" data-s="6">💿 C:\Temp\WinPE-Fournil.iso <small>(398 Mo · ≈ 567 Mo avec PowerShell)</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="tab" id="t4">
+  <h2>La clé en action</h2>
+  <p class="lead">Le poste a démarré sur ta clé WinPE. Choisis une mission : les commandes se tapent toutes seules. Sorties simplifiées, pour l’exemple.</p>
+  <div class="chips" id="missions"></div>
+  <div class="grid2">
+    <div class="term" id="term"></div>
+    <div id="missioninfo"></div>
+  </div>
+  <h3>⌨️ Le piège du clavier QWERTY</h3>
+  <p class="lead" style="margin-bottom:4px">Un WinPE fait avec <code>copype</code> est en anglais, avec un clavier américain. Tape sur ton clavier AZERTY et regarde ce que WinPE reçoit.</p>
+  <div class="kbd">
+    <input type="text" id="kin" value="list volume" aria-label="Ce que tu tapes">
+    <span>→</span>
+    <span class="out" id="kout"></span>
+    <label class="toggle"><input type="checkbox" id="kfix"> <code>wpeutil SetKeyboardLayout 040c:0000040c</code></label>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="tab" id="t5">
+  <h2>Un seul fichier de réponse, deux usages</h2>
+  <p class="lead"><code>autounattend.xml</code> répond à la place du technicien. Il est découpé en 7 passes, chacune jouée à un moment précis. Choisis l’usage : seules les passes lues s’allument.</p>
+  <div class="chips" id="usages"></div>
+  <div class="passes" id="passes"></div>
+  <div class="grid2">
+    <div id="passinfo"></div>
+    <div class="panel">
+      <h3 style="margin-top:0">Essaie le piège <code>ComputerName</code></h3>
+      <p class="lead" style="margin-bottom:8px">Passe <b>specialize</b>. Quelle valeur mettre pour que chaque poste ait un nom différent ?</p>
+      <div class="namecheck"><input id="cn" value="PC-*"><button class="btn" id="cnbtn">Déployer un poste</button></div>
+      <div id="cnres" style="margin-top:10px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="tab" id="t6">
+  <h2>Ce chapitre prépare toute la suite</h2>
+  <p class="lead">Clique sur une étape. Le violet marque les moments où un WinPE est en train de tourner.</p>
+  <div class="chain" id="chain"></div>
+  <div class="result" id="chainres"></div>
+  <h3>Deux stratégies de déploiement</h3>
+  <table>
+    <thead><tr><th></th><th>Installation automatisée (socle, lab)</th><th>Image maître (bonus)</th></tr></thead>
+    <tbody>
+      <tr><td><b>Principe</b></td><td>ISO officielle + <code>autounattend.xml</code></td><td>MASTER préparée, généralisée (Sysprep), capturée en WIM, puis déployée</td></tr>
+      <tr><td><b>Préparation</b></td><td>un fichier XML (ce chapitre)</td><td>VM MASTER, mode audit, Sysprep, capture DISM (ch. 14 et 15)</td></tr>
+      <tr><td><b>Entretien</b></td><td>rien : Microsoft tient l’ISO à jour</td><td>refaire l’image à chaque vague de mises à jour</td></tr>
+      <tr><td><b>Pour qui ?</b></td><td>petits et moyens parcs</td><td>grands parcs homogènes</td></tr>
+    </tbody>
+  </table>
+</section>
+</main>
+
+<footer>Chapitre 13 · Windows 11 administration et déploiement · Lab Fournil ·
+ <a href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/quiz/">Faire le quiz du chapitre</a> ·
+ <a href="https://learn.microsoft.com/windows-hardware/get-started/adk-install" target="_blank" rel="noopener">Installer l’ADK</a> ·
+ <a href="https://learn.microsoft.com/windows-hardware/manufacture/desktop/winpe-intro" target="_blank" rel="noopener">Windows PE</a></footer>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+function codeBlock(code){
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)});
+  pre.appendChild(b); return pre;
+}
+function chips(container, items, onPick, initial){
+  const box = $(container); box.innerHTML = "";
+  items.forEach(([id,label]) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = label; b.dataset.id = id;
+    b.onclick = () => { box.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c===b)); onPick(id); }; box.appendChild(b); });
+  if (initial) box.querySelector(`[data-id="${initial}"]`).click();
+}
+/* tabs */
+$$("#nav button").forEach(b => b.onclick = () => {
+  $$("#nav button").forEach(x => x.classList.toggle("active", x===b));
+  $$(".tab").forEach(t => t.classList.toggle("active", t.id === b.dataset.t));
+});
+
+/* ================= 1. boot simulator ================= */
+const SIT = [["ok","Tout va bien"],["broken","Windows ne démarre plus"],["blank","Disque neuf, vierge"],["capture","Je veux copier tout C: (image)"],["bitlocker","Disque BitLocker, PC en panne"]];
+let sit = "ok", media = null;
+const R = {
+  disk:{
+    ok:["ok","Windows 11 démarre","Windows tourne <b>depuis C:</b>. Parfait pour travailler… mais C: est occupé : impossible de l’effacer, de le repartitionner ou de le copier proprement pendant que Windows tourne dessus.",{ram:"",disk:"C: Windows (en cours d’utilisation)",lock:"🔒",screen:"Bureau Windows"}],
+    broken:["ko","Écran bleu / réparation automatique en boucle","Le Windows à réparer est justement celui qui ne démarre plus. On ne peut pas réparer une voiture en la conduisant.",{ram:"",disk:"C: Windows (abîmé)",lock:"⚠️",screen:"Réparation automatique… échec"}],
+    blank:["ko","No bootable device","Le disque est vide : il n’y a rien à démarrer. Il faut un système <b>venu d’ailleurs</b> pour le partitionner et y installer Windows.",{ram:"",disk:"(vide, non partitionné)",lock:"",screen:"No bootable device"}],
+    capture:["ko","Impossible de se copier soi-même","Windows ne peut pas capturer proprement le disque sur lequel il tourne : fichiers ouverts, registre verrouillé. Il faut démarrer <b>à côté</b> de lui.",{ram:"",disk:"C: Windows (en cours d’utilisation)",lock:"🔒",screen:"Fichiers en cours d’utilisation"}],
+    bitlocker:["ko","Le PC ne démarre pas","Le disque est chiffré et Windows ne démarre plus : les fichiers de l’utilisateur sont inaccessibles depuis ce poste.",{ram:"",disk:"C: chiffré BitLocker",lock:"🔐",screen:"Échec du démarrage"}]
+  },
+  pe:{
+    ok:["ok","WinPE démarre en mémoire","<b>X:</b> est en RAM, <b>C:</b> n’est plus qu’un disque de données. Tu peux tout faire dessus.",{ram:"X:  WinPE",disk:"C: Windows (libre)",lock:"🔓",screen:"X:\\Windows\\System32>"}],
+    broken:["ok","WinPE démarre, C: est accessible","Tu récupères les fichiers de l’utilisateur et tu répares le démarrage avec <code>bcdboot</code>.",{ram:"X:  WinPE",disk:"C: Windows (abîmé, accessible)",lock:"🔓",screen:"bcdboot C:\\Windows"}],
+    blank:["ok","WinPE démarre, le disque est à toi","<code>diskpart</code> pour créer les partitions, puis <code>DISM /Apply-Image</code> pour poser une image Windows.",{ram:"X:  WinPE",disk:"EFI · MSR · Windows",lock:"",screen:"diskpart / DISM"}],
+    capture:["ok","WinPE démarre, C: est au repos","Windows ne tourne plus sur C: : <code>DISM</code> peut capturer le disque dans un fichier <code>.wim</code>. (Dans le lab Hyper-V, le chapitre 15 fait plus simple : il monte le disque de la VM depuis l’hôte.)",{ram:"X:  WinPE",disk:"C: Windows (au repos)",lock:"🔓",screen:"DISM /Capture-Image"}],
+    bitlocker:["mid","WinPE démarre, C: est verrouillé","Avec la <b>clé de récupération</b> sauvegardée dans l’AD (chapitre 11), <code>manage-bde -unlock</code> rend le disque lisible.",{ram:"X:  WinPE",disk:"C: chiffré → déverrouillé",lock:"🔐",screen:"manage-bde -unlock C:"}]
+  },
+  iso:{
+    ok:["mid","Le programme d’installation démarre","C’est aussi un WinPE (boot.wim), mais il est fait pour <b>installer</b> Windows, pas pour dépanner avec tes outils.",{ram:"X:  WinPE de l’ISO → Setup",disk:"C: Windows",lock:"",screen:"Installer Windows 11"}],
+    broken:["mid","Options de récupération limitées","« Réparer l’ordinateur » donne quelques outils, mais ni tes scripts, ni tes pilotes, ni ton clavier configuré.",{ram:"X:  WinPE de l’ISO",disk:"C: Windows (abîmé)",lock:"",screen:"Réparer l’ordinateur"}],
+    blank:["ok","Parfait pour installer","L’ISO officielle installe Windows sur un disque vierge. Avec <code>autounattend.xml</code> à la racine, sans aucun clic (chapitre 16).",{ram:"X:  WinPE de l’ISO → Setup",disk:"EFI · MSR · Windows",lock:"",screen:"Installation automatique"}],
+    capture:["ko","Pas prévu pour ça","Le WinPE de l’ISO lance Setup. Pour capturer, on utilise sa propre clé WinPE avec DISM.",{ram:"X:  WinPE de l’ISO",disk:"C: Windows",lock:"",screen:"Installer Windows 11"}],
+    bitlocker:["mid","Possible, mais pas confortable","L’invite de commandes de la récupération permet parfois <code>manage-bde</code>, mais sans tes outils préparés.",{ram:"X:  WinPE de l’ISO",disk:"C: chiffré",lock:"🔐",screen:"Réparer l’ordinateur"}]
+  }
+};
+const MY = {disk:55, pe:165, iso:275};
+function drawBoot(){
+  $$(".media").forEach(g => { g.classList.toggle("sel", g.dataset.m === media); g.querySelector("rect").style.stroke = g.dataset.m===media ? "var(--pe)" : ""; });
+  if (!media){ $("#bootres").innerHTML = "<h3>Clique sur un support</h3><p class='lead'>Disque, clé WinPE ou ISO : à toi de tester.</p>"; setPC({ram:"",disk:sit==="blank"?"(vide, non partitionné)":"C: Windows",lock:"",screen:""}); return; }
+  const [st,title,txt,pc] = R[media][sit];
+  const path = $("#bootpath"); path.setAttribute("d", `M160,${MY[media]} C200,${MY[media]} 200,140 250,140`);
+  path.setAttribute("opacity",1);
+  const pkt = $("#bootpkt"), len = path.getTotalLength(); let t0=null;
+  pkt.setAttribute("opacity",1);
+  setPC({ram:"",disk:pc.disk,lock:"",screen:"Démarrage…"});
+  requestAnimationFrame(function f(ts){ if(!t0)t0=ts; const k=Math.min((ts-t0)/700,1); const p=path.getPointAtLength(len*k); pkt.setAttribute("cx",p.x); pkt.setAttribute("cy",p.y);
+    if(k<1) requestAnimationFrame(f); else { pkt.setAttribute("opacity",0); setPC(pc);
+      $("#bootres").innerHTML = `<h3><span class="pill ${st}">${st==="ok"?"Oui":st==="ko"?"Non":"Bof"}</span> ${title}</h3><p>${txt}</p>` + (media==="disk" && sit!=="ok" ? `<div class="callout info">Essaie maintenant la <b>clé WinPE</b> dans la même situation.</div>` : ""); }});
+}
+function setPC({ram,disk,lock,screen}){
+  $("#ramfill").setAttribute("width", ram ? 236 : 0); $("#ramtxt").textContent = ram;
+  $("#disktxt").textContent = disk; $("#lockico").textContent = lock; $("#screen").textContent = screen;
+}
+$$(".media").forEach(g => g.onclick = () => { media = g.dataset.m; drawBoot(); });
+chips("#situations", SIT, id => { sit = id; drawBoot(); }, "ok");
+
+/* ================= 2. ISO tree ================= */
+const TREE = {
+  boot:["boot.wim = Windows PE","C’est le <b>mini-Windows</b> qui démarre quand tu lances l’ISO. Il tourne en mémoire (X:) et lance le programme d’installation. Tu ne le vois jamais en tant que tel : tu vois juste « Installer Windows 11 »."],
+  install:["install.wim = le vrai Windows 11","L’image de Windows qui sera <b>copiée sur le disque</b>. Plusieurs éditions dedans (Famille, Pro…), chacune à un index. Dans le lab : <b>7,6 Go</b>. WSIM la lit pour construire le fichier de réponse."],
+  setup:["setup.exe","Le programme d’installation. Il est lancé <b>par</b> WinPE au démarrage de l’ISO."],
+  unattend:["autounattend.xml (ajouté au chapitre 16)","Posé à la racine de l’ISO, ce nom <b>exact</b> est cherché automatiquement par Windows Setup. Il répond à toutes les questions de l’installation."],
+  mine:["Ton boot.wim personnalisé","Le même principe que celui de l’ISO, mais construit par toi avec <code>copype</code> : tu peux y ajouter PowerShell, le clavier français, des pilotes réseau ou de stockage. Il ne lance pas Setup : il t’ouvre une invite de commandes <code>X:\\Windows\\System32&gt;</code>."]
+};
+$$("#tree .f").forEach(d => d.onclick = () => {
+  $$("#tree .f").forEach(x => x.classList.toggle("sel", x===d));
+  const [h,t] = TREE[d.dataset.f]; $("#treeres").innerHTML = `<h3>${h}</h3><p>${t}</p>`;
+});
+$('#tree .f[data-f="boot"]').click();
+
+/* ================= 3. stepper ================= */
+const OCS = ["WinPE-WMI","WinPE-NetFx","WinPE-Scripting","WinPE-PowerShell"];
+const STEPS = [
+ {t:"Installer l’ADK", body:`<p>Deux installeurs : l’<b>ADK</b> (outils de déploiement, USMT) et le <b>module WinPE</b>. Ils doivent avoir <b>exactement la même version</b>.</p>`,
+  code:String.raw`winget install --id Microsoft.WindowsADK -e --version 10.1.26100.9457 ` + "`" + String.raw`
+    --override "/quiet /norestart /features OptionId.DeploymentTools OptionId.UserStateMigrationTool"
+winget install --id Microsoft.WindowsADK.WinPEAddon -e --version 10.1.26100.9457 ` + "`" + String.raw`
+    --override "/quiet /norestart /features OptionId.WindowsPreinstallationEnvironment"`,
+  warn:"WinGet propose par défaut <b>10.1.28000.3481</b> (pour 26H1). Pour l’ISO <b>26H2</b> du lab : <b>10.1.26100.9457</b> dans les deux commandes. Environ 3 minutes."},
+ {t:"Ouvrir la bonne invite", body:`<p>Menu Démarrer → <i>Environnement de déploiement et d’outils de création d’images</i> → <b>Exécuter en tant qu’administrateur</b>.</p>`,
+  warn:"Depuis un terminal ordinaire, <code>copype</code> est <b>introuvable</b> : c’est cette invite qui charge les variables de l’ADK."},
+ {t:"copype", body:`<p>Copie les fichiers de WinPE dans un dossier de travail.</p>`, code:String.raw`copype amd64 C:\WinPE_amd64`, info:"WinPE <b>x86</b> n’existe plus : amd64 ou arm64 uniquement."},
+ {t:"Monter boot.wim", body:`<p>On « ouvre » l’image comme un dossier pour pouvoir la modifier.</p>`, code:String.raw`Dism /Mount-Image /ImageFile:C:\WinPE_amd64\media\sources\boot.wim /Index:1 /MountDir:C:\WinPE_amd64\mount`},
+ {t:"Personnaliser (bonus)", body:`<p>WinPE de base n’a ni PowerShell ni WMI. On ajoute des composants optionnels, <b>chacun avec son pack fr-fr</b>. <b>Remets-les dans l’ordre des dépendances :</b></p><div class="order" id="order"></div><div id="orderfb" class="lead"></div>`,
+  code:String.raw`set OC=C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Windows Preinstallation Environment\amd64\WinPE_OCs
+Dism /Image:C:\WinPE_amd64\mount /Add-Package /PackagePath:"%OC%\WinPE-WMI.cab"
+Dism /Image:C:\WinPE_amd64\mount /Add-Package /PackagePath:"%OC%\fr-fr\WinPE-WMI_fr-fr.cab"
+:: … puis NetFx, Scripting, PowerShell, StorageWMI (+ fr-fr à chaque fois)
+Dism /Image:C:\WinPE_amd64\mount /Set-InputLocale:fr-FR
+Dism /Image:C:\WinPE_amd64\mount /Add-Driver /Driver:C:\Drivers\Reseau /Recurse`},
+ {t:"Démonter en validant", body:`<p><code>/Commit</code> enregistre les changements dans <code>boot.wim</code>. Sans lui, tout est perdu.</p>`, code:String.raw`Dism /Image:C:\WinPE_amd64\mount /Get-Packages
+Dism /Unmount-Image /MountDir:C:\WinPE_amd64\mount /Commit`},
+ {t:"Créer le support", body:`<p>Une ISO pour une VM, ou une clé USB pour un poste physique.</p>`, code:String.raw`MakeWinPEMedia /ISO /F C:\WinPE_amd64 C:\Temp\WinPE-Fournil.iso
+MakeWinPEMedia /UFD C:\WinPE_amd64 P:   :: la clé sera FORMATÉE`,
+  info:"Clé UEFI = FAT32, donc fichiers de 4 Go maximum. Pour emporter un gros <code>install.wim</code> : <code>Dism /Split-Image</code> en .swm, ou une 2ᵉ partition NTFS."}
+];
+let step = 0;
+function renderSteps(){
+  const box = $("#steps"); box.innerHTML = "";
+  STEPS.forEach((s,i) => { const b = document.createElement("button"); b.textContent = `${i+1}. ${s.t}`; b.className = (i===step?"active ":"") + (i<=step?"done":""); b.onclick = () => { step = i; renderSteps(); }; box.appendChild(b); });
+  const s = STEPS[step], body = $("#stepbody"); body.innerHTML = `<h3 style="margin-top:0">${step+1}. ${s.t}</h3>${s.body}`;
+  if (s.code) body.appendChild(codeBlock(s.code));
+  if (s.warn) body.insertAdjacentHTML("beforeend", `<div class="callout">${s.warn}</div>`);
+  if (s.info) body.insertAdjacentHTML("beforeend", `<div class="callout info">${s.info}</div>`);
+  const nav = document.createElement("div"); nav.style.cssText = "display:flex;gap:8px;margin-top:10px";
+  nav.innerHTML = `<button class="btn ghost" ${step===0?"disabled":""}>← Précédent</button><button class="btn" ${step===STEPS.length-1?"disabled":""}>Suivant →</button>`;
+  nav.children[0].onclick = () => { step--; renderSteps(); }; nav.children[1].onclick = () => { step++; renderSteps(); };
+  body.appendChild(nav);
+  $$("#fs .n").forEach(n => { n.classList.toggle("on", +n.dataset.s <= step); n.classList.toggle("hot", +n.dataset.s === step); });
+  $("#mountstate").textContent = step>=3 && step<=4 ? "← boot.wim monté ici" : step>=5 ? "(vide : démonté, /Commit)" : "";
+  if (step === 4) buildOrder();
+}
+function buildOrder(){
+  let next = 0; const box = $("#order");
+  [...OCS].sort(()=>Math.random()-.5).forEach(n => { const b = document.createElement("button"); b.textContent = n;
+    b.onclick = () => { if (b.classList.contains("placed")) return;
+      if (n === OCS[next]) { b.classList.add("placed"); b.textContent = `${next+1}. ${n}`; next++;
+        if (next === OCS.length) $("#orderfb").innerHTML = "✅ <b>WMI → NetFx → Scripting → PowerShell</b> : chaque composant a besoin du précédent."; }
+      else { b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake"); $("#orderfb").textContent = `Pas encore : ${n} dépend d’un composant pas encore ajouté.`; } };
+    box.appendChild(b); });
+}
+renderSteps();
+
+/* ================= 4. terminal ================= */
+const P = "X:\\Windows\\System32>";
+const MISS = {
+ disks:{label:"Voir les disques", info:"<h3>Voir et préparer le disque</h3><p>Avant de déployer ou de dépanner, on regarde ce que WinPE voit. Les lettres peuvent être différentes de celles de Windows ! WinPE standard répond <b>en anglais</b>.</p><div class='callout'><b>Attention :</b> <code>clean</code> efface tout le disque sélectionné. Vérifie deux fois le numéro.</div>",
+  lines:[["c","diskpart"],["o","Microsoft DiskPart version 10.0.26100\n"],["c","list disk","DISKPART> "],["o","  Disk ###  Status    Size     Free\n  --------  --------  -------  -------\n  Disk 0    Online     127 GB      0 B\n  Disk 1    Online      14 GB      0 B   ← clé USB"],["c","list volume","DISKPART> "],["o","  Volume ###  Ltr  Label     Fs     Type\n  Volume 0     C   Windows   NTFS   Partition\n  Volume 1         System    FAT32  Partition\n  Volume 2     D   WINPE     FAT32  Removable"],["c","exit","DISKPART> "]]},
+ boot:{label:"Réparer le démarrage", info:"<h3>Le PC ne démarre plus</h3><p>Windows est intact sur C:, mais les fichiers de démarrage (partition EFI) sont abîmés. <code>bcdboot</code> les recrée à partir de <code>C:\\Windows</code>.</p><p>Impossible à faire depuis le Windows en panne : il ne démarre pas !</p>",
+  lines:[["c","dir C:\\Windows\\System32\\config\\SYSTEM"],["o","26/11/2026  09:12   15 990 784 SYSTEM      ← Windows est bien là"],["c","bcdboot C:\\Windows /f UEFI"],["o","Boot files successfully created."],["c","wpeutil reboot"]]},
+ bitlocker:{label:"Déverrouiller BitLocker", info:"<h3>Disque chiffré, PC en panne</h3><p>La <b>clé de récupération</b> (48 chiffres) a été sauvegardée dans l’AD au chapitre 11. Une fois saisie, C: redevient lisible.</p><div class='callout info'>Retrouve la clé dans <b>Utilisateurs et ordinateurs AD</b> → objet ordinateur → onglet <b>Récupération BitLocker</b>.</div>",
+  lines:[["c","manage-bde -status C:"],["o","Protection Status:    Protection On\nLock Status:          Locked","e"],["c","manage-bde -unlock C: -RecoveryPassword 123456-…-654321"],["o","The password successfully unlocked volume C:."],["c","dir C:\\Users"],["o","  Administrateur   Public   stagiaire"]]},
+ files:{label:"Sauver les fichiers", info:"<h3>Récupérer les données avant de réinstaller</h3><p>WinPE voit C: comme un disque de données. On copie le profil de l’utilisateur sur une clé ou sur un partage réseau (WinPE initialise le réseau en DHCP avec <code>wpeinit</code>).</p>",
+  lines:[["c","net use Z: \\\\SRV01\\Commun /user:FOURNIL\\Administrateur"],["o","The command completed successfully."],["c","robocopy C:\\Users\\stagiaire\\Documents Z:\\Sauvegarde\\stagiaire /E"],["o","    Files :       342       342         0\n    Bytes :    1.21 g    1.21 g         0"]]},
+ capture:{label:"Capturer une image", info:"<h3>Copier tout le disque dans un fichier</h3><p>Sur un <b>poste physique</b> : depuis WinPE, Windows ne tourne plus sur C:, DISM peut donc le capturer proprement dans un fichier <code>.wim</code>. Le chapitre 15 utilise aussi WinPE dans l’autre sens : <code>Dism /Apply-Image</code> puis <code>bcdboot</code> sur un disque vierge.</p>",
+  lines:[["c","Dism /Capture-Image /ImageFile:D:\\master.wim /CaptureDir:C:\\ /Name:\"Fournil 26H2\""],["o","Saving image\n[==========================100.0%==========================]\nThe operation completed successfully."]]}
+};
+let termRun = 0;
+async function play(id){
+  const my = ++termRun, t = $("#term"); t.innerHTML = ""; $("#missioninfo").innerHTML = MISS[id].info;
+  const add = (cls, txt) => { const s = document.createElement("span"); s.className = cls; s.textContent = txt; t.appendChild(s); t.scrollTop = t.scrollHeight; return s; };
+  for (const [k, txt, extra] of MISS[id].lines){
+    if (my !== termRun) return;
+    if (k === "c"){ add("p", extra && extra.startsWith("DISKPART") ? extra : P); const s = add("c",""); for (const ch of txt){ if (my!==termRun) return; s.textContent += ch; await new Promise(r=>setTimeout(r, 22)); } add("o","\n"); await new Promise(r=>setTimeout(r,250)); }
+    else { add(extra==="e"?"e":"o", txt + "\n\n"); await new Promise(r=>setTimeout(r,350)); }
+  }
+  if (my === termRun) add("p", P);
+}
+chips("#missions", Object.entries(MISS).map(([k,v])=>[k,v.label]), play, "disks");
+
+// AZERTY typed on a US layout
+const AZ2US = {a:"q",q:"a",z:"w",w:"z",m:";",",":"m",A:"Q",Q:"A",Z:"W",W:"Z",M:":",";":",",":":".","!":"/"};
+function kb(){ const v = $("#kin").value, fix = $("#kfix").checked;
+  $("#kout").textContent = fix ? v : [...v].map(c => AZ2US[c] ?? c).join(""); }
+$("#kin").oninput = kb; $("#kfix").onchange = kb; kb();
+
+/* ================= 5. passes ================= */
+const PASSES = [
+ ["windowsPE","dans WinPE, avant la copie","Langue fr-FR, disque 0 effacé, partitions EFI 200 Mo / MSR 16 Mo / Windows (Extend), installation sur la partition 3, AcceptEula, clé générique Pro.",["iso"]],
+ ["offlineServicing","image hors ligne","Ajout de correctifs ou de pilotes sur l’image juste copiée. Non utilisée ici.",[]],
+ ["generalize","pendant sysprep /generalize","Contrôle ce qui est généralisé (pilotes, identifiants matériels). Non utilisée ici.",[]],
+ ["specialize","1er démarrage, sur chaque poste","ComputerName = *, CopyProfile = false, RegisteredOrganization/Owner = Fournil, TimeZone = Romance Standard Time.",["iso","sysprep"]],
+ ["auditSystem","mode audit, avant session","Contexte système en mode audit. Non utilisée ici.",[]],
+ ["auditUser","mode audit, après session","Scripts et applications en mode audit. Non utilisée ici.",[]],
+ ["oobeSystem","dernier démarrage, accueil","Langue de l’interface, 5 écrans masqués (Hide…), ProtectYourPC = 3, compte local Utilisateur dans Administrators.",["iso","sysprep"]]
+];
+const USES = {iso:["ISO de déploiement (ch. 16)","Au démarrage de l’ISO sur un poste cible : <b>windowsPE</b> pilote l’installation (disque, clé), puis <b>specialize</b> et <b>oobeSystem</b> s’appliquent au premier démarrage."],
+              sysprep:["Sysprep de MASTER (ch. 14)","<code>sysprep /generalize /oobe /unattend:</code> : seules <b>specialize</b> et <b>oobeSystem</b> sont lues. windowsPE est ignorée : le disque de MASTER est déjà partitionné."]};
+let use = "iso", selPass = 0;
+function renderPasses(){
+  const box = $("#passes"); box.innerHTML = "";
+  PASSES.forEach(([n,when,,u],i) => { const d = document.createElement("div"); d.className = "pass" + (u.includes(use)?" used":"") + (i===selPass?" sel":"");
+    d.innerHTML = `<span class="n">${i+1}</span><b>${n}</b><small>${when}</small>`; d.onclick = () => { selPass = i; renderPasses(); }; box.appendChild(d); });
+  const [n,when,txt,u] = PASSES[selPass];
+  $("#passinfo").innerHTML = `<div class="callout info">${USES[use][1]}</div><h3>${selPass+1}. ${n} <span class="pill ${u.includes(use)?"ok":"ko"}" style="font-size:.72rem">${u.includes(use)?"lue":"ignorée"}</span></h3><p>${txt}</p>`;
+}
+chips("#usages", Object.entries(USES).map(([k,v])=>[k,v[0]]), id => { use = id; renderPasses(); }, "iso");
+$("#cnbtn").onclick = () => {
+  const v = $("#cn").value.trim(), r = $("#cnres");
+  if (v === "*") { const rnd = Math.random().toString(36).slice(2,9).toUpperCase(); r.innerHTML = `<div class="callout info">✅ Poste nommé <b>FOURNIL-${rnd}</b>. <code>*</code> <b>seul</b> génère un nom aléatoire, préfixé par RegisteredOrganization. Redéploie : le nom change à chaque fois.</div>`; }
+  else if (v.includes("*")) r.innerHTML = `<div class="callout ko">❌ « L’ordinateur a redémarré de manière inattendue… »<pre style="padding:10px 12px;white-space:pre-wrap">[Shell Unattend] ComputerName: failed to set the computer name [hr=0x80070057]</pre><code>*</code> ne marche que <b>seul</b>. Pour une convention de nommage : renommer à la jonction (<code>Add-Computer -NewName</code>) ou par script.</div>`;
+  else r.innerHTML = `<div class="callout">⚠️ Le poste s’appelle <b>${v.replace(/[<>&]/g,"")}</b>… comme <b>tous</b> les autres postes déployés avec ce fichier. Conflits assurés sur le domaine.</div>`;
+};
+renderPasses();
+
+/* ================= 6. chain ================= */
+const CHAIN = [
+ ["13","Outils","ADK, WinPE, autounattend.xml",false,"Ce chapitre : on prépare les outils (ADK, module WinPE), la clé WinPE du technicien, et le fichier de réponse qui servira aux chapitres 14 et 16."],
+ ["14","MASTER","Mode audit, Sysprep",false,"La machine de référence est installée, personnalisée en mode audit, puis généralisée avec Sysprep et le fichier de réponse (passes specialize et oobeSystem). Pourquoi généraliser ? Sinon tous les postes auraient le même SID."],
+ ["15","Capture / application","DISM, .wim",true,"Dans le lab, MASTER éteinte est capturée <b>depuis l’hôte</b> (Mount-VHD + DISM). Sur un poste physique, on démarrerait sur <b>WinPE</b> pour capturer. Et pour poser l’image sur une VM vierge, c’est ta clé WinPE : <code>diskpart</code> → <code>Dism /Apply-Image</code> → <code>bcdboot</code>."],
+ ["16","Déploiement","PC02 installé seul",true,"L’ISO officielle + autounattend.xml : le <b>WinPE de l’ISO</b> (boot.wim) lance Setup, qui lit la passe windowsPE et installe PC02 sans un clic."],
+ ["17","WDS / PXE","démarrer par le réseau",true,"Le poste démarre par sa carte réseau et reçoit un <b>WinPE</b> envoyé par le serveur. C’est le même boot.wim, mais sans clé USB."]
+];
+let selC = 0;
+function renderChain(){
+  const box = $("#chain"); box.innerHTML = "";
+  CHAIN.forEach(([n,t,s,pe],i) => { const d = document.createElement("div"); d.className = "ch" + (pe?" pe":"") + (i===selC?" sel":"");
+    d.innerHTML = `<small>Chapitre ${n}</small><b>${t}</b><small>${s}</small>${pe?'<br><span class="pebadge">WinPE tourne</span>':""}`; d.onclick = () => { selC = i; renderChain(); }; box.appendChild(d); });
+  const [n,t,,pe,txt] = CHAIN[selC]; $("#chainres").innerHTML = `<h3>Chapitre ${n} · ${t} ${pe?'<span class="pill ok" style="background:var(--pe)">WinPE</span>':""}</h3><p>${txt}</p>`;
+}
+renderChain();
+</script>
+</body>
+</html>

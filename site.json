@@ -211,7 +211,8 @@
               "file": "cours/11-gpo/tp/11-tp-gpo-guide.md",
               "correction": "cours/11-gpo/tp/11-tp-gpo-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/11-gpo/11-gpo-quiz.html"
         },
         {
           "slug": "12-acces-distant",
@@ -228,7 +229,9 @@
               "file": "cours/12-acces-distant/tp/12-tp-acces-distant-guide.md",
               "correction": "cours/12-acces-distant/tp/12-tp-acces-distant-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/12-acces-distant/12-acces-distant-quiz.html",
+          "html": "cours/12-acces-distant/12-acces-distant-schema.html"
         },
         {
           "slug": "13-adk-winpe",
@@ -245,7 +248,9 @@
               "file": "cours/13-adk-winpe/tp/13-tp-adk-winpe-guide.md",
               "correction": "cours/13-adk-winpe/tp/13-tp-adk-winpe-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/13-adk-winpe/13-adk-winpe-quiz.html",
+          "html": "cours/13-adk-winpe/13-adk-winpe-schema.html"
         },
         {
           "slug": "14-sysprep-audit",
@@ -262,7 +267,9 @@
               "file": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit-guide.md",
               "correction": "cours/14-sysprep-audit/tp/14-tp-sysprep-audit-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/14-sysprep-audit/14-sysprep-audit-quiz.html",
+          "html": "cours/14-sysprep-audit/14-sysprep-audit-schema.html"
         },
         {
           "slug": "15-wim-dism",
@@ -279,7 +286,9 @@
               "file": "cours/15-wim-dism/tp/15-tp-wim-dism-guide.md",
               "correction": "cours/15-wim-dism/tp/15-tp-wim-dism-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/15-wim-dism/15-wim-dism-quiz.html",
+          "html": "cours/15-wim-dism/15-wim-dism-schema.html"
         },
         {
           "slug": "16-deploiement",
@@ -297,6 +306,10 @@
               "file": "cours/16-deploiement/tp/16-tp-deploiement-guide.md",
               "correction": "cours/16-deploiement/tp/16-tp-deploiement-guide-correction.md"
             }
+          ],
+          "quiz": "cours/16-deploiement/16-deploiement-quiz.html",
+          "htmlAliases": [
+            "cours/16-deploiement/16-deploiement-schema.html"
           ]
         },
         {
@@ -314,7 +327,9 @@
               "file": "cours/17-wds-pxe/tp/17-tp-wds-pxe-guide.md",
               "correction": "cours/17-wds-pxe/tp/17-tp-wds-pxe-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/17-wds-pxe/17-wds-pxe-quiz.html",
+          "html": "cours/17-wds-pxe/17-wds-pxe-schema.html"
         },
         {
           "slug": "17-environnement-utilisateur",
@@ -331,7 +346,9 @@
               "file": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-guide.md",
               "correction": "cours/18-environnement-utilisateur/tp/18-tp-environnement-utilisateur-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/18-environnement-utilisateur/18-environnement-utilisateur-quiz.html",
+          "html": "cours/18-environnement-utilisateur/18-environnement-utilisateur-schema.html"
         },
         {
           "slug": "18-demarrage-recuperation",
@@ -348,7 +365,9 @@
               "file": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-guide.md",
               "correction": "cours/19-demarrage-recuperation/tp/19-tp-demarrage-recuperation-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/19-demarrage-recuperation/19-demarrage-recuperation-quiz.html",
+          "html": "cours/19-demarrage-recuperation/19-demarrage-recuperation-schema.html"
         },
         {
           "slug": "19-depannage",
@@ -365,7 +384,9 @@
               "file": "cours/20-depannage/tp/20-tp-depannage-guide.md",
               "correction": "cours/20-depannage/tp/20-tp-depannage-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/20-depannage/20-depannage-quiz.html",
+          "html": "cours/20-depannage/20-depannage-schema.html"
         },
         {
           "slug": "20-mco",
@@ -382,7 +403,9 @@
               "file": "cours/21-mco/tp/21-tp-mco-guide.md",
               "correction": "cours/21-mco/tp/21-tp-mco-guide-correction.md"
             }
-          ]
+          ],
+          "quiz": "cours/21-mco/21-mco-quiz.html",
+          "html": "cours/21-mco/21-mco-schema.html"
         }
       ],
       "attachments": [

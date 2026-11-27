@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>14. Mode audit et Sysprep — pourquoi généraliser ?</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8; --soft:#eef1f7;
+  --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --acc:#2f6fdf; --pe:#8a4fd8; --disk:#0f9aa8; --iso:#e0731f;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f131a;--card:#171c25;--ink:#e6e9ef;--muted:#9aa3b2;--line:#2a3140;--soft:#1e2430;--code:#0a0e14;--codeink:#d7dde8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 6px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+.big-idea{max-width:1180px;margin:14px auto 0;padding:0 20px}
+.big-idea div{background:linear-gradient(135deg,color-mix(in srgb,var(--pe) 16%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--pe) 40%,var(--line));border-radius:14px;padding:14px 18px;font-size:1.05rem}
+nav{max-width:1180px;margin:16px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:600;padding:8px 14px;border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);cursor:pointer}
+nav button.active{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--pe)}
+nav button span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-size:.8rem;margin-right:6px}
+nav button.active span{background:var(--pe);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tab{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:18px}
+.tab.active{display:block}
+h2{margin:0 0 6px;font-size:1.3rem}
+h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{font:inherit;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600}
+.chip.active{border-color:var(--pe);background:var(--pe);color:#fff}
+svg{width:100%;height:auto;display:block}
+.svgtxt{font-size:13px;fill:var(--muted)}
+.svgtitle{font-size:16px;font-weight:700;fill:var(--ink)}
+.media{cursor:pointer}
+.media rect{fill:var(--card);stroke:var(--line);stroke-width:2;transition:.2s}
+.media:hover rect{stroke:var(--muted)}
+.media.sel rect{stroke-width:3}
+.result{border-radius:12px;padding:14px;border:1px solid var(--line);background:var(--card);min-height:150px}
+.result h3{margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.pill{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.ko{background:var(--ko)}.pill.mid{background:var(--warn)}
+ul.can{margin:6px 0 0;padding-left:20px}
+ul.can li{margin:2px 0}
+pre{position:relative;margin:6px 0;background:var(--code);color:var(--codeink);padding:30px 12px 11px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;font-size:.92em}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.callout.info{border-color:var(--pe);background:color-mix(in srgb,var(--pe) 9%,transparent)}
+.callout.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 9%,transparent)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:8px 15px;background:var(--pe);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+/* ISO tree */
+.tree{font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.tree div{padding:5px 8px;border-radius:7px}
+.tree .f{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.tree .f:hover{background:var(--card)}
+.tree .f.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--pe)}
+.tree .tag{font-family:system-ui;font-size:.75rem;padding:1px 8px;border-radius:999px;color:#fff;align-self:center}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.steps button{font:inherit;font-size:.9rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--muted);cursor:pointer}
+.steps button.done{color:var(--ink)}
+.steps button.active{border-color:var(--pe);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--pe)}
+.fs{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.7}
+.fs .n{opacity:.25;transition:.3s}
+.fs .n.on{opacity:1}
+.fs .n.hot{color:var(--pe);font-weight:700}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.order button{font:inherit;font-family:ui-monospace,Consolas,monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.order button.placed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.order button.shake{animation:shake .35s;border-color:var(--ko)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* terminal */
+.term{background:#0b0f16;color:#cfd8e3;border-radius:10px;padding:12px 14px;font:13.5px/1.5 ui-monospace,Consolas,monospace;min-height:300px;max-height:440px;overflow:auto;white-space:pre-wrap;border:1px solid #1f2633}
+.term .p{color:#8fd16a}.term .c{color:#fff}.term .o{color:#9fb0c4}.term .e{color:#ff8a8a}.term .k{color:#e9c46a}
+.kbd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.kbd input[type=text]{font:14px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:260px}
+.kbd .out{font:15px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;background:#0b0f16;color:#fff;min-width:200px}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pe)}
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+@media (max-width:800px){.passes{grid-template-columns:repeat(2,1fr)}}
+.pass{border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);cursor:pointer;opacity:.45;transition:.2s;text-align:center}
+.pass b{display:block;font-size:.95rem}
+.pass small{color:var(--muted);font-size:.78rem}
+.pass .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);font-size:.78rem;font-weight:700}
+.pass.used{opacity:1;border-color:var(--pe)}
+.pass.used .n{background:var(--pe);color:#fff}
+.pass.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 35%,transparent)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.namecheck{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.namecheck input{font:14px ui-monospace,Consolas,monospace;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+/* chain */
+.chain{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:6px 0 10px}
+.ch{flex:1;min-width:150px;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;cursor:pointer;position:relative;margin-right:22px}
+.ch:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;color:var(--muted);font-weight:700}
+.ch b{display:block}
+.ch small{color:var(--muted)}
+.ch.pe{border-color:var(--pe)}
+.ch.sel{background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.pebadge{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;background:var(--pe);color:#fff;border-radius:999px;padding:1px 8px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--soft)}
+.card h4{margin:0 0 4px}
+.stage{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.st{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:10px;padding:9px;background:var(--soft);cursor:pointer;text-align:center;transition:.2s}
+.st b{display:block}.st small{color:var(--muted)}
+.st.sel{border-color:var(--pe);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.st.ok{border-color:var(--ok)}.st.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 10%,var(--soft))}
+.mini{font-size:.88rem;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{font:inherit;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{height:26px;border-radius:7px;background:var(--soft);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:700;transition:width .5s}
+.log{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:#0b0f16;color:#ffb4b4;padding:9px 11px;border-radius:8px;white-space:pre-wrap;margin:6px 0}
+.ok-t{color:var(--ok);font-weight:700}.ko-t{color:var(--ko);font-weight:700}
+
+:root{--pe:#0f9aa8}
+</style>
+</head>
+<body>
+<header>
+  <h1>14. Poste de référence : mode audit et Sysprep</h1>
+  <p>Préparer une fois MASTER, la généraliser, puis la cloner sans que les postes se marchent dessus.</p>
+</header>
+<div class="big-idea"><div>💡 <b>L’idée à retenir :</b> une image clonée sans Sysprep, ce sont des <b>jumeaux parfaits</b> : même SID, même nom, mêmes identifiants matériels. <code>/generalize</code> retire tout ce qui rend la machine unique, et chaque poste déployé se recrée une identité au premier démarrage (passe <b>specialize</b>).</div></div>
+<nav id="nav">
+  <button data-t="t1" class="active"><span>1</span>Pourquoi généraliser</button>
+  <button data-t="t2"><span>2</span>La vie de MASTER</button>
+  <button data-t="t3"><span>3</span>Sysprep refuse !</button>
+  <button data-t="t4"><span>4</span>Pièges au déploiement</button>
+</nav>
+<main>
+<section class="tab active" id="t1">
+  <h2>Cloner avec ou sans Sysprep</h2>
+  <p class="lead">Déploie trois postes depuis l’image de MASTER, puis regarde ce qui se passe quand ils rejoignent le domaine.</p>
+  <div class="row" style="margin-bottom:12px">
+    <label class="toggle"><input type="checkbox" id="gen"> Image généralisée avec <code>sysprep /generalize</code></label>
+    <button class="btn" id="deploy">Déployer 3 postes</button>
+  </div>
+  <div class="cards" id="clones"></div>
+  <div id="cloneres" style="margin-top:12px"></div>
+</section>
+
+<section class="tab" id="t2">
+  <h2>La vie de MASTER, étape par étape</h2>
+  <p class="lead">Clique sur une étape. MASTER est une VM <b>réutilisable</b> : la boucle du bas sert à rafraîchir l’image chaque mois.</p>
+  <div class="stage" id="life"></div>
+  <div class="grid2" style="margin-top:14px">
+    <div id="lifebody"></div>
+    <div class="panel">
+      <h3 style="margin-top:0">État de la VM MASTER</h3>
+      <table id="vmstate"><tbody></tbody></table>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t3">
+  <h2>Escape game : Sysprep refuse de généraliser</h2>
+  <p class="lead">Le scénario vécu sur le lab. Lance Sysprep, lis le journal, choisis la bonne correction. Sysprep s’arrête au <b>premier</b> problème trouvé : il peut échouer plusieurs fois de suite.</p>
+  <div class="row" style="margin-bottom:10px">
+    <label class="toggle"><input type="checkbox" id="prevent"> MASTER installée avec <code>PreventDeviceEncryption</code></label>
+    <button class="btn" id="sysbtn">▶ sysprep /generalize /oobe /shutdown</button>
+    <button class="btn ghost" id="sysreset">Recommencer</button>
+  </div>
+  <div class="grid2">
+    <div><div class="term" id="systerm" style="min-height:220px"></div></div>
+    <div id="sysfix"></div>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <h2>Sysprep a réussi… et c’est le déploiement qui échoue</h2>
+  <p class="lead">Deux pièges du nouveau Setup (médias 24H2+), trouvés dans <code>$WINDOWS.~BT\Sources\Panther\setupact.log</code> du poste cible.</p>
+  <div class="cards">
+    <div class="card"><h4>0x80070050 · le fichier existe</h4>
+      <div class="log">Failed to save copy of answer file to …\Panther\unattend-original.xml (0x80070050)</div>
+      <p>MASTER a été installée <b>avec</b> un fichier de réponse : sa copie est restée dans <code>C:\Windows\Panther</code>, capturée avec l’image. Setup refuse de l’écraser.</p>
+      <p class="mini">Et ce fichier contient des <b>mots de passe</b> : raison de plus pour nettoyer.</p>
+    </div>
+    <div class="card"><h4>0x800700B7 · Windows.old vide</h4>
+      <div class="log">CRelocateOS: Cannot move path …\NewOS\Windows.old … Error: 0x800700B7</div>
+      <p>Deux dossiers <b>vides</b> à la racine de MASTER (<code>Windows.old</code>, <code>Recovery</code>) ont été capturés. Setup veut les créer lui-même et abandonne.</p>
+    </div>
+  </div>
+  <h3>La correction : vérifier l’image avant de la distribuer</h3>
+  <div id="t4code"></div>
+  <div class="callout info"><b>Règle :</b> avant de distribuer une image, la monter et vérifier sa <b>racine</b> et <code>Windows\Panther</code>.</div>
+</section>
+</main>
+<footer>Chapitre 14 (bonus) · <a href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/quiz/">Faire le quiz du chapitre</a> · <a href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/html/">Chapitre 13 interactif</a> · <a href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/html/">Chapitre 15 interactif</a></footer>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+function codeBlock(code){
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)});
+  pre.appendChild(b); return pre;
+}
+function codeHTML(code){ const d=document.createElement("div"); d.appendChild(codeBlock(code)); return d.innerHTML; }
+function chips(container, items, onPick, initial){
+  const box = $(container); box.innerHTML = "";
+  items.forEach(([id,label]) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = label; b.dataset.id = id;
+    b.onclick = () => { box.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c===b)); onPick(id); }; box.appendChild(b); });
+  if (initial) box.querySelector(`[data-id="${initial}"]`).click();
+}
+function initTabs(){ $$("#nav button").forEach(b => b.onclick = () => {
+  $$("#nav button").forEach(x => x.classList.toggle("active", x===b));
+  $$(".tab").forEach(t => t.classList.toggle("active", t.id === b.dataset.t)); }); }
+function wireCopy(root){ (root||document).querySelectorAll("pre .copy").forEach(b=>{ const pre=b.parentElement; const code=pre.firstChild.textContent; b.onclick=()=>navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)}); }); }
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+</script>
+
+<script>
+initTabs();
+/* ---- 1 clones ---- */
+const rnd = () => "FOURNIL-" + Math.random().toString(36).slice(2,9).toUpperCase();
+function sidTail(){ return Math.floor(1e9+Math.random()*3e9); }
+$("#deploy").onclick = async () => {
+  const gen = $("#gen").checked, box = $("#clones"); box.innerHTML = ""; $("#cloneres").innerHTML = "";
+  const masterSid = "S-1-5-21-1997599300-1548322752-1041116163";
+  for (let i=0;i<3;i++){
+    await sleep(250);
+    const name = gen ? rnd() : "MASTER", sid = gen ? `S-1-5-21-${sidTail()}-${sidTail()}-${sidTail()}` : masterSid;
+    box.insertAdjacentHTML("beforeend", `<div class="card" style="border-color:${gen?"var(--ok)":"var(--ko)"}"><h4>🖥️ Poste ${i+1}</h4><div class="mini">Nom</div><b>${name}</b><div class="mini" style="margin-top:6px">SID machine</div><code style="font-size:.75rem;word-break:break-all">${sid}</code><div class="mini" style="margin-top:6px">Premier démarrage</div>${gen?"specialize → oobeSystem → écran d’accueil":"directement le bureau de MASTER"}</div>`);
+  }
+  await sleep(300);
+  $("#cloneres").innerHTML = gen
+    ? `<div class="callout info">✅ Chaque poste a rejoué <b>specialize</b> : SID propre, nom unique grâce à <code>ComputerName = *</code> (chapitre 13). Ils peuvent tous rejoindre le domaine.</div>`
+    : `<div class="callout ko">❌ Trois postes avec le <b>même SID</b> et le <b>même nom</b> : identités machine ambiguës dans Active Directory, conflits de nom sur le réseau, problèmes d’activation. C’est le « SID de duplication ».</div>`;
+};
+$("#deploy").click();
+
+/* ---- 2 life ---- */
+const LIFE = [
+ ["Créer la VM","New-VM Gen2, TPM", `<p>VM génération 2 avec TPM, branchée sur le <b>Default Switch</b> (Internet pour Windows Update et WinGet, sans consommer d’adresse du DHCP de SRV01).</p>`,
+  String.raw`New-VM -Name "MASTER" -Generation 2 -MemoryStartupBytes 6GB -NewVHDPath "D:\HyperV\MASTER\MASTER.vhdx" -NewVHDSizeBytes 64GB -SwitchName "Default Switch" -Path "D:\HyperV"
+Set-VMMemory -VMName "MASTER" -DynamicMemoryEnabled $false
+Set-VMKeyProtector -VMName "MASTER" -NewLocalKeyProtector
+Enable-VMTPM -VMName "MASTER"`, "Mémoire <b>statique</b> : la mémoire dynamique fait échouer Setup (0x800705AA).", {Etat:"Éteinte",Session:"—",BitLocker:"—",Generalisee:"Non",Checkpoint:"—"}],
+ ["Installer","jusqu’à l’OOBE", `<p>Installation avec <code>autounattend-installation-master.xml</code> sur une petite ISO : disque, édition Pro, <b>PreventDeviceEncryption</b>, et <b>pas</b> de passe oobeSystem : Setup s’arrête à l’écran « Région ? ».</p>`, null,
+  "Sans PreventDeviceEncryption, Windows chiffre MASTER tout seul et Sysprep refusera plus tard (0x80310039).", {Etat:"Écran OOBE « Région ? »",Session:"aucune",BitLocker:"FullyDecrypted",Generalisee:"Non",Checkpoint:"—"}],
+ ["Mode audit","Ctrl+Shift+F3", `<p>À l’écran OOBE, <b>Ctrl + Shift + F3</b> : Windows redémarre et ouvre une session sous l’<b>Administrateur intégré</b>, sans créer de profil utilisateur final. La fenêtre Sysprep s’ouvre à chaque connexion : on peut la fermer.</p>`, null,
+  "L’Administrateur est sans mot de passe et marqué inactif : pas d’administration à distance tant qu’on ne l’a pas activé.", {Etat:"Mode audit",Session:"Administrateur intégré",BitLocker:"FullyDecrypted",Generalisee:"Non",Checkpoint:"—"}],
+ ["Personnaliser","MAJ, apps, nettoyage", `<p>Windows Update, applications standard avec WinGet, retrait des applications grand public <b>de l’image</b>, nettoyage.</p>`,
+  String.raw`winget install --id 7zip.7zip -e --scope machine --silent
+Get-AppxProvisionedPackage -Online | Where DisplayName -eq Microsoft.BingNews | Remove-AppxProvisionedPackage -Online
+# juste avant Sysprep : retirer les paquets « utilisateur »
+Get-AppxPackage Microsoft.Winget.Source, NotepadPlusPlus | Remove-AppxPackage`, null, {Etat:"Mode audit",Session:"Administrateur intégré",BitLocker:"FullyDecrypted",Generalisee:"Non",Checkpoint:"—"}],
+ ["Copier le XML","Copy-VMFile", `<p>Le fichier de réponse du chapitre 13 passe de l’hôte à la VM par le canal Hyper-V, sans réseau. Le service d’intégration est désactivé par défaut : on le cible par son <b>GUID</b>, pas par son nom traduit.</p>`,
+  String.raw`Get-VMIntegrationService -VMName "MASTER" | Where-Object { $_.Id -match "6C09BB55-D683-4DA0-8931-C9BF705F6480" } | Enable-VMIntegrationService
+Copy-VMFile -Name "MASTER" -SourcePath "D:\Images\autounattend.xml" -DestinationPath "C:\Sysprep\autounattend.xml" -CreateFullPath -FileSource Host`, null, {Etat:"Mode audit",Session:"Administrateur intégré",BitLocker:"FullyDecrypted",Generalisee:"Non",Checkpoint:"—"}],
+ ["Checkpoint","Avant-Sysprep", `<p>On fige l’état « personnalisée, pas encore généralisée ». Quasi instantané, contrairement à un Export-VM.</p>`,
+  String.raw`Checkpoint-VM -Name "MASTER" -SnapshotName "Avant-Sysprep"`, null, {Etat:"Mode audit",Session:"Administrateur intégré",BitLocker:"FullyDecrypted",Generalisee:"Non",Checkpoint:"Avant-Sysprep ✓"}],
+ ["Sysprep","generalize + shutdown", `<p>Généralise, prépare l’OOBE, applique le fichier de réponse (specialize + oobeSystem) au prochain démarrage, et éteint.</p>`,
+  String.raw`C:\Windows\System32\Sysprep\sysprep.exe /generalize /oobe /shutdown /unattend:C:\Sysprep\autounattend.xml`,
+  "<b>Ne pas redémarrer MASTER</b> ensuite : l’OOBE se lancerait et la généralisation serait perdue.", {Etat:"Éteinte, généralisée",Session:"—",BitLocker:"FullyDecrypted",Generalisee:"Oui ✓",Checkpoint:"Avant-Sysprep ✓"}],
+ ["Capturer","chapitre 15", `<p>MASTER éteinte est capturée en <code>MASTER.wim</code> depuis l’hôte (chapitre 15).</p>`, null, null, {Etat:"Éteinte, capturée",Session:"—",BitLocker:"FullyDecrypted",Generalisee:"Oui ✓",Checkpoint:"Avant-Sysprep ✓"}],
+ ["🔁 Rafraîchir","le mois suivant", `<p>On revient au checkpoint : MASTER redémarre <b>personnalisée, en mode audit, pas encore généralisée</b>. Mises à jour, retrait des paquets utilisateur, <b>nouveau</b> checkpoint, Sysprep, nouvelle capture. Jamais de reconstruction depuis zéro.</p>`,
+  String.raw`Restore-VMSnapshot -VMName "MASTER" -Name "Avant-Sysprep" -Confirm:$false
+Start-VM -Name "MASTER"`, "Microsoft.Winget.Source revient dès qu’on utilise WinGet : le retirer à nouveau avant Sysprep.", {Etat:"Mode audit (restaurée)",Session:"Administrateur intégré",BitLocker:"FullyDecrypted",Generalisee:"Non",Checkpoint:"Avant-Sysprep ✓"}]
+];
+let li = 0;
+function renderLife(){
+  $("#life").innerHTML = LIFE.map(([t,s],i)=>`<div class="st ${i===li?"sel":""}" data-i="${i}"><small>${i+1}</small><b>${t}</b><small>${s}</small></div>`).join("");
+  $$("#life .st").forEach(d => d.onclick = () => { li = +d.dataset.i; renderLife(); });
+  const [t,,html,code,warn,state] = LIFE[li]; const b = $("#lifebody"); b.innerHTML = `<h3 style="margin-top:0">${li+1}. ${t}</h3>${html}`;
+  if (code) b.appendChild(codeBlock(code)); if (warn) b.insertAdjacentHTML("beforeend", `<div class="callout">${warn}</div>`);
+  const lab = {Etat:"État",Session:"Session ouverte",BitLocker:"BitLocker",Generalisee:"Généralisée",Checkpoint:"Point de contrôle"};
+  $("#vmstate tbody").innerHTML = Object.entries(state).map(([k,v])=>`<tr><th>${lab[k]}</th><td>${v}</td></tr>`).join("");
+}
+renderLife();
+
+/* ---- 3 escape game ---- */
+const FAILS = [
+ {id:"bl", need:p=>!p, log:"SYSPRP BitLocker-Sysprep: BitLocker is on for the OS volume. Turn BitLocker off to run Sysprep. (0x80310039)",
+  q:"BitLocker a chiffré MASTER. Que fais-tu ?", opts:[["manage-bde -off C:", "ko","❌ En mode audit : 0x8007007A (« La zone de données passée à un appel système est insuffisante »). Disable-BitLocker échoue pareil."],["Réinstaller MASTER avec PreventDeviceEncryption","ok","✅ C’est ce qu’il a fallu faire sur le lab. Coche la case en haut et relance : c’est la prévention."],["Ajouter un protecteur puis relancer","ko","❌ Testé sur le lab : ça ne change rien, le déchiffrement échoue toujours en mode audit."]], reinstall:true},
+ {id:"wg", log:"SYSPRP Package Microsoft.Winget.Source_2026.1108.637.6_neutral__8wekyb3d8bbwe was installed for a user,\nbut not provisioned for all users. This package will not function properly in the sysprep image.\nSYSPRP … hr = 0x80073cf2",
+  q:"Un paquet installé pour le seul Administrateur bloque. Que fais-tu ?", opts:[["Réinstaller MASTER","ko","❌ Inutile : il suffit de retirer le paquet."],["Get-AppxPackage Microsoft.Winget.Source | Remove-AppxPackage","ok","✅ L’index de WinGet, téléchargé pour l’utilisateur à sa première utilisation. Retiré : on relance."],["Désactiver Windows Update","ko","❌ Le problème est le paquet, pas Windows Update."]]},
+ {id:"np", log:"SYSPRP Package NotepadPlusPlus_1.0.0.0_neutral__… was installed for a user,\nbut not provisioned for all users.\nSYSPRP … hr = 0x80073cf2",
+  q:"Encore un ! Celui-là vient de Notepad++, pourtant installé avec --scope machine.", opts:[["Get-AppxPackage NotepadPlusPlus | Remove-AppxPackage","ok","✅ Le paquet « sparse » du menu contextuel de Windows 11. Retiré : on relance."],["Désinstaller Notepad++ complètement","ko","❌ Pas nécessaire : seul le paquet MSIX du menu contextuel gêne."],["Supprimer setupact.log","ko","❌ Effacer le journal ne retire pas le paquet !"]]}
+];
+let fi = 0, done = false;
+function term(lines){ $("#systerm").innerHTML = lines; $("#systerm").scrollTop = 1e6; }
+function resetGame(){ fi = 0; done = false; term(`<span class="p">PS C:\\Windows\\System32\\Sysprep&gt;</span> `); $("#sysfix").innerHTML = `<div class="callout info">Lance Sysprep. Le diagnostic est <b>toujours</b> dans <code>C:\\Windows\\System32\\Sysprep\\Panther\\setuperr.log</code> et <code>setupact.log</code>.</div>`; }
+async function runSys(){
+  if (done) return;
+  const prevent = $("#prevent").checked;
+  let list = FAILS.filter(f => !f.need || f.need(prevent));
+  term(`<span class="p">PS&gt;</span> <span class="c">sysprep /generalize /oobe /shutdown /unattend:C:\\Sysprep\\autounattend.xml</span>\n<span class="o">Sysprep est en cours…</span>\n`);
+  await sleep(900);
+  const f = list[fi];
+  if (!f){ done = true; term($("#systerm").innerHTML + `<span class="o">Généralisation terminée. Arrêt de la VM…</span>\n\n<span class="k">✅ MASTER éteinte en 90 secondes.</span>`);
+    $("#sysfix").innerHTML = `<div class="callout info">🎉 Réussi ! Sur le lab : <b>trois tentatives</b> (BitLocker, puis WinGet, puis Notepad++). Après chaque correction, <b>refais le checkpoint</b> « Avant-Sysprep », sinon le prochain rafraîchissement retombera sur le même échec.</div>` + codeHTML(`Get-VMCheckpoint -VMName MASTER | Remove-VMCheckpoint\nCheckpoint-VM -Name MASTER -SnapshotName "Avant-Sysprep"`); wireCopy($("#sysfix")); return; }
+  term($("#systerm").innerHTML + `<span class="e">Sysprep n’a pas pu valider votre installation de Windows.</span>\n\n<span class="p">PS&gt;</span> <span class="c">Select-String …\\Panther\\setupact.log -Pattern "SYSPRP"</span>\n<span class="e">${f.log}</span>`);
+  $("#sysfix").innerHTML = `<h3 style="margin-top:0">${f.q}</h3><div class="row" style="flex-direction:column;align-items:stretch" id="opts"></div><div id="fixfb"></div>`;
+  f.opts.forEach(([txt,res,fb]) => { const b = document.createElement("button"); b.className = "btn ghost"; b.style.textAlign = "left"; b.textContent = txt;
+    b.onclick = () => { $("#fixfb").innerHTML = `<div class="callout ${res==="ok"?"info":"ko"}">${fb}</div>`;
+      if (res==="ok"){ $$("#opts button").forEach(x=>x.disabled=true); if (f.reinstall){ $("#fixfb").insertAdjacentHTML("beforeend",`<button class="btn" id="re">Réinstaller MASTER avec PreventDeviceEncryption</button>`); $("#re").onclick=()=>{ $("#prevent").checked = true; resetGame(); }; } else { fi++; $("#fixfb").insertAdjacentHTML("beforeend",`<button class="btn" id="again">▶ Relancer Sysprep</button>`); $("#again").onclick = runSys; } } };
+    $("#opts").appendChild(b); });
+}
+$("#sysbtn").onclick = runSys; $("#sysreset").onclick = () => { $("#prevent").checked = false; resetGame(); };
+$("#prevent").onchange = resetGame; resetGame();
+
+/* ---- 4 ---- */
+$("#t4code").appendChild(codeBlock(String.raw`# Juste avant Sysprep, sur MASTER
+Remove-Item C:\Windows\Panther\unattend-original.xml -ErrorAction SilentlyContinue
+rd C:\Windows.old ; rd C:\Recovery          # s'ils sont vides
+
+# … ou après capture, dans l'image montée (chapitre 15)
+Dism /Mount-Image /ImageFile:D:\Images\MASTER.wim /Index:1 /MountDir:C:\Mount
+dir /a C:\Mount
+del C:\Mount\Windows\Panther\unattend-original.xml C:\Mount\Windows\Panther\unattend.xml
+rd C:\Mount\Windows.old ; rd C:\Mount\Recovery
+Dism /Unmount-Image /MountDir:C:\Mount /Commit`));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>21. MCO — maintenir le parc en condition opérationnelle</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8; --soft:#eef1f7;
+  --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --acc:#2f6fdf; --pe:#8a4fd8; --disk:#0f9aa8; --iso:#e0731f;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f131a;--card:#171c25;--ink:#e6e9ef;--muted:#9aa3b2;--line:#2a3140;--soft:#1e2430;--code:#0a0e14;--codeink:#d7dde8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 6px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+.big-idea{max-width:1180px;margin:14px auto 0;padding:0 20px}
+.big-idea div{background:linear-gradient(135deg,color-mix(in srgb,var(--pe) 16%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--pe) 40%,var(--line));border-radius:14px;padding:14px 18px;font-size:1.05rem}
+nav{max-width:1180px;margin:16px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:600;padding:8px 14px;border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);cursor:pointer}
+nav button.active{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--pe)}
+nav button span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-size:.8rem;margin-right:6px}
+nav button.active span{background:var(--pe);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tab{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:18px}
+.tab.active{display:block}
+h2{margin:0 0 6px;font-size:1.3rem}
+h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{font:inherit;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600}
+.chip.active{border-color:var(--pe);background:var(--pe);color:#fff}
+svg{width:100%;height:auto;display:block}
+.svgtxt{font-size:13px;fill:var(--muted)}
+.svgtitle{font-size:16px;font-weight:700;fill:var(--ink)}
+.media{cursor:pointer}
+.media rect{fill:var(--card);stroke:var(--line);stroke-width:2;transition:.2s}
+.media:hover rect{stroke:var(--muted)}
+.media.sel rect{stroke-width:3}
+.result{border-radius:12px;padding:14px;border:1px solid var(--line);background:var(--card);min-height:150px}
+.result h3{margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.pill{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.ko{background:var(--ko)}.pill.mid{background:var(--warn)}
+ul.can{margin:6px 0 0;padding-left:20px}
+ul.can li{margin:2px 0}
+pre{position:relative;margin:6px 0;background:var(--code);color:var(--codeink);padding:30px 12px 11px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;font-size:.92em}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.callout.info{border-color:var(--pe);background:color-mix(in srgb,var(--pe) 9%,transparent)}
+.callout.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 9%,transparent)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:8px 15px;background:var(--pe);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+/* ISO tree */
+.tree{font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.tree div{padding:5px 8px;border-radius:7px}
+.tree .f{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.tree .f:hover{background:var(--card)}
+.tree .f.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--pe)}
+.tree .tag{font-family:system-ui;font-size:.75rem;padding:1px 8px;border-radius:999px;color:#fff;align-self:center}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.steps button{font:inherit;font-size:.9rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--muted);cursor:pointer}
+.steps button.done{color:var(--ink)}
+.steps button.active{border-color:var(--pe);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--pe)}
+.fs{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.7}
+.fs .n{opacity:.25;transition:.3s}
+.fs .n.on{opacity:1}
+.fs .n.hot{color:var(--pe);font-weight:700}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.order button{font:inherit;font-family:ui-monospace,Consolas,monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.order button.placed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.order button.shake{animation:shake .35s;border-color:var(--ko)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* terminal */
+.term{background:#0b0f16;color:#cfd8e3;border-radius:10px;padding:12px 14px;font:13.5px/1.5 ui-monospace,Consolas,monospace;min-height:300px;max-height:440px;overflow:auto;white-space:pre-wrap;border:1px solid #1f2633}
+.term .p{color:#8fd16a}.term .c{color:#fff}.term .o{color:#9fb0c4}.term .e{color:#ff8a8a}.term .k{color:#e9c46a}
+.kbd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.kbd input[type=text]{font:14px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:260px}
+.kbd .out{font:15px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;background:#0b0f16;color:#fff;min-width:200px}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pe)}
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+@media (max-width:800px){.passes{grid-template-columns:repeat(2,1fr)}}
+.pass{border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);cursor:pointer;opacity:.45;transition:.2s;text-align:center}
+.pass b{display:block;font-size:.95rem}
+.pass small{color:var(--muted);font-size:.78rem}
+.pass .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);font-size:.78rem;font-weight:700}
+.pass.used{opacity:1;border-color:var(--pe)}
+.pass.used .n{background:var(--pe);color:#fff}
+.pass.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 35%,transparent)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.namecheck{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.namecheck input{font:14px ui-monospace,Consolas,monospace;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+/* chain */
+.chain{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:6px 0 10px}
+.ch{flex:1;min-width:150px;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;cursor:pointer;position:relative;margin-right:22px}
+.ch:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;color:var(--muted);font-weight:700}
+.ch b{display:block}
+.ch small{color:var(--muted)}
+.ch.pe{border-color:var(--pe)}
+.ch.sel{background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.pebadge{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;background:var(--pe);color:#fff;border-radius:999px;padding:1px 8px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--soft)}
+.card h4{margin:0 0 4px}
+.stage{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.st{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:10px;padding:9px;background:var(--soft);cursor:pointer;text-align:center;transition:.2s}
+.st b{display:block}.st small{color:var(--muted)}
+.st.sel{border-color:var(--pe);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.st.ok{border-color:var(--ok)}.st.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 10%,var(--soft))}
+.mini{font-size:.88rem;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{font:inherit;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{height:26px;border-radius:7px;background:var(--soft);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:700;transition:width .5s}
+.log{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:#0b0f16;color:#ffb4b4;padding:9px 11px;border-radius:8px;white-space:pre-wrap;margin:6px 0}
+.ok-t{color:var(--ok);font-weight:700}.ko-t{color:var(--ko);font-weight:700}
+
+:root{--pe:#1f9d55}
+</style>
+</head>
+<body>
+<header>
+  <h1>21. Maintien en condition opérationnelle</h1>
+  <p>Passer du dépannage au coup par coup à une maintenance organisée : savoir ce qu’on a, dans quel état, jusqu’à quand, et comment on le retire.</p>
+</header>
+<div class="big-idea"><div>💡 <b>L’idée à retenir :</b> le MCO, c’est surtout de la maintenance <b>préventive</b> et <b>évolutive</b>, pour faire le moins possible de <b>corrective</b>. Une alerte vue dans l’inventaire coûte cinq minutes ; la même découverte pendant une panne coûte une journée.</div></div>
+<nav id="nav">
+  <button data-t="t1" class="active"><span>1</span>Cycle de vie</button>
+  <button data-t="t2"><span>2</span>Santé du parc</button>
+  <button data-t="t3"><span>3</span>Règle 3-2-1</button>
+  <button data-t="t4"><span>4</span>Fin de vie</button>
+</nav>
+<main>
+<section class="tab active" id="t1">
+  <h2>Jusqu’à quand ce poste est-il supporté ?</h2>
+  <p class="lead">Chaque version annuelle (H2) a sa propre date de fin. Choisis l’édition : la ligne verticale, c’est aujourd’hui (26/11/2026).</p>
+  <div class="chips" id="edition"></div>
+  <div class="panel"><svg viewBox="0 0 720 240" id="life"></svg></div>
+  <div id="lifeinfo" style="margin-top:10px"></div>
+</section>
+
+<section class="tab" id="t2">
+  <h2>L’inventaire du Fournil, ligne par ligne</h2>
+  <p class="lead">Résultat réel de <code>Get-Inventaire.ps1</code> dans le lab. Les cases rouges dépassent un seuil d’alerte : clique dessus.</p>
+  <div style="overflow-x:auto"><table id="inv"></table></div>
+  <div class="grid2" style="margin-top:12px">
+    <div id="invinfo"></div>
+    <div class="panel"><h3 style="margin-top:0">Seuils d’alerte (exemples du cours)</h3><table id="seuils"></table></div>
+  </div>
+</section>
+
+<section class="tab" id="t3">
+  <h2>Ma stratégie de sauvegarde respecte-t-elle 3-2-1 ?</h2>
+  <p class="lead">Coche les copies que tu mets en place pour les documents de stagiaire. <b>3</b> copies, sur <b>2</b> supports différents, dont <b>1</b> hors site.</p>
+  <div class="grid2">
+    <div class="panel" id="bk"></div>
+    <div id="bkres"></div>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <h2>Retirer un poste en fin de vie</h2>
+  <p class="lead">Clique les étapes dans le bon ordre. Une étape faite trop tôt peut faire perdre quelque chose d’irrécupérable.</p>
+  <div class="grid2">
+    <div id="eolbtns"></div>
+    <div><div class="panel" id="eoldone"><h3 style="margin-top:0">Procédure</h3><ol id="eollist"></ol></div><div id="eolfb"></div></div>
+  </div>
+  <h3>Le plan de MCO</h3>
+  <table><thead><tr><th>Fréquence</th><th>Action</th><th>Vérification</th></tr></thead><tbody>
+    <tr><td>Quotidienne</td><td>Contrôle santé planifié (<code>Test-Poste.ps1</code>)</td><td>Journaux <code>C:\MCO\Logs</code>, alertes</td></tr>
+    <tr><td>Hebdomadaire</td><td>Revue des signatures AV, des échecs de mises à jour</td><td>Inventaire / console</td></tr>
+    <tr><td>Mensuelle (2ᵉ mardi)</td><td>Anneaux de mises à jour : pilote → large (ch. 08)</td><td>Rapport de conformité</td></tr>
+    <tr><td>Trimestrielle</td><td>Inventaire complet, <b>test de restauration</b>, revue des comptes admin et LAPS</td><td>CSV archivé, PV de test</td></tr>
+    <tr><td>Annuelle</td><td>Mise à niveau de version (H2), cycle de vie, renouvellement matériel</td><td>Plan de migration</td></tr>
+    <tr><td>À chaque intervention</td><td>Ticket documenté (ch. 20)</td><td>Base de connaissances</td></tr>
+  </tbody></table>
+</section>
+</main>
+<footer>Chapitre 21 · <a href="https://cours.kaya.ovh/windows11/windows11/20-mco/quiz/">Faire le quiz du chapitre</a> · <a href="https://cours.kaya.ovh/windows11/windows11/19-depannage/html/">Chapitre 20 interactif</a> · Source des dates : page <i>Windows 11 release information</i> de Microsoft, à consulter chaque année</footer>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+function codeBlock(code){
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)});
+  pre.appendChild(b); return pre;
+}
+function codeHTML(code){ const d=document.createElement("div"); d.appendChild(codeBlock(code)); return d.innerHTML; }
+function chips(container, items, onPick, initial){
+  const box = $(container); box.innerHTML = "";
+  items.forEach(([id,label]) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = label; b.dataset.id = id;
+    b.onclick = () => { box.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c===b)); onPick(id); }; box.appendChild(b); });
+  if (initial) box.querySelector(`[data-id="${initial}"]`).click();
+}
+function initTabs(){ $$("#nav button").forEach(b => b.onclick = () => {
+  $$("#nav button").forEach(x => x.classList.toggle("active", x===b));
+  $$(".tab").forEach(t => t.classList.toggle("active", t.id === b.dataset.t)); }); }
+function wireCopy(root){ (root||document).querySelectorAll("pre .copy").forEach(b=>{ const pre=b.parentElement; const code=pre.firstChild.textContent; b.onclick=()=>navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)}); }); }
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+</script>
+
+<script>
+initTabs();
+/* ---- 1 lifecycle ---- */
+const VERS = [ // [version, sortie, fin Pro, fin Ent]
+ ["23H2","2023-10-31","2025-11-11","2026-11-10"],
+ ["24H2","2024-10-01","2026-10-13","2027-10-12"],
+ ["25H2","2025-09-30","2027-10-12","2028-10-10"],
+ ["26H2","2026-09-29","2028-10-10","2029-10-09"]
+];
+const TODAY = new Date("2026-11-26"), T0 = new Date("2023-07-01"), T1 = new Date("2030-01-01");
+const X = d => 90 + (new Date(d) - T0) / (T1 - T0) * 610;
+const fmt = d => new Date(d).toLocaleDateString("fr-FR");
+let ed = "pro";
+function renderLife(){
+  let h = "";
+  for (let y = 2024; y <= 2029; y++){ const x = X(`${y}-01-01`); h += `<line x1="${x}" y1="20" x2="${x}" y2="215" stroke="var(--line)"/><text x="${x}" y="232" text-anchor="middle" class="svgtxt">${y}</text>`; }
+  VERS.forEach(([v,start,pro,ent],i) => { const end = ed==="pro" ? pro : ent, y = 35 + i*45, over = new Date(end) < TODAY, soon = !over && (new Date(end) - TODAY) < 1000*3600*24*92;
+    const col = over ? "var(--ko)" : soon ? "var(--warn)" : "var(--ok)";
+    h += `<text x="10" y="${y+18}" font-weight="700" fill="var(--ink)">${v}</text><rect x="${X(start)}" y="${y}" width="${X(end)-X(start)}" height="26" rx="6" fill="${col}" opacity=".85"/>
+          <text x="${X(end)+6}" y="${y+18}" font-size="12" fill="var(--ink)">fin ${fmt(end)}${v==="26H2"?" ≈":""}</text>`; });
+  const tx = X("2026-11-26"); h += `<line x1="${tx}" y1="14" x2="${tx}" y2="218" stroke="var(--pe)" stroke-width="3"/><text x="${tx}" y="12" text-anchor="middle" font-size="12" font-weight="700" fill="var(--pe)">aujourd’hui</text>`;
+  $("#life").innerHTML = h;
+  $("#lifeinfo").innerHTML = ed==="pro"
+    ? `<div class="callout ko">⚠️ Un poste <b>Pro en 24H2</b> ne reçoit plus de correctifs de sécurité depuis le <b>13 octobre 2026</b>. Le passage en 25H2 ou 26H2 est un <i>enablement package</i> rapide au-dessus de 24H2 (ch. 08).</div><p class="mini">Famille et Pro : <b>24 mois</b> par version. Windows 10 : hors support depuis le 14/10/2025 (sauf ESU payantes).</p>`
+    : `<div class="callout">⚠️ <b>23H2 Entreprise</b> s’est arrêtée le <b>10 novembre 2026</b>, il y a deux semaines. 24H2 Entreprise tient jusqu’en octobre 2027.</div><p class="mini">Entreprise et Éducation : <b>36 mois</b> par version. Les dates 26H2 sont approximatives.</p>`;
+}
+chips("#edition", [["pro","Famille / Pro (24 mois)"],["ent","Entreprise / Éducation (36 mois)"]], id => { ed = id; renderLife(); }, "pro");
+
+/* ---- 2 inventory ---- */
+const COLS = ["Poste","Version","Build","C: libre","Dernière MAJ","Signatures","BitLocker"];
+const ROWS = [
+ ["PC01","26H2","26300.9457","34 %","KB5129195 (13/09)","417 j","FullyEncrypted / On"],
+ ["PC02","26H2","26300.9457","60 %","KB5129195 (13/09)","417 j","FullyDecrypted / Off"],
+ ["PC09","—","—","—","—","—","Injoignable"]
+];
+const BAD = {"0-4":"maj","1-4":"maj","0-5":"sig","1-5":"sig","1-6":"bl","2-6":"unreach"};
+const FIX = {
+ sig:["Signatures Defender vieilles de 417 jours","Pourtant Internet fonctionne. <code>Update-MpSignature</code> échoue via Windows Update. En forçant la source MMPC, les signatures repassent à 0 jour.",
+   `& "$env:ProgramFiles\\Windows Defender\\MpCmdRun.exe" -SignatureUpdate -MMPC\n(Get-MpComputerStatus).AntivirusSignatureAge      # 0`,
+   "Par GPO, ajouter <b>MMPC</b> en secours dans l’ordre des sources : un Windows Update bloqué ne laissera plus l’antivirus aveugle. Si une commande échoue pendant la mise à jour (« Échec de l’appel de procédure distante »), attendre et relancer."],
+ maj:["Dernière mise à jour cumulative du 13/09/2026","Plus de deux mois de retard. Seuil d’alerte : plus de 35 jours.",
+   "Get-HotFix | Where-Object InstalledOn | Sort-Object InstalledOn -Descending | Select-Object -First 1","Vérifier les anneaux de mises à jour (ch. 08) et la présence d’un redémarrage en attente."],
+ bl:["PC02 non chiffré","Conséquence de <code>PreventDeviceEncryption</code> dans le fichier de réponse du déploiement (ch. 16).","Get-BitLockerVolume C:","Activer BitLocker par GPO avec sauvegarde de la clé dans AD (ch. 09 et 11)."],
+ unreach:["PC09 injoignable","Éteint, hors réseau… ou WinRM arrêté (par défaut sur Windows 11, ch. 12).","Test-NetConnection PC09 -Port 5985","Le script interroge le poste local directement et les autres par <code>Invoke-Command</code>. Piège de la v1 : <code>-eq</code> sur un tableau filtre au lieu de comparer, seul PC01 était inventorié."]
+};
+$("#inv").innerHTML = `<thead><tr>${COLS.map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>` + ROWS.map((r,i)=>`<tr>${r.map((v,j)=>{ const b = BAD[`${i}-${j}`]; return `<td ${b?`data-f="${b}" style="background:color-mix(in srgb,var(--ko) 14%,transparent);cursor:pointer;font-weight:700;color:var(--ko)"`:""}>${v}</td>`; }).join("")}</tr>`).join("") + `</tbody>`;
+$$("#inv [data-f]").forEach(td => td.onclick = () => { const [t,txt,code,more] = FIX[td.dataset.f];
+  $("#invinfo").innerHTML = `<h3 style="margin-top:0">${t}</h3><p>${txt}</p>` + codeHTML(code) + `<div class="callout info">${more}</div>`; wireCopy($("#invinfo")); });
+$$("#inv [data-f]")[1].click();
+$("#seuils").innerHTML = [["Dernière mise à jour","> 35 jours"],["Signatures antivirus","> 3 jours"],["Redémarrage en attente","> 7 jours"],["Espace disque libre","< 15 %"],["Uptime","> 30 jours"],["Fiabilité","indice < 5"],["Version","fin de support < 3 mois"],["BitLocker","Off sur un portable"]].map(([a,b])=>`<tr><td>${a}</td><td><b>${b}</b></td></tr>`).join("");
+$("#t2").insertAdjacentHTML("beforeend", `<h3>Contrôle planifié chaque matin</h3>` + codeHTML(`$a = New-ScheduledTaskAction -Execute 'powershell.exe' \`
+     -Argument '-NoProfile -ExecutionPolicy Bypass -Command "C:\\MCO\\Test-Poste.ps1 *> C:\\MCO\\Logs\\$(Get-Date -f yyyyMMdd).log"'
+$t = New-ScheduledTaskTrigger -Daily -At 8:30
+Register-ScheduledTask -TaskPath '\\Fournil\\' -TaskName 'Contrôle santé' -Action $a -Trigger $t -User SYSTEM -RunLevel Highest`) + `<div class="callout info">Rangée dans un dossier à son nom, nom explicite, script dans un dossier protégé, <b>documentée</b> : tout ce que la tâche malveillante du TP 20 n’était pas.</div>`); wireCopy($("#t2"));
+
+/* ---- 3 3-2-1 ---- */
+const BK = [
+ ["orig","Le fichier sur le disque de PC02","disque PC02",false,true,"L’original compte comme une copie."],
+ ["od","OneDrive (sauvegarde des dossiers connus)","cloud Microsoft",true,false,"Synchronisé et versionné. Mais une suppression ou un chiffrement par rançongiciel <b>se synchronise</b> : la corbeille et « Restaurer votre OneDrive » (30 jours) sont indispensables."],
+ ["hist","Historique des fichiers vers un disque USB","disque externe",false,false,"Copies versionnées. Si le disque reste branché au bureau, il n’est pas hors site."],
+ ["nas","Historique des fichiers vers \\\\SRV01 (même bâtiment)","serveur du bureau",false,false,"Autre support, mais même site : incendie ou cambriolage = tout perdu."],
+ ["rp","Point de restauration / point-in-time restore","disque PC02",false,false,"<b>Pas une sauvegarde</b> : même disque que les données. Il ne compte pas."],
+ ["veeam","Agent de sauvegarde tiers vers un stockage externalisé","stockage externe",true,false,"Image ou fichiers, centralisé, hors site."]
+];
+const bsel = new Set(["orig"]);
+function renderBk(){
+  $("#bk").innerHTML = BK.map(([id,l,,,fixed])=>`<label class="toggle" style="margin:8px 0"><input type="checkbox" data-id="${id}" ${bsel.has(id)?"checked":""} ${fixed?"disabled":""}> ${l}</label>`).join("");
+  $$("#bk input").forEach(i => i.onchange = () => { i.checked ? bsel.add(i.dataset.id) : bsel.delete(i.dataset.id); renderBk(); });
+  const list = BK.filter(b=>bsel.has(b[0]) && b[0]!=="rp");
+  const copies = list.length, supports = new Set(list.map(b=>b[2].replace("disque PC02","local"))).size, off = list.some(b=>b[3]);
+  const ok = copies>=3 && supports>=2 && off;
+  const chk = (c,t) => `<div class="card" style="border-color:${c?"var(--ok)":"var(--ko)"};text-align:center"><div style="font-size:24px">${c?"✅":"❌"}</div>${t}</div>`;
+  $("#bkres").innerHTML = `<div class="cards" style="grid-template-columns:repeat(3,1fr)">${chk(copies>=3,`<b>${copies}</b> copie(s) / 3`)}${chk(supports>=2,`<b>${supports}</b> support(s) / 2`)}${chk(off,`hors site : <b>${off?"oui":"non"}</b>`)}</div>` +
+    `<div class="callout ${ok?"info":"ko"}" style="margin-top:10px">${ok?"✅ Règle 3-2-1 respectée. Il reste à prévoir un <b>test de restauration</b> : une sauvegarde non testée n’existe pas.":"Pas encore 3-2-1."}</div>` +
+    [...bsel].map(id=>{ const b = BK.find(x=>x[0]===id); return `<p class="mini">• <b>${b[1]}</b> : ${b[5]}</p>`; }).join("") +
+    `<p class="mini"><code>wbadmin</code> et « Sauvegarde et restauration (Windows 7) » sont <b>dépréciés</b> : ne plus construire de procédure dessus.</p>`;
+}
+renderBk();
+
+/* ---- 4 fin de vie ---- */
+const EOL = [
+ ["Données","Vérifier que les données sont sauvegardées / migrées (USMT, OneDrive)."],
+ ["Effacement","Réinitialiser ce PC → Supprimer tout + nettoyer le lecteur, ou effacement cryptographique (protecteurs BitLocker effacés)."],
+ ["Annuaire","Désactiver puis supprimer le compte ordinateur dans AD."],
+ ["Cloud","Retirer d’Intune, d’Autopilot et d’Entra ID le cas échéant."],
+ ["Inventaire","Marquer le poste « réformé » dans GLPI (n° de série, date, destination)."],
+ ["Matériel","Filière DEEE ou reconditionnement ; certificat d’effacement si sous-traité."]
+];
+const WRONG = {
+ 1:"❌ Tu effaces avant d’avoir vérifié les données : si un document n’était pas sauvegardé, il est perdu pour toujours.",
+ 2:"❌ Le compte ordinateur porte la <b>clé de récupération BitLocker</b> et le <b>mot de passe LAPS</b>. Supprimé trop tôt, tu ne peux plus déverrouiller le disque ni ouvrir la session admin locale si besoin.",
+ 3:"❌ Trop tôt : finis d’abord ce qui se passe sur le poste et dans l’annuaire.",
+ 4:"❌ L’inventaire se met à jour une fois le poste réellement sorti.",
+ 5:"❌ Le matériel ne part qu’à la toute fin, effacé et retiré de partout."
+};
+let eol = 0;
+function renderEol(){
+  const order = [3,0,5,2,4,1];
+  $("#eolbtns").innerHTML = order.map(i=>`<div class="st ${i<eol?"ok":""}" data-i="${i}" style="text-align:left;margin:5px 0"><b>${i<eol?"✅ ":""}${EOL[i][0]}</b><small style="display:block">${EOL[i][1]}</small></div>`).join("");
+  $$("#eolbtns .st").forEach(d => d.onclick = () => { const i = +d.dataset.i; if (i < eol) return;
+    if (i === eol){ eol++; $("#eolfb").innerHTML = eol===EOL.length ? `<div class="callout info">✅ Poste sorti proprement. Pour simplement <b>réattribuer</b> un poste : Réinitialiser ce PC ou redéploiement (ch. 16) suffisent ; avec Intune, Autopilot Reset.</div>` : (eol===2 ? `<div class="callout info">Étape suivante, l’annuaire. Avant de supprimer l’objet AD : récupère si besoin la clé BitLocker et le mot de passe LAPS stockés dessus.</div>` : ""); }
+    else $("#eolfb").innerHTML = `<div class="callout ko">${WRONG[i] || "❌ Pas encore."}</div>`;
+    renderEol(); });
+  $("#eollist").innerHTML = EOL.slice(0,eol).map(([t])=>`<li>${t}</li>`).join("") || `<li class="mini" style="list-style:none">Rien pour l’instant.</li>`;
+}
+renderEol();
+</script>
+
+</body>
+</html>

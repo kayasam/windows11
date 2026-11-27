@@ -3,7 +3,9 @@ title: "13. ADK, Windows PE et fichier de réponse"
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/13-adk-winpe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="html" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/html/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32"><path d="M2 2h24l-2 25-10 3-10-3Z" fill="#e44d26"/><path d="M14 5v22l7-2 2-20Z" fill="#f16529"/><path d="M7 8h15l-.3 3H11l.3 3h10l-.8 9-6.5 2-6.5-2-.4-5h3l.2 2.6 3.7 1 3.7-1 .3-3.6H8Z" fill="#fff"/></svg>
+</span><span class="resource-label">HTML</span></a><a class="resource-button" data-resource-kind="quiz" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/quiz/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="6" fill="#7652ad"/><path d="M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="1.6" fill="#fff"/></svg>
+</span><span class="resource-label">Quiz</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/cours/13-adk-winpe.md">↓ Télécharger le cours (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 
 > [!abstract] Parcours TSSR
@@ -94,17 +96,19 @@ Le [Kit de déploiement et d'évaluation Windows (ADK)](https://learn.microsoft.
 > [!TIP] Pas besoin du "Concepteur de configuration"
 > Cette fonctionnalité (ICD, *Imaging and Configuration Designer*) sert à créer des **paquets de provisionnement** (`.ppkg`) — une méthode alternative de personnalisation en bloc, indépendante de Windows SIM. Elle n'est pas nécessaire ici.
 
-### Installation silencieuse avec WinGet (testée sur PC01)
+### Installation silencieuse avec WinGet sur PC01
 
 ```powershell
 winget install --id Microsoft.WindowsADK -e --version 10.1.26100.9457 `
     --override "/quiet /norestart /features OptionId.DeploymentTools OptionId.UserStateMigrationTool"
-winget install --id Microsoft.WindowsADK.WinPEAddon -e `
+winget install --id Microsoft.WindowsADK.WinPEAddon -e --version 10.1.26100.9457 `
     --override "/quiet /norestart /features OptionId.WindowsPreinstallationEnvironment"
 ```
 
 > [!WARNING] ADK et module WinPE : toujours la **même version**
-> Vécu sur le lab : `winget install Microsoft.WindowsADK` installe par défaut l'ADK **10.1.28000** (branche *26H1*, pour les PC Arm Snapdragon), alors que le module WinPE disponible est en **10.1.26100.9457**. Les deux doivent avoir **exactement** la même version, et correspondre à la famille de Windows déployée : pour 24H2/25H2/**26H2**, c'est la branche **26100**. D'où le `--version 10.1.26100.9457` explicite.
+> WinGet propose par défaut l’ADK et son module WinPE en **10.1.28000.3481**, la version que Microsoft indique pour Windows 11 **26H1**. Pour l’ISO **26H2** du lab, indique **10.1.26100.9457** dans les deux commandes. [Versions prises en charge par Microsoft](https://learn.microsoft.com/windows-hardware/get-started/adk-install)
+> Si l’installateur refuse la mise à niveau d’un ADK déjà installé avec le code `2008`, désinstalle l’ancienne version dans **Applications installées**, puis relance les deux installations.
+>
 > À noter aussi : WinPE **x86** n'existe plus dans les ADK récents (amd64 et arm64 uniquement).
 
 Résultat dans `C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\` :
@@ -126,6 +130,15 @@ Windows Setup
 - **partitionner** un disque (`diskpart`) avant déploiement ;
 - **dépanner** un poste qui ne démarre plus (accès aux fichiers, `bcdboot`) ;
 - lancer un outil de déploiement (ConfigMgr, outils tiers).
+
+> [!QUESTION] Pourquoi créer un WinPE, si l'ISO officielle en contient déjà un ?
+> Pour **déployer PC02** (chapitre 16), on n'en a **pas besoin** : l'ISO officielle démarre sur son propre WinPE. Le WinPE qu'on fabrique ici, c'est **la clé USB du technicien** :
+> - un PC ne démarre plus → on démarre sur la clé, on **récupère les fichiers** de l'utilisateur, on **répare le démarrage** (`bcdboot`) ;
+> - un disque BitLocker est verrouillé → on le **déverrouille** avec la clé de récupération sauvegardée dans l'AD (chapitre 11) ;
+> - un disque pose problème → on le **voit et on le prépare** avec `diskpart` ;
+> - en entreprise, WDS, MDT et ConfigMgr démarrent **tous** les postes sur un WinPE personnalisé (chapitres 16 et 17).
+>
+> C'est aussi le moyen de voir concrètement ce qui tourne « avant Windows » pendant une installation.
 
 ### Créer un WinPE (environnement « Outils de déploiement et de création d'images »)
 

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>15. Images WIM et DISM — capturer, modifier, appliquer</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8; --soft:#eef1f7;
+  --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --acc:#2f6fdf; --pe:#8a4fd8; --disk:#0f9aa8; --iso:#e0731f;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f131a;--card:#171c25;--ink:#e6e9ef;--muted:#9aa3b2;--line:#2a3140;--soft:#1e2430;--code:#0a0e14;--codeink:#d7dde8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 6px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+.big-idea{max-width:1180px;margin:14px auto 0;padding:0 20px}
+.big-idea div{background:linear-gradient(135deg,color-mix(in srgb,var(--pe) 16%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--pe) 40%,var(--line));border-radius:14px;padding:14px 18px;font-size:1.05rem}
+nav{max-width:1180px;margin:16px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:600;padding:8px 14px;border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);cursor:pointer}
+nav button.active{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--pe)}
+nav button span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-size:.8rem;margin-right:6px}
+nav button.active span{background:var(--pe);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tab{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:18px}
+.tab.active{display:block}
+h2{margin:0 0 6px;font-size:1.3rem}
+h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{font:inherit;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600}
+.chip.active{border-color:var(--pe);background:var(--pe);color:#fff}
+svg{width:100%;height:auto;display:block}
+.svgtxt{font-size:13px;fill:var(--muted)}
+.svgtitle{font-size:16px;font-weight:700;fill:var(--ink)}
+.media{cursor:pointer}
+.media rect{fill:var(--card);stroke:var(--line);stroke-width:2;transition:.2s}
+.media:hover rect{stroke:var(--muted)}
+.media.sel rect{stroke-width:3}
+.result{border-radius:12px;padding:14px;border:1px solid var(--line);background:var(--card);min-height:150px}
+.result h3{margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.pill{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.ko{background:var(--ko)}.pill.mid{background:var(--warn)}
+ul.can{margin:6px 0 0;padding-left:20px}
+ul.can li{margin:2px 0}
+pre{position:relative;margin:6px 0;background:var(--code);color:var(--codeink);padding:30px 12px 11px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;font-size:.92em}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.callout.info{border-color:var(--pe);background:color-mix(in srgb,var(--pe) 9%,transparent)}
+.callout.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 9%,transparent)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:8px 15px;background:var(--pe);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+/* ISO tree */
+.tree{font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.tree div{padding:5px 8px;border-radius:7px}
+.tree .f{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.tree .f:hover{background:var(--card)}
+.tree .f.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--pe)}
+.tree .tag{font-family:system-ui;font-size:.75rem;padding:1px 8px;border-radius:999px;color:#fff;align-self:center}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.steps button{font:inherit;font-size:.9rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--muted);cursor:pointer}
+.steps button.done{color:var(--ink)}
+.steps button.active{border-color:var(--pe);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--pe)}
+.fs{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.7}
+.fs .n{opacity:.25;transition:.3s}
+.fs .n.on{opacity:1}
+.fs .n.hot{color:var(--pe);font-weight:700}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.order button{font:inherit;font-family:ui-monospace,Consolas,monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.order button.placed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.order button.shake{animation:shake .35s;border-color:var(--ko)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* terminal */
+.term{background:#0b0f16;color:#cfd8e3;border-radius:10px;padding:12px 14px;font:13.5px/1.5 ui-monospace,Consolas,monospace;min-height:300px;max-height:440px;overflow:auto;white-space:pre-wrap;border:1px solid #1f2633}
+.term .p{color:#8fd16a}.term .c{color:#fff}.term .o{color:#9fb0c4}.term .e{color:#ff8a8a}.term .k{color:#e9c46a}
+.kbd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.kbd input[type=text]{font:14px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:260px}
+.kbd .out{font:15px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;background:#0b0f16;color:#fff;min-width:200px}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pe)}
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+@media (max-width:800px){.passes{grid-template-columns:repeat(2,1fr)}}
+.pass{border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);cursor:pointer;opacity:.45;transition:.2s;text-align:center}
+.pass b{display:block;font-size:.95rem}
+.pass small{color:var(--muted);font-size:.78rem}
+.pass .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);font-size:.78rem;font-weight:700}
+.pass.used{opacity:1;border-color:var(--pe)}
+.pass.used .n{background:var(--pe);color:#fff}
+.pass.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 35%,transparent)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.namecheck{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.namecheck input{font:14px ui-monospace,Consolas,monospace;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+/* chain */
+.chain{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:6px 0 10px}
+.ch{flex:1;min-width:150px;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;cursor:pointer;position:relative;margin-right:22px}
+.ch:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;color:var(--muted);font-weight:700}
+.ch b{display:block}
+.ch small{color:var(--muted)}
+.ch.pe{border-color:var(--pe)}
+.ch.sel{background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.pebadge{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;background:var(--pe);color:#fff;border-radius:999px;padding:1px 8px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--soft)}
+.card h4{margin:0 0 4px}
+.stage{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.st{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:10px;padding:9px;background:var(--soft);cursor:pointer;text-align:center;transition:.2s}
+.st b{display:block}.st small{color:var(--muted)}
+.st.sel{border-color:var(--pe);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.st.ok{border-color:var(--ok)}.st.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 10%,var(--soft))}
+.mini{font-size:.88rem;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{font:inherit;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{height:26px;border-radius:7px;background:var(--soft);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:700;transition:width .5s}
+.log{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:#0b0f16;color:#ffb4b4;padding:9px 11px;border-radius:8px;white-space:pre-wrap;margin:6px 0}
+.ok-t{color:var(--ok);font-weight:700}.ko-t{color:var(--ko);font-weight:700}
+
+:root{--pe:#e0731f}
+</style>
+</head>
+<body>
+<header>
+  <h1>15. Images WIM et DISM</h1>
+  <p>Un WIM est un « carton de fichiers » : on le remplit (capture), on le modifie sans démarrer Windows (montage), on le vide sur un disque (application).</p>
+</header>
+<div class="big-idea"><div>💡 <b>L’idée à retenir :</b> DISM travaille sur un Windows <b>éteint</b>. Capturer, injecter un pilote, appliquer une image : à chaque fois, le Windows concerné ne tourne pas. C’est pour ça qu’on passe par l’hôte (Mount-VHD), par un dossier de montage, ou par WinPE.</div></div>
+<nav id="nav">
+  <button data-t="t1" class="active"><span>1</span>Le format WIM</button>
+  <button data-t="t2"><span>2</span>Capturer</button>
+  <button data-t="t3"><span>3</span>Modifier hors ligne</button>
+  <button data-t="t4"><span>4</span>Appliquer depuis WinPE</button>
+</nav>
+<main>
+<section class="tab active" id="t1">
+  <h2>Plusieurs Windows dans un seul fichier</h2>
+  <p class="lead">Coche les éditions à ranger dans <code>install.wim</code>. Les fichiers communs ne sont stockés <b>qu’une fois</b> (déduplication). Tailles fictives, pour l’exemple.</p>
+  <div class="row" id="eds"></div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="panel">
+      <h3 style="margin-top:0">Si on copiait chaque édition à part</h3><div class="bar" id="barNaive"></div><p class="mini" id="txtNaive"></p>
+      <h3>Dans un .wim</h3><div class="bar" id="barWim"></div><p class="mini" id="txtWim"></p>
+    </div>
+    <div>
+      <table><tbody>
+        <tr><th>Basé fichiers</th><td>Pas une copie de secteurs : on peut appliquer sur une partition de taille différente.</td></tr>
+        <tr><th>Déduplication</th><td>Un fichier identique dans plusieurs index n’est stocké qu’une fois.</td></tr>
+        <tr><th>Multi-index</th><td>Chaque édition a un numéro d’index.</td></tr>
+        <tr><th>Montable</th><td>On l’ouvre comme un dossier, on modifie, on referme.</td></tr>
+      </tbody></table>
+      <div id="t1code"></div>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t2">
+  <h2>Capturer MASTER : quel fichier monter ?</h2>
+  <p class="lead">MASTER est généralisée et éteinte. Depuis le checkpoint « Avant-Sysprep », son dossier contient deux disques. Lequel monter pour capturer l’image <b>généralisée</b> ?</p>
+  <div class="grid2">
+    <div class="panel">
+      <div class="tree">
+        <div>📁 D:\HyperV\MASTER\</div>
+        <div class="f" data-f="vhdx" style="margin-left:22px">💽 MASTER.vhdx <span class="tag" style="background:var(--muted)">parent</span></div>
+        <div class="f" data-f="avhdx" style="margin-left:22px">💽 MASTER_323716A8-…-DC21A6A1633E.avhdx <span class="tag" style="background:var(--pe)">actif</span></div>
+        <div class="f" data-f="ask" style="margin-left:22px;margin-top:8px">❓ Demander à Hyper-V : (Get-VMHardDiskDrive -VMName MASTER).Path</div>
+      </div>
+      <svg viewBox="0 0 460 150" style="margin-top:10px">
+        <rect x="10" y="40" width="170" height="70" rx="10" fill="var(--card)" stroke="var(--line)"/><text x="95" y="70" text-anchor="middle" class="svgtitle" style="font-size:14px">MASTER.vhdx</text><text x="95" y="92" text-anchor="middle" class="svgtxt">figé AVANT Sysprep</text>
+        <path d="M180,75 L270,75" stroke="var(--muted)" stroke-width="2" marker-end="url(#ar)"/><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+        <text x="225" y="66" text-anchor="middle" class="svgtxt">+ différences</text>
+        <rect x="270" y="40" width="180" height="70" rx="10" fill="var(--card)" stroke="var(--pe)" stroke-width="2"/><text x="360" y="70" text-anchor="middle" class="svgtitle" style="font-size:14px">.avhdx</text><text x="360" y="92" text-anchor="middle" class="svgtxt">Sysprep, généralisation</text>
+      </svg>
+    </div>
+    <div class="result" id="capres"><h3>Clique sur un fichier</h3></div>
+  </div>
+  <div class="callout info">Pourquoi monter le disque plutôt que démarrer un WinPE ? Dans Hyper-V, c’est plus rapide. <code>Mount-VHD</code> sur le <code>.avhdx</code> présente le contenu fusionné sans toucher au checkpoint. Sur un <b>poste physique</b>, on démarrerait sur WinPE.</div>
+</section>
+
+<section class="tab" id="t3">
+  <h2>L’atelier : modifier une image sans la démarrer</h2>
+  <p class="lead">Monte l’image, fais tes modifications, puis referme-la. Regarde ce que contient vraiment <code>MASTER.wim</code> à la fin.</p>
+  <div class="grid2">
+    <div>
+      <div class="row" id="actions" style="gap:6px"></div>
+      <div class="term" id="dterm" style="min-height:200px;margin-top:10px"></div>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0">📦 MASTER.wim (index 1)</h3><ul class="can" id="wimc"></ul>
+      <h3>📂 C:\Mount</h3><p id="mountc" class="mini"></p>
+      <div id="wimstate"></div>
+    </div>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <h2>Poser l’image sur un disque vierge</h2>
+  <p class="lead">PC03 a démarré sur le WinPE du chapitre 13. Lance les commandes <b>dans le bon ordre</b> : le disque se construit sous tes yeux.</p>
+  <div class="row" id="apbtns" style="gap:6px"></div>
+  <div class="grid2" style="margin-top:12px">
+    <div>
+      <svg viewBox="0 0 520 170" id="disk">
+        <text x="10" y="18" class="svgtxt">Disque 0 (cible)</text>
+        <rect x="10" y="28" width="500" height="70" rx="8" fill="var(--soft)" stroke="var(--line)"/>
+        <g id="parts"></g>
+        <text x="10" y="128" class="svgtxt">Disque des images (dans WinPE : C:)</text>
+        <rect x="10" y="136" width="500" height="28" rx="6" fill="var(--card)" stroke="var(--line)"/>
+        <text x="20" y="155" font-size="12" fill="var(--ink)" font-family="ui-monospace,Consolas,monospace">C:\MASTER.wim · C:\partition-uefi.txt</text>
+      </svg>
+      <div id="apout"></div>
+    </div>
+    <div id="apinfo"></div>
+  </div>
+</section>
+</main>
+<footer>Chapitre 15 · <a href="https://cours.kaya.ovh/windows11/windows11/15-wim-dism/quiz/">Faire le quiz du chapitre</a> · <a href="https://cours.kaya.ovh/windows11/windows11/14-sysprep-audit/html/">Chapitre 14 interactif</a> · <a href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/html/">Chapitre 16 interactif</a></footer>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+function codeBlock(code){
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)});
+  pre.appendChild(b); return pre;
+}
+function codeHTML(code){ const d=document.createElement("div"); d.appendChild(codeBlock(code)); return d.innerHTML; }
+function chips(container, items, onPick, initial){
+  const box = $(container); box.innerHTML = "";
+  items.forEach(([id,label]) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = label; b.dataset.id = id;
+    b.onclick = () => { box.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c===b)); onPick(id); }; box.appendChild(b); });
+  if (initial) box.querySelector(`[data-id="${initial}"]`).click();
+}
+function initTabs(){ $$("#nav button").forEach(b => b.onclick = () => {
+  $$("#nav button").forEach(x => x.classList.toggle("active", x===b));
+  $$(".tab").forEach(t => t.classList.toggle("active", t.id === b.dataset.t)); }); }
+function wireCopy(root){ (root||document).querySelectorAll("pre .copy").forEach(b=>{ const pre=b.parentElement; const code=pre.firstChild.textContent; b.onclick=()=>navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)}); }); }
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+</script>
+
+<script>
+initTabs();
+/* ---- 1 dedup ---- */
+const EDS = [["Famille",2.0],["Pro",2.2],["Éducation",2.25],["Entreprise",2.3]], COMMON = 1.8;
+let sel = new Set(["Famille","Pro"]);
+function renderWim(){
+  $("#eds").innerHTML = EDS.map(([n])=>`<label class="toggle"><input type="checkbox" data-n="${n}" ${sel.has(n)?"checked":""}> ${n}</label>`).join("");
+  $$("#eds input").forEach(i => i.onchange = () => { i.checked ? sel.add(i.dataset.n) : sel.delete(i.dataset.n); renderWim(); });
+  const list = EDS.filter(([n])=>sel.has(n)); const naive = list.reduce((a,[,s])=>a+s,0); const wim = list.length ? COMMON + list.reduce((a,[,s])=>a+(s-COMMON),0) : 0;
+  const max = 9.5; const cols = ["#2f6fdf","#e0731f","#8a4fd8","#0f9aa8"];
+  $("#barNaive").innerHTML = list.map(([n,s],i)=>`<div style="width:${s/max*100}%;background:${cols[i]}">${n}</div>`).join("");
+  $("#barWim").innerHTML = list.length ? `<div style="width:${COMMON/max*100}%;background:var(--muted)">commun</div>` + list.map(([n,s],i)=>`<div style="width:${(s-COMMON)/max*100}%;background:${cols[i]}" title="${n}"></div>`).join("") : "";
+  $("#txtNaive").textContent = `${naive.toFixed(1)} Go : les fichiers communs sont copiés ${list.length} fois.`;
+  $("#txtWim").textContent = `${wim.toFixed(1)} Go : le socle commun n’est stocké qu’une fois, chaque index n’ajoute que ses différences.`;
+}
+renderWim();
+$("#t1code").appendChild(codeBlock(String.raw`Get-WindowsImage -ImagePath "D:\Images\install.wim"            # liste les index
+Get-WindowsImage -ImagePath "D:\Images\install.wim" -Index 6   # détail d'un index
+Dism /Get-WimInfo /WimFile:D:\Images\MASTER.wim`));
+
+/* ---- 2 capture ---- */
+const CAP = {
+ vhdx:["❌ Raté : image d’avant Sysprep", `<p>Depuis le checkpoint, <code>MASTER.vhdx</code> est un disque <b>parent figé</b> au moment du checkpoint, donc <b>avant</b> Sysprep. Tu capturerais une machine non généralisée : SID dupliqués au déploiement.</p>`],
+ avhdx:["✅ Le bon fichier… mais tu as dû deviner son nom", `<p>Le <code>.avhdx</code> contient les modifications depuis le checkpoint, dont la généralisation. Son nom contient un GUID généré par Hyper-V : facile de se tromper.</p>`],
+ ask:["✅ La méthode fiable", `<p>Hyper-V donne le disque <b>actuellement actif</b>, avec ou sans checkpoint. Relevé du lab : 22,4 min, <b>MASTER.wim 8,32 Go</b> (30,9 Go décompressé).</p>`]
+};
+$$("#t2 .f").forEach(d => d.onclick = () => { $$("#t2 .f").forEach(x=>x.classList.toggle("sel",x===d)); const [h,t] = CAP[d.dataset.f];
+  $("#capres").innerHTML = `<h3>${h}</h3>${t}`; if (d.dataset.f!=="vhdx") { $("#capres").appendChild(codeBlock(String.raw`$vhdPath = (Get-VMHardDiskDrive -VMName "MASTER").Path
+Mount-VHD -Path $vhdPath -ReadOnly
+Dism /Capture-Image /ImageFile:D:\Images\MASTER.wim /CaptureDir:E:\ /Name:"MASTER-Fournil-2026-11" /Compress:max /CheckIntegrity
+Dismount-VHD -Path $vhdPath`)); } });
+$('#t2 .f[data-f="ask"]').click();
+
+/* ---- 3 atelier ---- */
+let W, mounted, pending, dirty;
+function resetW(){ W = ["Windows 11 Pro généralisé","7-Zip, Notepad++","Microsoft.BingWeather (provisionnée)"]; mounted=false; pending=[]; dirty=false; $("#dterm").innerHTML = `<span class="p">C:\\&gt;</span> `; renderW(); }
+const ACT = [
+ ["mount","Monter",()=>{ if(mounted) return err("Déjà monté."); mounted=true; pending=[...W]; out("Dism /Mount-Image /ImageFile:D:\\Images\\MASTER.wim /Index:1 /MountDir:C:\\Mount","Montage de l’image\n[==========================100.0%==========================]\nL’opération a réussi."); }],
+ ["drv","+ pilote réseau",()=>{ if(!mounted) return err("Monte d’abord l’image."); pending.push("Pilote réseau (injecté)"); out("Dism /Image:C:\\Mount /Add-Driver /Driver:C:\\Drivers /Recurse","Installation du pilote 1 sur 1 : reseau.inf\nL’opération a réussi."); }],
+ ["kb","+ mise à jour",()=>{ if(!mounted) return err("Monte d’abord l’image."); pending.push("KB5041160 (hors ligne)"); out("Dism /Image:C:\\Mount /Add-Package /PackagePath:C:\\Updates\\KB5041160.msu","Traitement de 1 sur 1 — Ajout du package\nL’opération a réussi."); }],
+ ["app","− BingWeather",()=>{ if(!mounted) return err("Monte d’abord l’image."); pending = pending.filter(x=>!x.startsWith("Microsoft.BingWeather")); out("Dism /Image:C:\\Mount /Remove-ProvisionedAppxPackage /PackageName:Microsoft.BingWeather_…","L’opération a réussi."); }],
+ ["commit","Démonter /Commit",()=>{ if(!mounted) return err("Rien n’est monté."); W=[...pending]; mounted=false; out("Dism /Unmount-Image /MountDir:C:\\Mount /Commit","Enregistrement de l’image… Démontage de l’image\nL’opération a réussi."); note("✅ Modifications <b>enregistrées</b> dans MASTER.wim."); }],
+ ["discard","Démonter /Discard",()=>{ if(!mounted) return err("Rien n’est monté."); mounted=false; pending=[]; out("Dism /Unmount-Image /MountDir:C:\\Mount /Discard","Démontage de l’image\nL’opération a réussi."); note("↩️ Modifications <b>annulées</b> : MASTER.wim n’a pas changé."); }],
+ ["rm","🗑️ Supprimer C:\\Mount",()=>{ if(!mounted) return err("Rien n’est monté."); mounted=false; dirty=true; pending=[]; out("rd /s C:\\Mount","Accès refusé. (certains fichiers restent verrouillés)"); note("⚠️ Image laissée « sale » (montage orphelin). Lance <code>Dism /Cleanup-Wim</code>.","ko"); }],
+ ["clean","Dism /Cleanup-Wim",()=>{ dirty=false; out("Dism /Cleanup-Wim","Recherche des fichiers de montage altérés…\nL’opération a réussi."); note("🧹 Montages orphelins nettoyés."); }]
+];
+function out(cmd,txt){ $("#dterm").innerHTML += `<span class="c">${cmd}</span>\n<span class="o">${txt}</span>\n\n<span class="p">C:\\&gt;</span> `; $("#dterm").scrollTop=1e6; renderW(); }
+function err(t){ $("#dterm").innerHTML += `<span class="e">${t}</span>\n<span class="p">C:\\&gt;</span> `; renderW(); }
+function note(h,k){ $("#wimstate").innerHTML = `<div class="callout ${k==="ko"?"ko":"info"}">${h}</div>`; }
+function renderW(){
+  $("#wimc").innerHTML = W.map(x=>`<li>${x}</li>`).join("");
+  $("#mountc").innerHTML = mounted ? "Image ouverte ici, modifiable comme un dossier :<br>" + pending.map(x=>"• "+x).join("<br>") : (dirty ? "<span class='ko-t'>Montage orphelin !</span>" : "vide");
+}
+$("#actions").innerHTML = ACT.map(([id,l])=>`<button class="btn ${["mount","commit"].includes(id)?"":"ghost"}" data-a="${id}">${l}</button>`).join("") + `<button class="btn ghost" id="wreset">↺</button>`;
+$$("#actions [data-a]").forEach(b => b.onclick = () => ACT.find(a=>a[0]===b.dataset.a)[2]());
+$("#wreset").onclick = () => { resetW(); $("#wimstate").innerHTML=""; }; resetW();
+
+/* ---- 4 apply ---- */
+const AP = [
+ ["diskpart","diskpart /s C:\\partition-uefi.txt","Crée EFI (S:, FAT32 200 Mo), MSR (16 Mo) et Windows (W:, NTFS).",
+  "select disk 0\nclean\nconvert gpt\ncreate partition efi size=200\nformat quick fs=fat32 label=\"System\"\nassign letter=S\ncreate partition msr size=16\ncreate partition primary\nformat quick fs=ntfs label=\"Windows\"\nassign letter=W\nexit"],
+ ["apply","dism /Apply-Image /ImageFile:C:\\MASTER.wim /Index:1 /ApplyDir:W:\\","Décompresse le WIM sur W: (≈ 10 min pour 8 Go).",null],
+ ["bcdboot","bcdboot W:\\Windows /s S: /f UEFI","Copie le gestionnaire de démarrage dans la partition EFI et crée le magasin BCD. Sans lui, Windows est sur le disque mais rien ne sait le démarrer.",null],
+ ["reboot","wpeutil reboot","Redémarre : les passes specialize puis oobeSystem de l’image généralisée se jouent.",null]
+];
+let ap = 0;
+function drawDisk(){
+  const g = $("#parts"); g.innerHTML = "";
+  const R = (x,w,fill,t1,t2)=>`<rect x="${x}" y="30" width="${w}" height="66" rx="6" fill="${fill}"/><text x="${x+w/2}" y="58" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">${t1}</text><text x="${x+w/2}" y="78" text-anchor="middle" font-size="11" fill="#fff">${t2}</text>`;
+  if (ap === 0){ g.innerHTML = `<text x="260" y="68" text-anchor="middle" class="svgtxt">RAW · non partitionné</text>`; return; }
+  let h = R(12,70,"#8a4fd8","S:", ap>=3?"EFI + BCD ✓":"EFI vide") + R(84,30,"#6b7280","","MSR");
+  h += R(116,392, ap>=2 ? "#e0731f" : "#9aa3b2", "W:  Windows", ap>=2 ? "image appliquée" : "NTFS vide");
+  g.innerHTML = h;
+}
+function renderAp(){
+  $("#apbtns").innerHTML = AP.map(([id],i)=>`<button class="btn ${i<ap?"":"ghost"}" data-i="${i}">${i<ap?"✓ ":""}${id}</button>`).join("") + `<button class="btn ghost" id="apreset">↺</button>`;
+  $$("#apbtns [data-i]").forEach(b => b.onclick = () => { const i = +b.dataset.i;
+    if (i < ap) return;
+    if (i > ap){ $("#apout").innerHTML = `<div class="callout ko">❌ Pas encore : ${i===1?"il n’y a pas de partition W: où appliquer l’image.":i===2?"il n’y a pas encore de Windows sur W: à rendre démarrable.":"le disque n’est pas démarrable : au redémarrage, rien ne se lance."}</div>`; return; }
+    ap++; drawDisk(); renderAp();
+    const [,cmd,txt,file] = AP[i]; $("#apout").innerHTML = ""; $("#apout").appendChild(codeBlock(cmd));
+    $("#apinfo").innerHTML = `<h3 style="margin-top:0">${i+1}. ${AP[i][0]}</h3><p>${txt}</p>` + (file ? `<p class="mini">Contenu de <code>partition-uefi.txt</code> :</p>`+codeHTML(file) : "") +
+      (ap===4 ? `<div class="callout info">✅ Rejoué sur le lab formateur : <b>une minute</b> après le redémarrage, PC03 était sur le bureau, session Utilisateur, image Fournil. Pour automatiser l’OOBE, on copie un <code>unattend.xml</code> dans <code>W:\\Windows\\Panther</code> avant de redémarrer.</div>` : "");
+    wireCopy($("#apinfo"));
+  });
+  $("#apreset").onclick = () => { ap = 0; drawDisk(); renderAp(); $("#apout").innerHTML=""; initInfo(); };
+}
+function initInfo(){ $("#apinfo").innerHTML = `<div class="callout">⚠️ Dans WinPE, les lettres ne sont <b>jamais</b> celles de Windows : ici, le disque des images est en <b>C:</b>. Vérifie avec <code>Get-Volume</code> ou <code>list volume</code> avant <code>clean</code>.</div>`; }
+drawDisk(); renderAp(); initInfo();
+</script>
+
+</body>
+</html>

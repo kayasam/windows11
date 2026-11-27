@@ -29,7 +29,7 @@ Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11
 
 ## Partie A — Installer l'ADK
 
-**A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et le module WinPE ? Quel problème vois-tu ?
+**A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et pour le module WinPE ? Quelle version Microsoft indique-t-il pour l’ISO Windows 11 26H2 du lab ?
 
 **A2.** Installe en mode silencieux l'ADK **10.1.26100.9457** (Outils de déploiement + USMT) puis le module WinPE correspondant.
 

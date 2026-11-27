@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quiz · 17. Déployer Windows 11 par le réseau : PXE et WDS · Windows 11</title>
+<style>
+:root{color-scheme:light;--bg:#f5f5fb;--surface:#fff;--surface2:#eef1f7;--text:#182d3e;--dim:#455d70;--border:#b5bfce;--violet:#6940bd;--tint:#eeebfa;--mint:#087465;--mint-bg:#e7f6f1;--amber:#925500;--amber-bg:#fff4dd;--blue:#245db7;--blue-bg:#eaf1ff;--shadow:0 16px 45px #23314a09;--terminal:#132232;--terminal-text:#e7f3fc;--terminal-mint:#93e5ca;--accent:var(--violet)}
+html[data-theme=dark]{color-scheme:dark;--bg:#101827;--surface:#192638;--surface2:#223249;--text:#edf4ff;--dim:#bacce0;--border:#566a85;--violet:#c4a4ff;--tint:#302a49;--mint:#80dec6;--mint-bg:#163b36;--amber:#ffcb77;--amber-bg:#42341c;--blue:#9dbfff;--blue-bg:#203456;--shadow:0 16px 45px #0002;--terminal:#0c1725}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 'Segoe UI',system-ui,sans-serif}button{font:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.6}a{color:var(--violet);text-underline-offset:4px}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--violet);outline-offset:4px}h1,h2,h3,p,figure{margin:0}h1,h2,h3{line-height:1.18}p+p{margin-top:.7rem}code,kbd,pre{font-family:'Cascadia Code',Consolas,monospace}code{background:var(--surface2);border-radius:5px;padding:.12em .35em;font-size:.91em}pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font-size:.87rem;line-height:1.85}pre code{padding:0;background:none;font-size:inherit}ul{padding-left:1.25rem}.wrap{max-width:1180px;margin:auto;padding:0 28px}.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding:20px 0 0;font-size:.78rem}.toolbar a{text-decoration:none}.secondary{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 14px;font-weight:650;font-size:.83rem}.primary{border:0;background:var(--violet);color:#fff;border-radius:10px;padding:11px 18px;font-size:.88rem;font-weight:750}html[data-theme=dark] .primary{color:#1b1530}.eyebrow{text-transform:uppercase;font-size:.69rem;letter-spacing:.16em;font-weight:800;color:var(--violet)}.hero{display:grid;grid-template-columns:1fr 310px;align-items:center;gap:2rem;padding:35px 0 30px}.hero h1{font-size:clamp(2.1rem,5vw,3.6rem);letter-spacing:-.05em;margin:.75rem 0 1rem}.hero h1 em{color:var(--violet);font-style:normal}.hero p{max-width:59ch;color:var(--dim);font-size:1.02rem}.chapter-tabs{display:flex;gap:6px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow-x:auto;margin-bottom:27px;box-shadow:var(--shadow)}.chapter-tabs button{flex:1;white-space:nowrap;border:0;background:none;border-radius:11px;color:var(--dim);font-size:.88rem;font-weight:700;padding:12px 15px}.chapter-tabs button[aria-selected=true]{color:var(--violet);background:var(--tint)}.tab-number{opacity:.65;margin-right:7px;font-size:.75rem}.section-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin:0 0 20px}.section-head h2{font-size:1.55rem;letter-spacing:-.025em;margin:5px 0}.section-head p{color:var(--dim);font-size:.9rem;max-width:65ch}.pill{border:1px solid var(--border);border-radius:30px;padding:6px 12px;font-size:.73rem;white-space:nowrap;color:var(--dim)}.terminal{background:var(--terminal);color:var(--terminal-text);border-radius:14px;overflow:hidden}.terminal-top{display:flex;align-items:center;gap:6px;padding:11px 15px;border-bottom:1px solid #ffffff16;color:#c8d7e6;font-size:.68rem}.terminal-top i{width:7px;height:7px;border-radius:50%;background:#91a2b4;display:inline-block}.terminal-top span{margin-left:auto}.terminal-body{padding:18px 21px}.terminal code{background:none;color:inherit}.prompt{color:var(--terminal-mint)}.terminal-label{font-size:.72rem;color:var(--dim);margin-bottom:8px}.grid-two{display:grid;grid-template-columns:1fr 1fr;gap:20px}.surface{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow);min-width:0}.surface h3{font-size:1.15rem;margin:0 0 10px}.surface>p,.muted{color:var(--dim)}.surface>p{font-size:.9rem}.spaced{margin-top:24px}.note{border-left:3px solid var(--mint);padding:13px 17px;background:var(--mint-bg);border-radius:0 12px 12px 0;margin-top:17px;font-size:.87rem}.note strong{color:var(--mint)}.warning{background:var(--amber-bg);border-color:var(--amber)}.warning strong{color:var(--amber)}.result{min-height:55px;font-size:.9rem;margin-top:12px;padding:12px 15px;border-radius:11px;background:var(--surface2);overflow-wrap:anywhere}.button-row,.mode-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.mode-row{margin-bottom:16px}.mode-row button[aria-pressed=true],.button-row button[aria-pressed=true]{background:var(--tint);border-color:var(--violet);color:var(--violet)}.step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:20px}.step-card{border:1px solid var(--border);border-radius:17px;padding:20px;background:var(--surface);text-align:left;color:var(--text)}.step-card[aria-pressed=true]{background:var(--tint);border-color:var(--violet)}.step-card strong{display:block;margin:10px 0 5px}.step-card small{display:block;color:var(--dim);font-size:.8rem}.code-block{margin-top:15px;padding:17px 19px;background:var(--surface2);border-radius:12px}.timeline{display:flex;gap:7px;margin:19px 0}.timeline span{height:5px;border-radius:5px;background:var(--surface2);flex:1}.timeline span.active{background:var(--violet)}.mini-label,.simulation{font-size:.69rem;text-transform:uppercase;letter-spacing:.1em;font-weight:750;color:var(--dim)}.simulation{color:var(--mint)}.small-note{font-size:.8rem;color:var(--dim);margin-top:12px}.footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;margin:35px 0 24px;padding-top:22px;border-top:1px solid var(--border);font-size:.8rem;color:var(--dim)}.quiz-frame{width:100%;height:1100px;border:1px solid var(--border);border-radius:18px;background:var(--surface);margin-top:22px}.destination-card{display:flex;flex-direction:column;gap:12px}.destination-card a{font-weight:750;margin-top:auto}.panel-bottom{margin:24px 0}.panel-bottom button{width:100%}.noscript{padding:20px;background:var(--amber-bg)}label{display:block;font-size:.85rem;font-weight:650;margin:14px 0 6px}input,select{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;width:100%;max-width:100%}.tokens{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.token{padding:9px 14px;border-radius:12px;background:var(--tint);border:1px solid var(--violet);color:var(--violet);font-family:Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+@media(max-width:850px){.hero{grid-template-columns:1fr 210px}.chapter-tabs button{padding:12px 14px}}@media(max-width:620px){.wrap{padding:0 17px}.hero{grid-template-columns:1fr;padding:26px 0 24px;gap:20px}.hero-visual{display:none}.hero h1{font-size:2.3rem}.grid-two,.step-grid{grid-template-columns:1fr}.section-head{align-items:start}.section-head h2{font-size:1.4rem}.pill{white-space:normal;font-size:.68rem}.surface{padding:20px}.chapter-tabs{margin-bottom:24px}.toolbar{font-size:.7rem}.terminal-body{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+.wrap{max-width:860px}.hero{display:block;padding:30px 0 24px}.hero h1{font-size:clamp(2rem,6vw,3.2rem)}
+.hero p{max-width:62ch}.toolbar{font-size:.85rem}.quiz-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.quiz-meta p{font-weight:700;font-size:.9rem}
+progress{display:block;width:100%;height:8px;border:0;border-radius:9px;overflow:hidden;accent-color:var(--violet);margin-bottom:26px;background:var(--surface2)}progress::-webkit-progress-bar{background:var(--surface2)}progress::-webkit-progress-value{background:var(--violet)}
+fieldset{border:0;padding:0;margin:0;min-width:0}legend{font-size:1.35rem;font-weight:750;line-height:1.45;margin-bottom:22px;width:100%}
+.choices{display:grid;gap:12px}.choice{display:flex;align-items:center;gap:13px;border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:0;font-weight:500;font-size:1rem;cursor:pointer;line-height:1.5;background:var(--surface)}
+.choice:has(input:checked){border-color:var(--violet);background:var(--tint)}.choice:has(input:focus-visible){outline:3px solid var(--violet);outline-offset:3px}
+.choice input{appearance:auto;width:19px;height:19px;flex:0 0 19px;margin:0;padding:0;accent-color:var(--violet)}.choice.correct{border-color:var(--mint);background:var(--mint-bg)}.choice.wrong{border-color:var(--amber);background:var(--amber-bg)}
+fieldset:disabled .choice{cursor:default}.feedback{margin-top:22px;padding:18px;border-radius:12px;background:var(--mint-bg);border-left:4px solid var(--mint)}.feedback.wrong{background:var(--amber-bg);border-color:var(--amber)}.feedback strong{display:block;margin-bottom:5px}.actions{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}.primary,.secondary{font-size:.95rem;min-height:44px}
+.result-score{font-size:3.4rem;font-weight:800;letter-spacing:-.05em;color:var(--violet);margin:14px 0}.review{padding:0;list-style:none;display:grid;gap:14px;margin:24px 0 0}.review li{padding:16px;border:1px solid var(--border);border-radius:12px}.review p{font-size:.92rem;margin-top:7px}.review .status{font-size:.8rem;font-weight:750;color:var(--mint)}.review .status.revise{color:var(--amber)}.footer{justify-content:center}.small-note{margin:10px 0 0}.surface{padding:28px}h2:focus{outline:none}
+@media(max-width:500px){.surface{padding:20px 16px}.hero{padding-top:22px}.hero h1{font-size:2rem}legend{font-size:1.15rem}.choice{padding:12px}.actions button{flex:1}.quiz-meta{align-items:flex-start}.pill{font-size:.7rem}.result-score{font-size:2.8rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="toolbar"><span>Windows 11 · Chapitre 17</span><button class="secondary" id="theme" type="button" aria-pressed="false">Thème sombre</button></div>
+ <header class="hero"><p class="eyebrow">Révision TSSR · 10 questions</p><h1>17. Déployer Windows 11 par le réseau : PXE et WDS</h1><p>Choisis une réponse, puis valide pour comprendre. Pas de chronomètre : prends le temps de réfléchir.</p></header>
+ <main>
+  <section class="surface" id="quiz" aria-label="Quiz du chapitre 17">
+   <div class="quiz-meta"><p id="counter"></p><span class="pill" id="topic"></span></div>
+   <progress id="progress" value="0" max="10" aria-label="Questions validées"></progress>
+   <form id="form">
+    <fieldset id="question"><legend id="prompt"></legend><div class="choices" id="choices"></div></fieldset>
+    <div id="feedback" class="feedback" role="status" aria-live="polite" tabindex="-1" hidden></div>
+    <div class="actions"><button class="primary" id="validate" type="submit" disabled>Valider ma réponse</button><button class="primary" id="next" type="button" hidden>Question suivante →</button></div>
+   </form>
+  </section>
+  <section class="surface" id="results" aria-labelledby="result-title" hidden>
+   <p class="eyebrow">Ton bilan</p><h2 id="result-title" tabindex="-1">Quiz terminé</h2><p class="result-score" id="score"></p><p id="conclusion"></p>
+   <div class="button-row"><button id="restart" class="primary" type="button">Recommencer le quiz</button></div>
+   <h3 class="spaced">Les réponses à retenir</h3><ol class="review" id="review"></ol>
+  </section>
+ </main>
+ <footer class="footer">Quiz d’entraînement · 17. Déployer Windows 11 par le réseau : PXE et WDS · Aucune donnée envoyée</footer>
+</div>
+<noscript><p class="noscript">Active JavaScript pour utiliser ce quiz interactif.</p></noscript>
+<script>
+'use strict';
+const questions = [
+ {
+  "topic": "PXE",
+  "q": "Dans quel ordre interviennent les protocoles d’un démarrage PXE ?",
+  "choices": [
+   "SMB, TFTP, DHCP",
+   "TFTP, DHCP, SMB",
+   "DHCP, TFTP, SMB",
+   "DHCP, SMB, TFTP"
+  ],
+  "answer": 2,
+  "explanation": "DHCP donne l’adresse et l’option 60, TFTP charge le chargeur et boot.wim en mémoire, SMB fournit les sources d’installation."
+ },
+ {
+  "topic": "TFTP",
+  "q": "Que transporte TFTP pendant un déploiement ?",
+  "choices": [
+   "Seulement le démarrage : chargeur et WinPE",
+   "Les 6 Go de Windows",
+   "Le fichier de réponse",
+   "Les profils utilisateurs"
+  ],
+  "answer": 0,
+  "explanation": "TFTP est simple (UDP, sans authentification) et lent. Le gros des fichiers passe par SMB."
+ },
+ {
+  "topic": "WDS en 2026",
+  "q": "Que fait encore bien WDS en 2026 ?",
+  "choices": [
+   "Servir des install.wim de Windows 11",
+   "Servir un fichier de réponse mains libres",
+   "Lancer Setup en mode WDS",
+   "Livrer un WinPE en PXE + TFTP"
+  ],
+  "answer": 3,
+  "explanation": "Images d’installation Windows 11 non supportées, mains libres bloqué (CVE-2026-0386), Setup en mode WDS déconseillé."
+ },
+ {
+  "topic": "DHCP et WDS",
+  "q": "DHCP et WDS sont sur SRV01. Quel réglage évite le conflit sur le port UDP 67 ?",
+  "choices": [
+   "Désactiver le DHCP",
+   "wdsutil /Set-Server /UseDhcpPorts:No /DhcpOption60:Yes",
+   "Changer le port de WDS en 69",
+   "Utiliser les options 66 et 67"
+  ],
+  "answer": 1,
+  "explanation": "WDS n’écoute plus le 67 ; le DHCP ajoute l’option 60 « PXEClient » et le poste contacte WDS sur 4011."
+ },
+ {
+  "topic": "Sécurité",
+  "q": "Pourquoi AnswerClients:All + NoPrompt est dangereux en production ?",
+  "choices": [
+   "Parce que TFTP devient lent",
+   "Parce que le DHCP s’arrête",
+   "Parce que tout poste qui démarre sur le réseau s’efface et se réinstalle",
+   "Parce que le compte de service est supprimé"
+  ],
+  "answer": 2,
+  "explanation": "En entreprise : F12 obligatoire, clients connus seulement, ou VLAN de déploiement isolé."
+ },
+ {
+  "topic": "TFTP",
+  "q": "boot.wim mettait 7 minutes à charger. Quel réglage l’a ramené à 6 secondes ?",
+  "choices": [
+   "Une taille de bloc TFTP de 16384 octets",
+   "Passer en Wi-Fi",
+   "Compresser boot.wim",
+   "Désactiver Secure Boot"
+  ],
+  "answer": 0,
+  "explanation": "Si des fragments se perdent sur le réseau, on redescend à 8192 puis 4096."
+ },
+ {
+  "topic": "Image de démarrage",
+  "q": "Quel index de boot.wim de l’ISO WDS démarre-t-il ?",
+  "choices": [
+   "L’index 1, WinPE nu",
+   "L’index 2, Windows Setup",
+   "Les deux",
+   "Aucun : WDS utilise install.wim"
+  ],
+  "answer": 1,
+  "explanation": "Piège vécu : modifier l’index 1 ne change rien, le poste démarre toujours Setup en mode WDS."
+ },
+ {
+  "topic": "winpeshl.ini",
+  "q": "À quoi sert winpeshl.ini dans l’image de démarrage ?",
+  "choices": [
+   "À choisir la langue",
+   "À activer BitLocker",
+   "À joindre le domaine",
+   "À remplacer l’interface de démarrage de WinPE par le script deploiement.cmd"
+  ],
+  "answer": 3,
+  "explanation": "Le script lance wpeinit, ouvre Deploy$ et exécute setup.exe /unattend. Attention : wpeinit n’est plus lancé tout seul."
+ },
+ {
+  "topic": "RemoteInstall",
+  "q": "Comment modifier une image de démarrage déjà importée dans WDS ?",
+  "choices": [
+   "Remove-WdsBootImage puis nouvel import du boot.wim modifié",
+   "Remplacer le .wim dans E:\\RemoteInstall\\Boot\\x64\\Images",
+   "Redémarrer WDSServer",
+   "Éditer le BCD à la main"
+  ],
+  "answer": 0,
+  "explanation": "Remplacer le fichier dans RemoteInstall provoque 0xc0000098 (BCD incohérent)."
+ },
+ {
+  "topic": "$OEM$",
+  "q": "Pourquoi déposer postinstall.ps1 dans sources\\$OEM$\\$$\\Setup\\Scripts ?",
+  "choices": [
+   "Pour le cacher aux utilisateurs",
+   "Parce que WDS l’exige",
+   "Parce que Setup copie $OEM$\\$$ dans C:\\Windows du poste, là où FirstLogonCommands le cherche",
+   "Pour le chiffrer"
+  ],
+  "answer": 2,
+  "explanation": "Sans DVD ni clé à la racine, c’est la façon de faire arriver le script sur le poste installé."
+ }
+];
+const $=id=>document.getElementById(id);
+let index=0,answers=[];
+function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+function render(focus=false){
+ const q=questions[index];$('counter').textContent=`Question ${index+1} sur ${questions.length}`;$('topic').textContent=q.topic;
+ $('progress').value=answers.length;$('progress').max=questions.length;$('prompt').textContent=q.q;
+ $('question').disabled=false;$('choices').replaceChildren();$('feedback').hidden=true;$('feedback').replaceChildren();
+ $('validate').hidden=false;$('validate').disabled=true;$('next').hidden=true;
+ q.choices.forEach((text,i)=>{const label=node('label',undefined,'choice');const input=document.createElement('input');input.type='radio';input.name='answer';input.value=String(i);input.required=true;input.addEventListener('change',()=>{$('validate').disabled=false;});label.append(input,node('span',text));$('choices').append(label);});
+ if(focus){$('prompt').tabIndex=-1;$('prompt').focus();}
+}
+$('form').addEventListener('submit',e=>{
+ e.preventDefault();if(answers.length>index)return;const chosen=document.querySelector('input[name="answer"]:checked');if(!chosen)return;
+ const value=Number(chosen.value),q=questions[index],correct=value===q.answer;answers.push(value);$('progress').value=answers.length;$('question').disabled=true;
+ [...$('choices').children].forEach((label,i)=>{if(i===q.answer)label.classList.add('correct');else if(i===value)label.classList.add('wrong');});
+ const feedback=$('feedback');feedback.className='feedback'+(correct?'':' wrong');feedback.append(node('strong',correct?'Bonne réponse !':'À retenir : '+q.choices[q.answer]),node('p',q.explanation));feedback.hidden=false;
+ $('validate').hidden=true;$('next').hidden=false;$('next').textContent=index===questions.length-1?'Voir mon bilan →':'Question suivante →';feedback.focus();
+});
+$('next').addEventListener('click',()=>{if(answers.length<=index)return;if(index<questions.length-1){index++;render(true);}else finish();});
+function finish(){
+ $('quiz').hidden=true;$('results').hidden=false;const score=answers.filter((a,i)=>a===questions[i].answer).length;
+ $('score').textContent=`${score} / ${questions.length}`;
+ $('conclusion').textContent=score===questions.length?'Tous les bons réflexes sont là. Tu peux reprendre le TP avec ces repères.':score>=Math.ceil(questions.length*0.7)?'Les bases sont bien engagées. Relis les explications des questions à revoir.':'Prends le temps de relire les explications, puis réessaie tranquillement.';
+ $('review').replaceChildren();questions.forEach((q,i)=>{const correct=answers[i]===q.answer,li=node('li');li.append(node('span',`${i+1}. ${correct?'Acquis':'À revoir'}`,'status'+(correct?'':' revise')),node('p',q.q),node('p','Bonne réponse : '+q.choices[q.answer]));if(!correct)li.append(node('p','Ta réponse : '+q.choices[answers[i]]));li.append(node('p',q.explanation));$('review').append(li);});$('result-title').focus();
+}
+$('restart').addEventListener('click',()=>{index=0;answers=[];$('results').hidden=true;$('quiz').hidden=false;render(true);});
+function setTheme(theme){document.documentElement.dataset.theme=theme;$('theme').textContent=theme==='dark'?'Thème clair':'Thème sombre';$('theme').setAttribute('aria-pressed',String(theme==='dark'));try{localStorage.setItem('theme',theme);}catch{}}
+let initial='light';try{if(localStorage.getItem('theme')==='dark')initial='dark';}catch{}setTheme(initial);
+$('theme').addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+window.addEventListener('message',e=>{if(e.source!==window.parent||!e.data||e.data.type!=='linux-theme')return;if(e.data.theme==='light'||e.data.theme==='dark')setTheme(e.data.theme);});
+render();
+</script>
+</body>
+</html>

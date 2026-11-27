@@ -4,7 +4,9 @@ aliases: ["windows11/13-adk-winpe/tp-corrigev2"]
 ---
 
 <nav class="chapter-resources" aria-label="Ressources du chapitre" data-course-key="windows11/13-adk-winpe"><div class="resource-buttons"><a class="resource-button" data-resource-kind="markdown" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 24"><rect x="1" y="1" width="30" height="22" rx="3" fill="none" stroke="#34495e" stroke-width="2"/><path d="M5 18V6h3l4 5 4-5h3v12h-3v-7l-4 5-4-5v7Z" fill="#34495e"/><path d="M23 6h3v7h3l-4.5 5-4.5-5h3Z" fill="#34495e"/></svg>
-</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</span><span class="resource-label">Cours</span></a><a class="resource-button" data-resource-kind="html" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/html/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32"><path d="M2 2h24l-2 25-10 3-10-3Z" fill="#e44d26"/><path d="M14 5v22l7-2 2-20Z" fill="#f16529"/><path d="M7 8h15l-.3 3H11l.3 3h10l-.8 9-6.5 2-6.5-2-.4-5h3l.2 2.6 3.7 1 3.7-1 .3-3.6H8Z" fill="#fff"/></svg>
+</span><span class="resource-label">HTML</span></a><a class="resource-button" data-resource-kind="quiz" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/quiz/"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="4" y="3" width="24" height="26" rx="6" fill="#7652ad"/><path d="M12 12a4 4 0 1 1 6 3.5c-1.5.8-2 1.4-2 3" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="1.6" fill="#fff"/></svg>
+</span><span class="resource-label">Quiz</span></a><a class="resource-button" data-resource-kind="tp" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp"><span class="resource-icon"><svg class="resource-symbol" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="4" width="28" height="24" rx="5" fill="#237b60"/><path d="m8 12 5 4-5 4m9 0h7" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </span><span class="resource-label">TP</span></a></div><div class="resource-actions"><a class="resource-download" download data-router-ignore href="https://cours.kaya.ovh/windows11/telechargements/windows11/tp/13-adk-winpe-corrigev2.md">↓ Télécharger le corrigé (.md)</a><button type="button" class="support-focus-toggle" aria-pressed="false">Masquer les menus</button></div></nav>
 <nav class="exercise-resources" aria-label="Ressources du TP"><a href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/standard">Énoncé</a><a class="exercise-correction" href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/tp/standard-corrigev2" aria-current="page">Corrigé</a></nav>
 
@@ -42,17 +44,17 @@ Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11
 
 ## Partie A — Installer l'ADK
 
-**A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et le module WinPE ? Quel problème vois-tu ?
+**A1.** Sur `PC01`, quelle version de l'ADK WinGet propose-t-il par défaut ? Et pour le module WinPE ? Quelle version Microsoft indique-t-il pour l’ISO Windows 11 26H2 du lab ?
 
 > [!success]- Afficher la correction — A1
 > ```powershell
-> winget search "Microsoft.WindowsADK"
+> winget search Microsoft.WindowsADK --source winget
 > ```
 > ```
 > Windows Assessment and Deployment Kit           Microsoft.WindowsADK            10.1.28000.3481
-> Windows ADK Preinstallation Environment Add-ons Microsoft.WindowsADK.WinPEAddon 10.1.26100.9457
+> Windows ADK Preinstallation Environment Add-ons Microsoft.WindowsADK.WinPEAddon 10.1.28000.3481
 > ```
-> Les deux **ne correspondent pas** : l'ADK 28000 est la branche **26H1** (PC Arm Snapdragon récents), le module WinPE est en 26100 (24H2/25H2/26H2). Microsoft exige **la même version** pour l'ADK et le module, alignée sur la famille de Windows déployée. Constaté lors de la construction du lab : il a fallu désinstaller l'ADK 28000.
+> WinGet propose la branche **10.1.28000.3481** pour les deux paquets. Microsoft indique cette version pour Windows 11 **26H1**. Pour l’ISO **26H2** du lab, prends l’ADK et son module WinPE en **10.1.26100.9457**. [Versions prises en charge par Microsoft](https://learn.microsoft.com/windows-hardware/get-started/adk-install)
 
 **A2.** Installe en mode silencieux l'ADK **10.1.26100.9457** (Outils de déploiement + USMT) puis le module WinPE correspondant.
 
@@ -60,7 +62,7 @@ Télécharge <a href="https://cours.kaya.ovh/windows11/telechargements/windows11
 > ```powershell
 > winget install --id Microsoft.WindowsADK -e --version 10.1.26100.9457 `
 >     --override "/quiet /norestart /features OptionId.DeploymentTools OptionId.UserStateMigrationTool"
-> winget install --id Microsoft.WindowsADK.WinPEAddon -e `
+> winget install --id Microsoft.WindowsADK.WinPEAddon -e --version 10.1.26100.9457 `
 >     --override "/quiet /norestart /features OptionId.WindowsPreinstallationEnvironment"
 > ```
 > `--override` remplace les arguments par défaut de l'installeur : on choisit précisément les fonctionnalités. Les deux installations prennent **≈ 3 minutes** sur le lab (petit installeur qui télécharge le reste).

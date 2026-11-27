@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>17. PXE et WDS — démarrer un poste par le réseau</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --ink:#1d2433; --muted:#5d6678; --line:#d9dee8; --soft:#eef1f7;
+  --ok:#1f9d55; --ko:#d64545; --warn:#c77d00; --code:#0f172a; --codeink:#e2e8f0;
+  --acc:#2f6fdf; --pe:#8a4fd8; --disk:#0f9aa8; --iso:#e0731f;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#0f131a;--card:#171c25;--ink:#e6e9ef;--muted:#9aa3b2;--line:#2a3140;--soft:#1e2430;--code:#0a0e14;--codeink:#d7dde8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{max-width:1180px;margin:0 auto;padding:28px 20px 6px}
+header h1{margin:0 0 4px;font-size:1.6rem}
+header p{margin:0;color:var(--muted)}
+.big-idea{max-width:1180px;margin:14px auto 0;padding:0 20px}
+.big-idea div{background:linear-gradient(135deg,color-mix(in srgb,var(--pe) 16%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--pe) 40%,var(--line));border-radius:14px;padding:14px 18px;font-size:1.05rem}
+nav{max-width:1180px;margin:16px auto 0;padding:0 20px;display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-weight:600;padding:8px 14px;border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);cursor:pointer}
+nav button.active{background:var(--card);color:var(--ink);box-shadow:inset 0 3px 0 var(--pe)}
+nav button span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-size:.8rem;margin-right:6px}
+nav button.active span{background:var(--pe);color:#fff}
+main{max-width:1180px;margin:0 auto;padding:0 20px 40px}
+.tab{display:none;background:var(--card);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:18px}
+.tab.active{display:block}
+h2{margin:0 0 6px;font-size:1.3rem}
+h3{margin:14px 0 6px;font-size:1.05rem}
+.lead{color:var(--muted);margin:0 0 14px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.grid2>*{min-width:0}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.chip{font:inherit;padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600}
+.chip.active{border-color:var(--pe);background:var(--pe);color:#fff}
+svg{width:100%;height:auto;display:block}
+.svgtxt{font-size:13px;fill:var(--muted)}
+.svgtitle{font-size:16px;font-weight:700;fill:var(--ink)}
+.media{cursor:pointer}
+.media rect{fill:var(--card);stroke:var(--line);stroke-width:2;transition:.2s}
+.media:hover rect{stroke:var(--muted)}
+.media.sel rect{stroke-width:3}
+.result{border-radius:12px;padding:14px;border:1px solid var(--line);background:var(--card);min-height:150px}
+.result h3{margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.pill{font-size:.78rem;font-weight:700;padding:2px 9px;border-radius:999px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.ko{background:var(--ko)}.pill.mid{background:var(--warn)}
+ul.can{margin:6px 0 0;padding-left:20px}
+ul.can li{margin:2px 0}
+pre{position:relative;margin:6px 0;background:var(--code);color:var(--codeink);padding:30px 12px 11px;border-radius:9px;overflow:auto;font:13px/1.45 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre}
+.copy{position:absolute;top:6px;right:6px;font:12px system-ui;background:#ffffff1a;color:#fff;border:1px solid #ffffff33;border-radius:6px;padding:3px 7px;cursor:pointer}
+code{font-family:ui-monospace,Consolas,monospace;background:var(--soft);padding:1px 5px;border-radius:5px;font-size:.92em}
+.callout{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:9px 12px;border-radius:0 8px 8px 0;margin:10px 0}
+.callout.info{border-color:var(--pe);background:color-mix(in srgb,var(--pe) 9%,transparent)}
+.callout.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 9%,transparent)}
+.btn{font:inherit;font-weight:700;border:0;border-radius:9px;padding:8px 15px;background:var(--pe);color:#fff;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn:disabled{opacity:.45;cursor:default}
+/* ISO tree */
+.tree{font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.tree div{padding:5px 8px;border-radius:7px}
+.tree .f{cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.tree .f:hover{background:var(--card)}
+.tree .f.sel{background:var(--card);box-shadow:inset 3px 0 0 var(--pe)}
+.tree .tag{font-family:system-ui;font-size:.75rem;padding:1px 8px;border-radius:999px;color:#fff;align-self:center}
+/* stepper */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.steps button{font:inherit;font-size:.9rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:var(--soft);color:var(--muted);cursor:pointer}
+.steps button.done{color:var(--ink)}
+.steps button.active{border-color:var(--pe);color:var(--ink);font-weight:700;box-shadow:inset 0 0 0 1px var(--pe)}
+.fs{font-family:ui-monospace,Consolas,monospace;font-size:13.5px;line-height:1.7}
+.fs .n{opacity:.25;transition:.3s}
+.fs .n.on{opacity:1}
+.fs .n.hot{color:var(--pe);font-weight:700}
+.order{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.order button{font:inherit;font-family:ui-monospace,Consolas,monospace;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.order button.placed{background:var(--ok);color:#fff;border-color:var(--ok)}
+.order button.shake{animation:shake .35s;border-color:var(--ko)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* terminal */
+.term{background:#0b0f16;color:#cfd8e3;border-radius:10px;padding:12px 14px;font:13.5px/1.5 ui-monospace,Consolas,monospace;min-height:300px;max-height:440px;overflow:auto;white-space:pre-wrap;border:1px solid #1f2633}
+.term .p{color:#8fd16a}.term .c{color:#fff}.term .o{color:#9fb0c4}.term .e{color:#ff8a8a}.term .k{color:#e9c46a}
+.kbd{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.kbd input[type=text]{font:14px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:260px}
+.kbd .out{font:15px ui-monospace,Consolas,monospace;padding:8px 10px;border-radius:8px;background:#0b0f16;color:#fff;min-width:200px}
+.toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.toggle input{width:18px;height:18px;accent-color:var(--pe)}
+/* passes */
+.passes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+@media (max-width:800px){.passes{grid-template-columns:repeat(2,1fr)}}
+.pass{border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--soft);cursor:pointer;opacity:.45;transition:.2s;text-align:center}
+.pass b{display:block;font-size:.95rem}
+.pass small{color:var(--muted);font-size:.78rem}
+.pass .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);font-size:.78rem;font-weight:700}
+.pass.used{opacity:1;border-color:var(--pe)}
+.pass.used .n{background:var(--pe);color:#fff}
+.pass.sel{box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 35%,transparent)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.namecheck{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.namecheck input{font:14px ui-monospace,Consolas,monospace;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:160px}
+/* chain */
+.chain{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:6px 0 10px}
+.ch{flex:1;min-width:150px;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:10px;cursor:pointer;position:relative;margin-right:22px}
+.ch:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;color:var(--muted);font-weight:700}
+.ch b{display:block}
+.ch small{color:var(--muted)}
+.ch.pe{border-color:var(--pe)}
+.ch.sel{background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.pebadge{display:inline-block;margin-top:6px;font-size:.72rem;font-weight:700;background:var(--pe);color:#fff;border-radius:999px;padding:1px 8px}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:.85rem}
+footer a{color:inherit}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.card{border:1.5px solid var(--line);border-radius:12px;padding:12px;background:var(--soft)}
+.card h4{margin:0 0 4px}
+.stage{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.st{flex:1;min-width:120px;border:1.5px solid var(--line);border-radius:10px;padding:9px;background:var(--soft);cursor:pointer;text-align:center;transition:.2s}
+.st b{display:block}.st small{color:var(--muted)}
+.st.sel{border-color:var(--pe);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--pe) 30%,transparent)}
+.st.ok{border-color:var(--ok)}.st.ko{border-color:var(--ko);background:color-mix(in srgb,var(--ko) 10%,var(--soft))}
+.mini{font-size:.88rem;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{font:inherit;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.bar{height:26px;border-radius:7px;background:var(--soft);border:1px solid var(--line);overflow:hidden;display:flex}
+.bar>div{height:100%;display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:700;transition:width .5s}
+.log{font:12.5px/1.5 ui-monospace,Consolas,monospace;background:#0b0f16;color:#ffb4b4;padding:9px 11px;border-radius:8px;white-space:pre-wrap;margin:6px 0}
+.ok-t{color:var(--ok);font-weight:700}.ko-t{color:var(--ko);font-weight:700}
+
+:root{--pe:#2f6fdf}
+</style>
+</head>
+<body>
+<header>
+  <h1>17. Déployer Windows 11 par le réseau : PXE et WDS</h1>
+  <p>Même installation qu’au chapitre 16, même fichier de réponse : seul le transport change. Le DVD est remplacé par la carte réseau.</p>
+</header>
+<div class="big-idea"><div>💡 <b>L’idée à retenir :</b> en 2026, WDS ne sert plus qu’à une chose : <b>livrer un WinPE par le réseau</b> (PXE + TFTP). Ce WinPE ouvre un partage et lance <code>setup.exe /unattend</code> : c’est une installation <b>normale</b>, pilotée par le fichier de réponse du chapitre 16.</div></div>
+<nav id="nav">
+  <button data-t="t1" class="active"><span>1</span>Le démarrage PXE</button>
+  <button data-t="t2"><span>2</span>Casse et répare</button>
+  <button data-t="t3"><span>3</span>WDS en 2026</button>
+  <button data-t="t4"><span>4</span>L’image de démarrage</button>
+</nav>
+<main>
+<section class="tab active" id="t1">
+  <h2>PC03 démarre sur sa carte réseau</h2>
+  <p class="lead">Lance la séquence ou avance pas à pas. Chaque flèche indique le protocole et le port utilisés.</p>
+  <div class="row" style="margin-bottom:10px"><button class="btn" id="play">▶ Tout jouer</button><button class="btn ghost" id="stepb">Étape suivante →</button><button class="btn ghost" id="rst">↺</button></div>
+  <div class="grid2">
+    <div class="panel" style="padding:8px"><svg viewBox="0 0 560 470" id="seq"></svg></div>
+    <div id="seqinfo" class="result"></div>
+  </div>
+</section>
+
+<section class="tab" id="t2">
+  <h2>Casse et répare : diagnostiquer un PXE</h2>
+  <p class="lead">Chaque case cochée est un réglage correct. Décoche-en une, lance le démarrage de PC03 et regarde le symptôme. C’est le tableau de dépannage du cours, en version jouable.</p>
+  <div class="grid2">
+    <div class="panel" id="cfg"></div>
+    <div><button class="btn" id="boot">▶ Démarrer PC03</button><div class="term" id="pxeterm" style="min-height:230px;margin-top:10px"></div><div id="pxediag"></div></div>
+  </div>
+</section>
+
+<section class="tab" id="t3">
+  <h2>Ce que WDS fait encore, ce qu’il ne fait plus</h2>
+  <table>
+    <thead><tr><th>Usage de WDS</th><th>État en 2026</th><th>Constaté sur le lab</th></tr></thead>
+    <tbody>
+      <tr><td><b>Servir un WinPE en PXE</b></td><td class="ok-t">✅ Supporté</td><td>Fonctionne (UEFI, Secure Boot)</td></tr>
+      <tr><td>Images d’installation Windows 11 (<code>install.wim</code>) dans WDS</td><td class="ko-t">❌ Non supporté</td><td><code>Import-WdsInstallImage</code> refuse (0xC104012B)</td></tr>
+      <tr><td>Setup en « mode WDS » (boot.wim de l’ISO tel quel)</td><td class="ko-t">❌ Déconseillé</td><td>Message de dépréciation, puis redémarrage en boucle</td></tr>
+      <tr><td>Fichier de réponse servi par WDS (mains libres)</td><td class="ko-t">❌ Bloqué depuis avril 2026</td><td>CVE-2026-0386</td></tr>
+      <tr><td>Rôle WDS dans la prochaine version de Windows Server</td><td class="ko-t">❌ Déprécié</td><td>KB5129631</td></tr>
+    </tbody>
+  </table>
+  <div class="callout info">C’est aussi la logique des outils qui remplacent WDS (Configuration Manager, FOG, WAPT…) : un démarrage réseau, puis un environnement qui applique Windows.</div>
+  <h3>Sur SRV01</h3>
+  <div class="cards">
+    <div class="card"><h4>E:\RemoteInstall</h4><p class="mini">Chargeurs, BCD, images de démarrage. Géré par WDS : <b>on n’y touche pas à la main</b>.</p></div>
+    <div class="card"><h4>Partage Deploy$ (E:\Deploy)</h4><p class="mini">Contenu de l’ISO, <code>autounattend.xml</code> (PC02 → PC03), <code>sources\$OEM$\$$\Setup\Scripts\postinstall.ps1</code>.</p></div>
+    <div class="card"><h4>svc.deploiement</h4><p class="mini">Lecture seule sur Deploy$. Son mot de passe est <b>dans l’image de démarrage</b> : aucun autre droit.</p></div>
+  </div>
+</section>
+
+<section class="tab" id="t4">
+  <h2>Transformer le boot.wim de l’ISO</h2>
+  <p class="lead">Le <code>boot.wim</code> de l’ISO contient deux index. Choisis lequel modifier.</p>
+  <div class="grid2">
+    <div class="panel tree" id="idx">
+      <div>📦 boot.wim (ISO officielle)</div>
+      <div class="f" data-i="1" style="margin-left:22px">Index 1 · Microsoft Windows PE (amd64)</div>
+      <div class="f" data-i="2" style="margin-left:22px">Index 2 · Microsoft Windows Setup (amd64)</div>
+    </div>
+    <div class="result" id="idxres"><h3>Clique sur un index</h3></div>
+  </div>
+  <h3>Les deux fichiers ajoutés dans Windows\System32</h3>
+  <div class="grid2"><div id="ini"></div><div id="cmdf"></div></div>
+  <table style="margin-top:8px"><tbody>
+    <tr><th>wpeinit</th><td>Avec un winpeshl.ini, il n’est <b>plus lancé automatiquement</b> : réseau et pilotes à initialiser soi-même.</td></tr>
+    <tr><th>cmd.exe /k</th><td>Garde l’invite ouverte : en cas d’échec, on lit le message et on tape des commandes.</td></tr>
+    <tr><th>Ordre</th><td>On modifie boot.wim <b>avant</b> <code>Import-WdsBootImage</code>. Pour changer une image déjà importée : <code>Remove-WdsBootImage</code> puis nouvel import.</td></tr>
+  </tbody></table>
+</section>
+</main>
+<footer>Chapitre 17 (bonus) · <a href="https://cours.kaya.ovh/windows11/windows11/17-wds-pxe/quiz/">Faire le quiz du chapitre</a> · <a href="https://cours.kaya.ovh/windows11/windows11/16-deploiement/html/">Chapitre 16 interactif</a> · <a href="https://cours.kaya.ovh/windows11/windows11/13-adk-winpe/html/">Chapitre 13 interactif (WinPE)</a></footer>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+function codeBlock(code){
+  const pre = document.createElement("pre"); pre.textContent = code;
+  const b = document.createElement("button"); b.className = "copy"; b.textContent = "Copier";
+  b.onclick = () => navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)});
+  pre.appendChild(b); return pre;
+}
+function codeHTML(code){ const d=document.createElement("div"); d.appendChild(codeBlock(code)); return d.innerHTML; }
+function chips(container, items, onPick, initial){
+  const box = $(container); box.innerHTML = "";
+  items.forEach(([id,label]) => { const b = document.createElement("button"); b.className = "chip"; b.textContent = label; b.dataset.id = id;
+    b.onclick = () => { box.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active", c===b)); onPick(id); }; box.appendChild(b); });
+  if (initial) box.querySelector(`[data-id="${initial}"]`).click();
+}
+function initTabs(){ $$("#nav button").forEach(b => b.onclick = () => {
+  $$("#nav button").forEach(x => x.classList.toggle("active", x===b));
+  $$(".tab").forEach(t => t.classList.toggle("active", t.id === b.dataset.t)); }); }
+function wireCopy(root){ (root||document).querySelectorAll("pre .copy").forEach(b=>{ const pre=b.parentElement; const code=pre.firstChild.textContent; b.onclick=()=>navigator.clipboard?.writeText(code).then(()=>{b.textContent="Copié ✓";setTimeout(()=>b.textContent="Copier",1200)}); }); }
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+</script>
+
+<script>
+initTabs();
+/* ---- 1 sequence ---- */
+const NS="http://www.w3.org/2000/svg", COLS=[["PC03","firmware UEFI",70],["DHCP","SRV01",210],["WDS","PXE + TFTP",350],["Deploy$","partage SMB",490]];
+const MSG = [
+ [0,1,"DHCPDISCOVER (option 60 « PXEClient »)","DHCP","UDP 67/68","Le poste n’a ni adresse ni système : il crie sur le réseau qu’il veut démarrer en PXE."],
+ [1,0,"Adresse IP + option 60 « un serveur PXE est ici »","DHCP","UDP 68","Le DHCP de SRV01 donne une adresse (192.168.3.x) et, grâce à l’option 60, indique qu’un serveur PXE attend."],
+ [0,2,"Demande de démarrage","PXE","UDP 4011","WDS n’écoute pas le 67 (le DHCP l’occupe) : le poste le contacte sur le 4011."],
+ [2,0,"Nom du chargeur : boot\\x64\\wdsmgfw.efi","PXE","UDP 4011","WDS répond avec le chargeur UEFI à télécharger."],
+ [2,0,"wdsmgfw.efi, gestionnaire de démarrage, BCD","TFTP","UDP 69","TFTP : simple, UDP, sans authentification. Il ne transporte que le démarrage."],
+ [2,0,"boot.wim ≈ 600 Mo, chargé en mémoire","TFTP","UDP 69 + 64001-65000","7 minutes avec les réglages par défaut, 6 secondes avec une taille de bloc de 16384."],
+ [0,0,"WinPE démarre → winpeshl.ini → deploiement.cmd","WinPE","—","Le WinPE tourne en mémoire (X:) et lance le script au lieu de Setup en mode WDS."],
+ [0,3,"net use Z: \\\\192.168.3.1\\Deploy$","SMB","TCP 445","Le script ouvre le partage avec le compte svc.deploiement (lecture seule)."],
+ [0,3,"setup.exe /unattend:Z:\\autounattend.xml","SMB","TCP 445","Les 6 Go de Windows passent par SMB. Installation normale, pilotée par le fichier de réponse du chapitre 16."],
+ [0,0,"Installation, jonction au domaine, postinstall.ps1","Setup","—","Identique au chapitre 16 : redémarrages, domaine, session admin automatique, applications, écran de connexion."]
+];
+const PC = {DHCP:"#0f9aa8",PXE:"#8a4fd8",TFTP:"#e0731f",SMB:"#2f6fdf",WinPE:"#1f9d55",Setup:"#1f9d55"};
+let k = 0, playing = false;
+function svgEl(t,a,p){ const e=document.createElementNS(NS,t); for(const x in a) e.setAttribute(x,a[x]); p&&p.appendChild(e); return e; }
+function drawSeq(){
+  const s = $("#seq"); s.innerHTML = `<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>`;
+  COLS.forEach(([n,sub,x]) => { svgEl("rect",{x:x-58,y:6,width:116,height:40,rx:8,fill:"var(--card)",stroke:"var(--line)"},s);
+    const t=svgEl("text",{x,y:24,"text-anchor":"middle",class:"svgtitle",style:"font-size:14px"},s); t.textContent=n;
+    const t2=svgEl("text",{x,y:39,"text-anchor":"middle",class:"svgtxt",style:"font-size:11px"},s); t2.textContent=sub;
+    svgEl("line",{x1:x,y1:46,x2:x,y2:465,stroke:"var(--line)","stroke-dasharray":"4 4"},s); });
+  MSG.slice(0,k).forEach(([a,b,txt,proto],i) => { const y = 70 + i*40, xa = COLS[a][2], xb = COLS[b][2], c = PC[proto];
+    if (a===b){ svgEl("rect",{x:xa-62,y:y-12,width:520,height:24,rx:6,fill:c,opacity:.15},s); const t=svgEl("text",{x:xa-54,y:y+4,"font-size":"12",fill:"var(--ink)"},s); t.textContent="⚙ "+txt; }
+    else { svgEl("line",{x1:xa+(xb>xa?4:-4),y1:y,x2:xb+(xb>xa?-4:4),y2:y,stroke:c,"stroke-width":2.5,"marker-end":"url(#ah)",opacity:i===k-1?1:.75},s);
+      const t=svgEl("text",{x:(xa+xb)/2,y:y-6,"text-anchor":"middle","font-size":"11.5",fill:"var(--ink)"},s); t.textContent=txt;
+      const p=svgEl("text",{x:(xa+xb)/2,y:y+14,"text-anchor":"middle","font-size":"10.5","font-weight":"700",fill:c},s); p.textContent=proto; }
+  });
+  if (k===0) { $("#seqinfo").innerHTML = `<h3>Prêt</h3><p>PC03 est une VM neuve : disque vide, pas de DVD, premier périphérique de démarrage = carte réseau.</p>`; return; }
+  const [,, txt, proto, port, expl] = MSG[k-1];
+  $("#seqinfo").innerHTML = `<h3><span class="pill" style="background:${PC[proto]}">${proto}</span> ${k}. ${txt}</h3><p><b>Port :</b> ${port}</p><p>${expl}</p>` + (k===MSG.length ? `<div class="callout info"><b>À retenir :</b> DHCP (adresse + option 60) → TFTP (chargeur + boot.wim en mémoire) → WinPE → SMB (sources d’installation).</div>` : "");
+}
+$("#stepb").onclick = () => { if (k < MSG.length) { k++; drawSeq(); } };
+$("#rst").onclick = () => { k = 0; playing = false; drawSeq(); };
+$("#play").onclick = async () => { if (playing) return; playing = true; k = 0; drawSeq(); while (playing && k < MSG.length){ await sleep(900); if(!playing) break; k++; drawSeq(); } playing = false; };
+drawSeq();
+
+/* ---- 2 break & fix ---- */
+const CFG = [
+ ["scope","Étendue DHCP active, PC03 sur vSwitch-Rennes"],
+ ["opt60","Option 60 « PXEClient » (/DhcpOption60:Yes)"],
+ ["answer","WDS répond aux clients (/AnswerClients:All)"],
+ ["efi","wdsmgfw.efi présent dans E:\\RemoteInstall\\Boot\\x64"],
+ ["block","Taille de bloc TFTP 16384"],
+ ["idx","winpeshl.ini injecté dans l’index 2 de boot.wim"],
+ ["share","Compte svc.deploiement et droits sur Deploy$"],
+ ["xml","Z:\\autounattend.xml présent sur le partage"]
+];
+const on = Object.fromEntries(CFG.map(([k])=>[k,true]));
+$("#cfg").innerHTML = "<h3 style='margin-top:0'>Configuration de SRV01</h3>" + CFG.map(([k,l])=>`<label class="toggle" style="margin:7px 0"><input type="checkbox" data-k="${k}" checked> ${l}</label>`).join("");
+$$("#cfg input").forEach(i => i.onchange = () => { on[i.dataset.k] = i.checked; });
+$("#boot").onclick = async () => {
+  const t = $("#pxeterm"); t.innerHTML = ""; $("#pxediag").innerHTML = "";
+  const say = async (cls, txt, ms=500) => { t.innerHTML += `<span class="${cls}">${txt}</span>\n`; t.scrollTop = 1e6; await sleep(ms); };
+  const fail = (sym, cause, fix) => { $("#pxediag").innerHTML = `<div class="callout ko"><b>Symptôme :</b> ${sym}<br><b>Cause :</b> ${cause}<br><b>Vérifier :</b> ${fix}</div>`; };
+  await say("o","Start PXE over IPv4.");
+  if (!on.scope || !on.opt60){ await say("e","PXE-E16: No offer received.",300); await say("o","Retour au périphérique suivant…");
+    return fail("« Start PXE over IPv4 » puis rien, retour au disque", !on.scope ? "pas d’offre DHCP" : "pas d’option 60 : le poste ne sait pas qu’un serveur PXE existe", "étendue active ? poste sur vSwitch-Rennes ? <code>wdsutil /Get-Server /Show:Config</code> → DHCP option 60"); }
+  await say("o","  Station IP address is 192.168.3.105\n  Server IP address is 192.168.3.1");
+  if (!on.answer || !on.efi){ await say("e","A boot image was not found.");
+    return fail("« A boot image was not found »", !on.answer ? "WDS ne répond à aucun poste (réglage par défaut)" : "fichiers UEFI absents après un <code>/Initialize-Server</code> incomplet (erreur 0x41D sur le lab)", !on.answer ? "<code>wdsutil /Set-Server /AnswerClients:All</code>" : "<code>Test-Path E:\\RemoteInstall\\Boot\\x64\\wdsmgfw.efi</code>, recopier depuis <code>C:\\Windows\\System32\\RemInst\\boot\\x64</code> puis <code>Restart-Service WDSServer</code>"); }
+  await say("o","Downloading NBP file… wdsmgfw.efi");
+  await say("o","Windows is loading files… boot.wim", on.block ? 600 : 300);
+  if (!on.block){ await say("k","[…] 3 %  — 7 minutes restantes", 900); }
+  await say("o","WinPE démarré.");
+  if (!on.idx){ await say("e","La fonctionnalité client des Services de déploiement Windows est partiellement déconseillée. [OK]",600); await say("e","Redémarrage…");
+    return fail("message de dépréciation puis redémarrage en boucle", "Setup démarre en mode WDS : pas de winpeshl.ini, ou on a modifié l’<b>index 1</b> au lieu du 2", "<code>Get-WindowsImage -ImagePath E:\\WinPE\\boot.wim</code>, réinjecter dans l’index 2, Remove-WdsBootImage puis nouvel import"); }
+  await say("p","=== Fournil : installation de Windows 11 depuis le partage de deploiement ===");
+  await say("o","   Adresse IPv4. . . : 192.168.3.105");
+  if (!on.share){ await say("e","Erreur système 86. Le mot de passe réseau spécifié est incorrect.\nPartage inaccessible : verifier le reseau et le compte.");
+    return fail("« Partage inaccessible » dans la console WinPE", "compte, mot de passe, droits ou réseau", "dans l’invite restée ouverte (cmd /k) : <code>ipconfig</code>, <code>ping 192.168.3.1</code>, <code>net use</code> à la main"); }
+  await say("o","La commande s’est terminée correctement.");
+  await say("o","Z:\\Windows11\\setup.exe /unattend:Z:\\autounattend.xml");
+  if (!on.xml){ await say("e","Setup affiche : « Sélectionnez la langue à installer »…");
+    return fail("Setup s’arrête sur une question", "le fichier de réponse n’a pas été lu", "<code>Z:\\autounattend.xml</code> existe ? journal <code>X:\\Windows\\Panther\\setupact.log</code> (Maj+F10)"); }
+  await say("k","Installation de Windows 11… 100 %");
+  if (!on.block) $("#pxediag").innerHTML = `<div class="callout">⚠️ Ça marche, mais le chargement de boot.wim a pris <b>7 minutes</b>. Taille de bloc TFTP 16384 : 6 secondes.</div>`;
+  else $("#pxediag").innerHTML = `<div class="callout info">✅ PC03 s’installe, rejoint le domaine et reçoit ses applications. Décoche un réglage pour provoquer une panne.</div>`;
+};
+
+/* ---- 4 index ---- */
+const IDX = {
+ "1":["❌ Index 1 : ça ne change rien","WinPE nu. WDS démarre l’index <b>Windows Setup</b>. Piège vécu sur le lab : la première tentative a modifié l’index 1, le poste démarrait toujours Setup en mode WDS."],
+ "2":["✅ Index 2 : le bon","WinPE + Windows Setup : c’est lui que WDS démarre. On y ajoute <code>winpeshl.ini</code> et <code>deploiement.cmd</code>, puis on l’importe."]
+};
+$$("#idx .f").forEach(d => d.onclick = () => { $$("#idx .f").forEach(x=>x.classList.toggle("sel",x===d)); const [h,t] = IDX[d.dataset.i];
+  $("#idxres").innerHTML = `<h3>${h}</h3><p>${t}</p>`; if (d.dataset.i==="2") $("#idxres").appendChild(codeBlock(String.raw`Mount-WindowsImage -ImagePath E:\WinPE\boot.wim -Index 2 -Path E:\WinPE\mount
+Copy-Item .\deploiement.cmd, .\winpeshl.ini E:\WinPE\mount\Windows\System32\
+Dismount-WindowsImage -Path E:\WinPE\mount -Save
+Import-WdsBootImage -Path E:\WinPE\boot.wim -NewImageName 'WinPE Fournil - déploiement réseau'`)); });
+$('#idx .f[data-i="2"]').click();
+$("#ini").appendChild(codeBlock(`; Windows\\System32\\winpeshl.ini
+[LaunchApps]
+%SYSTEMROOT%\\System32\\cmd.exe, /k %SYSTEMROOT%\\System32\\deploiement.cmd`));
+$("#cmdf").appendChild(codeBlock(String.raw`@echo off
+rem Windows\System32\deploiement.cmd
+wpeinit
+wpeutil SetKeyboardLayout 040c:0000040c
+wpeutil WaitForNetwork
+net use Z: \\192.168.3.1\Deploy$ /user:FOURNIL\svc.deploiement Fournil2026!
+if errorlevel 1 (echo Partage inaccessible & goto :eof)
+Z:\Windows11\setup.exe /unattend:Z:\autounattend.xml`));
+</script>
+
+</body>
+</html>

@@ -64,6 +64,42 @@ def make_pdf(stage, entries, site):
     write(stage/'assets/course-pdfs.json', json.dumps({'pdf':'telechargements/cours-complets.pdf','pdfSha256':digest(data),'chapters':entries}, ensure_ascii=False, indent=2))
     return data
 
+def html_support_destinations(chapters, source_root):
+    destinations = {}
+    for item in chapters:
+        for kind in ('html', 'quiz'):
+            path = item.get(kind + 'Path')
+            if path is None:
+                continue
+            suffix = '-quiz.html' if kind == 'quiz' else '.html'
+            destination = (item['href'] + kind + '/', item['track'], 'cours/' + item['slug'] + suffix)
+            destinations[path] = destination
+            if kind == 'html':
+                for alias in item.get('htmlAliases', []):
+                    alias_path = (source_root / alias).resolve()
+                    assert alias_path.is_relative_to(source_root) and alias_path not in destinations, alias
+                    destinations[alias_path] = destination
+    return destinations
+
+def resolve_html_support_links(text, origin, track, destinations, offline=False):
+    def link(match):
+        parsed = urlsplit(html.unescape(match[2]))
+        if parsed.scheme or parsed.netloc or not parsed.path or parsed.path.startswith('/'):
+            return match[0]
+        destination = destinations.get((origin.parent / unquote(parsed.path)).resolve())
+        if destination is None:
+            return match[0]
+        url, target_track, archive_name = destination
+        if offline and target_track == track:
+            url = posixpath.relpath(archive_name, 'cours')
+        if parsed.query:
+            url += '?' + parsed.query
+        if parsed.fragment:
+            url += '#' + parsed.fragment
+        return match[1] + html.escape(url, quote=True) + match[3]
+    text = re.sub(r'(\bhref=")([^"]+)(")', link, text)
+    return re.sub(r'(?m)^[ \t]+$', '', text)
+
 def prepare():
     site = json.loads((ROOT/'site.json').read_text(encoding='utf-8-sig'))
     base = site['baseUrl'].rstrip('/'); site['baseUrl'] = base
@@ -163,6 +199,7 @@ def prepare():
     for attachment, (tid, relative) in attachments.items():
         assert attachment not in routes
         routes[attachment] = f'{base}/telechargements/{tid}/{relative}'
+    html_destinations = html_support_destinations(chapters, source_root)
     offline_names=dict(attachments)
     for item in chapters:
         offline_names[item['path']]=(item['track'],'cours/'+item['slug']+'.md')
@@ -246,10 +283,14 @@ def prepare():
                         marker='href="'+source_href+'"'
                         raw=raw.replace(marker,'href="'+routes[attachment]+'"')
                         offline_html=offline_html.replace(marker,'href="../'+relative_attachment+'"')
+                    raw = resolve_html_support_links(raw, item['htmlPath'], tid, html_destinations)
+                    offline_html = resolve_html_support_links(offline_html, item['htmlPath'], tid, html_destinations, offline=True)
                     files['cours/'+slug+'.html']=offline_html
                 elif item['quizPath'].suffix.lower()=='.html':
                     raw=item['quizPath'].read_text(encoding='utf-8-sig').replace('{{BASE_URL}}',base)
-                    files['cours/'+slug+'-quiz.html']=raw.replace(base+'/assets/','../assets/')
+                    offline_html = raw.replace(base+'/assets/','../assets/')
+                    raw = resolve_html_support_links(raw, item['quizPath'], tid, html_destinations)
+                    files['cours/'+slug+'-quiz.html'] = resolve_html_support_links(offline_html, item['quizPath'], tid, html_destinations, offline=True)
                 else:
                     bank=json.loads(item['quizPath'].read_text(encoding='utf-8-sig')); questions=bank['questions']; assert len(questions)==20
                     for q in questions: assert len(q['choices'])==4 and 0<=q['answer']<4 and q['explanation']
